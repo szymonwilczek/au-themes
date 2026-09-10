@@ -8,7 +8,7 @@
     (bg-main "#0d110f")       ; Ciemna, bezpieczna próchnica boru pod osłoną nocy
     (bg-dim "#131815")        ; Nasiąknięty pień świerku
     (bg-alt "#19201c")        ; Głęboki cień pod gałęziami
-    (fg-main "#9fa896")       ; Mokry len (APCA Lc ≈ 58 LCD / 57 OLED, ochrona przed irradiacją)
+    (fg-main "#abb6a2")       ; Mokry len (APCA LCD: 58.84, OLED: 57.90 - ostra definicja bez rozlewania)
     ;; Komentarze: ciemne igliwie w ściółce (leży cicho pod kodem)
     (fg-dim "#4f6154")        ; APCA Lc ≈ 23
     ;; Argumenty i identyfikatory (txt, bg): wilgotny piaskowiec

@@ -102,35 +102,54 @@ Gdy SIGNED jest nie-nil, zwraca wartość ze znakiem (ujemną dla WoB)."
   (defalias 'LCD  #'calc-lcd)
   (defalias 'OLED #'calc-oled)
   (defalias 'Δ    #'apca-color-distance)
+
+  ;; 10. Interaktywna funkcja automatycznej walidacji
+  (defun rainforest-eval-contrast-tables ()
+    "Przelicza automatycznie silnik i wszystkie tabele APCA w buforze."
+    (interactive)
+    (org-babel-execute-buffer)
+    (org-table-map-tables (lambda () (org-table-recalculate 'all)))
+    (message "Wszystkie tabele APCA zostały pomyślnie przeliczone!"))
 #+end_src
+
+#+begin_quote
+*Wskazówka obsługi w Emacs*:
+Bloki =#+begin_src= nie wykonują się same po otwarciu pliku (zabezpieczenie Emacsa).
+Aby załadować silnik i odświeżyć tabele, wywołaj:
+- =M-x rainforest-eval-contrast-tables= (jednym poleceniem przelicza wszystko)
+- LUB: umieść kursor wewnątrz bloku kodu powyżej i wciśnij =C-c C-c=, a potem na linii =#+TBLFM= wciśnij =C-c C-c=.
+#+end_quote
 
 * rainforest-night (Weryfikacja ergonomiczna dla LCD / OLED w ciemnym pokoju)
 
 ** Pomiary współczynników Lc z uwzględnieniem technologii ekranu
 Normy ergonomiczne dla nocnego schronienia:
-- Tekst podstawowy (Len): Lc 50 - 62 (Optimum czytelności, zapobiega rozlewaniu na LCD i fotycznej irradiacji na OLED)
+- Tekst podstawowy (Len): Lc 55 - 62 (Optimum czytelności, likwiduje rozlewanie na LCD i fotyczną irradiację na OLED)
 - Kursor (Kropla deszczu): Lc 38 - 50 (Wyraźny punkt skupienia wzroku, nieoślepiający w mroku)
 - Komentarze (Igliwie): Lc 18 - 25 (Dyskretne tło semantyczne, czysta kursywa bez sztucznego pogrubienia)
 - Elementy składni: Lc >= 30 (Wyraźna hierarchia kodu przy zachowaniu nasycenia pigmentu C* < 38)
 
-| Rola w kodzie                     | Token       | Kolor   | Tło     | APCA (Czyste) | Ekran LCD (Bleed) | Ekran OLED (Irrad) | Status / Norma w mroku            |
-|-----------------------------------+-------------+---------+---------+---------------+-------------------+--------------------+-----------------------------------|
-| Tekst podstawowy (Len)            | fg-main     | #9fa896 | #0d110f |         53.04 |             51.52 |              50.80 | Lc >= 50 (Optimum bez irradiacji) |
-| Tekst podstawowy (Len jaśniejszy) | fg-main-alt | #a8b29e | #0d110f |         58.31 |             56.75 |              55.87 | Lc 55-62 (Klasyczne Lc)           |
-| Kursor (Kropla deszczu)           | cursor      | #4e92a8 | #0d110f |         38.83 |             37.46 |              37.12 | Lc >= 38 (Subtelny akcent)        |
-| Komentarze / Doc (Ściółka)        | fg-dim      | #4f6154 | #0d110f |         18.72 |             17.76 |              17.77 | Lc >= 18 (W tle)                  |
-| Identyfikatory / Argumenty        | fg-alt      | #8fa08b | #0d110f |         47.87 |             46.40 |              45.83 | Lc >= 45 (Syntax)                 |
-| Typy (Mokry mech)                 | green       | #549842 | #0d110f |         38.55 |             37.18 |              36.85 | Lc >= 35 (Syntax)                 |
-| Napisy (Złota żywica)             | yellow      | #ba8428 | #0d110f |         41.44 |             40.04 |              39.64 | Lc >= 40 (Syntax)                 |
-| Funkcje (Świerk w deszczu)        | blue        | #388a66 | #0d110f |         32.46 |             31.18 |              30.99 | Lc >= 30 (Syntax)                 |
-| Dwukropki (:foreground itp.)      | blue-cooler | #3a8576 | #0d110f |         31.08 |             29.82 |              29.66 | Lc >= 30 (Subdued)                |
-| Symbole ('costam)                 | magenta     | #a65248 | #0d110f |         25.05 |             23.92 |              23.86 | Lc >= 25 (Subdued)                |
-| Słowa klucz (Mokry modrzew)       | cyan        | #b56834 | #0d110f |         32.55 |             31.27 |              31.08 | Lc >= 30 (Syntax)                 |
+| Rola w kodzie                      | Token       | Kolor   | Tło     | APCA (Czyste) | Ekran LCD (Bleed) | Ekran OLED (Irrad) | Status / Norma w mroku                  |
+|------------------------------------+-------------+---------+---------+---------------+-------------------+--------------------+-----------------------------------------|
+| Tekst podstawowy (Len leśny - cel) | fg-main     | #abb6a2 | #0d110f |         60.42 |             58.84 |              57.90 | Lc 55-62 (Ostra krawędź bez rozlewania) |
+| Tekst podstawowy (Mokry len)       | fg-main-alt | #a8b29e | #0d110f |         58.31 |             56.75 |              55.87 | Lc 55-62 (Miękki len świerkowy)         |
+| Tekst poprzedni (Za ciemny na LCD) | fg-main-old | #9fa896 | #0d110f |         53.04 |             51.52 |              50.80 | Lc < 55 (Rozmywa się na LCD)            |
+| Kursor (Kropla deszczu)            | cursor      | #4e92a8 | #0d110f |         38.83 |             37.46 |              37.12 | Lc >= 38 (Subtelny akcent)              |
+| Komentarze / Doc (Ściółka)         | fg-dim      | #4f6154 | #0d110f |         18.72 |             17.76 |              17.77 | Lc >= 18 (W tle)                        |
+| Identyfikatory / Argumenty         | fg-alt      | #8fa08b | #0d110f |         47.87 |             46.40 |              45.83 | Lc >= 45 (Syntax)                       |
+| Typy (Mokry mech)                  | green       | #549842 | #0d110f |         38.55 |             37.18 |              36.85 | Lc >= 35 (Syntax)                       |
+| Napisy (Złota żywica)              | yellow      | #ba8428 | #0d110f |         41.44 |             40.04 |              39.64 | Lc >= 40 (Syntax)                       |
+| Funkcje (Świerk w deszczu)         | blue        | #388a66 | #0d110f |         32.46 |             31.18 |              30.99 | Lc >= 30 (Syntax)                       |
+| Dwukropki (:foreground itp.)       | blue-cooler | #3a8576 | #0d110f |         31.08 |             29.82 |              29.66 | Lc >= 30 (Subdued)                      |
+| Symbole ('costam)                  | magenta     | #a65248 | #0d110f |         25.05 |             23.92 |              23.86 | Lc >= 25 (Subdued)                      |
+| Słowa klucz (Mokry modrzew)        | cyan        | #b56834 | #0d110f |         32.55 |             31.27 |              31.08 | Lc >= 30 (Syntax)                       |
 #+TBLFM: $5='(APCA $3 $4) :: $6='(LCD $3 $4) :: $7='(OLED $3 $4)
 
 ** Weryfikacja odległości percepcyjnej między składnikami (min. 5000)
 | Porównanie ról                          | Kolor 1 | Kolor 2 | Dystans (Δ) | Status       |
 |-----------------------------------------+---------+---------+-------------+--------------|
+| Len leśny (txt) vs Argumenty (fg-alt)   | #abb6a2 | #8fa08b |        5289 | Rozróżnialne |
+| Len leśny (txt) vs Komentarz (Cień)     | #abb6a2 | #4f6154 |       65757 | Rozróżnialne |
 | Argumenty (txt, bg) vs Komentarz (Cień) | #8fa08b | #4f6154 |       33872 | Rozróżnialne |
 | Dwukropek (:foreg.) vs Symbol ('theme)  | #3a8576 | #a65248 |       44620 | Rozróżnialne |
 | defconst (Modrzew) vs funkcja (Świerk)  | #b56834 | #388a66 |       49860 | Rozróżnialne |
