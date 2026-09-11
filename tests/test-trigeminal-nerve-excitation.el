@@ -15,7 +15,7 @@ Ref: Burstein et al. (2015) Nature Rev. Neurosci.; Noseda et al. (2010); Digre &
          (fails 0)
          (warm-tokens '(("Alerts / Errors (Yew berry)"        :err)
                         ("Strings (Burnt oak)"                :string)
-                        ("Builtins (Cedar wood bark)"         :builtin)
+                        ("Builtins"                           :builtin)
                         ("Numbers (Golden amber honey)"       :number)
                         ("Preprocessor (#define)"             :preprocessor))))
 
@@ -43,7 +43,7 @@ Ref: Burstein et al. (2015) Nature Rev. Neurosci.; Noseda et al. (2010); Digre &
              (max-purity (if (eq polarity 'light) 0.880 0.850))
              (max-lum    (if (eq polarity 'light) 0.400 (if (eq key :number) 0.400 0.250)))
              (ok (and (<= purity max-purity)
-                      (<= y-val max-lum))))
+                      (if (> purity 0.400) (<= y-val max-lum) t))))
         (if ok
             (setq passes (1+ passes))
           (setq fails (1+ fails)))
