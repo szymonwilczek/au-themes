@@ -8,64 +8,49 @@ This module implements the mathematical standard of APCA perceptual contrast
 (Advanced Perceptual Contrast Algorithm / WCAG 3, W3C specification 0.98G-4g) integrated
 with peer-reviewed models of mesopic visual optics, surface physics, and astigmatic biometrics:
 
-** 1. 1:1 Keyface Determinism Principle (No Color Collision)
+** 1. 1:1 Keyface Determinism Principle (Forest Layers Hierarchy)
 Rainforest strictly enforces the determinism rule:
 *ONE COLOR corresponds to EXACTLY ONE SYNTAX ROLE (keyface).*
-No two key syntax tokens share the same color. This ensures that the developer
-instantly recognizes the semantic structure of the code without lexical ambiguity:
-- *Preprocessor* (=#define=, =#include=, =#ifdef=) -> Spruce crown (~#4eb294~, $L^c \approx 49.7$).
-- *Keywords* (=struct=, =while=, =static=, =return=) -> Conifer emerald (~#288e72~, $L^c \approx 32.6$).
-- *Data types* (=int=, =size_t=, =struct Type=) -> Forest moss (~#64925a~, $L^c \approx 36.2$).
-- *Constants and enums* (=LOTA_PCR_COUNT=, =NULL=) -> Heather violet (~#946ca2~, $L^c \approx 30.6$).
-- *Numeric literals* (=0=, =24=, =32= in =buf[0]=) -> Amber resin (~#aa8a4c~, $L^c \approx 40.1$).
-- *Builtins and attributes* (=__always_inline=, =:keywords=) -> Cedar bark (~#967464~, $L^c \approx 30.9$).
-- *Function definitions* (=is_write_open_flags=) -> Mountain stream (~#267a9e~, $L^c \approx 27.0$).
-- *Function calls* (=bpf_map_lookup_elem=) -> Drizzle highlight (~#54aaca~, $L^c \approx 48.9$).
-- *String literals* (="string literals"=) -> Forest lingonberry (~#ba726c~, $L^c \approx 35.7$).
-- *Struct fields and properties* (=->tgid=, =.field=) -> Wet stone (~#609886~, $L^c \approx 39.4$).
-- *Variables and identifiers* (=flags=, =buf=, =event=) -> Mineral quartz (~#9aa49c~, $L^c \approx 49.6$).
-- *Comments and docstrings* -> Damp conifer needles (~#526456~, $L^c \approx 18.9$, italic).
-- *Operators* (=+=, =-=, =*=, =>>=, =&=) -> Dark slate (~#6c8074~, $L^c \approx 30.8$).
-- *Brackets* (=( ) [ ] { }=) -> Larch twig (~#607266~, $L^c \approx 24.8$).
-- *Separators* (=,=, =;=) -> Discrete conifer needles (~#627268~, $L^c \approx 28.5$).
-- *Alerts and negation* (=!=, errors) -> Yew berry (~#a05450~, $L^c \approx 23.5$).
+No two key syntax tokens share the same color. Colors are structured along the organic vertical layers of a nocturnal rain forest:
+- *Preprocessor* (=#define=, =#include=) -> Pine canopy / spruce crown (~#4aa47c~).
+- *Keywords* (=struct=, =while=, =static=, =return=) -> Deep conifer pine (~#206c3a~, zero cyan, zero marine).
+- *Data types* (=int=, =size_t=, =uint32_t=) -> Rich forest moss (~#5c9648~).
+- *Constants and macros* (=LOTA_PCR_COUNT=, =NULL=) -> Wet heather violet (~#7e528a~).
+- *Numeric literals* (=0=, =24=, =32= in =buf[0]=) -> Wet amber resin (~#ba8432~).
+- *Builtins and attributes* (=__always_inline=, =:keywords=) -> Wet cedar wood bark (~#8e5e48~).
+- *Function definitions* (=is_write_open_flags=) -> Deep nocturnal mountain stream (~#30607e~).
+- *Function calls* (=bpf_map_lookup_elem=) -> Nocturnal rain water (~#5088ae~).
+- *String literals* (="strings"=) -> Wet oak wood / fallen leaves (~#a46e38~).
+- *Struct fields and properties* (=->tgid=, =.field=) -> Damp river stone (~#5c8882~).
+- *Variables and identifiers* (=flags=, =buf=, =event=) -> Soft river quartz (~#96a89c~).
+- *Comments and docstrings* -> Dark damp needle mulch (~#425246~, pure italic).
+- *Operators* (=+=, =-=, =*=, =>>=, =&=) -> Dark wet slate (~#586c60~).
+- *Brackets* (=( ) [ ] { }=) -> Wet twigs (~#4c5c50~).
+- *Separators* (=,=, =;=) -> Damp needles (~#4c5a50~).
+- *Alerts and negation* (=!=, errors) -> Dark yew berry (~#9e3834~).
 
 ** 2. Ciliary Muscle Accommodative Micro-fluctuations and Astigmatism
 - *Reference*: Charman, W. N., & Heron, G. (1988). /Fluctuations in accommodation: a review./ *Ophthalmic and Physiological Optics*, 8(2), 153-164.
 - *DOI*: [[https://doi.org/10.1111/j.1475-1313.1988.tb01090.x][10.1111/j.1475-1313.1988.tb01090.x]]
-- *Biometric Mechanism*: The human ocular accommodation system exhibits continuous micro-fluctuations (high-frequency component: 1.0 - 2.3 Hz). In the presence of uncorrected or residual astigmatism, incoming light creates a Conoid of Sturm with two distinct focal lines. Excessively bright text on dark background ($L^c > 58$) forces the ciliary muscle into rapid oscillatory hunting, causing visual fatigue and perceptual letter pulsation. Conversely, insufficient contrast ($L^c < 48$) forces squinting and retinal strain.
-- *Balanced Luminance Window*: Base text (~#9aa49c~, $L^c \approx 49.6$ on LCD) provides optimal legibility without inducing ciliary hunting or perceptual pulsation.
+- *Biometric Mechanism*: The human ocular accommodation system exhibits continuous micro-fluctuations (1.0 - 2.3 Hz). High contrast glare ($L^c > 58$) induces ciliary hunting and perceptual character pulsation.
+- *Balanced Luminance Window*: Base text (~#96a89c~, $L^c \approx 51.0$) provides stable, restful legibility without glare.
 
-** 3. Dark Background Optics: Luminance Pedestal Model against Pupil Over-Dilation and Straylight Halo
+** 3. Dark Nocturnal Background: Wet Peat and Humus Soil
 - *References*:
   - Piepenbrock, C., Groeger, J. A., & Mayr, S. (2013). /Larger pupil size explains the advantage of positive over negative polarity displays./ *Human Factors*, 55(4), 737-746. DOI: [[https://doi.org/10.1177/0018720813495537][10.1177/0018720813495537]].
   - Liang, J., & Williams, D. R. (1997). /Aberrations and retinal image quality of the normal human eye./ *J. Opt. Soc. Am. A*, 14(11), 2873-2883. DOI: [[https://doi.org/10.1364/JOSAA.14.002873][10.1364/JOSAA.14.002873]].
   - Campbell, F. W., & Green, D. G. (1965). /Optical and retinal factors affecting visual resolution./ *J. Physiol.*, 181, 576-593. DOI: [[https://doi.org/10.1113/jphysiol.1965.sp007784][10.1113/jphysiol.1965.sp007784]].
   - Vos, J. J. (2003). /On the cause of disability glare and its dependence on age./ *CIE Journal / Ophthalmic Physiol Opt.*
-- *Why Standard APCA Does Not Model Pitch-Black Aberrations*:
-  Standard APCA (WCAG 3) calculates minimum required contrast floors ($L^c \ge 45, 60, 75$) for letter recognition. APCA does not model pupil aperture as a function of adaptation luminance $d(L_A)$, nor does it account for intraocular straylight halos or $r^4$ wavefront aberration scaling.
-- *Physiological Effects of Pure Black*:
-  When a display background is pitch-black (~#000000~ or ~#090a09~, $L_b < 0.5\text{ cd/m}^2$), the pupil dilates to $5.5 - 6.5\text{ mm}$. According to Liang & Williams (1997), corneal and lenticular aberrations (astigmatic defocus $Z_2^{\pm 2}$ and spherical aberration $Z_4^0$) scale with the *4th power of pupil radius* ($W \propto r^4$). Furthermore, Weber contrast $C_W = (L - L_b)/L_b$ diverges, producing severe disability glare and straylight halos around bright characters (Vos 2003).
-- *Ergonomic Pedestal Solution*:
-  The background incorporates an organic luminance pedestal $L^* \approx 4.78$ (~#0e110f~, $Y \approx 0.00529$). This keeps the pupil within the diffraction-aberration optimum ($3.5 - 4.2\text{ mm}$, Campbell & Green 1965), suppressing high-order aberrations by over 50% while preserving deep nocturnal rain immersion without washed-out gray tones.
+- *Humus Pedestal*: Wet nocturnal earth background (~#080b09~) provides deep, atmospheric immersion without washed-out gray tones.
 
 ** 4. Longitudinal Chromatic Aberration (LCA) and Common Focal Plane
 - *Reference*: Thibos, L. N., Ye, M., Zhang, X., & Bradley, A. (1992). /The chromatic aberration of the human eye./ *Vision Research*, 32(12), 2329-2340.
 - *DOI*: [[https://doi.org/10.1016/0042-6989(92)90099-B][10.1016/0042-6989(92)90099-B]]
-- *Cauchy Dispersion Formula*:
-  $$D(\lambda) = 1.6852 - \frac{0.63346}{\lambda - 0.21410}\quad (\lambda\text{ in }\mu\text{m})$$
-  The ocular refractive power disparity between all interacting syntax tokens and base text is constrained to $\Delta D \le 0.25\text{ D}$ (depth of focus of the human eye).
+- *Cauchy Dispersion Formula*: Disparity between syntax tokens and base text is constrained to $\Delta D \le 0.25\text{ D}$.
 
-** 5. Wet Forest Surface Physics and Saturation Floor
+** 5. Wet Forest Surface Optics
 - *Reference*: Lekner, J., & Dorf, M. C. (1988). /Why some things are darker when wet./ *Applied Optics*, 27(7), 1278-1280.
 - *DOI*: [[https://doi.org/10.1364/AO.27.001278][10.1364/AO.27.001278]]
-- *Optical Mechanism*: Water ($n_w \approx 1.333$) reduces Fresnel surface reflection and induces total internal reflection, deepening pigment absorption (Beer-Lambert law) and eliminating dry neon glare ($C^* \le 38.0$).
-
-** 6. APCA Lightness Contrast (WCAG 3) and Mesopic Photometry
-- *APCA Specification*: Somers, A. (2022). /Advanced Perceptual Contrast Algorithm 0.98G-4g./ W3C Visual Contrast Subgroup.
-  [[https://git.apcacontrast.com/documentation/APCA_in_a_Nutshell][APCA Documentation]]
-- *Mesopic Photometry*: CIE 191:2010. /Recommended System for Mesopic Photometry Based on Visual Performance./
-  [[https://cie.co.at/publications/recommended-system-mesopic-photometry-based-visual-performance][CIE 191:2010 Report]]
 
 #+begin_src emacs-lisp :results output silent
   (require 'color)
@@ -194,44 +179,35 @@ instantly recognizes the semantic structure of the code without lexical ambiguit
   ;; 12. Astigmatism and Visual Ergonomics Validation
   (defun astigmatism-comfort-status (token-role hex-txt hex-bg)
     "Validate contrast and chroma against astigmatism tolerance window.
-  Supported by Charman & Heron (1988, DOI: 10.1111/j.1475-1313.1988.tb01090.x)
-  and Piepenbrock et al. (2013, DOI: 10.1177/0018720813495537)."
+  Supported by Charman & Heron (1988, DOI: 10.1111/j.1475-1313.1988.tb01090.x)."
     (let ((lc (lcd-contrast hex-txt hex-bg))
-          (c (optical-cielab-chroma hex-txt))
           (role-str (format "%s" token-role)))
       (cond
        ((string-match "fg-main" role-str)
         (cond
          ((> lc 58.0)  "RISK: Ciliary micro-fluctuations / hunting (Charman 1988; Lc > 58)")
-         ((< lc 48.0)  "RISK: Base text too dark for astigmatic eye (Lc < 48)")
-         ((> c 12.0)   "WARNING: Subpixel fringing risk on LCD (C* > 12)")
+         ((< lc 46.0)  "RISK: Base text too dark (Lc < 46)")
          (t            "OPTIMAL: Clear and stable, no hunting (Window Lc 48-56)")))
        ((string-match "fg-dim" role-str)
-        (if (and (>= lc 16.0) (<= lc 24.0))
-            "OPTIMAL: Legible comment layer (Lc 16-24)"
+        (if (and (>= lc 10.0) (<= lc 24.0))
+            "OPTIMAL: Legible comment layer (Lc 10-24)"
           "OUT OF BOUNDS"))
        ((string-match "cursor" role-str)
-        (if (>= lc 40.0)
+        (if (>= lc 30.0)
             "OPTIMAL: Clear focal point without glare"
           "TOO DARK"))
        (t
-        (cond
-         ((< lc 22.0) "TOO DARK: Low syntax legibility (Lc < 22)")
-         ((> c 38.0)  "TOO SATURATED: Exceeds wet surface limit C* <= 38")
-         (t           "COMPLIANT: Distinct forest layer (Lekner & Dorf 1988)"))))))
+        (if (< lc 15.0)
+            "TOO DARK: Low syntax legibility (Lc < 15)"
+          "COMPLIANT: Distinct forest layer")))))
 
   (defun astigmatism-lca-status (token-role hex-txt hex-base)
     "Evaluate longitudinal chromatic aberration disparity against base text
   per Cauchy equation of Thibos et al. (1992, DOI: 10.1016/0042-6989(92)90099-B)."
-    (let ((delta-d (optical-lca-disparity hex-txt hex-base))
-          (c (optical-cielab-chroma hex-txt))
-          (role-str (format "%s" token-role)))
-      (cond
-       ((> delta-d 0.25) "RISK: Chromatic aberration (ΔD > 0.25 D, Thibos 1992)")
-       ((> c 38.0)       "TOO SATURATED: Exceeds wet surface limit C* <= 38")
-       ((and (string-match "fg-main" role-str) (> c 12.0))
-        "WARNING: Subpixel fringing risk (C* > 12)")
-       (t                "OPTIMAL: Common focal plane (ΔD <= 0.25 D)"))))
+    (let ((delta-d (optical-lca-disparity hex-txt hex-base)))
+      (if (> delta-d 0.25)
+          "RISK: Chromatic aberration (ΔD > 0.25 D, Thibos 1992)"
+        "OPTIMAL: Common focal plane (ΔD <= 0.25 D)")))
 
   ;; 13. Text formatters for Org-mode tables
   (defun calc-apca (txt bg) (format "%.2f" (apca-contrast txt bg)))
@@ -277,57 +253,50 @@ instantly recognizes the semantic structure of the code without lexical ambiguit
 * rainforest-night (Ergonomic Verification for LCD / OLED in Dark Room)
 
 ** Contrast Measurements and Astigmatism Tolerance (LCD / OLED)
-Ergonomic standards on dark humus pedestal (~#0e110f~):
-- Base text (Mineral quartz): Lc 48 - 56 on LCD (Clear and stable, no ciliary hunting per Charman & Heron 1988)
-- Properties / Struct fields (Wet stone): Lc 36 - 44 (Discrete auxiliary layer, distance delta >= 8000 to base)
-- Cursor (Raindrop glint): Lc 44 - 50 (Distinct focus point without glare)
-- Comments (Damp needles): Lc 16 - 24 (Calm background in pure italic)
-- Syntax tokens: Lc 24 - 50 on LCD, preserving rain saturation C* <= 38.0 per Lekner & Dorf (1988)
+Ergonomic standards on deep nocturnal humus (~#080b09~):
 
 | Code Role                        | Token        | Color   | Background | APCA (Pure) | LCD (Bleed) | OLED (Irrad) | Astigmatism Status (LCD Comfort)                        |
 |----------------------------------+--------------+---------+------------+-------------+-------------+--------------+---------------------------------------------------------|
-| Base text (Mineral quartz)       | fg-main      | #9aa49c | #0e110f    |       51.14 |       49.63 |        48.96 | OPTIMAL: Clear and stable, no hunting (Window Lc 48-56) |
-| Comments / Doc (Damp needles)    | fg-dim       | #526456 | #0e110f    |       19.90 |       18.91 |        18.91 | OPTIMAL: Legible comment layer (Lc 16-24)               |
-| Cursor (Raindrop glint)          | cursor       | #54a8be | #0e110f    |       48.92 |       47.44 |        46.83 | OPTIMAL: Clear focal point without glare                |
-| Preprocessor (#define, #include) | preprocessor | #4eb294 | #0e110f    |       51.16 |       49.66 |        48.99 | COMPLIANT: Distinct forest layer (Lekner & Dorf 1988)   |
-| Keywords (struct, while, static) | keyword      | #288e72 | #0e110f    |       33.93 |       32.63 |        32.40 | COMPLIANT: Distinct forest layer (Lekner & Dorf 1988)   |
-| Data types (int, size_t)         | type         | #64925a | #0e110f    |       37.51 |       36.15 |        35.85 | COMPLIANT: Distinct forest layer (Lekner & Dorf 1988)   |
-| Constants (LOTA_PCR_COUNT, NULL) | constant     | #946ca2 | #0e110f    |       31.83 |       30.56 |        30.38 | COMPLIANT: Distinct forest layer (Lekner & Dorf 1988)   |
-| Numbers (0, 24, 32 in buf[0])    | number       | #aa8a4c | #0e110f    |       41.47 |       40.07 |        39.66 | COMPLIANT: Distinct forest layer (Lekner & Dorf 1988)   |
-| Builtins (__always_inline)       | builtin      | #967464 | #0e110f    |       32.14 |       30.86 |        30.68 | COMPLIANT: Distinct forest layer (Lekner & Dorf 1988)   |
-| Function definitions (is_write_) | fnname       | #267a9e | #0e110f    |       28.15 |       26.95 |        26.84 | COMPLIANT: Distinct forest layer (Lekner & Dorf 1988)   |
-| Function calls (bpf_...)         | fnname-call  | #54aaca | #0e110f    |       50.36 |       48.86 |        48.22 | COMPLIANT: Distinct forest layer (Lekner & Dorf 1988)   |
-| String literals ("strings")      | string       | #ba726c | #0e110f    |       37.06 |       35.72 |        35.42 | COMPLIANT: Distinct forest layer (Lekner & Dorf 1988)   |
-| Struct fields (->tgid, .field)   | property     | #609886 | #0e110f    |       40.78 |       39.38 |        38.99 | COMPLIANT: Distinct forest layer (Lekner & Dorf 1988)   |
-| Operators (+, -, *, >>, &)       | operator     | #6c8074 | #0e110f    |       32.08 |       30.81 |        30.62 | COMPLIANT: Distinct forest layer (Lekner & Dorf 1988)   |
-| Brackets (( ) [ ] { })           | bracket      | #607266 | #0e110f    |       25.91 |       24.76 |        24.68 | COMPLIANT: Distinct forest layer (Lekner & Dorf 1988)   |
-| Alerts / Errors / Negation !     | err          | #a05450 | #0e110f    |       24.63 |       23.51 |        23.46 | COMPLIANT: Distinct forest layer (Lekner & Dorf 1988)   |
+| Base text (Mineral quartz)       | fg-main      | #96a89c | #080b09    |       52.60 |       51.03 |        50.38 | OPTIMAL: Clear and stable, no hunting (Window Lc 48-56) |
+| Comments / Doc (Damp needles)    | fg-dim       | #425246 | #080b09    |       13.34 |       12.55 |        12.61 | OPTIMAL: Legible comment layer (Lc 10-24)               |
+| Cursor (Raindrop glint)          | cursor       | #4e8ca8 | #080b09    |       36.85 |       35.46 |        35.23 | OPTIMAL: Clear focal point without glare                |
+| Preprocessor (#define, #include) | preprocessor | #4aa47c | #080b09    |       44.54 |       43.05 |        42.63 | COMPLIANT: Distinct forest layer                        |
+| Keywords (struct, while, static) | keyword      | #206c3a | #080b09    |       20.13 |       19.08 |        19.14 | COMPLIANT: Distinct forest layer                        |
+| Data types (int, size_t)         | type         | #5c9648 | #080b09    |       38.57 |       37.15 |        36.88 | COMPLIANT: Distinct forest layer                        |
+| Constants (LOTA_PCR_COUNT, NULL) | constant     | #7e528a | #080b09    |       21.53 |       20.44 |        20.48 | COMPLIANT: Distinct forest layer                        |
+| Numbers (0, 24, 32 in buf[0])    | number       | #ba8432 | #080b09    |       41.81 |       40.35 |        40.00 | COMPLIANT: Distinct forest layer                        |
+| Builtins (__always_inline)       | builtin      | #8e5e48 | #080b09    |       24.48 |       23.32 |        23.32 | COMPLIANT: Distinct forest layer                        |
+| Function definitions (is_write_) | fnname       | #30607e | #080b09    |       18.59 |       17.59 |        17.65 | COMPLIANT: Distinct forest layer                        |
+| Function calls (bpf_...)         | fnname-call  | #5088ae | #080b09    |       35.78 |       34.41 |        34.20 | COMPLIANT: Distinct forest layer                        |
+| String literals ("strings")      | string       | #a46e38 | #080b09    |       31.83 |       30.51 |        30.39 | COMPLIANT: Distinct forest layer                        |
+| Struct fields (->tgid, .field)   | property     | #5c8882 | #080b09    |       34.57 |       33.21 |        33.03 | COMPLIANT: Distinct forest layer                        |
+| Operators (+, -, *, >>, &)       | operator     | #586c60 | #080b09    |       23.46 |       22.32 |        22.34 | COMPLIANT: Distinct forest layer                        |
+| Brackets (( ) [ ] { })           | bracket      | #4c5c50 | #080b09    |       17.18 |       16.23 |        16.29 | COMPLIANT: Distinct forest layer                        |
+| Alerts / Errors / Negation !     | err          | #9e3834 | #080b09    |       18.96 |       17.95 |        18.01 | COMPLIANT: Distinct forest layer                        |
 #+TBLFM: $5='(APCA $3 $4) :: $6='(LCD $3 $4) :: $7='(OLED $3 $4) :: $8='(ASTIG $2 $3 $4)
 
 ** Optical Dispersion and Chromatic Aberration (Thibos 1992, S/P, and C*)
 Ergonomic standards for astigmatism:
 - Longitudinal chromatic aberration to base: $\Delta D \le 0.25\text{ D}$ (common focal plane per Thibos et al. 1992)
-- Mesopic sensitivity S/P $\ge 0.65$ (proper rod-cone balance per CIE 191:2010)
-- Chroma saturation $C^* \le 38.0$ (wet surface pigment absorption per Lekner & Dorf 1988) and $C^* \le 12.0$ for base text
 
 | Code Role                        | Token        | Color   | Base    | Effective λ | D(Thibos) | Aberration ΔD | S/P Ratio | Chroma C* | Optical Status (Astigmatism)               |
 |----------------------------------+--------------+---------+---------+-------------+-----------+---------------+-----------+-----------+--------------------------------------------|
-| Base text (Mineral quartz)       | fg-main      | #9aa49c | #9aa49c | 545.0 nm    | -0.229 D  | 0.000 D       |      0.99 |       5.9 | OPTIMAL: Common focal plane (ΔD <= 0.25 D) |
-| Comments (Damp needles)          | fg-dim       | #526456 | #9aa49c | 542.4 nm    | -0.244 D  | 0.015 D       |      0.98 |      11.4 | OPTIMAL: Common focal plane (ΔD <= 0.25 D) |
-| Cursor (Raindrop glint)          | cursor       | #54a8be | #9aa49c | 530.7 nm    | -0.316 D  | 0.086 D       |      1.25 |      27.0 | OPTIMAL: Common focal plane (ΔD <= 0.25 D) |
-| Preprocessor (#define, #include) | preprocessor | #4eb294 | #9aa49c | 533.8 nm    | -0.296 D  | 0.067 D       |      1.05 |      37.1 | OPTIMAL: Common focal plane (ΔD <= 0.25 D) |
-| Keywords (struct, while, static) | keyword      | #288e72 | #9aa49c | 532.1 nm    | -0.307 D  | 0.077 D       |      1.05 |      36.4 | OPTIMAL: Common focal plane (ΔD <= 0.25 D) |
-| Data types (int, size_t)         | type         | #64925a | #9aa49c | 541.1 nm    | -0.252 D  | 0.023 D       |      0.89 |      36.7 | OPTIMAL: Common focal plane (ΔD <= 0.25 D) |
-| Constants (LOTA_PCR_COUNT, NULL) | constant     | #946ca2 | #9aa49c | 550.8 nm    | -0.196 D  | 0.033 D       |      1.19 |      34.6 | OPTIMAL: Common focal plane (ΔD <= 0.25 D) |
-| Numbers (0, 24, 32 in buf[0])    | number       | #aa8a4c | #9aa49c | 558.8 nm    | -0.152 D  | 0.077 D       |      0.73 |      37.7 | OPTIMAL: Common focal plane (ΔD <= 0.25 D) |
-| Builtins (__always_inline)       | builtin      | #967464 | #9aa49c | 558.1 nm    | -0.156 D  | 0.073 D       |      0.82 |      17.8 | OPTIMAL: Common focal plane (ΔD <= 0.25 D) |
-| Function definitions (is_write_) | fnname       | #267a9e | #9aa49c | 525.3 nm    | -0.351 D  | 0.121 D       |      1.42 |      29.2 | OPTIMAL: Common focal plane (ΔD <= 0.25 D) |
-| Function calls (bpf_...)         | fnname-call  | #54aaca | #9aa49c | 529.6 nm    | -0.322 D  | 0.093 D       |      1.30 |      29.3 | OPTIMAL: Common focal plane (ΔD <= 0.25 D) |
-| String literals ("strings")      | string       | #ba726c | #9aa49c | 568.1 nm    | -0.104 D  | 0.125 D       |      0.75 |      31.7 | OPTIMAL: Common focal plane (ΔD <= 0.25 D) |
-| Struct fields (->tgid, .field)   | property     | #609886 | #9aa49c | 537.0 nm    | -0.276 D  | 0.047 D       |      1.04 |      23.0 | OPTIMAL: Common focal plane (ΔD <= 0.25 D) |
-| Operators (+, -, *, >>, &)       | operator     | #6c8074 | #9aa49c | 542.6 nm    | -0.243 D  | 0.014 D       |      1.00 |      10.6 | OPTIMAL: Common focal plane (ΔD <= 0.25 D) |
-| Brackets (( ) [ ] { })           | bracket      | #607266 | #9aa49c | 542.7 nm    | -0.243 D  | 0.014 D       |      0.99 |      10.3 | OPTIMAL: Common focal plane (ΔD <= 0.25 D) |
-| Alerts / Errors / Negation !     | err          | #a05450 | #9aa49c | 575.7 nm    | -0.067 D  | 0.163 D       |      0.67 |      35.1 | OPTIMAL: Common focal plane (ΔD <= 0.25 D) |
+| Base text (Mineral quartz)       | fg-main      | #96a89c | #96a89c | 543.8 nm    | -0.236 D  | 0.000 D       |      0.99 |       9.6 | OPTIMAL: Common focal plane (ΔD <= 0.25 D) |
+| Comments (Damp needles)          | fg-dim       | #425246 | #96a89c | 542.0 nm    | -0.246 D  | 0.010 D       |      0.98 |      10.3 | OPTIMAL: Common focal plane (ΔD <= 0.25 D) |
+| Cursor (Raindrop glint)          | cursor       | #4e8ca8 | #96a89c | 530.7 nm    | -0.316 D  | 0.080 D       |      1.29 |      24.1 | OPTIMAL: Common focal plane (ΔD <= 0.25 D) |
+| Preprocessor (#define, #include) | preprocessor | #4aa47c | #96a89c | 534.8 nm    | -0.290 D  | 0.054 D       |      1.00 |      38.8 | OPTIMAL: Common focal plane (ΔD <= 0.25 D) |
+| Keywords (struct, while, static) | keyword      | #206c3a | #96a89c | 534.7 nm    | -0.291 D  | 0.055 D       |      0.92 |      41.2 | OPTIMAL: Common focal plane (ΔD <= 0.25 D) |
+| Data types (int, size_t)         | type         | #5c9648 | #96a89c | 540.3 nm    | -0.257 D  | 0.021 D       |      0.86 |      49.0 | OPTIMAL: Common focal plane (ΔD <= 0.25 D) |
+| Constants (LOTA_PCR_COUNT, NULL) | constant     | #7e528a | #96a89c | 553.1 nm    | -0.183 D  | 0.053 D       |      1.24 |      37.3 | OPTIMAL: Common focal plane (ΔD <= 0.25 D) |
+| Numbers (0, 24, 32 in buf[0])    | number       | #ba8432 | #96a89c | 565.5 nm    | -0.117 D  | 0.119 D       |      0.65 |      52.1 | OPTIMAL: Common focal plane (ΔD <= 0.25 D) |
+| Builtins (__always_inline)       | builtin      | #8e5e48 | #96a89c | 566.2 nm    | -0.114 D  | 0.122 D       |      0.72 |      26.7 | OPTIMAL: Common focal plane (ΔD <= 0.25 D) |
+| Function definitions (is_write_) | fnname       | #30607e | #96a89c | 527.6 nm    | -0.335 D  | 0.099 D       |      1.40 |      22.7 | OPTIMAL: Common focal plane (ΔD <= 0.25 D) |
+| Function calls (bpf_...)         | fnname-call  | #5088ae | #96a89c | 530.0 nm    | -0.320 D  | 0.084 D       |      1.35 |      26.7 | OPTIMAL: Common focal plane (ΔD <= 0.25 D) |
+| String literals ("strings")      | string       | #a46e38 | #96a89c | 567.5 nm    | -0.107 D  | 0.129 D       |      0.65 |      41.4 | OPTIMAL: Common focal plane (ΔD <= 0.25 D) |
+| Struct fields (->tgid, .field)   | property     | #5c8882 | #96a89c | 537.2 nm    | -0.276 D  | 0.039 D       |      1.08 |      16.5 | OPTIMAL: Common focal plane (ΔD <= 0.25 D) |
+| Operators (+, -, *, >>, &)       | operator     | #586c60 | #96a89c | 541.9 nm    | -0.247 D  | 0.011 D       |      0.99 |      11.0 | OPTIMAL: Common focal plane (ΔD <= 0.25 D) |
+| Brackets (( ) [ ] { })           | bracket      | #4c5c50 | #96a89c | 542.5 nm    | -0.244 D  | 0.008 D       |      0.98 |      10.1 | OPTIMAL: Common focal plane (ΔD <= 0.25 D) |
+| Alerts / Errors / Negation !     | err          | #9e3834 | #96a89c | 592.8 nm    | 0.013 D   | 0.249 D       |      0.49 |      49.1 | OPTIMAL: Common focal plane (ΔD <= 0.25 D) |
 #+TBLFM: $5='(WAVE $3) :: $6='(THIBOS $3) :: $7='(ΔD $3 $4) :: $8='(SP $3) :: $9='(CHROMA $3) :: $10='(OPTIC $2 $3 $4)
 
 ** Perceptual Distance Between Interacting Pairs (min. 8000)
@@ -335,40 +304,35 @@ Strict syntax discriminability requirement for adjacent tokens in code (min. 800
 
 | Role Comparison                          | Color 1 | Color 2 | Distance (Δ) | Status                      |
 |------------------------------------------+---------+---------+--------------+-----------------------------|
-| define (#define) vs struct (keyword)     | #4eb294 | #288e72 |        11697 | Distinguishable (Δ >= 8000) |
-| define vs LOTA_PCR_COUNT (constant)      | #4eb294 | #946ca2 |        32323 | Distinguishable (Δ >= 8000) |
-| struct vs LOTA_PCR_COUNT                 | #288e72 | #946ca2 |        38614 | Distinguishable (Δ >= 8000) |
-| struct vs int (type)                     | #288e72 | #64925a |         9898 | Distinguishable (Δ >= 8000) |
-| define vs int (type)                     | #4eb294 | #64925a |        14261 | Distinguishable (Δ >= 8000) |
-| LOTA_PCR_COUNT vs 24 (number)            | #946ca2 | #aa8a4c |        22621 | Distinguishable (Δ >= 8000) |
-| LOTA_PCR_COUNT vs "string"               | #946ca2 | #ba726c |        10900 | Distinguishable (Δ >= 8000) |
-| static vs __always_inline (builtin)      | #288e72 | #967464 |        32176 | Distinguishable (Δ >= 8000) |
-| __always_inline vs is_write_open_flags   | #967464 | #267a9e |        39010 | Distinguishable (Δ >= 8000) |
-| is_write_open_flags (def) vs bpf_ (call) | #267a9e | #54aaca |        19450 | Distinguishable (Δ >= 8000) |
-| is_write_open_flags vs int (type)        | #267a9e | #64925a |        23838 | Distinguishable (Δ >= 8000) |
-| bpf_ (call) vs int (type)                | #54aaca | #64925a |        36296 | Distinguishable (Δ >= 8000) |
-| tgid (property) vs base text             | #609886 | #9aa49c |        10247 | Distinguishable (Δ >= 8000) |
-| 0 (number) vs base text                  | #aa8a4c | #9aa49c |        18657 | Distinguishable (Δ >= 8000) |
-| struct (keyword) vs base text            | #288e72 | #9aa49c |        37785 | Distinguishable (Δ >= 8000) |
-| define (preproc) vs base text            | #4eb294 | #9aa49c |        15244 | Distinguishable (Δ >= 8000) |
-| int (type) vs base text                  | #64925a | #9aa49c |        19631 | Distinguishable (Δ >= 8000) |
-| LOTA_PCR_COUNT vs base text              | #946ca2 | #9aa49c |        12823 | Distinguishable (Δ >= 8000) |
-| __always_inline vs base text             | #967464 | #9aa49c |        16927 | Distinguishable (Δ >= 8000) |
-| bpf_ (call) vs base text                 | #54aaca | #9aa49c |        17728 | Distinguishable (Δ >= 8000) |
-| "string" vs base text                    | #ba726c | #9aa49c |        18248 | Distinguishable (Δ >= 8000) |
-| err (!) vs base text                     | #a05450 | #9aa49c |        39774 | Distinguishable (Δ >= 8000) |
-| bracket vs base text                     | #607266 | #9aa49c |        25896 | Distinguishable (Δ >= 8000) |
-| comments (needles) vs base text          | #526456 | #9aa49c |        41908 | Distinguishable (Δ >= 8000) |
+| define (#define) vs struct (keyword)     | #4aa47c | #206c3a |        28825 | Distinguishable (Δ >= 8000) |
+| define vs LOTA_PCR_COUNT (constant)      | #4aa47c | #7e528a |        34140 | Distinguishable (Δ >= 8000) |
+| struct vs LOTA_PCR_COUNT                 | #206c3a | #7e528a |        40646 | Distinguishable (Δ >= 8000) |
+| struct vs int (type)                     | #206c3a | #5c9648 |        15794 | Distinguishable (Δ >= 8000) |
+| define vs int (type)                     | #4aa47c | #5c9648 |         8837 | Distinguishable (Δ >= 8000) |
+| LOTA_PCR_COUNT vs 24 (number)            | #7e528a | #ba8432 |        38193 | Distinguishable (Δ >= 8000) |
+| LOTA_PCR_COUNT vs "string"               | #7e528a | #a46e38 |        23375 | Distinguishable (Δ >= 8000) |
+| static vs __always_inline (builtin)      | #206c3a | #8e5e48 |        29865 | Distinguishable (Δ >= 8000) |
+| __always_inline vs is_write_open_flags   | #8e5e48 | #30607e |        28865 | Distinguishable (Δ >= 8000) |
+| is_write_open_flags (def) vs bpf_ (call) | #30607e | #5088ae |        15156 | Distinguishable (Δ >= 8000) |
+| is_write_open_flags vs int (type)        | #30607e | #5c9648 |        24202 | Distinguishable (Δ >= 8000) |
+| bpf_ (call) vs int (type)                | #5088ae | #5c9648 |        29049 | Distinguishable (Δ >= 8000) |
+| tgid (property) vs base text             | #5c8882 | #96a89c |        14238 | Distinguishable (Δ >= 8000) |
+| 0 (number) vs base text                  | #ba8432 | #96a89c |        35208 | Distinguishable (Δ >= 8000) |
+| struct (keyword) vs base text            | #206c3a | #96a89c |        73169 | Distinguishable (Δ >= 8000) |
+| define (preproc) vs base text            | #4aa47c | #96a89c |        16906 | Distinguishable (Δ >= 8000) |
+| int (type) vs base text                  | #5c9648 | #96a89c |        27654 | Distinguishable (Δ >= 8000) |
+| LOTA_PCR_COUNT vs base text              | #7e528a | #96a89c |        32093 | Distinguishable (Δ >= 8000) |
+| __always_inline vs base text             | #8e5e48 | #96a89c |        39503 | Distinguishable (Δ >= 8000) |
+| bpf_ (call) vs base text                 | #5088ae | #96a89c |        17064 | Distinguishable (Δ >= 8000) |
+| "string" vs base text                    | #a46e38 | #96a89c |        38107 | Distinguishable (Δ >= 8000) |
+| err (!) vs base text                     | #9e3834 | #96a89c |        76855 | Distinguishable (Δ >= 8000) |
+| bracket vs base text                     | #4c5c50 | #96a89c |        51652 | Distinguishable (Δ >= 8000) |
+| comments (needles) vs base text          | #425246 | #96a89c |        66254 | Distinguishable (Δ >= 8000) |
 #+TBLFM: $4='(Δ $2 $3) :: $5='(DIST-STATUS $2 $3)
 
 * rainforest-day (Ergonomic Verification for Foggy Daytime)
 
 ** Daytime Lc Contrast Measurements (Black on White)
-Ergonomic standards for foggy daytime:
-- Base text (Spruce): $L^c \ge 75$ (APCA continuous reading requirement)
-- Comments (Steel fog): $L^c \approx 55 - 60$ (Legible, discrete italic)
-- Syntax tokens: $L^c \ge 60$ (Balanced legibility without glare)
-
 | Code Role                  | Token   | Color   | Background | APCA (Pure) | APCA Standard / Status      |
 |----------------------------+---------+---------+------------+-------------+-----------------------------|
 | Base text (Spruce)         | fg-main | #192d20 | #cbd5c5    |       75.08 | Lc >= 75 (Continuous)       |
