@@ -20,7 +20,7 @@
     (red "#be4a44")           ; Dark yew berry: alerts, negation !
     (red-warmer "#c8524c")
     (red-cooler "#b4423c")
-    (red-faint "#5a7061")     ; Wet twigs: brackets ( ) [ ] { }
+    (red-faint "#5b7162")     ; Wet twigs: brackets ( ) [ ] { }
 
     (green "#6ca253")         ; Rich forest moss: data types (int, size_t, uint32_t)
     (green-warmer "#7ab65e")
@@ -104,7 +104,7 @@
     (variable fg-main)           ; #9c9a96 - Soft river slate (variables)
     (variable-use fg-main)       ; #9c9a96 - Variable usages
     (operator blue-cooler)       ; #688272 - Dark wet slate (+, -, *, >>, &)
-    (bracket red-faint)          ; #5a7061 - Wet twigs (( ) [ ] { })
+    (bracket red-faint)          ; #5b7162 - Wet twigs (( ) [ ] { })
     (delimiter cyan-faint)       ; #586e60 - Damp needles (, ;)
     (comment fg-dim)             ; #526456 - Dark needle mulch (pure italic)
     (docstring fg-dim)           ; #526456 - Documentation strings
@@ -153,7 +153,7 @@
  '(font-lock-property-name-face ((t (:foreground "#5e9f96"))))
  '(font-lock-property-use-face ((t (:foreground "#5e9f96"))))
  '(font-lock-operator-face ((t (:foreground "#688272"))))
- '(font-lock-bracket-face ((t (:foreground "#5a7061"))))
+ '(font-lock-bracket-face ((t (:foreground "#5b7162"))))
  '(font-lock-delimiter-face ((t (:foreground "#586e60"))))
  '(font-lock-warning-face ((t (:foreground "#be4a44"))))
  '(region ((t (:background "#162e1b" :extend t))))
