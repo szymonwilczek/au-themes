@@ -24,7 +24,8 @@
     test-oled-irradiance
     test-spatial-frequency-csf
     test-determinism-1to1
-    test-wet-surface-physics))
+    test-wet-surface-physics
+    test-photophobia-glare))
 
 (defun run-all-rainforest-tests ()
   "Execute all test suites across both themes and compile executive master diagnostic report."
@@ -53,7 +54,8 @@
     (princ "\n======================================================================\n")
     (princ " EXECUTIVE MASTER TEST SUITE SUMMARY\n")
     (princ "======================================================================\n")
-    (princ (format "Total Test Executions:       %d (20 modules x 2 themes)\n" total-modules))
+    (princ (format "Total Test Executions:       %d (%d modules x 2 themes)\n"
+                   total-modules (length rf-test-modules)))
     (princ (format "Passed Test Executions:      %d\n" passed-modules))
     (princ (format "Failed Test Executions:      %d\n" (length failed-modules)))
     (if failed-modules
@@ -61,7 +63,7 @@
           (princ (format "Failing Modules:             %S\n" (nreverse failed-modules)))
           (princ "Status: FAILING GATES DETECTED\n")
           nil)
-      (princ "Status: ALL 40 PHYSICAL, OPTICAL & ERGONOMIC GATES PASSED!\n")
+      (princ (format "Status: ALL %d PHYSICAL, OPTICAL & ERGONOMIC GATES PASSED!\n" total-modules))
       t)))
 
 (when noninteractive

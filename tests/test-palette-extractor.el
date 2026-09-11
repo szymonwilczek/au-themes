@@ -374,5 +374,46 @@ BLUR-ATTENUATION defaults to 0.60 representing a 1.25D cylinder defocus on a 1.2
         (setq total-illum (+ total-illum (* lum weight)))))
     (* total-illum straylight-factor 0.01)))
 
+;; Photophobia & Neuro-Ophthalmic Models: CIE S 026 & Hopkinson DGI
+(defun rf-melanopic-irradiance (hex)
+  "Calculate CIE S 026:2018 relative melanopic irradiance M under sRGB D65.
+Weights derived from integrating CIE S 026 melanopic sensitivity s_mel(lambda)
+against standard sRGB primaries: R=0.046, G=0.565, B=0.389."
+  (let* ((rgb (rf-hex-to-rgb hex))
+         (r (rf-srgb-to-linear (nth 0 rgb)))
+         (g (rf-srgb-to-linear (nth 1 rgb)))
+         (b (rf-srgb-to-linear (nth 2 rgb))))
+    (+ (* r 0.046) (* g 0.565) (* b 0.389))))
+
+(defun rf-melanopic-photopic-ratio (hex)
+  "Calculate M/P (melanopic-to-photopic) ratio for HEX."
+  (let ((y (rf-luminance-y hex))
+        (m (rf-melanopic-irradiance hex)))
+    (if (< y 1e-6)
+        0.0
+      (/ m y))))
+
+(defun rf-hopkinson-glare-constant (token-hex bg-hex &optional solid-angle ambient-lum)
+  "Compute Hopkinson glare constant G for TOKEN-HEX against BG-HEX.
+SOLID-ANGLE defaults to 0.00025 sr (typical word at 60cm).
+AMBIENT-LUM defaults to 1.5 cd/m2 ambient field adaptation."
+  (let* ((omega (or solid-angle 0.00025))
+         (ambient (or ambient-lum 1.5))
+         (peak-cd-m2 100.0)
+         (ls (* (rf-luminance-y token-hex) peak-cd-m2))
+         (lb (+ (* (rf-luminance-y bg-hex) peak-cd-m2) ambient)))
+    (* 0.478 (/ (* (expt (max 0.001 ls) 1.6) (expt omega 0.8))
+                (+ lb (* 0.07 (sqrt omega) ls))))))
+
+(defun rf-hopkinson-dgi (tokens bg-hex &optional solid-angle ambient-lum)
+  "Calculate cumulative CIE Discomfort Glare Index (DGI in dB) for TOKENS.
+DGI = 10 * log10(sum(G_i))."
+  (let ((sum-g 0.0))
+    (dolist (tok tokens)
+      (setq sum-g (+ sum-g (rf-hopkinson-glare-constant tok bg-hex solid-angle ambient-lum))))
+    (if (< sum-g 1e-6)
+        0.0
+      (* 10.0 (log sum-g 10)))))
+
 (provide 'test-palette-extractor)
 ;;; test-palette-extractor.el ends here
