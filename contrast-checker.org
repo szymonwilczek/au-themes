@@ -50,8 +50,8 @@ modelami fizyki wyświetlaczy w warunkach nocnych i dziennych:
   ;; 4. Standardowy algorytm APCA (W3C 0.98G-4g) bazujący na luminancji Y
   (defun apca--contrast-from-luminance (txt-y bg-y &optional signed)
     "Oblicza kontrast Lc z fizycznych luminancji TXT-Y i BG-Y wg specyfikacji APCA 0.98G-4g.
-Domyślnie zwraca dodatnią magnitudę |Lc| odpowiednią do tabel norm ergonomicznych.
-Gdy SIGNED jest nie-nil, zwraca wartość ze znakiem (ujemną dla WoB)."
+  Domyślnie zwraca dodatnią magnitudę |Lc| odpowiednią do tabel norm ergonomicznych.
+  Gdy SIGNED jest nie-nil, zwraca wartość ze znakiem (ujemną dla WoB)."
     (let* (;; Soft-clamping poziomu czerni (SoftToe flare compensation)
            (txt-c (if (> txt-y 0.022) txt-y (+ txt-y (expt (- 0.022 txt-y) 1.414))))
            (bg-c  (if (> bg-y 0.022)  bg-y  (+ bg-y  (expt (- 0.022 bg-y)  1.414)))))
