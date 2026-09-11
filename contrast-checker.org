@@ -256,7 +256,7 @@ Normy ergonomiczne dla nocnego schronienia:
 | Słowa kluczowe (Szmaragd deszczu)  | cyan        | #3c9676 | #0d110f |         37.81 |             36.43 |              36.14 | ZGODNY: Wyraźna definicja w mroku            |
 | Funkcje (Górska woda/potok)        | blue        | #3886a4 | #0d110f |         33.24 |             31.96 |              31.76 | ZGODNY: Wyraźna definicja w mroku            |
 | Typy (Mokry mech)                  | green       | #608e58 | #0d110f |         35.65 |             34.33 |              34.03 | ZGODNY: Wyraźna definicja w mroku            |
-| Napisy (Mokry bursztyn leśny)      | yellow      | #9a8c54 | #0d110f |         40.25 |             38.86 |              38.48 | ZGODNY: Wyraźna definicja w mroku            |
+| Napisy (Leśna borówka w deszczu)   | yellow      | #a27ca2 | #0d110f |         38.35 |             36.99 |              36.66 | ZGODNY: Wyraźna definicja w mroku            |
 | Symbole / Stałe (Mokry cedr)       | magenta     | #8e6c7e | #0d110f |         29.53 |             28.30 |              28.17 | ZGODNY: Wyraźna definicja w mroku            |
 | Dwukropki (Tafla kałuży)           | blue-cooler | #2e7470 | #0d110f |         24.28 |             23.18 |              23.14 | ZGODNY: Wyraźna definicja w mroku            |
 | Alerty / Błędy (Owoc cisa)         | red         | #9e524a | #0d110f |         23.75 |             22.65 |              22.61 | ZGODNY: Wyraźna definicja w mroku            |
@@ -277,7 +277,7 @@ Wymagania dla astygmatyzmu:
 | Słowa kluczowe (Szmaragd deszczu)  | cyan        | #3c9676 | #a6b6b0 | 533.6 nm    | -0.297 D  | 0.061 D      |        1.03 |         35.9 | OPTYMALNY: Wspólna płaszczyzna ogniskowa (ΔD <= 0.25 D) |
 | Funkcje (Górska woda/potok)        | blue        | #3886a4 | #a6b6b0 | 527.9 nm    | -0.334 D  | 0.099 D      |        1.34 |         27.1 | OPTYMALNY: Wspólna płaszczyzna ogniskowa (ΔD <= 0.25 D) |
 | Typy (Mokry mech)                  | green       | #608e58 | #a6b6b0 | 540.8 nm    | -0.254 D  | 0.018 D      |        0.90 |         35.9 | OPTYMALNY: Wspólna płaszczyzna ogniskowa (ΔD <= 0.25 D) |
-| Napisy (Mokry bursztyn)            | yellow      | #9a8c54 | #a6b6b0 | 554.0 nm    | -0.178 D  | 0.057 D      |        0.78 |         31.9 | OPTYMALNY: Wspólna płaszczyzna ogniskowa (ΔD <= 0.25 D) |
+| Napisy (Leśna borówka)             | yellow      | #a27ca2 | #a6b6b0 | 552.1 nm    | -0.189 D  | 0.047 D      |        1.08 |         25.9 | OPTYMALNY: Wspólna płaszczyzna ogniskowa (ΔD <= 0.25 D) |
 | Symbole / Stałe (Mokry cedr)       | magenta     | #8e6c7e | #a6b6b0 | 554.7 nm    | -0.174 D  | 0.061 D      |        0.98 |         17.2 | OPTYMALNY: Wspólna płaszczyzna ogniskowa (ΔD <= 0.25 D) |
 | Dwukropki (Tafla kałuży)           | blue-cooler | #2e7470 | #a6b6b0 | 531.3 nm    | -0.311 D  | 0.075 D      |        1.14 |         23.2 | OPTYMALNY: Wspólna płaszczyzna ogniskowa (ΔD <= 0.25 D) |
 | Alerty (Owoc cisa)                 | red         | #9e524a | #a6b6b0 | 574.6 nm    | -0.061 D  | 0.174 D      |        0.65 |         36.0 | OPTYMALNY: Wspólna płaszczyzna ogniskowa (ΔD <= 0.25 D) |
@@ -290,14 +290,14 @@ Wymagania dla astygmatyzmu:
 | Kwarc (txt) vs Komentarz (Ściółka)     | #a6b6b0 | #4f6154 |       69540 | Rozróżnialne |
 | Piaskowiec (fg-alt) vs Komentarz       | #889e94 | #4f6154 |       33573 | Rozróżnialne |
 | Szmaragd (defun) vs Woda (fnname)      | #3c9676 | #3886a4 |        6980 | Rozróżnialne |
-| Szmaragd (defun) vs Bursztyn (string)  | #3c9676 | #9a8c54 |       24956 | Rozróżnialne |
+| Szmaragd (defun) vs Borówka (string)   | #3c9676 | #a27ca2 |       33264 | Rozróżnialne |
 | Szmaragd (defun) vs Mech (type)        | #3c9676 | #608e58 |        5713 | Rozróżnialne |
-| Woda (fnname) vs Bursztyn (string)     | #3886a4 | #9a8c54 |       40183 | Rozróżnialne |
+| Woda (fnname) vs Borówka (string)      | #3886a4 | #a27ca2 |       27901 | Rozróżnialne |
 | Woda (fnname) vs Mech (type)           | #3886a4 | #608e58 |       19692 | Rozróżnialne |
-| Mech (type) vs Bursztyn (string)       | #608e58 | #9a8c54 |        8499 | Rozróżnialne |
+| Mech (type) vs Borówka (string)        | #608e58 | #a27ca2 |       26071 | Rozróżnialne |
 | Tafla (:builtin) vs Cedr ('constant)   | #2e7470 | #8e6c7e |       22777 | Rozróżnialne |
 | Szmaragd (defun) vs Tafla (:builtin)   | #3c9676 | #2e7470 |        5197 | Rozróżnialne |
-| Cedr ('constant) vs Bursztyn (string)  | #8e6c7e | #9a8c54 |        8804 | Rozróżnialne |
+| Cedr ('constant) vs Borówka (string)   | #8e6c7e | #a27ca2 |        5218 | Rozróżnialne |
 #+TBLFM: $4='(Δ $2 $3)
 
 * rainforest-day (Weryfikacja ergonomiczna dla zamglonego boru w dzień)

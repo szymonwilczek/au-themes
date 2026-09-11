@@ -29,10 +29,10 @@
     (green-cooler "#548a56")
     (green-faint "#4c744c")
 
-    (yellow "#9a8c54")        ; STRINGS: Mokry bursztyn leśny / zmyta żywica (C*=31.9, LCD=38.86)
-    (yellow-warmer "#a6945c")
-    (yellow-cooler "#8e8450")
-    (yellow-faint "#787046")
+    (yellow "#a27ca2")        ; STRINGS: Leśna borówka w deszczu / wilgotny wrzos (C*=25.9, LCD=36.99)
+    (yellow-warmer "#ba8428") ; Alerty ostrzeżeń (warning): bursztyn ostrzegawczy
+    (yellow-cooler "#94769c")
+    (yellow-faint "#7c5c7c")
 
     (blue "#3886a4")          ; FUNKCJE: Górska woda / czysty potok w deszczu (C*=27.1, LCD=31.96)
     (blue-warmer "#3c8ca8")
