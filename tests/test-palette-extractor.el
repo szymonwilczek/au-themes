@@ -155,10 +155,13 @@
 ;; =============================================================================
 
 (defun rf-clean-hex (hex)
+  "Normalise HEX to lowercase #rrggbb, signalling an error if it is not one.
+A missing palette entry (nil) must never be silently evaluated as #000000:
+every photometric gate would then measure pure black instead of the face."
   (let ((s (format "%s" hex)))
-    (if (string-match "#\\([0-9a-fA-F]\\{6\\}\\)" s)
+    (if (string-match "\\`#\\([0-9a-fA-F]\\{6\\}\\)\\'" s)
         (concat "#" (downcase (match-string 1 s)))
-      "#000000")))
+      (error "rf-clean-hex: not a #rrggbb colour: %S" hex))))
 
 (defun rf-hex-to-rgb (hex)
   (let ((c (rf-clean-hex hex)))
