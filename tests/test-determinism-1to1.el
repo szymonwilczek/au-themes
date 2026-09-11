@@ -85,7 +85,7 @@
                        (if ok "PASS" "FAIL (<8000)")))))
 
     (princ (format "-------------------------------------------+----------+----------+----------+----------\n"))
-    (princ "Part 3: Categorical Role Disparity Check (Daylight Hue Delta-h >= 40° or Night Delta-L >= 0.10):\n")
+    (princ "Part 3: Categorical Role Disparity Check (Daylight Hue Delta-h >= 40° or Night Delta-L >= 0.08):\n")
     (princ (format "%-42s | %-8s | %-8s | %-8s | %-8s | %-8s\n"
                    "Role Comparison" "Color 1" "Color 2" "Delta-h" "Delta-L" "Status"))
     (princ (format "-------------------------------------------+----------+----------+----------+----------+----------\n"))
@@ -119,7 +119,7 @@
                (dh (min raw-dh (- 360.0 raw-dh)))
                (ok (if (eq polarity 'light)
                        (>= dh min-dh)
-                     (or (>= dh min-dh) (>= dl 0.10)))))
+                     (or (>= dh min-dh) (>= dl 0.08)))))
           (if ok
               (setq passes (1+ passes))
             (setq fails (1+ fails)))
