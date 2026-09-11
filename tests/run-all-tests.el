@@ -10,6 +10,12 @@
     test-pupil-aberrations
     test-straylight-glare
     test-lca-chromatic
+    test-chromostereopsis
+    test-foveal-scotopic-macula
+    test-cvd-colorblindness
+    test-mesopic-purkinje-shift
+    test-toric-blur-astigmatism
+    test-glare-veiling-luminance
     test-oklab-perceptual
     test-helmholtz-kohlrausch
     test-spectral-coherence

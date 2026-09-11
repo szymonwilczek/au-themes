@@ -46,12 +46,14 @@
                    ((boundp 'rainforest-day-palette-partial) (symbol-value 'rainforest-day-palette-partial))
                    (t nil)))
          (bg (or (cadr (assq 'bg-main partial)) "#080b09"))
-         (fg (or (cadr (assq 'fg-main partial)) "#96a89c"))
-         (dim (or (cadr (assq 'fg-dim partial)) "#425246"))
-         (cur (or (cadr (assq 'cursor partial)) "#4e8ca8")))
+         (fg (or (cadr (assq 'fg-main partial)) "#90a297"))
+         (dim (or (cadr (assq 'fg-dim partial)) "#48574c"))
+         (cur (or (cadr (assq 'cursor partial)) "#4d93b3"))
+         (hl (or (cadr (assq 'bg-hl-line partial)) "#101612")))
     (list
      :theme theme
      :bg-main bg
+     :bg-hl-line hl
      :fg-main fg
      :fg-dim dim
      :cursor cur
@@ -249,6 +251,115 @@
          ;; Empirical H-K multiplier: saturated colors stimulate human brightness channel
          (hk (+ 1.0 (* 0.012 c))))
     hk))
+
+;; =============================================================================
+;; Advanced Biophysical & Physiological Models
+;; =============================================================================
+
+;; Foveal Macular Tritanopia / L+M Cone Fraction
+(defun rf-foveal-lm-fraction (hex)
+  "Calculate the fraction of photopic luminance derived from L- and M-cones.
+Central foveola (0.35 mm macular zone) lacks S-cones and contains macular pigment
+absorbing short wavelengths. Fine strokes rely on L+M cone stimulation."
+  (let* ((rgb (rf-hex-to-rgb hex))
+         (rl (rf-srgb-to-linear (nth 0 rgb)))
+         (gl (rf-srgb-to-linear (nth 1 rgb)))
+         (bl (rf-srgb-to-linear (nth 2 rgb)))
+         (y-total (+ (* rl 0.2126729) (* gl 0.7151522) (* bl 0.0721750))))
+    (if (< y-total 1e-6)
+        1.0
+      (/ (+ (* rl 0.2126729) (* gl 0.7151522)) y-total))))
+
+;; CVD (Color Vision Deficiency) Simulation Matrices (Machado et al. 2009 / Brettel 1997)
+(defconst rf-cvd-matrix-protan
+  '((0.56667 0.43333 0.00000)
+    (0.55833 0.44167 0.00000)
+    (0.00000 0.24167 0.75833))
+  "Machado (2009) / Brettel linear sRGB projection matrix for Protanopia.")
+
+(defconst rf-cvd-matrix-deutan
+  '((0.62500 0.37500 0.00000)
+    (0.70000 0.30000 0.00000)
+    (0.00000 0.30000 0.70000))
+  "Machado (2009) / Brettel linear sRGB projection matrix for Deuteranopia.")
+
+(defconst rf-cvd-matrix-tritan
+  '((0.95000 0.05000 0.00000)
+    (0.00000 0.43333 0.56667)
+    (0.00000 0.47500 0.52500))
+  "Machado (2009) / Brettel linear sRGB projection matrix for Tritanopia.")
+
+(defun rf-cvd-simulate (hex cvd-type)
+  "Simulate CVD-transformed hex color under CVD-TYPE ('protan, 'deutan, or 'tritan)."
+  (let* ((rgb (rf-hex-to-rgb hex))
+         (rl (rf-srgb-to-linear (nth 0 rgb)))
+         (gl (rf-srgb-to-linear (nth 1 rgb)))
+         (bl (rf-srgb-to-linear (nth 2 rgb)))
+         (m (cond
+             ((eq cvd-type 'protan) rf-cvd-matrix-protan)
+             ((eq cvd-type 'deutan) rf-cvd-matrix-deutan)
+             ((eq cvd-type 'tritan) rf-cvd-matrix-tritan)
+             (t (error "Unknown CVD type: %s" cvd-type))))
+         (r-sim (max 0.0 (+ (* (nth 0 (nth 0 m)) rl) (* (nth 1 (nth 0 m)) gl) (* (nth 2 (nth 0 m)) bl))))
+         (g-sim (max 0.0 (+ (* (nth 0 (nth 1 m)) rl) (* (nth 1 (nth 1 m)) gl) (* (nth 2 (nth 1 m)) bl))))
+         (b-sim (max 0.0 (+ (* (nth 0 (nth 2 m)) rl) (* (nth 1 (nth 2 m)) gl) (* (nth 2 (nth 2 m)) bl))))
+         (r-srgb (min 1.0 (max 0.0 (rf-linear-to-srgb r-sim))))
+         (g-srgb (min 1.0 (max 0.0 (rf-linear-to-srgb g-sim))))
+         (b-srgb (min 1.0 (max 0.0 (rf-linear-to-srgb b-sim)))))
+    (format "#%02x%02x%02x"
+            (round (* r-srgb 255.0))
+            (round (* g-srgb 255.0))
+            (round (* b-srgb 255.0)))))
+
+;; Scotopic & Mesopic Vision (CIE 191:2010 Purkinje Shift)
+(defun rf-scotopic-luminance (hex)
+  "Calculate approximate CIE scotopic V'(lambda) luminance from HEX."
+  (let* ((rgb (rf-hex-to-rgb hex))
+         (rl (rf-srgb-to-linear (nth 0 rgb)))
+         (gl (rf-srgb-to-linear (nth 1 rgb)))
+         (bl (rf-srgb-to-linear (nth 2 rgb))))
+    (+ (* rl 0.062) (* gl 0.608) (* bl 0.330))))
+
+(defun rf-mesopic-luminance (hex &optional m-coef)
+  "Calculate CIE 191:2010 mesopic luminance for HEX under mesopic coefficient M-COEF (default 0.45)."
+  (let* ((m (or m-coef 0.45))
+         (y-p (rf-luminance-y hex))
+         (y-s (rf-scotopic-luminance hex))
+         (ratio (/ 683.0 1700.0)))
+    (/ (+ (* m y-p) (* (- 1.0 m) y-s ratio))
+       (+ m (* (- 1.0 m) ratio)))))
+
+;; Toric Blur Astigmatism PSF
+(defun rf-toric-blur-michelson (hex bg-hex &optional blur-attenuation)
+  "Calculate post-blur Michelson contrast for thin stroke under astigmatic blur.
+BLUR-ATTENUATION defaults to 0.60 representing a 1.25D cylinder defocus on a 1.2px stroke."
+  (let* ((eta (or blur-attenuation 0.60))
+         (y-bg (rf-luminance-y bg-hex))
+         (y-tok (rf-luminance-y hex))
+         (y-peak-blur (+ y-bg (* (- y-tok y-bg) eta))))
+    (if (< (+ y-peak-blur y-bg) 1e-6)
+        0.0
+      (/ (- y-peak-blur y-bg) (+ y-peak-blur y-bg)))))
+
+;; Intraocular Veiling Glare (CIE 112 / Vos-van den Berg Straylight Spatial Integral)
+(defun rf-veiling-glare-luminance (pal)
+  "Estimate intraocular veiling luminance Lv from typical Emacs buffer geometry per Vos (1999)."
+  (let* ((weights `((:bg-main . 0.850)
+                    (:fg-main . 0.070)
+                    (:type . 0.030)
+                    (:keyword . 0.020)
+                    (:bg-hl-line . 0.025)
+                    (:cursor . 0.005)))
+         (total-illum 0.0)
+         (theta 8.0)
+         (straylight-factor (/ 10.0 (* theta theta))))
+    (dolist (w weights)
+      (let* ((key (car w))
+             (weight (cdr w))
+             (hex (or (plist-get pal key) "#080b09"))
+             (lum (rf-luminance-y hex)))
+        (setq total-illum (+ total-illum (* lum weight)))))
+    (* total-illum straylight-factor 0.01)))
 
 (provide 'test-palette-extractor)
 ;;; test-palette-extractor.el ends here
