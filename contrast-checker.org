@@ -12,22 +12,22 @@ with peer-reviewed models of mesopic visual optics, surface physics, and astigma
 Rainforest strictly enforces the determinism rule:
 *ONE COLOR corresponds to EXACTLY ONE SYNTAX ROLE (keyface).*
 No two key syntax tokens share the same color. Colors are structured along the organic vertical layers of a nocturnal rain forest:
-- *Preprocessor* (=#define=, =#include=) -> Pine canopy / spruce crown (~#4aa47c~).
-- *Keywords* (=struct=, =while=, =static=, =return=) -> Deep conifer pine (~#206c3a~, zero cyan, zero marine).
-- *Data types* (=int=, =size_t=, =uint32_t=) -> Rich forest moss (~#5c9648~).
-- *Constants and macros* (=LOTA_PCR_COUNT=, =NULL=) -> Wet heather violet (~#7e528a~).
-- *Numeric literals* (=0=, =24=, =32= in =buf[0]=) -> Wet amber resin (~#ba8432~).
-- *Builtins and attributes* (=__always_inline=, =:keywords=) -> Wet cedar wood bark (~#8e5e48~).
-- *Function definitions* (=is_write_open_flags=) -> Deep nocturnal mountain stream (~#30607e~).
-- *Function calls* (=bpf_map_lookup_elem=) -> Nocturnal rain water (~#5088ae~).
-- *String literals* (="strings"=) -> Wet oak wood / fallen leaves (~#a46e38~).
-- *Struct fields and properties* (=->tgid=, =.field=) -> Damp river stone (~#5c8882~).
-- *Variables and identifiers* (=flags=, =buf=, =event=) -> Soft river quartz (~#96a89c~).
-- *Comments and docstrings* -> Dark damp needle mulch (~#425246~, pure italic).
-- *Operators* (=+=, =-=, =*=, =>>=, =&=) -> Dark wet slate (~#586c60~).
-- *Brackets* (=( ) [ ] { }=) -> Wet twigs (~#4c5c50~).
-- *Separators* (=,=, =;=) -> Damp needles (~#4c5a50~).
-- *Alerts and negation* (=!=, errors) -> Dark yew berry (~#9e3834~).
+- *Preprocessor* (=#define=, =#include=) -> Pine canopy / spruce crown (~#47a57c~).
+- *Keywords* (=struct=, =while=, =static=, =return=) -> Deep conifer pine (~#2a7c40~, zero cyan, zero marine).
+- *Data types* (=int=, =size_t=, =uint32_t=) -> Rich forest moss (~#639c4c~).
+- *Constants and macros* (=LOTA_PCR_COUNT=, =NULL=) -> Wet heather violet (~#9360a3~).
+- *Numeric literals* (=0=, =24=, =32= in =buf[0]=) -> Wet amber resin (~#bc842f~).
+- *Builtins and attributes* (=__always_inline=, =:keywords=) -> Wet cedar wood bark (~#a46344~).
+- *Function definitions* (=is_write_open_flags=) -> Deep nocturnal mountain stream (~#2e7092~).
+- *Function calls* (=bpf_map_lookup_elem=) -> Nocturnal rain water (~#4f92be~).
+- *String literals* (="strings"=) -> Wet oak wood / fallen leaves (~#b27536~).
+- *Struct fields and properties* (=->tgid=, =.field=) -> Damp river stone (~#56938b~).
+- *Variables and identifiers* (=flags=, =buf=, =event=) -> Calm river quartz (~#90a297~).
+- *Comments and docstrings* -> Dark damp needle mulch (~#48574c~, pure italic).
+- *Operators* (=+=, =-=, =*=, =>>=, =&=) -> Dark wet slate (~#5b7264~).
+- *Brackets* (=( ) [ ] { }=) -> Wet twigs (~#4e6053~).
+- *Separators* (=,=, =;=) -> Damp needles (~#4c5e52~).
+- *Alerts and negation* (=!=, errors) -> Dark yew berry (~#b0423d~).
 
 ** 2. Ciliary Muscle Accommodative Micro-fluctuations and Astigmatism
 - *Reference*: Charman, W. N., & Heron, G. (1988). /Fluctuations in accommodation: a review./ *Ophthalmic and Physiological Optics*, 8(2), 153-164.
@@ -257,22 +257,22 @@ Ergonomic standards on deep nocturnal humus (~#080b09~):
 
 | Code Role                        | Token        | Color   | Background | APCA (Pure) | LCD (Bleed) | OLED (Irrad) | Astigmatism Status (LCD Comfort)                        |
 |----------------------------------+--------------+---------+------------+-------------+-------------+--------------+---------------------------------------------------------|
-| Base text (Mineral quartz)       | fg-main      | #96a89c | #080b09    |       52.60 |       51.03 |        50.38 | OPTIMAL: Clear and stable, no hunting (Window Lc 48-56) |
-| Comments / Doc (Damp needles)    | fg-dim       | #425246 | #080b09    |       13.34 |       12.55 |        12.61 | OPTIMAL: Legible comment layer (Lc 10-24)               |
-| Cursor (Raindrop glint)          | cursor       | #4e8ca8 | #080b09    |       36.85 |       35.46 |        35.23 | OPTIMAL: Clear focal point without glare                |
-| Preprocessor (#define, #include) | preprocessor | #4aa47c | #080b09    |       44.54 |       43.05 |        42.63 | COMPLIANT: Distinct forest layer                        |
-| Keywords (struct, while, static) | keyword      | #206c3a | #080b09    |       20.13 |       19.08 |        19.14 | COMPLIANT: Distinct forest layer                        |
-| Data types (int, size_t)         | type         | #5c9648 | #080b09    |       38.57 |       37.15 |        36.88 | COMPLIANT: Distinct forest layer                        |
-| Constants (LOTA_PCR_COUNT, NULL) | constant     | #7e528a | #080b09    |       21.53 |       20.44 |        20.48 | COMPLIANT: Distinct forest layer                        |
-| Numbers (0, 24, 32 in buf[0])    | number       | #ba8432 | #080b09    |       41.81 |       40.35 |        40.00 | COMPLIANT: Distinct forest layer                        |
-| Builtins (__always_inline)       | builtin      | #8e5e48 | #080b09    |       24.48 |       23.32 |        23.32 | COMPLIANT: Distinct forest layer                        |
-| Function definitions (is_write_) | fnname       | #30607e | #080b09    |       18.59 |       17.59 |        17.65 | COMPLIANT: Distinct forest layer                        |
-| Function calls (bpf_...)         | fnname-call  | #5088ae | #080b09    |       35.78 |       34.41 |        34.20 | COMPLIANT: Distinct forest layer                        |
-| String literals ("strings")      | string       | #a46e38 | #080b09    |       31.83 |       30.51 |        30.39 | COMPLIANT: Distinct forest layer                        |
-| Struct fields (->tgid, .field)   | property     | #5c8882 | #080b09    |       34.57 |       33.21 |        33.03 | COMPLIANT: Distinct forest layer                        |
-| Operators (+, -, *, >>, &)       | operator     | #586c60 | #080b09    |       23.46 |       22.32 |        22.34 | COMPLIANT: Distinct forest layer                        |
-| Brackets (( ) [ ] { })           | bracket      | #4c5c50 | #080b09    |       17.18 |       16.23 |        16.29 | COMPLIANT: Distinct forest layer                        |
-| Alerts / Errors / Negation !     | err          | #9e3834 | #080b09    |       18.96 |       17.95 |        18.01 | COMPLIANT: Distinct forest layer                        |
+| Base text (Mineral quartz)       | fg-main      | #90a297 | #080b09    |       51.21 |       49.65 |        49.02 | OPTIMAL: Clear and stable, no hunting (Window Lc 48-56) |
+| Comments / Doc (Damp needles)    | fg-dim       | #48574c | #080b09    |       17.92 |       16.96 |        17.02 | OPTIMAL: Legible comment layer (Lc 10-24)               |
+| Cursor (Raindrop glint)          | cursor       | #4d93b3 | #080b09    |       41.90 |       40.43 |        40.09 | OPTIMAL: Clear focal point without glare                |
+| Preprocessor (#define, #include) | preprocessor | #47a57c | #080b09    |       46.51 |       45.00 |        44.56 | COMPLIANT: Distinct forest layer                        |
+| Keywords (struct, while, static) | keyword      | #2a7c40 | #080b09    |       28.43 |       27.20 |        27.27 | COMPLIANT: Distinct forest layer                        |
+| Data types (int, size_t)         | type         | #639c4c | #080b09    |       43.44 |       41.96 |        41.53 | COMPLIANT: Distinct forest layer                        |
+| Constants (LOTA_PCR_COUNT, NULL) | constant     | #9360a3 | #080b09    |       31.17 |       29.89 |        29.95 | COMPLIANT: Distinct forest layer                        |
+| Numbers (0, 24, 32 in buf[0])    | number       | #bc842f | #080b09    |       43.96 |       42.47 |        42.04 | COMPLIANT: Distinct forest layer                        |
+| Builtins (__always_inline)       | builtin      | #a46344 | #080b09    |       31.20 |       29.92 |        29.97 | COMPLIANT: Distinct forest layer                        |
+| Function definitions (is_write_) | fnname       | #2e7092 | #080b09    |       26.92 |       25.72 |        25.79 | COMPLIANT: Distinct forest layer                        |
+| Function calls (bpf_...)         | fnname-call  | #4f92be | #080b09    |       42.25 |       40.78 |        40.39 | COMPLIANT: Distinct forest layer                        |
+| String literals ("strings")      | string       | #b27536 | #080b09    |       38.03 |       36.62 |        36.33 | COMPLIANT: Distinct forest layer                        |
+| Struct fields (->tgid, .field)   | property     | #56938b | #080b09    |       40.79 |       39.34 |        38.98 | COMPLIANT: Distinct forest layer                        |
+| Operators (+, -, *, >>, &)       | operator     | #5b7264 | #080b09    |       28.29 |       27.06 |        27.13 | COMPLIANT: Distinct forest layer                        |
+| Brackets (( ) [ ] { })           | bracket      | #4e6053 | #080b09    |       21.24 |       20.19 |        20.25 | COMPLIANT: Distinct forest layer                        |
+| Alerts / Errors / Negation !     | err          | #b0423d | #080b09    |       25.76 |       24.58 |        24.64 | COMPLIANT: Distinct forest layer                        |
 #+TBLFM: $5='(APCA $3 $4) :: $6='(LCD $3 $4) :: $7='(OLED $3 $4) :: $8='(ASTIG $2 $3 $4)
 
 ** Optical Dispersion and Chromatic Aberration (Thibos 1992, S/P, and C*)
@@ -281,22 +281,22 @@ Ergonomic standards for astigmatism:
 
 | Code Role                        | Token        | Color   | Base    | Effective λ | D(Thibos) | Aberration ΔD | S/P Ratio | Chroma C* | Optical Status (Astigmatism)               |
 |----------------------------------+--------------+---------+---------+-------------+-----------+---------------+-----------+-----------+--------------------------------------------|
-| Base text (Mineral quartz)       | fg-main      | #96a89c | #96a89c | 543.8 nm    | -0.236 D  | 0.000 D       |      0.99 |       9.6 | OPTIMAL: Common focal plane (ΔD <= 0.25 D) |
-| Comments (Damp needles)          | fg-dim       | #425246 | #96a89c | 542.0 nm    | -0.246 D  | 0.010 D       |      0.98 |      10.3 | OPTIMAL: Common focal plane (ΔD <= 0.25 D) |
-| Cursor (Raindrop glint)          | cursor       | #4e8ca8 | #96a89c | 530.7 nm    | -0.316 D  | 0.080 D       |      1.29 |      24.1 | OPTIMAL: Common focal plane (ΔD <= 0.25 D) |
-| Preprocessor (#define, #include) | preprocessor | #4aa47c | #96a89c | 534.8 nm    | -0.290 D  | 0.054 D       |      1.00 |      38.8 | OPTIMAL: Common focal plane (ΔD <= 0.25 D) |
-| Keywords (struct, while, static) | keyword      | #206c3a | #96a89c | 534.7 nm    | -0.291 D  | 0.055 D       |      0.92 |      41.2 | OPTIMAL: Common focal plane (ΔD <= 0.25 D) |
-| Data types (int, size_t)         | type         | #5c9648 | #96a89c | 540.3 nm    | -0.257 D  | 0.021 D       |      0.86 |      49.0 | OPTIMAL: Common focal plane (ΔD <= 0.25 D) |
-| Constants (LOTA_PCR_COUNT, NULL) | constant     | #7e528a | #96a89c | 553.1 nm    | -0.183 D  | 0.053 D       |      1.24 |      37.3 | OPTIMAL: Common focal plane (ΔD <= 0.25 D) |
-| Numbers (0, 24, 32 in buf[0])    | number       | #ba8432 | #96a89c | 565.5 nm    | -0.117 D  | 0.119 D       |      0.65 |      52.1 | OPTIMAL: Common focal plane (ΔD <= 0.25 D) |
-| Builtins (__always_inline)       | builtin      | #8e5e48 | #96a89c | 566.2 nm    | -0.114 D  | 0.122 D       |      0.72 |      26.7 | OPTIMAL: Common focal plane (ΔD <= 0.25 D) |
-| Function definitions (is_write_) | fnname       | #30607e | #96a89c | 527.6 nm    | -0.335 D  | 0.099 D       |      1.40 |      22.7 | OPTIMAL: Common focal plane (ΔD <= 0.25 D) |
-| Function calls (bpf_...)         | fnname-call  | #5088ae | #96a89c | 530.0 nm    | -0.320 D  | 0.084 D       |      1.35 |      26.7 | OPTIMAL: Common focal plane (ΔD <= 0.25 D) |
-| String literals ("strings")      | string       | #a46e38 | #96a89c | 567.5 nm    | -0.107 D  | 0.129 D       |      0.65 |      41.4 | OPTIMAL: Common focal plane (ΔD <= 0.25 D) |
-| Struct fields (->tgid, .field)   | property     | #5c8882 | #96a89c | 537.2 nm    | -0.276 D  | 0.039 D       |      1.08 |      16.5 | OPTIMAL: Common focal plane (ΔD <= 0.25 D) |
-| Operators (+, -, *, >>, &)       | operator     | #586c60 | #96a89c | 541.9 nm    | -0.247 D  | 0.011 D       |      0.99 |      11.0 | OPTIMAL: Common focal plane (ΔD <= 0.25 D) |
-| Brackets (( ) [ ] { })           | bracket      | #4c5c50 | #96a89c | 542.5 nm    | -0.244 D  | 0.008 D       |      0.98 |      10.1 | OPTIMAL: Common focal plane (ΔD <= 0.25 D) |
-| Alerts / Errors / Negation !     | err          | #9e3834 | #96a89c | 592.8 nm    | 0.013 D   | 0.249 D       |      0.49 |      49.1 | OPTIMAL: Common focal plane (ΔD <= 0.25 D) |
+| Base text (Mineral quartz)       | fg-main      | #90a297 | #90a297 | 543.8 nm    | -0.236 D  | 0.000 D       |      0.99 |       9.6 | OPTIMAL: Common focal plane (ΔD <= 0.25 D) |
+| Comments (Damp needles)          | fg-dim       | #48574c | #90a297 | 543.0 nm    | -0.241 D  | 0.005 D       |      0.98 |       9.5 | OPTIMAL: Common focal plane (ΔD <= 0.25 D) |
+| Cursor (Raindrop glint)          | cursor       | #4d93b3 | #90a297 | 530.9 nm    | -0.315 D  | 0.079 D       |      1.29 |      25.6 | OPTIMAL: Common focal plane (ΔD <= 0.25 D) |
+| Preprocessor (#define, #include) | preprocessor | #47a57c | #90a297 | 535.0 nm    | -0.289 D  | 0.053 D       |      1.00 |      39.9 | OPTIMAL: Common focal plane (ΔD <= 0.25 D) |
+| Keywords (struct, while, static) | keyword      | #2a7c40 | #90a297 | 536.0 nm    | -0.282 D  | 0.047 D       |      0.90 |      46.4 | OPTIMAL: Common focal plane (ΔD <= 0.25 D) |
+| Data types (int, size_t)         | type         | #639c4c | #90a297 | 540.8 nm    | -0.254 D  | 0.018 D       |      0.85 |      49.4 | OPTIMAL: Common focal plane (ΔD <= 0.25 D) |
+| Constants (LOTA_PCR_COUNT, NULL) | constant     | #9360a3 | #90a297 | 552.0 nm    | -0.189 D  | 0.046 D       |      1.24 |      43.0 | OPTIMAL: Common focal plane (ΔD <= 0.25 D) |
+| Numbers (0, 24, 32 in buf[0])    | number       | #bc842f | #90a297 | 564.5 nm    | -0.122 D  | 0.113 D       |      0.65 |      53.8 | OPTIMAL: Common focal plane (ΔD <= 0.25 D) |
+| Builtins (__always_inline)       | builtin      | #a46344 | #90a297 | 568.6 nm    | -0.102 D  | 0.134 D       |      0.71 |      36.8 | OPTIMAL: Common focal plane (ΔD <= 0.25 D) |
+| Function definitions (is_write_) | fnname       | #2e7092 | #90a297 | 528.4 nm    | -0.330 D  | 0.094 D       |      1.38 |      26.5 | OPTIMAL: Common focal plane (ΔD <= 0.25 D) |
+| Function calls (bpf_...)         | fnname-call  | #4f92be | #90a297 | 529.9 nm    | -0.321 D  | 0.085 D       |      1.34 |      30.4 | OPTIMAL: Common focal plane (ΔD <= 0.25 D) |
+| String literals ("strings")      | string       | #b27536 | #90a297 | 566.6 nm    | -0.112 D  | 0.124 D       |      0.66 |      47.1 | OPTIMAL: Common focal plane (ΔD <= 0.25 D) |
+| Struct fields (->tgid, .field)   | property     | #56938b | #90a297 | 535.9 nm    | -0.283 D  | 0.047 D       |      1.10 |      21.9 | OPTIMAL: Common focal plane (ΔD <= 0.25 D) |
+| Operators (+, -, *, >>, &)       | operator     | #5b7264 | #90a297 | 542.0 nm    | -0.246 D  | 0.010 D       |      0.99 |      12.6 | OPTIMAL: Common focal plane (ΔD <= 0.25 D) |
+| Brackets (( ) [ ] { })           | bracket      | #4e6053 | #90a297 | 542.6 nm    | -0.243 D  | 0.007 D       |      0.98 |      11.1 | OPTIMAL: Common focal plane (ΔD <= 0.25 D) |
+| Alerts / Errors / Negation !     | err          | #b0423d | #90a297 | 586.0 nm    | -0.018 D  | 0.218 D       |      0.53 |      51.9 | OPTIMAL: Common focal plane (ΔD <= 0.25 D) |
 #+TBLFM: $5='(WAVE $3) :: $6='(THIBOS $3) :: $7='(ΔD $3 $4) :: $8='(SP $3) :: $9='(CHROMA $3) :: $10='(OPTIC $2 $3 $4)
 
 ** Perceptual Distance Between Interacting Pairs (min. 8000)
@@ -304,30 +304,30 @@ Strict syntax discriminability requirement for adjacent tokens in code (min. 800
 
 | Role Comparison                          | Color 1 | Color 2 | Distance (Δ) | Status                      |
 |------------------------------------------+---------+---------+--------------+-----------------------------|
-| define (#define) vs struct (keyword)     | #4aa47c | #206c3a |        28825 | Distinguishable (Δ >= 8000) |
-| define vs LOTA_PCR_COUNT (constant)      | #4aa47c | #7e528a |        34140 | Distinguishable (Δ >= 8000) |
-| struct vs LOTA_PCR_COUNT                 | #206c3a | #7e528a |        40646 | Distinguishable (Δ >= 8000) |
-| struct vs int (type)                     | #206c3a | #5c9648 |        15794 | Distinguishable (Δ >= 8000) |
-| define vs int (type)                     | #4aa47c | #5c9648 |         8837 | Distinguishable (Δ >= 8000) |
-| LOTA_PCR_COUNT vs 24 (number)            | #7e528a | #ba8432 |        38193 | Distinguishable (Δ >= 8000) |
-| LOTA_PCR_COUNT vs "string"               | #7e528a | #a46e38 |        23375 | Distinguishable (Δ >= 8000) |
-| static vs __always_inline (builtin)      | #206c3a | #8e5e48 |        29865 | Distinguishable (Δ >= 8000) |
-| __always_inline vs is_write_open_flags   | #8e5e48 | #30607e |        28865 | Distinguishable (Δ >= 8000) |
-| is_write_open_flags (def) vs bpf_ (call) | #30607e | #5088ae |        15156 | Distinguishable (Δ >= 8000) |
-| is_write_open_flags vs int (type)        | #30607e | #5c9648 |        24202 | Distinguishable (Δ >= 8000) |
-| bpf_ (call) vs int (type)                | #5088ae | #5c9648 |        29049 | Distinguishable (Δ >= 8000) |
-| tgid (property) vs base text             | #5c8882 | #96a89c |        14238 | Distinguishable (Δ >= 8000) |
-| 0 (number) vs base text                  | #ba8432 | #96a89c |        35208 | Distinguishable (Δ >= 8000) |
-| struct (keyword) vs base text            | #206c3a | #96a89c |        73169 | Distinguishable (Δ >= 8000) |
-| define (preproc) vs base text            | #4aa47c | #96a89c |        16906 | Distinguishable (Δ >= 8000) |
-| int (type) vs base text                  | #5c9648 | #96a89c |        27654 | Distinguishable (Δ >= 8000) |
-| LOTA_PCR_COUNT vs base text              | #7e528a | #96a89c |        32093 | Distinguishable (Δ >= 8000) |
-| __always_inline vs base text             | #8e5e48 | #96a89c |        39503 | Distinguishable (Δ >= 8000) |
-| bpf_ (call) vs base text                 | #5088ae | #96a89c |        17064 | Distinguishable (Δ >= 8000) |
-| "string" vs base text                    | #a46e38 | #96a89c |        38107 | Distinguishable (Δ >= 8000) |
-| err (!) vs base text                     | #9e3834 | #96a89c |        76855 | Distinguishable (Δ >= 8000) |
-| bracket vs base text                     | #4c5c50 | #96a89c |        51652 | Distinguishable (Δ >= 8000) |
-| comments (needles) vs base text          | #425246 | #96a89c |        66254 | Distinguishable (Δ >= 8000) |
+| define (#define) vs struct (keyword)     | #47a57c | #2a7c40 |        18740 | Distinguishable (Δ >= 8000) |
+| define vs LOTA_PCR_COUNT (constant)      | #47a57c | #9360a3 |        37267 | Distinguishable (Δ >= 8000) |
+| struct vs LOTA_PCR_COUNT                 | #2a7c40 | #9360a3 |        55473 | Distinguishable (Δ >= 8000) |
+| struct vs int (type)                     | #2a7c40 | #639c4c |        11977 | Distinguishable (Δ >= 8000) |
+| define vs int (type)                     | #47a57c | #639c4c |         8362 | Distinguishable (Δ >= 8000) |
+| LOTA_PCR_COUNT vs 24 (number)            | #9360a3 | #bc842f |        41501 | Distinguishable (Δ >= 8000) |
+| LOTA_PCR_COUNT vs "string"               | #9360a3 | #b27536 |        32623 | Distinguishable (Δ >= 8000) |
+| static vs __always_inline (builtin)      | #2a7c40 | #a46344 |        38621 | Distinguishable (Δ >= 8000) |
+| __always_inline vs is_write_open_flags   | #a46344 | #2e7092 |        50395 | Distinguishable (Δ >= 8000) |
+| is_write_open_flags (def) vs bpf_ (call) | #2e7092 | #4f92be |        12499 | Distinguishable (Δ >= 8000) |
+| is_write_open_flags vs int (type)        | #2e7092 | #639c4c |        27682 | Distinguishable (Δ >= 8000) |
+| bpf_ (call) vs int (type)                | #4f92be | #639c4c |        36071 | Distinguishable (Δ >= 8000) |
+| tgid (property) vs base text             | #56938b | #90a297 |         9586 | Distinguishable (Δ >= 8000) |
+| 0 (number) vs base text                  | #bc842f | #90a297 |        34406 | Distinguishable (Δ >= 8000) |
+| struct (keyword) vs base text            | #2a7c40 | #90a297 |        50718 | Distinguishable (Δ >= 8000) |
+| define (preproc) vs base text            | #47a57c | #90a297 |        14936 | Distinguishable (Δ >= 8000) |
+| int (type) vs base text                  | #639c4c | #90a297 |        19505 | Distinguishable (Δ >= 8000) |
+| LOTA_PCR_COUNT vs base text              | #9360a3 | #90a297 |        17936 | Distinguishable (Δ >= 8000) |
+| __always_inline vs base text             | #a46344 | #90a297 |        33685 | Distinguishable (Δ >= 8000) |
+| bpf_ (call) vs base text                 | #4f92be | #90a297 |        15338 | Distinguishable (Δ >= 8000) |
+| "string" vs base text                    | #b27536 | #90a297 |        33689 | Distinguishable (Δ >= 8000) |
+| err (!) vs base text                     | #b0423d | #90a297 |        59232 | Distinguishable (Δ >= 8000) |
+| bracket vs base text                     | #4e6053 | #90a297 |        40203 | Distinguishable (Δ >= 8000) |
+| comments (needles) vs base text          | #48574c | #90a297 |        49944 | Distinguishable (Δ >= 8000) |
 #+TBLFM: $4='(Δ $2 $3) :: $5='(DIST-STATUS $2 $3)
 
 * rainforest-day (Ergonomic Verification for Foggy Daytime)
