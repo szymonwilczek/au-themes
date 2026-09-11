@@ -33,7 +33,7 @@
             '(("Base text (Mineral quartz)"       :fg-main      0.60 0.85 0.01 0.08)
               ("Comments (Damp needles)"          :fg-dim       0.30 0.55 0.01 0.08)
               ("Cursor (Raindrop glint)"          :cursor       0.50 0.75 0.06 0.20)
-              ("Preprocessor (#define)"           :preprocessor 0.55 0.75 0.08 0.22)
+              ("Preprocessor (#define)"           :preprocessor 0.48 0.75 0.03 0.22)
               ("Keywords (struct, while)"         :keyword      0.40 0.65 0.08 0.25)
               ("Data types (int, size_t)"         :type         0.50 0.75 0.09 0.25)
               ("Constants (LOTA_PCR_COUNT)"       :constant     0.40 0.80 0.08 0.25)
