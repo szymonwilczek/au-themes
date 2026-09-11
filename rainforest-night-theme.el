@@ -3,80 +3,80 @@
 (require 'ef-themes)
 
 (defconst rainforest-night-palette-partial
-  '(;; Płótno: głęboka noc w borze iglastym (organiczny mrok, zero morskiej szarości)
-    (cursor "#4e92a8")        ; KURSOR: Lśniąca, chłodna kropla deszczu (APCA Lc ≈ 45-47)
-    (bg-main "#0d110f")       ; Ciemna, bezpieczna próchnica boru pod osłoną nocy
-    (bg-dim "#131815")        ; Nasiąknięty pień świerku
-    (bg-alt "#19201c")        ; Głęboki cień pod gałęziami
-    (fg-main "#a6b6b0")       ; Chłodny kwarc mineralny (APCA LCD: 58.81, OLED: 57.87, C*=6.8 - idealna definicja dla astygmatyzmu)
+  '(;; Płótno: głęboka noc w borze iglastym (neutralny, organiczny mrok z nutą zieleni, zero morskiego cyjanu)
+    (cursor "#4e92a8")        ; KURSOR: Lśniąca, chłodna kropla deszczu (APCA Lc ≈ 38)
+    (bg-main "#0b0e0a")       ; Ciemna, bezpieczna próchnica boru pod osłoną nocy (R=11, G=14, B=10 - neutralna czerń z liściastą zielenią)
+    (bg-dim "#101410")        ; Nasiąknięty pień świerku
+    (bg-alt "#151a14")        ; Głęboki cień pod gałęziami
+    (fg-main "#a6b6b0")       ; Chłodny kwarc mineralny (APCA LCD: 58.95, OLED: 58.04, C*=6.8 - idealna definicja dla astygmatyzmu)
     ;; Komentarze: ciemne igliwie w ściółce (leży cicho pod kodem)
     (fg-dim "#4f6154")        ; APCA Lc ≈ 18
     ;; Argumenty i identyfikatory (txt, bg): wilgotny piaskowiec
-    (fg-alt "#889e94")        ; APCA LCD: 45.27, C*=10.1, Δ do tekstu bazowego = 6 575
+    (fg-alt "#849a90")        ; APCA LCD: 43.37, C*=10.2, Δ do tekstu bazowego = 8 664
 
-    (bg-active "#202a24")
-    (bg-inactive "#111513")
-    (border "#1c2520")
+    (bg-active "#1c241b")
+    (bg-inactive "#0e120d")
+    (border "#182017")
 
-    ;; Składnia: głębokie, soczyste barwy przesiąknięte deszczem (C* <= 38, Thibos ΔD <= 0.25 D)
-    (red "#9e524a")           ; Alerty: wilgotny owoc cisa w deszczu
-    (red-warmer "#ab5a50")
-    (red-cooler "#964e4e")
-    (red-faint "#7c4642")
+    ;; Składnia: głębokie, soczyste barwy przesiąknięte deszczem (C* <= 38, Thibos ΔD <= 0.25 D, Δ >= 8000)
+    (red "#a85a52")           ; Alerty: wilgotny owoc cisa w deszczu (C*=36.3, LCD=26.32)
+    (red-warmer "#b46058")
+    (red-cooler "#9e544e")
+    (red-faint "#844844")
 
-    (green "#608e58")         ; TYPY: Soczysty, mokry mech leśny (C*=35.9, LCD=34.33)
-    (green-warmer "#6c9860")
-    (green-cooler "#548a56")
-    (green-faint "#4c744c")
+    (green "#64965e")         ; TYPY: Soczysty mech borowy (C*=37.3, LCD=37.93)
+    (green-warmer "#6e9e66")
+    (green-cooler "#5c8e58")
+    (green-faint "#4c7648")
 
-    (yellow "#6ea8c4")        ; STRINGS: Kropla mżawki / czysta woda deszczowa (C*=23.3, LCD=49.20)
+    (yellow "#a47ca6")        ; STRINGS: Leśna borówka / wilgotny wrzos w mroku (C*=28.2, LCD=37.57)
     (yellow-warmer "#ba8428") ; Alerty ostrzeżeń (warning): bursztyn ostrzegawczy
-    (yellow-cooler "#6098b0")
-    (yellow-faint "#4a748c")
+    (yellow-cooler "#9c749e")
+    (yellow-faint "#7e5e80")
 
-    (blue "#348a66")          ; FUNKCJE: Świerk w ulewie (C*=36.7, LCD=31.06)
-    (blue-warmer "#3c926e")
-    (blue-cooler "#487268")   ; DWUKROPKI (:foreground itp.): Mokry łupek leśny (C*=17.1, LCD=23.28)
-    (blue-faint "#2c5e48")
+    (blue "#469ec4")          ; FUNKCJE: Kropla deszczu / woda potoku w ulewie (C*=31.0, LCD=43.30)
+    (blue-warmer "#4ea6cc")
+    (blue-cooler "#749a94")   ; DWUKROPKI i BUILTIN (:foreground, __always_inline): Mokry łupek leśny (C*=14.4, LCD=42.17)
+    (blue-faint "#3c7694")
 
-    (magenta "#8e6c7e")       ; SYMBOLE '... : Mokry cedr / wilgotny wrzos w mroku (C*=17.2, LCD=28.30)
-    (magenta-warmer "#987484")
-    (magenta-cooler "#846678")
-    (magenta-faint "#6c5664")
+    (magenta "#ba825a")       ; SYMBOLE '... : Mokry cedr / kora sosny w deszczu (C*=34.6, LCD=40.15)
+    (magenta-warmer "#c48a62")
+    (magenta-cooler "#b07a54")
+    (magenta-faint "#8e6446")
 
-    (cyan "#4aa086")          ; SŁOWA KLUCZOWE (defun, defconst): Szmaragd młodych pędów / nefryt (C*=33.0, LCD=41.47)
-    (cyan-warmer "#52a88e")
-    (cyan-cooler "#42987e")
-    (cyan-faint "#366e60")
+    (cyan "#3aa084")          ; SŁOWA KLUCZOWE (static, defun, defconst): Szmaragd nefrytu / pędy sosny (C*=36.8, LCD=40.98)
+    (cyan-warmer "#42aa8e")
+    (cyan-cooler "#34987c")
+    (cyan-faint "#2c6e5a")
 
     ;; Diffy i panele
-    (bg-added "#0e2414")
-    (bg-added-faint "#08180d")
-    (bg-added-refine "#14301a")
+    (bg-added "#0d2012")
+    (bg-added-faint "#09160d")
+    (bg-added-refine "#122c19")
     (fg-added "#60ba68")
 
-    (bg-changed "#221c08")
-    (bg-changed-faint "#161205")
-    (bg-changed-refine "#2e260c")
+    (bg-changed "#201a08")
+    (bg-changed-faint "#141005")
+    (bg-changed-refine "#2a240a")
     (fg-changed "#bfa438")
 
-    (bg-removed "#280e0c")
-    (bg-removed-faint "#1a0807")
-    (bg-removed-refine "#341210")
+    (bg-removed "#240c0b")
+    (bg-removed-faint "#160807")
+    (bg-removed-refine "#30100f")
     (fg-removed "#c4544c")
 
-    (bg-mode-line-active "#141c17")
+    (bg-mode-line-active "#141812")
     (fg-mode-line-active "#b4c2ab")
-    (bg-completion "#111714")
-    (bg-popup "#0f1411")
-    (bg-hover "#16221a")
-    (bg-hover-secondary "#20181d")
-    (bg-hl-line "#111613")
-    (bg-paren-match "#122419")
+    (bg-completion "#121611")
+    (bg-popup "#10140f")
+    (bg-hover "#161e14")
+    (bg-hover-secondary "#20181c")
+    (bg-hl-line "#0f130d")
+    (bg-paren-match "#122014")
     (bg-err "#220c0a")
     (bg-warning "#1c1204")
-    (bg-info "#081a0e")
-    (bg-region "#162019")))
+    (bg-info "#0a180e")
+    (bg-region "#162016")))
 
 (defconst rainforest-night-palette-mappings-partial
   '(;; Statusy
@@ -92,17 +92,17 @@
     (fg-prompt blue)
 
     ;; Determinizm 1:1 w sercu boru
-    (builtin blue-cooler)     ; DWUKROPKI (:foreground)
-    (comment fg-dim)          ; Komentarze: ściółka iglasta
-    (constant magenta)        ; SYMBOLE ('costam): Jarzębina / dąb
-    (fnname blue)             ; Definicje funkcji: świerk w deszczu
-    (fnname-call blue)        ; Wywołania funkcji
-    (keyword cyan)            ; Słowa kluczowe (defun, defconst): mokry modrzew
+    (builtin blue-cooler)     ; DWUKROPKI i BUILTIN (:foreground, __always_inline): mokry łupek leśny
+    (comment fg-dim)          ; Komentarze: ciemne igliwie w ściółce
+    (constant magenta)        ; SYMBOLE ('costam): Mokry cedr / kora sosny
+    (fnname blue)             ; Definicje funkcji: kropla deszczu / woda potoku
+    (fnname-call blue)        ; Wywołania funkcji: kropla deszczu / woda potoku
+    (keyword cyan)            ; Słowa kluczowe (static, defun, defconst): szmaragd nefrytu / pędy
     (preprocessor cyan-faint)
     (docstring fg-dim)
-    (string yellow)           ; Literały tekstowe: złota żywica
+    (string yellow)           ; Literały tekstowe: leśna borówka / wilgotny wrzos
     (type green)              ; Typy: soczysty mech borowy
-    (variable fg-main)        ; Zmienne bazowe: matowy len
+    (variable fg-main)        ; Zmienne bazowe: chłodny kwarc mineralny
     (variable-use fg-alt)     ; Użycia zmiennych i argumenty (txt, bg): wilgotny piaskowiec
     (rx-backslash yellow-cooler)
     (rx-construct red)
