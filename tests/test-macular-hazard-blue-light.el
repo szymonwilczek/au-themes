@@ -20,7 +20,7 @@ efficacy K_B,v (W/lm, brightness-independent) of each token with that of
 daylight D65 (0.99 mW/lm).  The rationale is chronobiological comfort at
 night, not photochemical injury: at display luminances the photochemical
 margin is ~3 orders of magnitude, so no palette choice can be defended as
-'preventing' RPE phototoxicity.
+\"preventing\" RPE phototoxicity.
 Ref: ICNIRP (2013) Health Phys. 105(1):74-96, DOI 10.1097/HP.0b013e318289a611;
 IEC 62471:2006 / CIE S 009:2002; Algvere, Marshall & Seregard (2006)
 Acta Ophthalmol. Scand. 84(1):4-15, DOI 10.1111/j.1600-0420.2005.00627.x."
