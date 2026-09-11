@@ -1,0 +1,73 @@
+;;; test-isoluminance-jitter.el --- Isoluminance Edge Jitter & Rod Boundary Loss -*- lexical-binding: t; -*-
+
+(require 'test-palette-extractor)
+
+(defun test-isoluminance-jitter-run ()
+  "Evaluate isoluminance jitter and chromatic edge blurring between adjacent syntax elements.
+When two distinct syntax colors share identical luminance (Delta-Y ~ 0), the magnocellular/rod
+system fails to detect an achromatic boundary edge, producing perceptual edge jitter,
+wobbling letter contours, and visual confusion.
+Ref: Livingstone & Hubel (1987) J. Neurosci.; Mullen (1985) J. Physiol.; Gegenfurtner (2003)."
+  (let* ((pal (rainforest-extract-active-palette))
+         (theme (plist-get pal :theme))
+         (polarity (rf-theme-polarity theme))
+         (bg (plist-get pal :bg-main))
+         (bg-y (rf-luminance-y bg))
+         (passes 0)
+         (fails 0)
+         (touching-pairs
+          '(("keyword (struct) vs type (int)"             :keyword     :type)
+            ("keyword (static) vs builtin (__always)"     :keyword     :builtin)
+            ("builtin vs fnname (def)"                    :builtin     :fnname)
+            ("fnname (def) vs fnname-call (call)"         :fnname      :fnname-call)
+            ("fnname vs type"                             :fnname      :type)
+            ("keyword vs base text"                       :keyword     :fg-main)
+            ("builtin vs base text"                       :builtin     :fg-main)
+            ("type vs base text"                          :type        :fg-main)
+            ("constant vs base text"                      :constant    :fg-main)
+            ("number vs base text"                        :number      :fg-main)
+            ("string vs base text"                        :string      :fg-main)
+            ("operator vs property"                       :operator    :property)
+            ("operator vs base text"                      :operator    :fg-main)
+            ("operator vs number"                         :operator    :number)
+            ("bracket vs base text"                       :bracket     :fg-main)
+            ("bracket vs type"                            :bracket     :type)
+            ("bracket vs keyword"                         :bracket     :keyword))))
+
+    (princ (format "\n======================================================================\n"))
+    (princ (format " Isoluminance Edge Jitter & Achromatic Boundary Acuity Suite\n"))
+    (princ (format " Ref: Livingstone & Hubel (1987); Mullen (1985); Gegenfurtner (2003)\n"))
+    (princ (format " Theme: %s (%s) | Background: %s (Y_bg: %.6f)\n" theme polarity bg bg-y))
+    (princ (format " Requirement: Adjacent syntax pairs must maintain Delta-Y >= 0.0050\n"))
+    (princ (format "======================================================================\n"))
+
+    (princ (format "%-42s | %-8s | %-8s | %-8s | %-8s | %-8s | %-8s\n"
+                   "Adjacent Syntax Pair" "Color 1" "Color 2" "Y 1" "Y 2" "Delta-Y" "Status"))
+    (princ (format "-------------------------------------------+----------+----------+----------+----------+----------+----------\n"))
+    (dolist (p touching-pairs)
+      (let* ((label (nth 0 p))
+             (k1    (nth 1 p))
+             (k2    (nth 2 p))
+             (h1    (plist-get pal k1))
+             (h2    (plist-get pal k2))
+             (y1    (rf-luminance-y h1))
+             (y2    (rf-luminance-y h2))
+             (dy    (abs (- y1 y2)))
+             (min-dy 0.0050)
+             (ok    (>= dy min-dy)))
+        (if ok
+            (setq passes (1+ passes))
+          (setq fails (1+ fails)))
+        (princ (format "%-42s | %-8s | %-8s | %8.4f | %8.4f | %8.4f | %s\n"
+                       label h1 h2 y1 y2 dy (if ok "PASS" "FAIL")))))
+    (princ (format "-------------------------------------------+----------+----------+----------+----------+----------+----------\n"))
+
+    (princ (format "Isoluminance Jitter Summary: %d Passed, %d Failed.\n\n" passes fails))
+    (zerop fails)))
+
+(when (and noninteractive (not (bound-and-true-p rf-running-all-tests)))
+  (unless (test-isoluminance-jitter-run)
+    (kill-emacs 1)))
+
+(provide 'test-isoluminance-jitter)
+;;; test-isoluminance-jitter.el ends here

@@ -29,7 +29,16 @@
     test-pattern-glare-cortical
     test-macular-hazard-blue-light
     test-pupil-spasm-adaptation
-    test-astigmatism-meridional-blur))
+    test-astigmatism-meridional-blur
+    test-asd-semantic-entropy
+    test-photophobia-triplet-contrast
+    test-trigeminal-nerve-excitation
+    test-scotopic-pupillary-aperture
+    test-magnocellular-parvocellular-balance
+    test-tonic-accommodation-dark-focus
+    test-crowding-effect-foveal
+    test-isoluminance-jitter
+    test-afterimage-persistence))
 
 (defun run-all-rainforest-tests ()
   "Execute all test suites across both themes and compile executive master diagnostic report."
