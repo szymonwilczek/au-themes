@@ -1,5 +1,6 @@
 ;;; test-palette-extractor.el --- Automated theme palette extraction and biophysical math -*- lexical-binding: t; -*-
 
+(require 'cl-lib)
 (require 'color)
 (require 'subr-x)
 
@@ -284,11 +285,49 @@ Positive for BoW (BG-Y > TXT-Y), negative for WoB.  Inputs outside
          (h (if (< h-deg 0.0) (+ h-deg 360.0) h-deg)))
     (list L C h)))
 
-;; CIELAB Chroma C*
+;; CIE 1931 XYZ and CIE 1976 L*a*b* (CIE 15:2018, Colorimetry, 4th ed.,
+;; DOI: 10.25039/TR.015.2018).  Emacs' own `color-srgb-to-lab' is NOT used:
+;; as of Emacs 31.1 `color-srgb-to-xyz' divides the linear segment by 12.95
+;; instead of the IEC 61966-2-1 value 12.92 (C0 discontinuity at 0.04045),
+;; carries the typo 0.21266729 in the Y row, and normalises by a D65 white
+;; (0.950455 1 1.088753) that is not the white of its own matrix, so sRGB
+;; neutrals acquire non-zero a*, b*.
+(defconst rf-srgb-to-xyz-matrix
+  '((0.4124564 0.3575761 0.1804375)
+    (0.2126729 0.7151522 0.0721750)
+    (0.0193339 0.1191920 0.9503041))
+  "Linear sRGB -> CIE 1931 XYZ, derived from IEC 61966-2-1:1999 primaries
+and D65 (x=0.3127, y=0.3290); Y row equals `rf-luminance-y' weights.")
+
+(defconst rf-d65-white-xyz
+  (mapcar (lambda (row) (apply #'+ row)) rf-srgb-to-xyz-matrix)
+  "Reference white of `rf-srgb-to-xyz-matrix' (RGB = 1,1,1), i.e. D65.")
+
+(defun rf-hex-to-xyz (hex)
+  "Convert HEX to CIE 1931 XYZ (Y of white = 1) via IEC 61966-2-1."
+  (let* ((rgb (mapcar #'rf-srgb-to-linear (rf-hex-to-rgb hex))))
+    (mapcar (lambda (row)
+              (+ (* (nth 0 row) (nth 0 rgb))
+                 (* (nth 1 row) (nth 1 rgb))
+                 (* (nth 2 row) (nth 2 rgb))))
+            rf-srgb-to-xyz-matrix)))
+
+(defun rf-hex-to-cielab (hex)
+  "Convert HEX to CIE 1976 L*a*b* relative to `rf-d65-white-xyz'."
+  (let* ((eps (/ 216.0 24389.0))
+         (kappa (/ 24389.0 27.0))
+         (f (lambda (u) (if (> u eps) (expt u (/ 1.0 3.0))
+                          (/ (+ (* kappa u) 16.0) 116.0))))
+         (fxyz (cl-mapcar (lambda (c w) (funcall f (/ c w)))
+                          (rf-hex-to-xyz hex) rf-d65-white-xyz)))
+    (list (- (* 116.0 (nth 1 fxyz)) 16.0)
+          (* 500.0 (- (nth 0 fxyz) (nth 1 fxyz)))
+          (* 200.0 (- (nth 1 fxyz) (nth 2 fxyz))))))
+
+;; CIELAB Chroma C*ab
 (defun rf-cielab-chroma (hex)
-  "Calculate CIELAB chroma C*."
-  (let* ((rgb (rf-hex-to-rgb hex))
-         (lab (apply #'color-srgb-to-lab rgb))
+  "Calculate CIE 1976 chroma C*ab = sqrt(a*^2 + b*^2) of HEX."
+  (let* ((lab (rf-hex-to-cielab hex))
          (a (nth 1 lab))
          (b (nth 2 lab)))
     (sqrt (+ (* a a) (* b b)))))
