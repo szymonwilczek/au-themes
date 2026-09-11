@@ -3,7 +3,12 @@
 (require 'test-palette-extractor)
 
 (defun test-determinism-1to1-run ()
-  "Evaluate 1:1 keyface uniqueness and pairwise Emacs 16-bit Riemersma distance (min 8000)."
+  "Evaluate 1:1 keyface uniqueness and pairwise CIEDE2000 separation (min 10.0).
+Colour separation is measured with CIEDE2000 (CIE 142:2001 /
+ISO-CIE 11664-6:2014), not with Emacs' `color-distance', which is an
+unpublished sRGB heuristic that is not perceptually uniform: the same
+numeric gate of 8000 corresponded to dE00 between 9.7 and 19.7 depending
+on the hue pair."
   (let* ((pal (rainforest-extract-active-palette))
          (theme (plist-get pal :theme))
          (base (plist-get pal :fg-main))
@@ -43,7 +48,7 @@
             ("comments (needles) vs base text"          :fg-dim       :fg-main))))
 
     (princ (format "\n======================================================================\n"))
-    (princ (format " 1:1 Keyface Determinism & Pairwise Distance Suite (min. 8000)\n"))
+    (princ (format " 1:1 Keyface Determinism & Pairwise CIEDE2000 Suite (min. dE00 10.0)\n"))
     (princ (format " Theme: %s\n" theme))
     (princ (format "======================================================================\n"))
 
@@ -66,9 +71,9 @@
         (setq passes (1+ passes))))
 
     (princ (format "----------------------------------------------------------------------\n"))
-    (princ "Part 2: Pairwise Distance Check (Emacs 16-bit color-distance >= 8000):\n")
+    (princ "Part 2: Pairwise Separation Check (CIEDE2000 dE00 >= 10.0):\n")
     (princ (format "%-42s | %-8s | %-8s | %-8s | %-8s\n"
-                   "Role Comparison" "Color 1" "Color 2" "Distance" "Status"))
+                   "Role Comparison" "Color 1" "Color 2" "dE00" "Status"))
     (princ (format "-------------------------------------------+----------+----------+----------+----------\n"))
     (dolist (pair critical-pairs)
       (let* ((name (nth 0 pair))
@@ -81,9 +86,9 @@
         (if ok
             (setq passes (1+ passes))
           (setq fails (1+ fails)))
-        (princ (format "%-42s | %-8s | %-8s | %8d | %s\n"
+        (princ (format "%-42s | %-8s | %-8s | %8.2f | %s\n"
                        name h1 h2 dist
-                       (if ok "PASS" "FAIL (<8000)")))))
+                       (if ok "PASS" "FAIL (<10.0)")))))
 
     (princ (format "-------------------------------------------+----------+----------+----------+----------\n"))
     (princ "Part 3: Categorical Role Disparity Check (Daylight Hue Delta-h >= 40° or Night Delta-L >= 0.08):\n")

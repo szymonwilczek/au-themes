@@ -13,7 +13,12 @@ fundamentals over Judd-Vos corrected XYZ, as in Viénot, Brettel & Mollon
          (theme (plist-get pal :theme))
          (passes 0)
          (fails 0)
-         (min-distance 3500)
+         ;; Discriminability gate: CIEDE2000 (CIE 142:2001 / ISO-CIE 11664-6).
+         ;; 1 unit is ~1 JND for large uniform patches; thin antialiased glyphs
+         ;; inspected in passing need a large margin, so a 10x design factor is
+         ;; required.  The previous metric was Emacs' `color-distance', an
+         ;; unpublished sRGB heuristic with no perceptual normalisation.
+         (min-de 10.0)
          (cvd-modes '((protan . "Protanopia (Red-Blind)")
                       (deutan . "Deuteranopia (Green-Blind)")
                       (tritan . "Tritanopia (Blue-Blind)")))
@@ -27,7 +32,7 @@ fundamentals over Judd-Vos corrected XYZ, as in Viénot, Brettel & Mollon
     (princ (format "\n======================================================================\n"))
     (princ (format " Color Vision Deficiency (CVD) Accessibility Gate Suite\n"))
     (princ (format " Ref: Brettel, Viénot & Mollon (1997) DOI 10.1364/JOSAA.14.002647\n"))
-    (princ (format " Requirement: Minimum Pairwise Emacs Distance >= %d in all CVD modes\n" min-distance))
+    (princ (format " Requirement: Minimum pairwise CIEDE2000 dE00 >= %.1f in all CVD modes\n" min-de))
     (princ (format " Theme: %s\n" theme))
     (princ (format "======================================================================\n"))
     (dolist (mode-spec cvd-modes)
@@ -35,7 +40,7 @@ fundamentals over Judd-Vos corrected XYZ, as in Viénot, Brettel & Mollon
             (label (cdr mode-spec)))
         (princ (format "\nMode: %s\n" label))
         (princ (format "%-28s | %-16s | %-16s | %-8s | %-8s\n"
-                       "Syntax Pair" "Simulated 1" "Simulated 2" "Distance" "Status"))
+                       "Syntax Pair" "Simulated 1" "Simulated 2" "dE00" "Status"))
         (princ (format "-----------------------------+------------------+------------------+----------+----------\n"))
         (dolist (p pairs)
           (let* ((p-label (nth 0 p))
@@ -45,12 +50,12 @@ fundamentals over Judd-Vos corrected XYZ, as in Viénot, Brettel & Mollon
                  (c2      (plist-get pal k2))
                  (sim1    (rf-cvd-simulate c1 mode))
                  (sim2    (rf-cvd-simulate c2 mode))
-                 (dist    (rf-color-distance sim1 sim2))
-                 (ok      (>= dist min-distance)))
+                 (dist    (rf-delta-e-2000 sim1 sim2))
+                 (ok      (>= dist min-de)))
             (if ok
                 (setq passes (1+ passes))
               (setq fails (1+ fails)))
-            (princ (format "%-28s | %-8s (%s) | %-8s (%s) | %8d | %s\n"
+            (princ (format "%-28s | %-8s (%s) | %-8s (%s) | %8.2f | %s\n"
                            p-label c1 sim1 c2 sim2 dist
                            (if ok "PASS" "FAIL")))))
         (princ (format "-----------------------------+------------------+------------------+----------+----------\n"))))

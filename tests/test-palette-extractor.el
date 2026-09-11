@@ -554,9 +554,67 @@ underestimates the defocus of broadband or mixed-primary colours (up to
 (defun rf-lca-disparity (hex1 hex2)
   (abs (- (rf-thibos-diopters hex1) (rf-thibos-diopters hex2))))
 
-;; Emacs 16-bit Riemersma color distance
+;; Emacs 16-bit Riemersma color distance (legacy metric, kept for reference).
 (defun rf-color-distance (hex1 hex2)
   (color-distance (rf-hex-to-rgb16 hex1) (rf-hex-to-rgb16 hex2)))
+
+;; CIEDE2000 colour difference, CIE 142:2001 / ISO-CIE 11664-6:2014
+;; (Sharma, Wu & Dalal (2005) Color Res. Appl. 30(1):21-30,
+;; DOI: 10.1002/col.20070 give the reference formulation and test data).
+(defun rf-delta-e-2000 (hex1 hex2 &optional kl kc kh)
+  "CIEDE2000 colour difference between HEX1 and HEX2 (1:1:1 parametric factors)."
+  (let* ((lab1 (rf-hex-to-cielab hex1))
+         (lab2 (rf-hex-to-cielab hex2))
+         (kl (or kl 1.0)) (kc (or kc 1.0)) (kh (or kh 1.0))
+         (deg (/ 180.0 float-pi))
+         (l1 (nth 0 lab1)) (a1 (nth 1 lab1)) (b1 (nth 2 lab1))
+         (l2 (nth 0 lab2)) (a2 (nth 1 lab2)) (b2 (nth 2 lab2))
+         (c1 (sqrt (+ (* a1 a1) (* b1 b1))))
+         (c2 (sqrt (+ (* a2 a2) (* b2 b2))))
+         (cbar (/ (+ c1 c2) 2.0))
+         (g (* 0.5 (- 1.0 (sqrt (/ (expt cbar 7) (+ (expt cbar 7) (expt 25.0 7)))))))
+         (ap1 (* (+ 1.0 g) a1)) (ap2 (* (+ 1.0 g) a2))
+         (cp1 (sqrt (+ (* ap1 ap1) (* b1 b1))))
+         (cp2 (sqrt (+ (* ap2 ap2) (* b2 b2))))
+         (hp1 (if (and (= b1 0.0) (= ap1 0.0)) 0.0
+                (let ((h (* deg (atan b1 ap1)))) (if (< h 0.0) (+ h 360.0) h))))
+         (hp2 (if (and (= b2 0.0) (= ap2 0.0)) 0.0
+                (let ((h (* deg (atan b2 ap2)))) (if (< h 0.0) (+ h 360.0) h))))
+         (dlp (- l2 l1))
+         (dcp (- cp2 cp1))
+         (dhp (cond ((= (* cp1 cp2) 0.0) 0.0)
+                    ((<= (abs (- hp2 hp1)) 180.0) (- hp2 hp1))
+                    ((> (- hp2 hp1) 180.0) (- (- hp2 hp1) 360.0))
+                    (t (+ (- hp2 hp1) 360.0))))
+         (dhp-big (* 2.0 (sqrt (* cp1 cp2)) (sin (/ (/ dhp deg) 2.0))))
+         (lbar (/ (+ l1 l2) 2.0))
+         (cpbar (/ (+ cp1 cp2) 2.0))
+         (hpbar (cond ((= (* cp1 cp2) 0.0) (+ hp1 hp2))
+                      ((<= (abs (- hp1 hp2)) 180.0) (/ (+ hp1 hp2) 2.0))
+                      ((< (+ hp1 hp2) 360.0) (/ (+ hp1 hp2 360.0) 2.0))
+                      (t (/ (- (+ hp1 hp2) 360.0) 2.0))))
+         (tt (+ 1.0
+                (* -0.17 (cos (/ (- hpbar 30.0) deg)))
+                (* 0.24 (cos (/ (* 2.0 hpbar) deg)))
+                (* 0.32 (cos (/ (+ (* 3.0 hpbar) 6.0) deg)))
+                (* -0.20 (cos (/ (- (* 4.0 hpbar) 63.0) deg)))))
+         (dtheta (* 30.0 (exp (- (expt (/ (- hpbar 275.0) 25.0) 2)))))
+         (rc (* 2.0 (sqrt (/ (expt cpbar 7) (+ (expt cpbar 7) (expt 25.0 7))))))
+         (sl (+ 1.0 (/ (* 0.015 (expt (- lbar 50.0) 2))
+                       (sqrt (+ 20.0 (expt (- lbar 50.0) 2))))))
+         (sc (+ 1.0 (* 0.045 cpbar)))
+         (sh (+ 1.0 (* 0.015 cpbar tt)))
+         (rt (* -1.0 (sin (/ (* 2.0 dtheta) deg)) rc)))
+    (sqrt (+ (expt (/ dlp (* kl sl)) 2)
+             (expt (/ dcp (* kc sc)) 2)
+             (expt (/ dhp-big (* kh sh)) 2)
+             (* rt (/ dcp (* kc sc)) (/ dhp-big (* kh sh)))))))
+
+(defun rf-lab-delta-e-2000 (lab1 lab2)
+  "CIEDE2000 difference between CIELAB triples LAB1 and LAB2 (for validation)."
+  (cl-letf (((symbol-function 'rf-hex-to-cielab)
+             (lambda (x) (if (eq x 'a) lab1 lab2))))
+    (rf-delta-e-2000 'a 'b)))
 
 ;; Viewing geometry (declared assumption, used for every angular quantity).
 (defconst rf-viewing-distance-mm 600.0
