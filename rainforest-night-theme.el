@@ -22,7 +22,7 @@
     (red-cooler "#b4423c")
     (red-faint "#5a7061")     ; Wet twigs: brackets ( ) [ ] { }
 
-    (green "#6aa052")         ; Rich forest moss: data types (int, size_t, uint32_t)
+    (green "#6ca253")         ; Rich forest moss: data types (int, size_t, uint32_t)
     (green-warmer "#7ab65e")
     (green-cooler "#5e9846")
     (green-faint "#4a6250")
@@ -42,7 +42,7 @@
     (magenta-cooler "#b26e4e") ; Wet cedar wood bark: builtins and attributes (__always_inline, :keywords)
     (magenta-faint "#64aebb")
 
-    (cyan "#308a4c")          ; Deep conifer pine: keywords (struct, while, static, return)
+    (cyan "#2c8446")          ; Deep conifer pine: keywords (struct, while, static, return)
     (cyan-warmer "#7a6450")   ; Dark walnut elm bark: preprocessor and macro directives (__uint, #define)
     (cyan-cooler "#2a8044")
     (cyan-faint "#586e60")    ; Damp pine needles: delimiters (, ;)
@@ -74,7 +74,7 @@
     (bg-err "#1e0808")
     (bg-warning "#181004")
     (bg-info "#08140c")
-    (bg-region "#244234")))
+    (bg-region "#1e382a")))
 
 (defconst rainforest-night-palette-mappings-partial
   '(;; Statuses
@@ -91,8 +91,8 @@
 
     ;; 1:1 Keyface Determinism Mappings:
     (preprocessor cyan-warmer)   ; #7a6450 - Dark walnut elm bark (__uint, BPF_CORE_READ, #define)
-    (keyword cyan)               ; #308a4c - Deep conifer pine (struct, while, static, return)
-    (type green)                 ; #6aa052 - Rich forest moss (int, size_t, uint32_t)
+    (keyword cyan)               ; #2c8446 - Deep conifer pine (struct, while, static, return)
+    (type green)                 ; #6ca253 - Rich forest moss (int, size_t, uint32_t)
     (constant magenta)           ; #7ec4da - Clear glacial polar ice (LOTA_PCR_COUNT, NULL)
     (number yellow-warmer)       ; #c69038 - Wet amber resin (0, 24, 32 in buf[0])
     (builtin magenta-cooler)     ; #b26e4e - Wet cedar wood bark (__always_inline, :keywords)
@@ -139,8 +139,8 @@
  '(font-lock-comment-delimiter-face ((t (:foreground "#526456" :slant italic))))
  '(font-lock-doc-face ((t (:foreground "#526456" :slant italic))))
  '(font-lock-preprocessor-face ((t (:foreground "#7a6450"))))
- '(font-lock-keyword-face ((t (:foreground "#308a4c"))))
- '(font-lock-type-face ((t (:foreground "#6aa052"))))
+ '(font-lock-keyword-face ((t (:foreground "#2c8446"))))
+ '(font-lock-type-face ((t (:foreground "#6ca253"))))
  '(font-lock-constant-face ((t (:foreground "#7ec4da"))))
  '(font-lock-number-face ((t (:foreground "#c69038"))))
  '(font-lock-builtin-face ((t (:foreground "#b26e4e"))))
@@ -155,26 +155,7 @@
  '(font-lock-bracket-face ((t (:foreground "#5a7061"))))
  '(font-lock-delimiter-face ((t (:foreground "#586e60"))))
  '(font-lock-warning-face ((t (:foreground "#be4a44"))))
- '(region ((t (:background "#244234" :extend t)))))
-
-;;;###autoload
-(defun rainforest-setup-c-keywords ()
-  "Fontify C/C++ builtins and primitive types to prevent tree-sitter parsing anomalies."
-  (font-lock-add-keywords
-   nil
-   '(("\\_<\\(__always_inline\\|__inline__\\|__attribute__\\|__attribute\\|__read_mostly\\|__init\\|__exit\\|asmlinkage\\|sizeof\\|typeof\\|alignof\\|offsetof\\)\\_>"
-      1 'font-lock-builtin-face t)
-     ("\\_<\\(int\\|char\\|void\\|long\\|short\\|unsigned\\|signed\\|float\\|double\\|bool\\|_Bool\\|size_t\\|ssize_t\\|ptrdiff_t\\|intptr_t\\|uintptr_t\\|u8\\|u16\\|u32\\|u64\\|s8\\|s16\\|s32\\|s64\\|__u8\\|__u16\\|__u32\\|__u64\\|__s8\\|__s16\\|__s32\\|__s64\\|uint8_t\\|uint16_t\\|uint32_t\\|uint64_t\\|int8_t\\|int16_t\\|int32_t\\|int64_t\\)\\_>"
-      1 'font-lock-type-face t))))
-
-;;;###autoload
-(defalias 'rainforest-setup-c-builtins #'rainforest-setup-c-keywords)
-
-(add-hook 'c-mode-common-hook #'rainforest-setup-c-keywords)
-(when (fboundp 'c-ts-mode)
-  (add-hook 'c-ts-mode-hook #'rainforest-setup-c-keywords))
-(when (fboundp 'c++-ts-mode)
-  (add-hook 'c++-ts-mode-hook #'rainforest-setup-c-keywords))
+ '(region ((t (:background "#1e382a" :extend t)))))
 
 (provide 'rainforest-night-theme)
 ;;; rainforest-night-theme.el ends here

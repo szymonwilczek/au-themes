@@ -154,24 +154,5 @@
  '(font-lock-delimiter-face ((t (:foreground "#2a3a30"))))
  '(font-lock-warning-face ((t (:foreground "#843428")))))
 
-;;;###autoload
-(defun rainforest-setup-c-keywords ()
-  "Fontify C/C++ builtins and primitive types to prevent tree-sitter parsing anomalies."
-  (font-lock-add-keywords
-   nil
-   '(("\\_<\\(__always_inline\\|__inline__\\|__attribute__\\|__attribute\\|__read_mostly\\|__init\\|__exit\\|asmlinkage\\|sizeof\\|typeof\\|alignof\\|offsetof\\)\\_>"
-      1 'font-lock-builtin-face t)
-     ("\\_<\\(int\\|char\\|void\\|long\\|short\\|unsigned\\|signed\\|float\\|double\\|bool\\|_Bool\\|size_t\\|ssize_t\\|ptrdiff_t\\|intptr_t\\|uintptr_t\\|u8\\|u16\\|u32\\|u64\\|s8\\|s16\\|s32\\|s64\\|__u8\\|__u16\\|__u32\\|__u64\\|__s8\\|__s16\\|__s32\\|__s64\\|uint8_t\\|uint16_t\\|uint32_t\\|uint64_t\\|int8_t\\|int16_t\\|int32_t\\|int64_t\\)\\_>"
-      1 'font-lock-type-face t))))
-
-;;;###autoload
-(defalias 'rainforest-setup-c-builtins #'rainforest-setup-c-keywords)
-
-(add-hook 'c-mode-common-hook #'rainforest-setup-c-keywords)
-(when (fboundp 'c-ts-mode)
-  (add-hook 'c-ts-mode-hook #'rainforest-setup-c-keywords))
-(when (fboundp 'c++-ts-mode)
-  (add-hook 'c++-ts-mode-hook #'rainforest-setup-c-keywords))
-
 (provide 'rainforest-day-theme)
 ;;; rainforest-day-theme.el ends here

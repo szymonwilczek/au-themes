@@ -30,13 +30,6 @@
       (load-theme 'rainforest-day t)
       (message "Włączono rainforest-day"))))
 
-;; Enable C/C++ builtins fontification hook (sizeof, typeof, alignof, offsetof)
-(add-hook 'c-mode-common-hook #'rainforest-setup-c-builtins)
-(when (fboundp 'c-ts-mode)
-  (add-hook 'c-ts-mode-hook #'rainforest-setup-c-builtins))
-(when (fboundp 'c++-ts-mode)
-  (add-hook 'c++-ts-mode-hook #'rainforest-setup-c-builtins))
-
 ;;;###autoload
 (when (and (boundp 'custom-theme-load-path)
            load-file-name)
