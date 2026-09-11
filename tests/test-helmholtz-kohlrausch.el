@@ -3,11 +3,11 @@
 (require 'test-palette-extractor)
 
 (defun test-helmholtz-kohlrausch-run ()
-  "Evaluate Helmholtz-Kohlrausch (H-K) perceived brightness per Fairchild & Pirrotta (1991)."
+  "Evaluate Helmholtz-Kohlrausch perceived brightness.
+Uses the published model of Fairchild & Pirrotta (1991)."
   (let* ((pal (rainforest-extract-active-palette))
          (theme (plist-get pal :theme))
          (passes 0)
-         (warnings 0)
          (tokens '(("Base text (Mineral quartz)"       :fg-main)
                    ("Comments (Damp needles)"          :fg-dim)
                    ("Cursor (Raindrop glint)"          :cursor)
