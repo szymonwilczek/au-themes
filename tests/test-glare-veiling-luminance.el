@@ -10,7 +10,10 @@ Ref: CIE 112-1994; Vos & van den Berg (1999); IESNA TM-12-12."
          (polarity (rf-theme-polarity theme))
          (bg (plist-get pal :bg-main))
          (bg-y (rf-apca-screen-y bg))
-         (lv (rf-veiling-glare-luminance pal))
+         ;; Veiling luminance is physical (cd/m2); APCA operates on screen
+         ;; luminance normalised to display white, hence the division.
+         (lv-cd (rf-veiling-glare-luminance pal))
+         (lv (/ lv-cd rf-display-white-luminance))
          (eff-bg-y (+ bg-y lv))
          (passes 0)
          (fails 0)
@@ -30,9 +33,12 @@ Ref: CIE 112-1994; Vos & van den Berg (1999); IESNA TM-12-12."
               ("Base text (Mineral quartz)"       :fg-main      46.0 62.0)))))
     (princ (format "\n======================================================================\n"))
     (princ (format " Intraocular Veiling Glare & Corneal Straylight Spatial Integral Suite\n"))
-    (princ (format " Ref: CIE 112-1994; Vos & van den Berg (1999) CIE Report on Disability Glare\n"))
-    (princ (format " Theme: %s (%s) | Background: %s (Lum: %.6f)\n" theme polarity bg bg-y))
-    (princ (format " Veiling Luminance (Lv): %.6f\n" lv))
+    (princ (format " Ref: CIE 146:2002 General Disability Glare Equation (Vos & van den Berg);\n"))
+    (princ (format "      Vos (2003) Clin. Exp. Optom. 86(6):363, DOI 10.1111/j.1444-0938.2003.tb03080.x\n"))
+    (princ (format " Theme: %s (%s) | Background: %s (APCA Ys: %.6f)\n" theme polarity bg bg-y))
+    (princ (format " Straylight integral (1 deg .. field edge, age %.0f, p = %.1f): %.4f\n"
+                   rf-observer-age rf-eye-pigmentation (rf-straylight-integral)))
+    (princ (format " Veiling Luminance Lv: %.4f cd/m2 (%.6f of display white)\n" lv-cd lv))
     (princ (format "======================================================================\n"))
     (princ (format "%-30s | %-8s | %-7s | %-12s | %-12s | %-8s\n"
                    "Token Role" "Hex" "|Lc(eff)|" "Raw |Lc|" "Target |Lc|" "Status"))

@@ -761,25 +761,56 @@ BLUR-ATTENUATION defaults to 0.60 representing a 1.25D cylinder defocus on a 1.2
         0.0
       (/ (abs (- y-peak-blur y-bg)) (+ y-peak-blur y-bg)))))
 
-;; Intraocular Veiling Glare (CIE 112 / Vos-van den Berg Straylight Spatial Integral)
-(defun rf-veiling-glare-luminance (pal)
-  "Estimate intraocular veiling luminance Lv from typical Emacs buffer geometry per Vos (1999)."
-  (let* ((weights `((:bg-main . 0.850)
-                    (:fg-main . 0.070)
-                    (:type . 0.030)
-                    (:keyword . 0.020)
-                    (:bg-hl-line . 0.025)
-                    (:cursor . 0.005)))
-         (total-illum 0.0)
-         (theta 8.0)
-         (straylight-factor (/ 10.0 (* theta theta))))
-    (dolist (w weights)
-      (let* ((key (car w))
-             (weight (cdr w))
-             (hex (or (plist-get pal key) "#080b09"))
-             (lum (rf-luminance-y hex)))
-        (setq total-illum (+ total-illum (* lum weight)))))
-    (* total-illum straylight-factor 0.01)))
+;; Intraocular straylight: CIE 146:2002 General Disability Glare Equation
+;; (Vos & van den Berg; see also Vos (2003) Clin. Exp. Optom. 86(6):363-370,
+;; DOI: 10.1111/j.1444-0938.2003.tb03080.x), valid for 0.1 deg < theta < 100 deg:
+;;
+;;   L_eq/E_gl = 10/theta^3 + [5/theta^2 + 0.1 p/theta] [1 + (A/62.5)^4]
+;;               + 0.0025 p          (theta in degrees, result in sr^-1)
+;;
+;; The screen is an extended source, so the veiling luminance on the fovea is
+;; the straylight integral over the field:
+;;   L_v = L_field * Int_{theta1}^{theta2} f(theta) 2 pi sin(theta) cos(theta) dtheta
+;; with theta1 = 1 deg (light inside the foveal field is signal, not veil) and
+;; theta2 the equivalent radius of the display.
+(defconst rf-eye-pigmentation 0.5
+  "Ocular pigmentation factor p of CIE 146:2002 (0 very dark, 0.5 brown, 1.0 blue-green).")
+
+(defun rf-glare-spread-function (theta-deg &optional age pigmentation)
+  "CIE 146:2002 general disability glare equation, L_eq/E_gl in sr^-1."
+  (let ((a (or age rf-observer-age))
+        (p (or pigmentation rf-eye-pigmentation))
+        (th theta-deg))
+    (+ (/ 10.0 (expt th 3))
+       (* (+ (/ 5.0 (* th th)) (/ (* 0.1 p) th))
+          (+ 1.0 (expt (/ a 62.5) 4)))
+       (* 0.0025 p))))
+
+(defun rf-straylight-integral (&optional theta-min-deg theta-max-deg)
+  "Fraction of a uniform field's luminance scattered onto the fovea.
+Numerically integrates the CIE 146 glare spread function over the annulus
+THETA-MIN-DEG (default 1) to THETA-MAX-DEG (default the equivalent radius
+of the display) using logarithmic steps."
+  (let* ((t1 (or theta-min-deg 1.0))
+         (t2 (or theta-max-deg (sqrt (/ (rf-display-field-area-deg2) float-pi))))
+         (steps 2000)
+         (ratio (/ (log (/ t2 t1)) steps))
+         (sum 0.0))
+    (dotimes (i steps sum)
+      (let* ((th (* t1 (exp (* ratio (+ i 0.5)))))
+             (dth (* th ratio))                ; d(theta) in degrees
+             (th-rad (* th (/ float-pi 180.0)))
+             (dth-rad (* dth (/ float-pi 180.0))))
+        (setq sum (+ sum (* (rf-glare-spread-function th)
+                            2.0 float-pi (sin th-rad) (cos th-rad) dth-rad)))))))
+
+(defun rf-veiling-glare-luminance (pal &optional white-cd)
+  "Total veiling luminance on the fovea in cd/m^2 for palette PAL.
+Sum of the intraocular straylight from the display field (CIE 146) and the
+display veiling glare of the IEC 61966-2-1 reference viewing conditions."
+  (let ((field (* (rf-viewport-mean-luminance-y pal)
+                  (or white-cd rf-display-white-luminance))))
+    (+ (* field (rf-straylight-integral)) rf-reference-veiling-glare)))
 
 ;; Photophobia & Neuro-Ophthalmic Models: CIE S 026 & Hopkinson DGI
 (defun rf-melanopic-irradiance (hex)
