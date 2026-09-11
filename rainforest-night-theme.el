@@ -5,16 +5,16 @@
 (defconst rainforest-night-palette-partial
   '(;; Canvas: deep nocturnal forest humus under steady midnight rain
     (cursor "#56a0c4")        ; Mountain rain glint cursor
-    (bg-main "#131714")       ; Deep nocturnal forest humus: soft restful dark
-    (bg-dim "#0f1310")        ; Damp bark shadow
-    (bg-alt "#19201a")        ; Deep canopy shadow
-    (fg-main "#9cb0a2")       ; Calm river quartz: glare-free, ciliary-safe base text
-    (fg-dim "#566a5c")        ; Dark damp needle mulch: quiet italic comments
-    (fg-alt "#5ea69a")        ; Damp river stone: struct fields and parameters
+    (bg-main "#060706")       ; Deep nocturnal forest humus under midnight rain
+    (bg-dim "#0a0c0a")        ; Damp bark shadow
+    (bg-alt "#111412")        ; Deep canopy shadow
+    (fg-main "#98ac9f")       ; Calm river quartz: glare-free, ciliary-safe base text
+    (fg-dim "#526456")        ; Dark damp needle mulch: quiet italic comments
+    (fg-alt "#5e9f96")        ; Damp river stone: struct fields and parameters
 
-    (bg-active "#222c24")
-    (bg-inactive "#111512")
-    (border "#263228")
+    (bg-active "#141815")
+    (bg-inactive "#080a09")
+    (border "#101311")
 
     ;; 1:1 Keyface Determinism Palette (Forest layers hierarchy)
     (red "#be4a44")           ; Dark yew berry: alerts, negation !
@@ -63,18 +63,18 @@
     (bg-removed-refine "#2c0e0c")
     (fg-removed "#b44a42")
 
-    (bg-mode-line-active "#1e2820")
-    (fg-mode-line-active "#9eb2a4")
-    (bg-completion "#18201a")
-    (bg-popup "#161c17")
-    (bg-hover "#263429")
-    (bg-hover-secondary "#2a382d")
-    (bg-hl-line "#222f25")
-    (bg-paren-match "#2c4030")
-    (bg-err "#220e0c")
-    (bg-warning "#221808")
-    (bg-info "#102014")
-    (bg-region "#253628")))
+    (bg-mode-line-active "#0e110f")
+    (fg-mode-line-active "#98a89c")
+    (bg-completion "#0a0c0a")
+    (bg-popup "#080a09")
+    (bg-hover "#111412")
+    (bg-hover-secondary "#141715")
+    (bg-hl-line "#0e110f")
+    (bg-paren-match "#101a12")
+    (bg-err "#1e0808")
+    (bg-warning "#181004")
+    (bg-info "#08140c")
+    (bg-region "#101812")))
 
 (defconst rainforest-night-palette-mappings-partial
   '(;; Statuses
@@ -99,14 +99,14 @@
     (fnname blue)                ; #2c7094 - Deep mountain stream (is_write_open_flags)
     (fnname-call blue-warmer)    ; #469cd8 - Cold rain water pool (bpf_map_lookup_elem, BPF_CORE_READ)
     (string yellow)              ; #bd803e - Wet oak wood ("strings")
-    (property fg-alt)            ; #5ea69a - Damp river stone (->tgid, .field)
-    (variable fg-main)           ; #9cb0a2 - Soft river quartz (variables)
-    (variable-use fg-main)       ; #9cb0a2 - Variable usages
+    (property fg-alt)            ; #5e9f96 - Damp river stone (->tgid, .field)
+    (variable fg-main)           ; #98ac9f - Soft river quartz (variables)
+    (variable-use fg-main)       ; #98ac9f - Variable usages
     (operator blue-cooler)       ; #688272 - Dark wet slate (+, -, *, >>, &)
     (bracket red-faint)          ; #5a7061 - Wet twigs (( ) [ ] { })
     (delimiter cyan-faint)       ; #586e60 - Damp needles (, ;)
-    (comment fg-dim)             ; #566a5c - Dark needle mulch (pure italic)
-    (docstring fg-dim)           ; #566a5c - Documentation strings
+    (comment fg-dim)             ; #526456 - Dark needle mulch (pure italic)
+    (docstring fg-dim)           ; #526456 - Documentation strings
     (rx-backslash yellow-cooler)
     (rx-construct red)
 
@@ -135,9 +135,9 @@
 ;; Universal standard font-lock faces:
 (custom-theme-set-faces
  'rainforest-night
- '(font-lock-comment-face ((t (:foreground "#566a5c" :slant italic))))
- '(font-lock-comment-delimiter-face ((t (:foreground "#566a5c" :slant italic))))
- '(font-lock-doc-face ((t (:foreground "#566a5c" :slant italic))))
+ '(font-lock-comment-face ((t (:foreground "#526456" :slant italic))))
+ '(font-lock-comment-delimiter-face ((t (:foreground "#526456" :slant italic))))
+ '(font-lock-doc-face ((t (:foreground "#526456" :slant italic))))
  '(font-lock-preprocessor-face ((t (:foreground "#4a74bc"))))
  '(font-lock-keyword-face ((t (:foreground "#308a4c"))))
  '(font-lock-type-face ((t (:foreground "#6ea854"))))
@@ -147,10 +147,10 @@
  '(font-lock-function-name-face ((t (:foreground "#2c7094"))))
  '(font-lock-function-call-face ((t (:foreground "#469cd8"))))
  '(font-lock-string-face ((t (:foreground "#bd803e"))))
- '(font-lock-variable-name-face ((t (:foreground "#9cb0a2"))))
- '(font-lock-variable-use-face ((t (:foreground "#9cb0a2"))))
- '(font-lock-property-name-face ((t (:foreground "#5ea69a"))))
- '(font-lock-property-use-face ((t (:foreground "#5ea69a"))))
+ '(font-lock-variable-name-face ((t (:foreground "#98ac9f"))))
+ '(font-lock-variable-use-face ((t (:foreground "#98ac9f"))))
+ '(font-lock-property-name-face ((t (:foreground "#5e9f96"))))
+ '(font-lock-property-use-face ((t (:foreground "#5e9f96"))))
  '(font-lock-operator-face ((t (:foreground "#688272"))))
  '(font-lock-bracket-face ((t (:foreground "#5a7061"))))
  '(font-lock-delimiter-face ((t (:foreground "#586e60"))))
