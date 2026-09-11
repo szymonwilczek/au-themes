@@ -5,16 +5,16 @@
 (defconst rainforest-night-palette-partial
   '(;; Canvas: deep nocturnal forest humus under steady midnight rain
     (cursor "#56a0c4")        ; Mountain rain glint cursor
-    (bg-main "#060706")       ; Deep nocturnal forest humus under midnight rain
-    (bg-dim "#0a0c0a")        ; Damp bark shadow
-    (bg-alt "#111412")        ; Deep canopy shadow
+    (bg-main "#080a08")       ; Deep nocturnal charcoal: darker than ef-autumn with very light forest accent
+    (bg-dim "#060806")        ; Damp bark shadow
+    (bg-alt "#0c0e0c")        ; Deep canopy shadow
     (fg-main "#98ac9f")       ; Calm river quartz: glare-free, ciliary-safe base text
     (fg-dim "#526456")        ; Dark damp needle mulch: quiet italic comments
     (fg-alt "#5e9f96")        ; Damp river stone: struct fields and parameters
 
-    (bg-active "#141815")
-    (bg-inactive "#080a09")
-    (border "#101311")
+    (bg-active "#141814")
+    (bg-inactive "#050605")
+    (border "#161a16")
 
     ;; 1:1 Keyface Determinism Palette (Forest layers hierarchy)
     (red "#be4a44")           ; Dark yew berry: alerts, negation !
@@ -43,7 +43,7 @@
     (magenta-faint "#64aebb")
 
     (cyan "#308a4c")          ; Deep conifer pine: keywords (struct, while, static, return)
-    (cyan-warmer "#4a74bc")   ; Wet boreal river slate cobalt: preprocessor directives (#define, #include, #endif)
+    (cyan-warmer "#8a8682")   ; Wet mountain granite slate: preprocessor and macro directives (__uint, #define)
     (cyan-cooler "#2a8044")
     (cyan-faint "#586e60")    ; Damp pine needles: delimiters (, ;)
 
@@ -63,18 +63,18 @@
     (bg-removed-refine "#2c0e0c")
     (fg-removed "#b44a42")
 
-    (bg-mode-line-active "#0e110f")
-    (fg-mode-line-active "#98a89c")
-    (bg-completion "#0a0c0a")
-    (bg-popup "#080a09")
-    (bg-hover "#111412")
-    (bg-hover-secondary "#141715")
-    (bg-hl-line "#0e110f")
-    (bg-paren-match "#101a12")
+    (bg-mode-line-active "#121613")
+    (fg-mode-line-active "#90a094")
+    (bg-completion "#101411")
+    (bg-popup "#0e120f")
+    (bg-hover "#161c17")
+    (bg-hover-secondary "#1a201b")
+    (bg-hl-line "#141815")
+    (bg-paren-match "#1a261c")
     (bg-err "#1e0808")
     (bg-warning "#181004")
     (bg-info "#08140c")
-    (bg-region "#101812")))
+    (bg-region "#18221a")))
 
 (defconst rainforest-night-palette-mappings-partial
   '(;; Statuses
@@ -90,7 +90,7 @@
     (fg-prompt blue)
 
     ;; 1:1 Keyface Determinism Mappings:
-    (preprocessor cyan-warmer)   ; #4a74bc - Wet boreal river slate cobalt (#define, #include, #endif)
+    (preprocessor cyan-warmer)   ; #8a8682 - Wet mountain granite slate (__uint, BPF_CORE_READ, #define)
     (keyword cyan)               ; #308a4c - Deep conifer pine (struct, while, static, return)
     (type green)                 ; #6ea854 - Rich forest moss (int, size_t, uint32_t)
     (constant magenta)           ; #7ec4da - Clear glacial polar ice (LOTA_PCR_COUNT, NULL)
@@ -138,7 +138,7 @@
  '(font-lock-comment-face ((t (:foreground "#526456" :slant italic))))
  '(font-lock-comment-delimiter-face ((t (:foreground "#526456" :slant italic))))
  '(font-lock-doc-face ((t (:foreground "#526456" :slant italic))))
- '(font-lock-preprocessor-face ((t (:foreground "#4a74bc"))))
+ '(font-lock-preprocessor-face ((t (:foreground "#8a8682"))))
  '(font-lock-keyword-face ((t (:foreground "#308a4c"))))
  '(font-lock-type-face ((t (:foreground "#6ea854"))))
  '(font-lock-constant-face ((t (:foreground "#7ec4da"))))
