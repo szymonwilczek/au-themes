@@ -12,7 +12,7 @@ with peer-reviewed models of mesopic visual optics, surface physics, and astigma
 Rainforest strictly enforces the determinism rule:
 *ONE COLOR corresponds to EXACTLY ONE SYNTAX ROLE (keyface).*
 No two key syntax tokens share the same color. Colors are structured along the organic vertical layers of a nocturnal rain forest:
-- *Preprocessor* (=#define=, =#include=) -> Pine canopy / spruce crown (~#47a57c~).
+- *Preprocessor* (=#define=, =#include=) -> Wet boreal spruce-lake (~#288c86~).
 - *Keywords* (=struct=, =while=, =static=, =return=) -> Deep conifer pine (~#2a7c40~, zero cyan, zero marine).
 - *Data types* (=int=, =size_t=, =uint32_t=) -> Rich forest moss (~#639c4c~).
 - *Constants and macros* (=LOTA_PCR_COUNT=, =NULL=) -> Wet heather violet (~#9360a3~).
@@ -260,7 +260,7 @@ Ergonomic standards on deep nocturnal humus (~#080b09~):
 | Base text (Mineral quartz)       | fg-main      | #90a297 | #080b09    |       51.21 |       49.65 |        49.02 | OPTIMAL: Clear and stable, no hunting (Window Lc 48-56) |
 | Comments / Doc (Damp needles)    | fg-dim       | #48574c | #080b09    |       17.92 |       16.96 |        17.02 | OPTIMAL: Legible comment layer (Lc 10-24)               |
 | Cursor (Raindrop glint)          | cursor       | #4d93b3 | #080b09    |       41.90 |       40.43 |        40.09 | OPTIMAL: Clear focal point without glare                |
-| Preprocessor (#define, #include) | preprocessor | #47a57c | #080b09    |       46.51 |       45.00 |        44.56 | COMPLIANT: Distinct forest layer                        |
+| Preprocessor (#define, #include) | preprocessor | #288c86 | #080b09    |       36.10 |       34.78 |        34.47 | COMPLIANT: Distinct forest layer                        |
 | Keywords (struct, while, static) | keyword      | #2a7c40 | #080b09    |       28.43 |       27.20 |        27.27 | COMPLIANT: Distinct forest layer                        |
 | Data types (int, size_t)         | type         | #639c4c | #080b09    |       43.44 |       41.96 |        41.53 | COMPLIANT: Distinct forest layer                        |
 | Constants (LOTA_PCR_COUNT, NULL) | constant     | #9360a3 | #080b09    |       31.17 |       29.89 |        29.95 | COMPLIANT: Distinct forest layer                        |
@@ -284,7 +284,7 @@ Ergonomic standards for astigmatism:
 | Base text (Mineral quartz)       | fg-main      | #90a297 | #90a297 | 543.8 nm    | -0.236 D  | 0.000 D       |      0.99 |       9.6 | OPTIMAL: Common focal plane (ΔD <= 0.25 D) |
 | Comments (Damp needles)          | fg-dim       | #48574c | #90a297 | 543.0 nm    | -0.241 D  | 0.005 D       |      0.98 |       9.5 | OPTIMAL: Common focal plane (ΔD <= 0.25 D) |
 | Cursor (Raindrop glint)          | cursor       | #4d93b3 | #90a297 | 530.9 nm    | -0.315 D  | 0.079 D       |      1.29 |      25.6 | OPTIMAL: Common focal plane (ΔD <= 0.25 D) |
-| Preprocessor (#define, #include) | preprocessor | #47a57c | #90a297 | 535.0 nm    | -0.289 D  | 0.053 D       |      1.00 |      39.9 | OPTIMAL: Common focal plane (ΔD <= 0.25 D) |
+| Preprocessor (#define, #include) | preprocessor | #288c86 | #90a297 | 530.9 nm    | -0.315 D  | 0.078 D       |      1.22 |      29.8 | OPTIMAL: Common focal plane (ΔD <= 0.25 D) |
 | Keywords (struct, while, static) | keyword      | #2a7c40 | #90a297 | 536.0 nm    | -0.282 D  | 0.047 D       |      0.90 |      46.4 | OPTIMAL: Common focal plane (ΔD <= 0.25 D) |
 | Data types (int, size_t)         | type         | #639c4c | #90a297 | 540.8 nm    | -0.254 D  | 0.018 D       |      0.85 |      49.4 | OPTIMAL: Common focal plane (ΔD <= 0.25 D) |
 | Constants (LOTA_PCR_COUNT, NULL) | constant     | #9360a3 | #90a297 | 552.0 nm    | -0.189 D  | 0.046 D       |      1.24 |      43.0 | OPTIMAL: Common focal plane (ΔD <= 0.25 D) |
@@ -304,11 +304,11 @@ Strict syntax discriminability requirement for adjacent tokens in code (min. 800
 
 | Role Comparison                          | Color 1 | Color 2 | Distance (Δ) | Status                      |
 |------------------------------------------+---------+---------+--------------+-----------------------------|
-| define (#define) vs struct (keyword)     | #47a57c | #2a7c40 |        18740 | Distinguishable (Δ >= 8000) |
-| define vs LOTA_PCR_COUNT (constant)      | #47a57c | #9360a3 |        37267 | Distinguishable (Δ >= 8000) |
+| define (#define) vs struct (keyword)     | #288c86 | #2a7c40 |        15061 | Distinguishable (Δ >= 8000) |
+| define vs LOTA_PCR_COUNT (constant)      | #288c86 | #9360a3 |        37344 | Distinguishable (Δ >= 8000) |
 | struct vs LOTA_PCR_COUNT                 | #2a7c40 | #9360a3 |        55473 | Distinguishable (Δ >= 8000) |
 | struct vs int (type)                     | #2a7c40 | #639c4c |        11977 | Distinguishable (Δ >= 8000) |
-| define vs int (type)                     | #47a57c | #639c4c |         8362 | Distinguishable (Δ >= 8000) |
+| define vs int (type)                     | #288c86 | #639c4c |        18251 | Distinguishable (Δ >= 8000) |
 | LOTA_PCR_COUNT vs 24 (number)            | #9360a3 | #bc842f |        41501 | Distinguishable (Δ >= 8000) |
 | LOTA_PCR_COUNT vs "string"               | #9360a3 | #b27536 |        32623 | Distinguishable (Δ >= 8000) |
 | static vs __always_inline (builtin)      | #2a7c40 | #a46344 |        38621 | Distinguishable (Δ >= 8000) |
@@ -319,7 +319,7 @@ Strict syntax discriminability requirement for adjacent tokens in code (min. 800
 | tgid (property) vs base text             | #56938b | #90a297 |         9586 | Distinguishable (Δ >= 8000) |
 | 0 (number) vs base text                  | #bc842f | #90a297 |        34406 | Distinguishable (Δ >= 8000) |
 | struct (keyword) vs base text            | #2a7c40 | #90a297 |        50718 | Distinguishable (Δ >= 8000) |
-| define (preproc) vs base text            | #47a57c | #90a297 |        14936 | Distinguishable (Δ >= 8000) |
+| define (preproc) vs base text            | #288c86 | #90a297 |        28453 | Distinguishable (Δ >= 8000) |
 | int (type) vs base text                  | #639c4c | #90a297 |        19505 | Distinguishable (Δ >= 8000) |
 | LOTA_PCR_COUNT vs base text              | #9360a3 | #90a297 |        17936 | Distinguishable (Δ >= 8000) |
 | __always_inline vs base text             | #a46344 | #90a297 |        33685 | Distinguishable (Δ >= 8000) |

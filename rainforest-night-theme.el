@@ -43,7 +43,7 @@
     (magenta-faint "#6e477a")
 
     (cyan "#2a7c40")          ; Deep conifer pine: keywords (struct, while, static, return)
-    (cyan-warmer "#47a57c")   ; Pine canopy / spruce crown: preprocessor directives (#define, #include)
+    (cyan-warmer "#288c86")   ; Wet boreal spruce-lake: preprocessor directives (#define, #include, #endif)
     (cyan-cooler "#29733c")
     (cyan-faint "#4c5e52")    ; Damp pine needles: delimiters (, ;)
 
@@ -90,7 +90,7 @@
     (fg-prompt blue)
 
     ;; 1:1 Keyface Determinism Mappings:
-    (preprocessor cyan-warmer)   ; #47a57c - Pine canopy (#define, #include)
+    (preprocessor cyan-warmer)   ; #288c86 - Wet boreal spruce-lake (#define, #include, #endif)
     (keyword cyan)               ; #2a7c40 - Deep conifer pine (struct, while, static, return)
     (type green)                 ; #639c4c - Rich forest moss (int, size_t, uint32_t)
     (constant magenta)           ; #9360a3 - Wet heather violet (LOTA_PCR_COUNT, NULL)
@@ -138,7 +138,7 @@
  '(font-lock-comment-face ((t (:foreground "#48574c" :slant italic))))
  '(font-lock-comment-delimiter-face ((t (:foreground "#48574c" :slant italic))))
  '(font-lock-doc-face ((t (:foreground "#48574c" :slant italic))))
- '(font-lock-preprocessor-face ((t (:foreground "#47a57c"))))
+ '(font-lock-preprocessor-face ((t (:foreground "#288c86"))))
  '(font-lock-keyword-face ((t (:foreground "#2a7c40"))))
  '(font-lock-type-face ((t (:foreground "#639c4c"))))
  '(font-lock-constant-face ((t (:foreground "#9360a3"))))
