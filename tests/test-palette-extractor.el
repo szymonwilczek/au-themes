@@ -644,17 +644,19 @@ BLUR-ATTENUATION defaults to 0.60 representing a 1.25D cylinder defocus on a 1.2
 
 ;; Photophobia & Neuro-Ophthalmic Models: CIE S 026 & Hopkinson DGI
 (defun rf-melanopic-irradiance (hex)
-  "Calculate CIE S 026:2018 relative melanopic irradiance M under sRGB D65.
-Weights derived from integrating CIE S 026 melanopic sensitivity s_mel(lambda)
-against standard sRGB primaries: R=0.046, G=0.565, B=0.389."
-  (let* ((rgb (rf-hex-to-rgb hex))
-         (r (rf-srgb-to-linear (nth 0 rgb)))
-         (g (rf-srgb-to-linear (nth 1 rgb)))
-         (b (rf-srgb-to-linear (nth 2 rgb))))
-    (+ (* r 0.046) (* g 0.565) (* b 0.389))))
+  "Return melanopic equivalent daylight luminance of HEX per unit display white.
+Computed per CIE S 026:2018 as L_mel,EDI = L_mel / K_mel,v^D65 from the
+melanopic-weighted radiance of the reference display model, normalised by
+the luminance of display white.  Display white returns mel-DER(white)
+(0.997 for the default OLED emitter bands), so the scale matches the
+melanopic daylight (D65) equivalent, not an arbitrary unit."
+  (/ (rf-hex-spectral-response hex rf-cie-s026-melanopic)
+     (* rf-km rf-melanopic-efficacy-d65)))
 
 (defun rf-melanopic-photopic-ratio (hex)
-  "Calculate M/P (melanopic-to-photopic) ratio for HEX."
+  "Return the melanopic daylight efficacy ratio mel-DER of HEX (CIE S 026:2018).
+This is melanopic EDI divided by photopic luminance; D65 has mel-DER = 1
+by definition."
   (let ((y (rf-luminance-y hex))
         (m (rf-melanopic-irradiance hex)))
     (if (< y 1e-6)
