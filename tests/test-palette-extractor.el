@@ -335,6 +335,155 @@ and D65 (x=0.3127, y=0.3290); Y row equals `rf-luminance-y' weights.")
          (b (nth 2 lab)))
     (sqrt (+ (* a a) (* b b)))))
 
+;; =============================================================================
+;; Reference Display Spectral Model
+;; =============================================================================
+;;
+;; IEC 61966-2-1 defines sRGB primaries by chromaticity only; their spectral
+;; power distributions (SPDs) are unspecified.  Any quantity weighted by an
+;; action spectrum that is NOT a linear combination of the CIE 1931 CMFs -
+;; scotopic V'(lambda), melanopic s_mel(lambda) (CIE S 026), blue-light hazard
+;; B(lambda) (ICNIRP/IEC 62471), or the LCA defocus D(lambda) (Thibos 1992) -
+;; is therefore undefined for an "sRGB colour" without a spectral model.
+;; A least-squares projection of those spectra onto span{xbar,ybar,zbar}
+;; (Cohen's fundamental metamer) leaves residuals of 21-55 % (L2), so an
+;; explicit emitter model is unavoidable.
+;;
+;; Physical model: an RGB display emits through three emitter bands j (e.g.
+;; OLED sub-pixel emitters, or LED/QD bands filtered by an LCD colour filter
+;; array).  Every primary is a non-negative mixture of those bands:
+;;   P_i(lambda) = sum_j C_ji G_j(lambda),   C = T^-1 M,
+;; where T_kj = integral of CMF_k * G_j and M = `rf-srgb-to-xyz-matrix'.
+;; This is the unique mixture that reproduces the IEC 61966-2-1 primaries and
+;; D65 white *exactly*; the only free choice is the emitter bands.  C >= 0
+;; (physically realisable, no negative light) is asserted.
+;;
+;; Default bands (Gaussian, peak/FWHM in nm): 460/25, 530/35, 620/35, a
+;; representative RGB-OLED emitter set.  Sensitivity (per linear-RGB unit,
+;; sweeping QD-LCD 450/530/630, OLED 455/525/615 and RGB-LED 465/525/625):
+;; melanopic R 0.005-0.041, G 0.47-0.58, B 0.38-0.58; white S/P 2.40-2.94;
+;; white BLH efficacy 0.80-0.85 mW/lm; blue-primary LCA -0.54..-0.62 D.
+;; Gates that depend on the band choice must be read with this band in mind.
+
+(require 'rf-spectral-data)
+
+(defconst rf-km 683.002
+  "Maximum photopic luminous efficacy K_m in lm/W (CIE 015:2018, sec. 5).")
+
+(defconst rf-km-scotopic 1700.06
+  "Maximum scotopic luminous efficacy K'_m in lm/W (CIE 015:2018, sec. 5).")
+
+(defvar rf-display-emitter-bands
+  '((460.0 . 25.0) (530.0 . 35.0) (620.0 . 35.0))
+  "Reference display emitter bands as (PEAK-NM . FWHM-NM), blue, green, red.")
+
+(defun rf--spectral-lambda (i)
+  "Wavelength in nm of spectral sample I."
+  (+ rf-spectral-lambda-min (* i rf-spectral-lambda-step)))
+
+(defun rf--spectral-integral (u v)
+  "Return sum_lambda U(lambda) V(lambda) dlambda for sampled vectors U, V."
+  (let ((s 0.0))
+    (dotimes (i rf-spectral-samples)
+      (setq s (+ s (* (aref u i) (aref v i)))))
+    (* s rf-spectral-lambda-step)))
+
+(defun rf--gaussian-band (peak fwhm)
+  "Return sampled unit-height Gaussian emitter band at PEAK nm with FWHM nm."
+  (let ((sigma (/ fwhm (* 2.0 (sqrt (* 2.0 (log 2.0))))))
+        (v (make-vector rf-spectral-samples 0.0)))
+    (dotimes (i rf-spectral-samples v)
+      (aset v i (exp (* -0.5 (expt (/ (- (rf--spectral-lambda i) peak) sigma) 2)))))))
+
+(defun rf--mat3-inverse (m)
+  "Return the inverse of 3x3 matrix M (list of rows) by cofactors."
+  (let* ((a (nth 0 (nth 0 m))) (b (nth 1 (nth 0 m))) (c (nth 2 (nth 0 m)))
+         (d (nth 0 (nth 1 m))) (e (nth 1 (nth 1 m))) (f (nth 2 (nth 1 m)))
+         (g (nth 0 (nth 2 m))) (h (nth 1 (nth 2 m))) (k (nth 2 (nth 2 m)))
+         (det (+ (* a (- (* e k) (* f h)))
+                 (- (* b (- (* d k) (* f g))))
+                 (* c (- (* d h) (* e g))))))
+    (when (< (abs det) 1e-12)
+      (error "rf--mat3-inverse: singular matrix"))
+    (mapcar (lambda (row) (mapcar (lambda (x) (/ x det)) row))
+            (list (list (- (* e k) (* f h)) (- (* c h) (* b k)) (- (* b f) (* c e)))
+                  (list (- (* f g) (* d k)) (- (* a k) (* c g)) (- (* c d) (* a f)))
+                  (list (- (* d h) (* e g)) (- (* b g) (* a h)) (- (* a e) (* b d)))))))
+
+(defun rf--mat3-mul (a b)
+  "Return the 3x3 matrix product A B (lists of rows)."
+  (mapcar (lambda (row)
+            (cl-loop for j below 3
+                     collect (cl-loop for k below 3
+                                      sum (* (nth k row) (nth j (nth k b))))))
+          a))
+
+(defvar rf--display-primary-cache nil
+  "Cons (BANDS . PRIMARY-SPDS) memoising `rf-display-primary-spds'.")
+
+(defun rf-display-primary-spds ()
+  "Return sampled SPDs (R G B) of the reference display primaries.
+Each P_i is scaled so that its CIE 1931 XYZ equals column i of
+`rf-srgb-to-xyz-matrix' (hence sum_i Y_i = 1 for white)."
+  (if (equal (car rf--display-primary-cache) rf-display-emitter-bands)
+      (cdr rf--display-primary-cache)
+    (let* ((bands (mapcar (lambda (b) (rf--gaussian-band (car b) (cdr b)))
+                          rf-display-emitter-bands))
+           (cmfs (list rf-cie1931-xbar rf-cie1931-ybar rf-cie1931-zbar))
+           (tmat (mapcar (lambda (cmf)
+                           (mapcar (lambda (g) (rf--spectral-integral cmf g)) bands))
+                         cmfs))
+           (mix (rf--mat3-mul (rf--mat3-inverse tmat) rf-srgb-to-xyz-matrix))
+           (spds (cl-loop for i below 3
+                          collect (let ((p (make-vector rf-spectral-samples 0.0)))
+                                    (cl-loop for j below 3
+                                             for c = (nth i (nth j mix))
+                                             do (when (< c -1e-9)
+                                                  (error "Emitter bands %S cannot realise sRGB primary %d without negative light (C=%g)"
+                                                         rf-display-emitter-bands i c))
+                                             (dotimes (l rf-spectral-samples)
+                                               (aset p l (+ (aref p l) (* c (aref (nth j bands) l))))))
+                                    p))))
+      (setq rf--display-primary-cache (cons rf-display-emitter-bands spds))
+      spds)))
+
+(defun rf-spectral-rgb-weights (action)
+  "Return (w_R w_G w_B): integral of ACTION times each display primary SPD.
+For linear RGB c, sum_i c_i w_i is the ACTION-weighted radiance in units
+of (display white luminance / K_m), i.e. W m^-2 sr^-1 per cd m^-2 x K_m."
+  (mapcar (lambda (p) (rf--spectral-integral action p)) (rf-display-primary-spds)))
+
+(defun rf-hex-spectral-response (hex action)
+  "Return ACTION-weighted response of HEX under the reference display model."
+  (let ((rgb (mapcar #'rf-srgb-to-linear (rf-hex-to-rgb hex))))
+    (cl-loop for c in rgb for w in (rf-spectral-rgb-weights action) sum (* c w))))
+
+(defconst rf-melanopic-efficacy-d65
+  (/ (rf--spectral-integral rf-cie-s026-melanopic rf-cie-d65-spd)
+     (* rf-km (rf--spectral-integral rf-cie1931-ybar rf-cie-d65-spd)))
+  "Melanopic efficacy of luminous radiation for CIE D65, K_mel,v^D65 in W/lm.
+Computed from the tabulated data; CIE S 026:2018 publishes 1.3262 mW/lm.")
+
+(defun rf-spectral-model-self-check ()
+  "Verify the reference display model against its defining standards.
+Signals an error if the modelled primaries do not reproduce
+`rf-srgb-to-xyz-matrix' or if K_mel,v^D65 deviates from CIE S 026 by
+more than 0.5 %."
+  (let ((cmfs (list rf-cie1931-xbar rf-cie1931-ybar rf-cie1931-zbar)))
+    (cl-loop for p in (rf-display-primary-spds) for i from 0 do
+             (cl-loop for cmf in cmfs for k from 0 do
+                      (let ((got (rf--spectral-integral cmf p))
+                            (want (nth i (nth k rf-srgb-to-xyz-matrix))))
+                        (when (> (abs (- got want)) 1e-9)
+                          (error "Display model: primary %d component %d = %g, expected %g"
+                                 i k got want))))))
+  (when (> (abs (- rf-melanopic-efficacy-d65 1.3262e-3)) (* 0.005 1.3262e-3))
+    (error "Display model: K_mel,v^D65 = %g W/lm deviates from CIE S 026 (1.3262 mW/lm)"
+           rf-melanopic-efficacy-d65))
+  t)
+
+(rf-spectral-model-self-check)
+
 ;; Thibos (1992) Effective Wavelength and Diopters
 (defun rf-effective-wavelength (hex)
   (let* ((rgb (rf-hex-to-rgb hex))
