@@ -33,7 +33,7 @@
     (yellow-faint "#8c5e2a")
 
     (blue "#2c7094")          ; Deep mountain stream: function definitions (is_write_open_flags)
-    (blue-warmer "#469cd8")   ; Cold rain water pool: function calls (bpf_map_lookup_elem, BPF_CORE_READ)
+    (blue-warmer "#528cc4")   ; Cold rain water pool: function calls (bpf_map_lookup_elem, BPF_CORE_READ)
     (blue-cooler "#688272")   ; Dark wet slate: operators (+, -, *, >>, &)
     (blue-faint "#2c5672")
 
@@ -98,7 +98,7 @@
     (number yellow-warmer)       ; #c69038 - Wet amber resin (0, 24, 32 in buf[0])
     (builtin magenta-cooler)     ; #3ea47c - Cold forest viridian (__always_inline, bpf_map_lookup_elem)
     (fnname blue)                ; #2c7094 - Deep mountain stream (is_write_open_flags)
-    (fnname-call blue-warmer)    ; #469cd8 - Cold rain water pool (bpf_map_lookup_elem, BPF_CORE_READ)
+    (fnname-call blue-warmer)    ; #528cc4 - Cold rain water pool (bpf_map_lookup_elem, BPF_CORE_READ)
     (string yellow)              ; #bd803e - Wet oak wood ("strings")
     (property fg-alt)            ; #8c8e56 - Damp olive lichen (->tgid, .field)
     (variable fg-main)           ; #9c9a96 - Soft river slate (variables)
@@ -146,7 +146,7 @@
  '(font-lock-number-face ((t (:foreground "#bfa03c"))))
  '(font-lock-builtin-face ((t (:foreground "#3ea47c"))))
  '(font-lock-function-name-face ((t (:foreground "#2c7094"))))
- '(font-lock-function-call-face ((t (:foreground "#469cd8"))))
+ '(font-lock-function-call-face ((t (:foreground "#528cc4"))))
  '(font-lock-string-face ((t (:foreground "#8e4c1c"))))
  '(font-lock-variable-name-face ((t (:foreground "#9c9a96"))))
  '(font-lock-variable-use-face ((t (:foreground "#9c9a96"))))

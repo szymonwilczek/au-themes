@@ -136,7 +136,7 @@
          :fnname (or (rainforest-get-theme-face-fg theme 'font-lock-function-name-face)
                      (cadr (assq 'blue partial)) "#2c7094")
          :fnname-call (or (rainforest-get-theme-face-fg theme 'font-lock-function-call-face)
-                          (cadr (assq 'blue-warmer partial)) "#469cd8")
+                          (cadr (assq 'blue-warmer partial)) "#528cc4")
          :string (or (rainforest-get-theme-face-fg theme 'font-lock-string-face)
                      (cadr (assq 'yellow partial)) "#a46e38")
          :property (or (rainforest-get-theme-face-fg theme 'font-lock-property-name-face)
