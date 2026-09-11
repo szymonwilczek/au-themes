@@ -74,7 +74,8 @@
     (bg-err "#1e0808")
     (bg-warning "#181004")
     (bg-info "#08140c")
-    (bg-region "#162e1b")))
+    (bg-region "#162e1b")
+    (fg-line-number-inactive "#4a4c4a")))
 
 (defconst rainforest-night-palette-mappings-partial
   '(;; Statuses
@@ -155,7 +156,8 @@
  '(font-lock-bracket-face ((t (:foreground "#5a7061"))))
  '(font-lock-delimiter-face ((t (:foreground "#586e60"))))
  '(font-lock-warning-face ((t (:foreground "#be4a44"))))
- '(region ((t (:background "#162e1b" :extend t)))))
+ '(region ((t (:background "#162e1b" :extend t))))
+ '(line-number ((t (:foreground "#4a4c4a")))))
 
 (provide 'rainforest-night-theme)
 ;;; rainforest-night-theme.el ends here
