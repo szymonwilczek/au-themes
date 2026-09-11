@@ -4,7 +4,11 @@
 
 (defun test-cvd-colorblindness-run ()
   "Evaluate syntax token discriminability under Protanopia, Deuteranopia, and Tritanopia.
-Ref: Machado et al. (2009) IEEE TVCG, Brettel et al. (1997) JOSA A."
+Dichromat appearance is simulated with the two half-plane LMS projection of
+Brettel, Viénot & Mollon (1997) J. Opt. Soc. Am. A 14(10):2647-2655,
+DOI: 10.1364/JOSAA.14.002647, using the Smith & Pokorny (1975) cone
+fundamentals over Judd-Vos corrected XYZ, as in Viénot, Brettel & Mollon
+(1999) Color Res. Appl. 24(4):243-252."
   (let* ((pal (rainforest-extract-active-palette))
          (theme (plist-get pal :theme))
          (passes 0)
@@ -22,7 +26,7 @@ Ref: Machado et al. (2009) IEEE TVCG, Brettel et al. (1997) JOSA A."
                   ("Alert / Error vs Base Text"  :err          :fg-main))))
     (princ (format "\n======================================================================\n"))
     (princ (format " Color Vision Deficiency (CVD) Accessibility Gate Suite\n"))
-    (princ (format " Ref: Machado, Oliveira & Fernandes (2009); Brettel et al. (1997)\n"))
+    (princ (format " Ref: Brettel, Viénot & Mollon (1997) DOI 10.1364/JOSAA.14.002647\n"))
     (princ (format " Requirement: Minimum Pairwise Emacs Distance >= %d in all CVD modes\n" min-distance))
     (princ (format " Theme: %s\n" theme))
     (princ (format "======================================================================\n"))

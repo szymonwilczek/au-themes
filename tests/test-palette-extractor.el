@@ -632,46 +632,122 @@ absorbing short wavelengths. Fine strokes rely on L+M cone stimulation."
         1.0
       (/ (+ (* rl 0.2126729) (* gl 0.7151522)) y-total))))
 
-;; CVD (Color Vision Deficiency) Simulation Matrices (Machado et al. 2009 / Brettel 1997)
-(defconst rf-cvd-matrix-protan
-  '((0.56667 0.43333 0.00000)
-    (0.55833 0.44167 0.00000)
-    (0.00000 0.24167 0.75833))
-  "Machado (2009) / Brettel linear sRGB projection matrix for Protanopia.")
+;; Dichromat simulation: Brettel, Viénot & Mollon (1997) "Computerized
+;; simulation of color appearance for dichromats", J. Opt. Soc. Am. A
+;; 14(10):2647-2655, DOI: 10.1364/JOSAA.14.002647.  The stimulus is mapped to
+;; LMS, then projected along the missing cone axis onto one of two half-planes
+;; that share the neutral (white) axis and contain the anchor stimuli
+;; 475/575 nm (protan, deutan) or 485/660 nm (tritan).
+;;
+;; The matrices previously stored here (0.56667/0.43333 ...) are the
+;; "ColorMatrix" set that circulates in web tooling.  They are neither
+;; Brettel nor Machado et al. (2009): they are single matrices with no
+;; half-plane split, they are not derived from any cone fundamentals, and
+;; applying them cannot reproduce the confusion lines of a dichromat.
+;;
+;; LMS model as in Viénot, Brettel & Mollon (1999) and the public-domain
+;; libDaltonLens: Judd-Vos corrected XYZ from linear sRGB, then the Smith &
+;; Pokorny (1975) cone fundamentals.
+(defconst rf-xyz-juddvos-from-linear-rgb
+  '((0.409568 0.355041 0.179167)
+    (0.213389 0.706743 0.0798680)
+    (0.0186297 0.114620 0.912367))
+  "Linear sRGB (BT.709 primaries) to Judd-Vos corrected CIE XYZ.")
 
-(defconst rf-cvd-matrix-deutan
-  '((0.62500 0.37500 0.00000)
-    (0.70000 0.30000 0.00000)
-    (0.00000 0.30000 0.70000))
-  "Machado (2009) / Brettel linear sRGB projection matrix for Deuteranopia.")
+(defconst rf-lms-from-xyz-smith-pokorny
+  '((0.15514 0.54312 -0.03286)
+    (-0.15514 0.45684 0.03286)
+    (0.0 0.0 0.01608))
+  "Judd-Vos XYZ to LMS, Smith & Pokorny (1975) cone fundamentals.")
 
-(defconst rf-cvd-matrix-tritan
-  '((0.95000 0.05000 0.00000)
-    (0.00000 0.43333 0.56667)
-    (0.00000 0.47500 0.52500))
-  "Machado (2009) / Brettel linear sRGB projection matrix for Tritanopia.")
+(defconst rf-cvd-anchor-xyz
+  '((475 . (0.13287 0.11284 0.9422))
+    (575 . (0.84394 0.91558 0.00197))
+    (485 . (0.05699 0.16987 0.5864))
+    (660 . (0.16161 0.061 0.00001)))
+  "Judd-Vos XYZ of the Brettel (1997) anchor stimuli.")
+
+(defun rf--mat3-vec (m v)
+  "Multiply 3x3 matrix M (list of rows) by vector V."
+  (mapcar (lambda (row) (cl-loop for a in row for b in v sum (* a b))) m))
+
+(defun rf--vec3-cross (a b)
+  "Cross product of 3-vectors A and B."
+  (list (- (* (nth 1 a) (nth 2 b)) (* (nth 2 a) (nth 1 b)))
+        (- (* (nth 2 a) (nth 0 b)) (* (nth 0 a) (nth 2 b)))
+        (- (* (nth 0 a) (nth 1 b)) (* (nth 1 a) (nth 0 b)))))
+
+(defun rf--vec3-dot (a b)
+  "Dot product of 3-vectors A and B."
+  (cl-loop for x in a for y in b sum (* x y)))
+
+(defun rf--cvd-projection-matrix (n cvd-type)
+  "Projection onto the plane with normal N along the CVD-TYPE cone axis."
+  (pcase cvd-type
+    ('protan (list (list 0.0 (- (/ (nth 1 n) (nth 0 n))) (- (/ (nth 2 n) (nth 0 n))))
+                   '(0.0 1.0 0.0)
+                   '(0.0 0.0 1.0)))
+    ('deutan (list '(1.0 0.0 0.0)
+                   (list (- (/ (nth 0 n) (nth 1 n))) 0.0 (- (/ (nth 2 n) (nth 1 n))))
+                   '(0.0 0.0 1.0)))
+    ('tritan (list '(1.0 0.0 0.0)
+                   '(0.0 1.0 0.0)
+                   (list (- (/ (nth 0 n) (nth 2 n))) (- (/ (nth 1 n) (nth 2 n))) 0.0)))
+    (_ (error "Unknown CVD type: %s" cvd-type))))
+
+(defvar rf--cvd-params-cache nil "Alist of CVD-TYPE to Brettel parameters.")
+
+(defun rf-cvd-parameters (cvd-type)
+  "Return (H1 H2 N-SEP) for CVD-TYPE, all expressed in linear sRGB.
+H1 applies where the stimulus is on the positive side of the separation
+plane N-SEP, H2 otherwise (Brettel et al. 1997)."
+  (or (cdr (assq cvd-type rf--cvd-params-cache))
+      (let* ((lms<-rgb (rf--mat3-mul rf-lms-from-xyz-smith-pokorny
+                                     rf-xyz-juddvos-from-linear-rgb))
+             (rgb<-lms (rf--mat3-inverse lms<-rgb))
+             (neutral (rf--mat3-vec lms<-rgb '(1.0 1.0 1.0)))
+             (anchor (lambda (nm) (rf--mat3-vec rf-lms-from-xyz-smith-pokorny
+                                                (cdr (assq nm rf-cvd-anchor-xyz)))))
+             (wings (if (eq cvd-type 'tritan)
+                        (list (funcall anchor 485) (funcall anchor 660))
+                      (list (funcall anchor 475) (funcall anchor 575))))
+             (axis (pcase cvd-type
+                     ('protan '(1.0 0.0 0.0))
+                     ('deutan '(0.0 1.0 0.0))
+                     ('tritan '(0.0 0.0 1.0))
+                     (_ (error "Unknown CVD type: %s" cvd-type))))
+             (n-sep-lms (rf--vec3-cross neutral axis))
+             (w1 (nth 0 wings))
+             (w2 (nth 1 wings)))
+        ;; Order the wings so that wing 1 lies on the positive side of the
+        ;; separation plane.
+        (when (< (rf--vec3-dot n-sep-lms w1) 0)
+          (setq w1 (nth 1 wings) w2 (nth 0 wings)))
+        (let* ((h1 (rf--cvd-projection-matrix (rf--vec3-cross neutral w1) cvd-type))
+               (h2 (rf--cvd-projection-matrix (rf--vec3-cross neutral w2) cvd-type))
+               (params (list (rf--mat3-mul rgb<-lms (rf--mat3-mul h1 lms<-rgb))
+                             (rf--mat3-mul rgb<-lms (rf--mat3-mul h2 lms<-rgb))
+                             ;; Separation-plane normal expressed in linear RGB:
+                             ;; n_rgb^T = n_lms^T M, so that n_rgb . rgb = n_lms . lms.
+                             (cl-loop for j below 3
+                                      collect (cl-loop for k below 3
+                                                       sum (* (nth k n-sep-lms)
+                                                              (nth j (nth k lms<-rgb))))))))
+          (push (cons cvd-type params) rf--cvd-params-cache)
+          params))))
 
 (defun rf-cvd-simulate (hex cvd-type)
-  "Simulate CVD-transformed hex color under CVD-TYPE ('protan, 'deutan, or 'tritan)."
-  (let* ((rgb (rf-hex-to-rgb hex))
-         (rl (rf-srgb-to-linear (nth 0 rgb)))
-         (gl (rf-srgb-to-linear (nth 1 rgb)))
-         (bl (rf-srgb-to-linear (nth 2 rgb)))
-         (m (cond
-             ((eq cvd-type 'protan) rf-cvd-matrix-protan)
-             ((eq cvd-type 'deutan) rf-cvd-matrix-deutan)
-             ((eq cvd-type 'tritan) rf-cvd-matrix-tritan)
-             (t (error "Unknown CVD type: %s" cvd-type))))
-         (r-sim (max 0.0 (+ (* (nth 0 (nth 0 m)) rl) (* (nth 1 (nth 0 m)) gl) (* (nth 2 (nth 0 m)) bl))))
-         (g-sim (max 0.0 (+ (* (nth 0 (nth 1 m)) rl) (* (nth 1 (nth 1 m)) gl) (* (nth 2 (nth 1 m)) bl))))
-         (b-sim (max 0.0 (+ (* (nth 0 (nth 2 m)) rl) (* (nth 1 (nth 2 m)) gl) (* (nth 2 (nth 2 m)) bl))))
-         (r-srgb (min 1.0 (max 0.0 (rf-linear-to-srgb r-sim))))
-         (g-srgb (min 1.0 (max 0.0 (rf-linear-to-srgb g-sim))))
-         (b-srgb (min 1.0 (max 0.0 (rf-linear-to-srgb b-sim)))))
-    (format "#%02x%02x%02x"
-            (round (* r-srgb 255.0))
-            (round (* g-srgb 255.0))
-            (round (* b-srgb 255.0)))))
+  "Simulate HEX as seen by a dichromat of CVD-TYPE (protan, deutan or tritan).
+Brettel, Viénot & Mollon (1997) two half-plane projection in LMS."
+  (let* ((rgb (mapcar #'rf-srgb-to-linear (rf-hex-to-rgb hex)))
+         (params (rf-cvd-parameters cvd-type))
+         (m (if (>= (rf--vec3-dot (nth 2 params) rgb) 0.0)
+                (nth 0 params)
+              (nth 1 params)))
+         (sim (mapcar (lambda (c) (min 1.0 (max 0.0 (rf-linear-to-srgb (max 0.0 c)))))
+                      (rf--mat3-vec m rgb))))
+    (apply #'format "#%02x%02x%02x"
+           (mapcar (lambda (c) (round (* c 255.0))) sim))))
 
 ;; Reference viewing conditions of IEC 61966-2-1:1999 (sRGB), clause 2:
 ;; display white luminance 80 cd/m^2, ambient illuminance 64 lx, veiling
