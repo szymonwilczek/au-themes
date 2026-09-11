@@ -109,7 +109,7 @@
                        ((eq theme 'rainforest-day) rainforest-day-palette-partial)
                        ((boundp 'rainforest-day-palette-partial) (symbol-value 'rainforest-day-palette-partial))
                        (t nil)))
-             (bg (or (cadr (assq 'bg-main partial)) (if (eq theme 'rainforest-day) "#b2beaf" "#0c0b08")))
+             (bg (or (cadr (assq 'bg-main partial)) (if (eq theme 'rainforest-day) "#b2beaf" "#080a08")))
              (fg (or (cadr (assq 'fg-main partial)) (if (eq theme 'rainforest-day) "#122216" "#9c9a96")))
              (dim (or (cadr (assq 'fg-dim partial)) (if (eq theme 'rainforest-day) "#485a4c" "#526456")))
              (cur (or (cadr (assq 'cursor partial)) (if (eq theme 'rainforest-day) "#105476" "#56a0c4")))

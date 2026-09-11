@@ -5,16 +5,16 @@
 (defconst rainforest-night-palette-partial
   '(;; Canvas: deep nocturnal forest humus under steady midnight rain
     (cursor "#56a0c4")        ; Mountain rain glint cursor
-    (bg-main "#0c0b08")       ; Deep nocturnal peat charcoal: warm brownish-black tone
-    (bg-dim "#080705")        ; Damp bark shadow
-    (bg-alt "#11100d")        ; Deep canopy shadow
+    (bg-main "#080a08")       ; Deep nocturnal conifer charcoal: eliminates warm brownish gamma wash
+    (bg-dim "#060806")        ; Damp bark shadow
+    (bg-alt "#0c0e0c")        ; Deep canopy shadow
     (fg-main "#9c9a96")       ; Soft river slate: calm, glare-free, ciliary-safe base text
     (fg-dim "#526456")        ; Dark damp needle mulch: quiet italic comments
     (fg-alt "#5e9f96")        ; Damp river stone: struct fields and parameters
 
-    (bg-active "#1a1815")
-    (bg-inactive "#060504")
-    (border "#1c1a17")
+    (bg-active "#141814")
+    (bg-inactive "#050605")
+    (border "#161a16")
 
     ;; 1:1 Keyface Determinism Palette (Forest layers hierarchy)
     (red "#be4a44")           ; Dark yew berry: alerts, negation !
