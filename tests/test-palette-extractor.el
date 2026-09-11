@@ -592,23 +592,81 @@ absorbing short wavelengths. Fine strokes rely on L+M cone stimulation."
             (round (* g-srgb 255.0))
             (round (* b-srgb 255.0)))))
 
-;; Scotopic & Mesopic Vision (CIE 191:2010 Purkinje Shift)
-(defun rf-scotopic-luminance (hex)
-  "Calculate approximate CIE scotopic V'(lambda) luminance from HEX."
-  (let* ((rgb (rf-hex-to-rgb hex))
-         (rl (rf-srgb-to-linear (nth 0 rgb)))
-         (gl (rf-srgb-to-linear (nth 1 rgb)))
-         (bl (rf-srgb-to-linear (nth 2 rgb))))
-    (+ (* rl 0.062) (* gl 0.608) (* bl 0.330))))
+;; Reference viewing conditions of IEC 61966-2-1:1999 (sRGB), clause 2:
+;; display white luminance 80 cd/m^2, ambient illuminance 64 lx, veiling
+;; glare 0.2 cd/m^2.  Every absolute photometric quantity in this suite is
+;; anchored to these values instead of ad-hoc per-test constants.
+(defconst rf-display-white-luminance 80.0
+  "Luminance of display white in cd/m^2 (IEC 61966-2-1:1999 reference).")
 
-(defun rf-mesopic-luminance (hex &optional m-coef)
-  "Calculate CIE 191:2010 mesopic luminance for HEX under mesopic coefficient M-COEF (default 0.45)."
-  (let* ((m (or m-coef 0.45))
-         (y-p (rf-luminance-y hex))
-         (y-s (rf-scotopic-luminance hex))
-         (ratio (/ 683.0 1700.0)))
-    (/ (+ (* m y-p) (* (- 1.0 m) y-s ratio))
-       (+ m (* (- 1.0 m) ratio)))))
+(defconst rf-ambient-illuminance 64.0
+  "Ambient illuminance at the observer in lx (IEC 61966-2-1:1999 reference).")
+
+(defconst rf-reference-veiling-glare 0.2
+  "Display veiling glare luminance in cd/m^2 (IEC 61966-2-1:1999 reference).")
+
+(defun rf-luminance-cd (hex &optional white-cd)
+  "Absolute luminance of HEX in cd/m^2 for a display white of WHITE-CD."
+  (* (rf-luminance-y hex) (or white-cd rf-display-white-luminance)))
+
+;; Scotopic & Mesopic Vision (CIE 191:2010 Purkinje Shift)
+(defun rf-scotopic-luminance (hex &optional white-cd)
+  "Scotopic luminance of HEX in scotopic cd/m^2, display white = WHITE-CD.
+L' = K'_m Int V'(lambda) L_e(lambda) dlambda over the reference display
+model, so display white yields L'/L = S/P = 2.54 for the default emitter
+bands (2.46 for a true D65 spectrum), instead of the value 1.0 implied by
+the previous normalised RGB weights."
+  (* (or white-cd rf-display-white-luminance)
+     (/ (* rf-km-scotopic (rf-hex-spectral-response hex rf-cie1951-vprime))
+        rf-km)))
+
+(defconst rf-mesopic-vprime-555 (/ rf-km rf-km-scotopic)
+  "V'(lambda_0) = K_m/K'_m at lambda_0 = 555 nm, as used by CIE 191:2010.")
+
+(defun rf-mesopic-adaptation-coefficient (lp ls)
+  "Return CIE 191:2010 adaptation coefficient m for photopic LP and scotopic LS.
+Both luminances are in cd/m^2.  Implements the iterative MES-2 procedure:
+m_0 = 0.5, L_mes,n = [m L_p + (1-m) L_s V'(l_0)] / [m + (1-m) V'(l_0)],
+m_n = 0.767 + 0.3334 log10(L_mes,n), clamped to m = 1 at or above
+5 cd/m^2 (photopic) and m = 0 at or below 0.005 cd/m^2 (scotopic)."
+  (let ((m 0.5)
+        (vp rf-mesopic-vprime-555))
+    (dotimes (_ 10 m)
+      (let ((lmes (/ (+ (* m lp) (* (- 1.0 m) ls vp))
+                     (+ m (* (- 1.0 m) vp)))))
+        (setq m (cond ((>= lmes 5.0) 1.0)
+                      ((<= lmes 0.005) 0.0)
+                      (t (max 0.0 (min 1.0 (+ 0.767 (* 0.3334 (log lmes 10))))))))))))
+
+(defun rf-mesopic-luminance (hex m &optional white-cd)
+  "Mesopic luminance of HEX in cd/m^2 under adaptation coefficient M.
+M describes the observer's adaptation state (see
+`rf-mesopic-adaptation-coefficient'); it is a property of the adaptation
+field, not of the individual stimulus."
+  (let* ((lp (rf-luminance-cd hex white-cd))
+         (ls (rf-scotopic-luminance hex white-cd))
+         (vp rf-mesopic-vprime-555))
+    (/ (+ (* m lp) (* (- 1.0 m) ls vp))
+       (+ m (* (- 1.0 m) vp)))))
+
+;; Standard 80x40 character viewport composition, shared by every test that
+;; needs a field/adaptation luminance rather than a single colour.
+(defconst rf-viewport-cells 3200 "Character cells in an 80x40 viewport.")
+(defconst rf-viewport-code-cells 1050 "Cells covered by syntax ink.")
+(defconst rf-viewport-hl-cells 80 "Cells covered by the hl-line band.")
+
+(defun rf-viewport-mean-luminance-y (pal)
+  "Mean relative luminance of an 80x40 viewport rendered with palette PAL."
+  (let* ((keys '(:fg-main :keyword :type :property :fnname-call :number :string :constant))
+         (ink (/ (cl-loop for k in keys sum (rf-luminance-y (plist-get pal k)))
+                 (float (length keys))))
+         (hl (rf-luminance-y (plist-get pal :bg-hl-line)))
+         (bg (rf-luminance-y (plist-get pal :bg-main)))
+         (bg-cells (- rf-viewport-cells rf-viewport-code-cells rf-viewport-hl-cells)))
+    (/ (+ (* rf-viewport-code-cells ink)
+          (* rf-viewport-hl-cells hl)
+          (* bg-cells bg))
+       (float rf-viewport-cells))))
 
 ;; Toric Blur Astigmatism PSF
 (defun rf-toric-blur-michelson (hex bg-hex &optional blur-attenuation)
