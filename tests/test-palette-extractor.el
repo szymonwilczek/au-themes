@@ -38,6 +38,17 @@
         (rainforest-extract-fg-from-spec (cdr spec))))
    (t nil)))
 
+(defun rainforest-extract-bg-from-spec (spec)
+  "Recursively search SPEC for :background value."
+  (cond
+   ((null spec) nil)
+   ((and (consp spec) (eq (car spec) :background))
+    (cadr spec))
+   ((consp spec)
+    (or (rainforest-extract-bg-from-spec (car spec))
+        (rainforest-extract-bg-from-spec (cdr spec))))
+   (t nil)))
+
 (defun rainforest-get-theme-face-fg (theme face)
   "Extract foreground hex string for FACE from THEME's settings."
   (let ((settings (get theme 'theme-settings))
@@ -50,54 +61,93 @@
           (when (and fg (stringp fg) (string-prefix-p "#" fg))
             (setq result fg)))))))
 
+(defun rainforest-get-theme-face-bg (theme face)
+  "Extract background hex string for FACE from THEME's settings."
+  (let ((settings (get theme 'theme-settings))
+        result)
+    (dolist (s settings result)
+      (when (and (eq (car s) 'theme-face)
+                 (eq (cadr s) face)
+                 (null result))
+        (let ((bg (rainforest-extract-bg-from-spec (nth 3 s))))
+          (when (and bg (stringp bg) (string-prefix-p "#" bg))
+            (setq result bg)))))))
+
 (defun rainforest-extract-active-palette (&optional theme-name)
   "Extract complete semantic color dictionary directly from THEME-NAME (default `rf-active-theme')."
-  (let* ((theme (or theme-name rf-active-theme 'rainforest-night))
-         (partial (cond
-                   ((eq theme 'rainforest-night) rainforest-night-palette-partial)
-                   ((eq theme 'rainforest-day) rainforest-day-palette-partial)
-                   ((boundp 'rainforest-day-palette-partial) (symbol-value 'rainforest-day-palette-partial))
-                   (t nil)))
-         (bg (or (cadr (assq 'bg-main partial)) (if (eq theme 'rainforest-day) "#b2beaf" "#0c0b08")))
-         (fg (or (cadr (assq 'fg-main partial)) (if (eq theme 'rainforest-day) "#122216" "#9c9a96")))
-         (dim (or (cadr (assq 'fg-dim partial)) (if (eq theme 'rainforest-day) "#485a4c" "#526456")))
-         (cur (or (cadr (assq 'cursor partial)) (if (eq theme 'rainforest-day) "#105476" "#56a0c4")))
-         (hl (or (cadr (assq 'bg-hl-line partial)) (if (eq theme 'rainforest-day) "#a2af9f" "#182026"))))
-    (list
-     :theme theme
-     :bg-main bg
-     :bg-hl-line hl
-     :fg-main fg
-     :fg-dim dim
-     :cursor cur
-     :preprocessor (or (rainforest-get-theme-face-fg theme 'font-lock-preprocessor-face)
-                       (cadr (assq 'cyan-warmer partial)) "#7a6450")
-     :keyword (or (rainforest-get-theme-face-fg theme 'font-lock-keyword-face)
-                  (cadr (assq 'cyan partial)) "#2c8446")
-     :type (or (rainforest-get-theme-face-fg theme 'font-lock-type-face)
-               (cadr (assq 'green partial)) "#6ca253")
-     :constant (or (rainforest-get-theme-face-fg theme 'font-lock-constant-face)
-                   (cadr (assq 'magenta partial)) "#7ec4da")
-     :number (or (rainforest-get-theme-face-fg theme 'font-lock-number-face)
-                 (cadr (assq 'yellow-warmer partial)) "#c69038")
-     :builtin (or (rainforest-get-theme-face-fg theme 'font-lock-builtin-face)
-                  (cadr (assq 'magenta-cooler partial)) "#b26e4e")
-     :fnname (or (rainforest-get-theme-face-fg theme 'font-lock-function-name-face)
-                 (cadr (assq 'blue partial)) "#2c7094")
-     :fnname-call (or (rainforest-get-theme-face-fg theme 'font-lock-function-call-face)
-                      (cadr (assq 'blue-warmer partial)) "#469cd8")
-     :string (or (rainforest-get-theme-face-fg theme 'font-lock-string-face)
-                 (cadr (assq 'yellow partial)) "#a46e38")
-     :property (or (rainforest-get-theme-face-fg theme 'font-lock-property-name-face)
-                   (cadr (assq 'fg-alt partial)) "#5c8882")
-     :operator (or (rainforest-get-theme-face-fg theme 'font-lock-operator-face)
-                   (cadr (assq 'blue-cooler partial)) "#586c60")
-     :bracket (or (rainforest-get-theme-face-fg theme 'font-lock-bracket-face)
-                  (cadr (assq 'red-faint partial)) "#4c5c50")
-     :delimiter (or (rainforest-get-theme-face-fg theme 'font-lock-delimiter-face)
-                    (cadr (assq 'cyan-faint partial)) "#4c5a50")
-     :err (or (rainforest-get-theme-face-fg theme 'font-lock-warning-face)
-              (cadr (assq 'red partial)) "#9e3834"))))
+  (let* ((theme (or theme-name rf-active-theme 'rainforest-night)))
+    (if (string-prefix-p "ef-" (symbol-name theme))
+        (progn
+          (require 'ef-themes nil t)
+          (require (intern (format "%s-theme" theme)) nil t)
+          (load-theme theme t)
+          (let ((get-c (lambda (sym) (ignore-errors (ef-themes-get-color-value sym nil theme)))))
+            (list
+             :theme theme
+             :bg-main (or (rainforest-get-theme-face-bg theme 'default) (funcall get-c 'bg-main) "#0f0e06")
+             :bg-hl-line (or (rainforest-get-theme-face-bg theme 'hl-line) (funcall get-c 'bg-hl-line) "#302a3a")
+             :fg-main (or (rainforest-get-theme-face-fg theme 'default) (funcall get-c 'fg-main) "#cfbcba")
+             :fg-dim (or (rainforest-get-theme-face-fg theme 'line-number) (funcall get-c 'fg-dim) "#887c8a")
+             :cursor (or (rainforest-get-theme-face-bg theme 'cursor) (funcall get-c 'cursor) "#ffaa33")
+             :preprocessor (or (rainforest-get-theme-face-fg theme 'font-lock-preprocessor-face) (funcall get-c 'preprocessor) "#d570af")
+             :keyword (or (rainforest-get-theme-face-fg theme 'font-lock-keyword-face) (funcall get-c 'keyword) "#c48702")
+             :type (or (rainforest-get-theme-face-fg theme 'font-lock-type-face) (funcall get-c 'type) "#2fa526")
+             :constant (or (rainforest-get-theme-face-fg theme 'font-lock-constant-face) (funcall get-c 'constant) "#64aa0f")
+             :number (or (rainforest-get-theme-face-fg theme 'font-lock-number-face) (funcall get-c 'number) "#cfbcba")
+             :builtin (or (rainforest-get-theme-face-fg theme 'font-lock-builtin-face) (funcall get-c 'builtin) "#ff7a7f")
+             :fnname (or (rainforest-get-theme-face-fg theme 'font-lock-function-name-face) (funcall get-c 'fnname) "#3dbbb0")
+             :fnname-call (or (rainforest-get-theme-face-fg theme 'font-lock-function-call-face) (funcall get-c 'fnname-call) "#82a0af")
+             :string (or (rainforest-get-theme-face-fg theme 'font-lock-string-face) (funcall get-c 'string) "#f06a3f")
+             :property (or (rainforest-get-theme-face-fg theme 'font-lock-property-name-face) (funcall get-c 'property) "#6fafff")
+             :operator (or (rainforest-get-theme-face-fg theme 'font-lock-operator-face) (funcall get-c 'operator) "#cfbcba")
+             :bracket (or (rainforest-get-theme-face-fg theme 'font-lock-bracket-face) (funcall get-c 'bracket) "#cfbcba")
+             :delimiter (or (rainforest-get-theme-face-fg theme 'font-lock-delimiter-face) (funcall get-c 'delimiter) "#cfbcba")
+             :err (or (rainforest-get-theme-face-fg theme 'font-lock-warning-face) (funcall get-c 'err) "#f06a3f"))))
+      (let* ((partial (cond
+                       ((eq theme 'rainforest-night) rainforest-night-palette-partial)
+                       ((eq theme 'rainforest-day) rainforest-day-palette-partial)
+                       ((boundp 'rainforest-day-palette-partial) (symbol-value 'rainforest-day-palette-partial))
+                       (t nil)))
+             (bg (or (cadr (assq 'bg-main partial)) (if (eq theme 'rainforest-day) "#b2beaf" "#0c0b08")))
+             (fg (or (cadr (assq 'fg-main partial)) (if (eq theme 'rainforest-day) "#122216" "#9c9a96")))
+             (dim (or (cadr (assq 'fg-dim partial)) (if (eq theme 'rainforest-day) "#485a4c" "#526456")))
+             (cur (or (cadr (assq 'cursor partial)) (if (eq theme 'rainforest-day) "#105476" "#56a0c4")))
+             (hl (or (cadr (assq 'bg-hl-line partial)) (if (eq theme 'rainforest-day) "#a2af9f" "#182026"))))
+        (list
+         :theme theme
+         :bg-main bg
+         :bg-hl-line hl
+         :fg-main fg
+         :fg-dim dim
+         :cursor cur
+         :preprocessor (or (rainforest-get-theme-face-fg theme 'font-lock-preprocessor-face)
+                           (cadr (assq 'cyan-warmer partial)) "#7a6450")
+         :keyword (or (rainforest-get-theme-face-fg theme 'font-lock-keyword-face)
+                      (cadr (assq 'cyan partial)) "#2c8446")
+         :type (or (rainforest-get-theme-face-fg theme 'font-lock-type-face)
+                   (cadr (assq 'green partial)) "#6ca253")
+         :constant (or (rainforest-get-theme-face-fg theme 'font-lock-constant-face)
+                       (cadr (assq 'magenta partial)) "#7ec4da")
+         :number (or (rainforest-get-theme-face-fg theme 'font-lock-number-face)
+                     (cadr (assq 'yellow-warmer partial)) "#c69038")
+         :builtin (or (rainforest-get-theme-face-fg theme 'font-lock-builtin-face)
+                      (cadr (assq 'magenta-cooler partial)) "#b26e4e")
+         :fnname (or (rainforest-get-theme-face-fg theme 'font-lock-function-name-face)
+                     (cadr (assq 'blue partial)) "#2c7094")
+         :fnname-call (or (rainforest-get-theme-face-fg theme 'font-lock-function-call-face)
+                          (cadr (assq 'blue-warmer partial)) "#469cd8")
+         :string (or (rainforest-get-theme-face-fg theme 'font-lock-string-face)
+                     (cadr (assq 'yellow partial)) "#a46e38")
+         :property (or (rainforest-get-theme-face-fg theme 'font-lock-property-name-face)
+                       (cadr (assq 'fg-alt partial)) "#5c8882")
+         :operator (or (rainforest-get-theme-face-fg theme 'font-lock-operator-face)
+                       (cadr (assq 'blue-cooler partial)) "#586c60")
+         :bracket (or (rainforest-get-theme-face-fg theme 'font-lock-bracket-face)
+                      (cadr (assq 'red-faint partial)) "#4c5c50")
+         :delimiter (or (rainforest-get-theme-face-fg theme 'font-lock-delimiter-face)
+                        (cadr (assq 'cyan-faint partial)) "#4c5a50")
+         :err (or (rainforest-get-theme-face-fg theme 'font-lock-warning-face)
+                  (cadr (assq 'red partial)) "#9e3834"))))))
 
 ;; =============================================================================
 ;; Color Conversion & Photometric Mathematics
