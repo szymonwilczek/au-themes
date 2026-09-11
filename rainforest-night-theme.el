@@ -17,7 +17,7 @@
     (border "#1c1a17")
 
     ;; 1:1 Keyface Determinism Palette (Forest layers hierarchy)
-    (red "#be4a44")           ; Dark yew berry: alerts, negation !
+    (red "#8c382c")           ; Dark yew berry: alerts, negation !
     (red-warmer "#c8524c")
     (red-cooler "#b4423c")
     (red-faint "#5a7061")     ; Wet twigs: brackets ( ) [ ] { }
@@ -27,8 +27,8 @@
     (green-cooler "#5e9846")
     (green-faint "#4a6250")
 
-    (yellow "#bd803e")        ; Wet oak wood / fallen leaves: strings ("strings")
-    (yellow-warmer "#c69038") ; Wet amber resin: numbers (0, 24, 32 in buf[0])
+    (yellow "#a26c2e")        ; Wet oak wood / fallen leaves: strings ("strings")
+    (yellow-warmer "#b08428") ; Wet amber resin: numbers (0, 24, 32 in buf[0])
     (yellow-cooler "#aa7234")
     (yellow-faint "#8c5e2a")
 
@@ -143,11 +143,11 @@
  '(font-lock-keyword-face ((t (:foreground "#2c8446"))))
  '(font-lock-type-face ((t (:foreground "#6ca253"))))
  '(font-lock-constant-face ((t (:foreground "#7ec4da"))))
- '(font-lock-number-face ((t (:foreground "#c69038"))))
+ '(font-lock-number-face ((t (:foreground "#b08428"))))
  '(font-lock-builtin-face ((t (:foreground "#b26e4e"))))
  '(font-lock-function-name-face ((t (:foreground "#2c7094"))))
  '(font-lock-function-call-face ((t (:foreground "#469cd8"))))
- '(font-lock-string-face ((t (:foreground "#bd803e"))))
+ '(font-lock-string-face ((t (:foreground "#a26c2e"))))
  '(font-lock-variable-name-face ((t (:foreground "#9c9a96"))))
  '(font-lock-variable-use-face ((t (:foreground "#9c9a96"))))
  '(font-lock-property-name-face ((t (:foreground "#5e9f96"))))
@@ -155,7 +155,7 @@
  '(font-lock-operator-face ((t (:foreground "#688272"))))
  '(font-lock-bracket-face ((t (:foreground "#5a7061"))))
  '(font-lock-delimiter-face ((t (:foreground "#586e60"))))
- '(font-lock-warning-face ((t (:foreground "#be4a44"))))
+ '(font-lock-warning-face ((t (:foreground "#8c382c"))))
  '(region ((t (:background "#162e1b" :extend t))))
  '(line-number ((t (:foreground "#4a4c4a")))))
 
