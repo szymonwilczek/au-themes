@@ -10,7 +10,7 @@
     (bg-alt "#0c0e0c")        ; Deep canopy shadow
     (fg-main "#9c9a96")       ; Soft river slate: calm, glare-free, ciliary-safe base text
     (fg-dim "#526456")        ; Dark damp needle mulch: quiet italic comments
-    (fg-alt "#5e9f96")        ; Damp river stone: struct fields and parameters
+    (fg-alt "#8c8e56")        ; Damp olive lichen: struct fields and parameters
 
     (bg-active "#141814")
     (bg-inactive "#050605")
@@ -100,7 +100,7 @@
     (fnname blue)                ; #2c7094 - Deep mountain stream (is_write_open_flags)
     (fnname-call blue-warmer)    ; #469cd8 - Cold rain water pool (bpf_map_lookup_elem, BPF_CORE_READ)
     (string yellow)              ; #bd803e - Wet oak wood ("strings")
-    (property fg-alt)            ; #5e9f96 - Damp river stone (->tgid, .field)
+    (property fg-alt)            ; #8c8e56 - Damp olive lichen (->tgid, .field)
     (variable fg-main)           ; #9c9a96 - Soft river slate (variables)
     (variable-use fg-main)       ; #9c9a96 - Variable usages
     (operator blue-cooler)       ; #688272 - Dark wet slate (+, -, *, >>, &)
@@ -150,8 +150,8 @@
  '(font-lock-string-face ((t (:foreground "#8e4c1c"))))
  '(font-lock-variable-name-face ((t (:foreground "#9c9a96"))))
  '(font-lock-variable-use-face ((t (:foreground "#9c9a96"))))
- '(font-lock-property-name-face ((t (:foreground "#5e9f96"))))
- '(font-lock-property-use-face ((t (:foreground "#5e9f96"))))
+ '(font-lock-property-name-face ((t (:foreground "#8c8e56"))))
+ '(font-lock-property-use-face ((t (:foreground "#8c8e56"))))
  '(font-lock-operator-face ((t (:foreground "#688272"))))
  '(font-lock-bracket-face ((t (:foreground "#5b7162"))))
  '(font-lock-delimiter-face ((t (:foreground "#586e60"))))

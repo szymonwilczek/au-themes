@@ -140,7 +140,7 @@
          :string (or (rainforest-get-theme-face-fg theme 'font-lock-string-face)
                      (cadr (assq 'yellow partial)) "#a46e38")
          :property (or (rainforest-get-theme-face-fg theme 'font-lock-property-name-face)
-                       (cadr (assq 'fg-alt partial)) "#5c8882")
+                       (cadr (assq 'fg-alt partial)) "#8c8e56")
          :operator (or (rainforest-get-theme-face-fg theme 'font-lock-operator-face)
                        (cadr (assq 'blue-cooler partial)) "#586c60")
          :bracket (or (rainforest-get-theme-face-fg theme 'font-lock-bracket-face)
