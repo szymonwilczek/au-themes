@@ -40,15 +40,24 @@
     test-isoluminance-jitter
     test-afterimage-persistence))
 
+(defvar rf-test-themes
+  (let ((env (getenv "RF_TEST_THEMES")))
+    (if (and env (not (string-empty-p env)))
+        (mapcar #'intern (split-string env "[, ]+" t))
+      '(rainforest-night rainforest-day)))
+  "Themes evaluated by `run-all-rainforest-tests'.
+Override with the RF_TEST_THEMES environment variable, e.g.
+RF_TEST_THEMES=rainforest-night to gate a single variant.")
+
 (defun run-all-rainforest-tests ()
-  "Execute all test suites across both themes and compile executive master diagnostic report."
-  (let* ((themes '(rainforest-night rainforest-day))
+  "Execute all test suites across `rf-test-themes' and compile executive master diagnostic report."
+  (let* ((themes rf-test-themes)
          (total-modules (* (length rf-test-modules) (length themes)))
          (passed-modules 0)
          (failed-modules nil))
     (princ "\n######################################################################\n")
     (princ " RAINFOREST THEMES: AUTOMATED SCIENTIFIC & ERGONOMIC TEST SUITE\n")
-    (princ " Themes: rainforest-night, rainforest-day\n")
+    (princ (format " Themes: %s\n" (mapconcat #'symbol-name themes ", ")))
     (princ "######################################################################\n")
 
     (dolist (theme themes)
@@ -67,8 +76,8 @@
     (princ "\n======================================================================\n")
     (princ " EXECUTIVE MASTER TEST SUITE SUMMARY\n")
     (princ "======================================================================\n")
-    (princ (format "Total Test Executions:       %d (%d modules x 2 themes)\n"
-                   total-modules (length rf-test-modules)))
+    (princ (format "Total Test Executions:       %d (%d modules x %d themes)\n"
+                   total-modules (length rf-test-modules) (length themes)))
     (princ (format "Passed Test Executions:      %d\n" passed-modules))
     (princ (format "Failed Test Executions:      %d\n" (length failed-modules)))
     (if failed-modules
