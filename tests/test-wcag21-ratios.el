@@ -1,0 +1,56 @@
+;;; test-wcag21-ratios.el --- ISO/IEC 40500 / WCAG 2.1 contrast ratio verification -*- lexical-binding: t; -*-
+
+(require 'test-palette-extractor)
+
+(defun test-wcag21-ratios-run ()
+  "Evaluate standard WCAG 2.1 contrast ratios against background."
+  (let* ((pal (rainforest-extract-active-palette))
+         (bg (plist-get pal :bg-main))
+         (theme (plist-get pal :theme))
+         (passes 0)
+         (fails 0)
+         (tokens '(("Base text (Mineral quartz)"       :fg-main      4.5)
+                   ("Comments (Damp needles)"          :fg-dim       1.5)
+                   ("Cursor (Raindrop glint)"          :cursor       3.0)
+                   ("Preprocessor (#define)"           :preprocessor 3.0)
+                   ("Keywords (struct, while)"         :keyword      2.0)
+                   ("Data types (int, size_t)"         :type         3.0)
+                   ("Constants (LOTA_PCR_COUNT)"       :constant     2.0)
+                   ("Numbers (0, 24, 32)"              :number       3.0)
+                   ("Builtins (__always_inline)"       :builtin      2.0)
+                   ("Function definitions"             :fnname       2.0)
+                   ("Function calls (bpf_...)"         :fnname-call  3.0)
+                   ("Strings (\"string literals\")"    :string       2.5)
+                   ("Struct fields (->tgid)"           :property     2.5)
+                   ("Operators (+, -, *, >>)"          :operator     2.0)
+                   ("Brackets (( ) [ ] { })"           :bracket      1.8)
+                   ("Alerts / Errors (!)"              :err          2.0))))
+    (princ (format "\n======================================================================\n"))
+    (princ (format " ISO/IEC 40500:2012 / WCAG 2.1 Relative Luminance Contrast Suite\n"))
+    (princ (format " Theme: %s | Background: %s\n" theme bg))
+    (princ (format "======================================================================\n"))
+    (princ (format "%-32s | %-8s | %-7s | %-12s | %-8s\n" "Token Role" "Hex" "Ratio" "Min Ratio" "Status"))
+    (princ (format "---------------------------------+----------+---------+--------------+----------\n"))
+    (dolist (tok tokens)
+      (let* ((name (nth 0 tok))
+             (key  (nth 1 tok))
+             (min-ratio (nth 2 tok))
+             (hex (plist-get pal key))
+             (ratio (rf-wcag-contrast-ratio hex bg))
+             (ok (>= ratio min-ratio)))
+        (if ok
+            (setq passes (1+ passes))
+          (setq fails (1+ fails)))
+        (princ (format "%-32s | %-8s | %6.2f:1 | >= %4.1f:1     | %s\n"
+                       name hex ratio min-ratio
+                       (if ok "PASS" "FAIL")))))
+    (princ (format "---------------------------------+----------+---------+--------------+----------\n"))
+    (princ (format "WCAG 2.1 Summary: %d Passed, %d Failed.\n\n" passes fails))
+    (zerop fails)))
+
+(when (and noninteractive (not (bound-and-true-p rf-running-all-tests)))
+  (unless (test-wcag21-ratios-run)
+    (kill-emacs 1)))
+
+(provide 'test-wcag21-ratios)
+;;; test-wcag21-ratios.el ends here

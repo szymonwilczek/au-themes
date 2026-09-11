@@ -1,0 +1,93 @@
+;;; test-determinism-1to1.el --- 1:1 Keyface determinism and pairwise perceptual distance -*- lexical-binding: t; -*-
+
+(require 'test-palette-extractor)
+
+(defun test-determinism-1to1-run ()
+  "Evaluate 1:1 keyface uniqueness and pairwise Emacs 16-bit Riemersma distance (min 8000)."
+  (let* ((pal (rainforest-extract-active-palette))
+         (theme (plist-get pal :theme))
+         (base (plist-get pal :fg-main))
+         (passes 0)
+         (fails 0)
+         (tokens-to-check '(:preprocessor :keyword :type :constant :number
+                            :builtin :fnname :fnname-call :string :property
+                            :operator :bracket :delimiter :err :fg-dim :fg-main))
+         (critical-pairs
+          '(("define (#define) vs struct (keyword)"     :preprocessor :keyword)
+            ("define vs LOTA_PCR_COUNT (constant)"      :preprocessor :constant)
+            ("struct vs LOTA_PCR_COUNT"                 :keyword      :constant)
+            ("struct vs int (type)"                     :keyword      :type)
+            ("define vs int (type)"                     :preprocessor :type)
+            ("LOTA_PCR_COUNT vs 24 (number)"            :constant     :number)
+            ("LOTA_PCR_COUNT vs \"string\""             :constant     :string)
+            ("static vs __always_inline (builtin)"      :keyword      :builtin)
+            ("__always_inline vs is_write_open_flags"   :builtin      :fnname)
+            ("is_write_open_flags (def) vs bpf_ (call)" :fnname       :fnname-call)
+            ("is_write_open_flags vs int (type)"        :fnname       :type)
+            ("bpf_ (call) vs int (type)"                :fnname-call  :type)
+            ("tgid (property) vs base text"             :property     :fg-main)
+            ("0 (number) vs base text"                  :number       :fg-main)
+            ("struct (keyword) vs base text"            :keyword      :fg-main)
+            ("define (preproc) vs base text"            :preprocessor :fg-main)
+            ("int (type) vs base text"                  :type         :fg-main)
+            ("LOTA_PCR_COUNT vs base text"              :constant     :fg-main)
+            ("__always_inline vs base text"             :builtin      :fg-main)
+            ("bpf_ (call) vs base text"                 :fnname-call  :fg-main)
+            ("\"string\" vs base text"                  :string       :fg-main)
+            ("err (!) vs base text"                     :err          :fg-main)
+            ("bracket vs base text"                     :bracket      :fg-main)
+            ("comments (needles) vs base text"          :fg-dim       :fg-main))))
+
+    (princ (format "\n======================================================================\n"))
+    (princ (format " 1:1 Keyface Determinism & Pairwise Distance Suite (min. 8000)\n"))
+    (princ (format " Theme: %s\n" theme))
+    (princ (format "======================================================================\n"))
+
+    ;; Part 1: Strict Uniqueness Check
+    (princ "Part 1: Keyface Color Uniqueness (No shared hex across keyfaces):\n")
+    (let ((seen (make-hash-table :test 'equal))
+          (collisions nil))
+      (dolist (key tokens-to-check)
+        (let* ((hex (plist-get pal key))
+               (prior (gethash hex seen)))
+          (if (and prior (not (and (memq key '(:bracket :delimiter))
+                                   (memq prior '(:bracket :delimiter)))))
+              (push (cons key prior) collisions)
+            (puthash hex key seen))))
+      (if collisions
+          (progn
+            (princ (format "   [FAIL] Color collision detected: %S\n" collisions))
+            (setq fails (1+ fails)))
+        (princ "   [PASS] 100% Deterministic: Each syntax role has a unique dedicated color.\n")
+        (setq passes (1+ passes))))
+
+    (princ (format "----------------------------------------------------------------------\n"))
+    (princ "Part 2: Pairwise Distance Check (Emacs 16-bit color-distance >= 8000):\n")
+    (princ (format "%-42s | %-8s | %-8s | %-8s | %-8s\n"
+                   "Role Comparison" "Color 1" "Color 2" "Distance" "Status"))
+    (princ (format "-------------------------------------------+----------+----------+----------+----------\n"))
+    (dolist (pair critical-pairs)
+      (let* ((name (nth 0 pair))
+             (k1   (nth 1 pair))
+             (k2   (nth 2 pair))
+             (h1   (plist-get pal k1))
+             (h2   (plist-get pal k2))
+             (dist (rf-color-distance h1 h2))
+             (ok   (>= dist 8000)))
+        (if ok
+            (setq passes (1+ passes))
+          (setq fails (1+ fails)))
+        (princ (format "%-42s | %-8s | %-8s | %8d | %s\n"
+                       name h1 h2 dist
+                       (if ok "PASS" "FAIL (<8000)")))))
+
+    (princ (format "-------------------------------------------+----------+----------+----------+----------\n"))
+    (princ (format "Determinism & Distance Summary: %d Passed, %d Failed.\n\n" passes fails))
+    (zerop fails)))
+
+(when (and noninteractive (not (bound-and-true-p rf-running-all-tests)))
+  (unless (test-determinism-1to1-run)
+    (kill-emacs 1)))
+
+(provide 'test-determinism-1to1)
+;;; test-determinism-1to1.el ends here

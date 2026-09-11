@@ -1,0 +1,57 @@
+;;; test-apca-contrast.el --- APCA 0.98G-4g lightness contrast gates -*- lexical-binding: t; -*-
+
+(require 'test-palette-extractor)
+
+(defun test-apca-contrast-run ()
+  "Evaluate APCA 0.98G-4g contrast gates for active theme."
+  (let* ((pal (rainforest-extract-active-palette))
+         (bg (plist-get pal :bg-main))
+         (theme (plist-get pal :theme))
+         (passes 0)
+         (fails 0)
+         (tokens '(("Base text (Mineral quartz)"       :fg-main      46.0 58.0)
+                   ("Comments (Damp needles)"          :fg-dim       10.0 24.0)
+                   ("Cursor (Raindrop glint)"          :cursor       30.0 70.0)
+                   ("Preprocessor (#define)"           :preprocessor 16.0 50.0)
+                   ("Keywords (struct, while)"         :keyword      16.0 45.0)
+                   ("Data types (int, size_t)"         :type         16.0 45.0)
+                   ("Constants (LOTA_PCR_COUNT)"       :constant     16.0 45.0)
+                   ("Numbers (0, 24, 32)"              :number       16.0 50.0)
+                   ("Builtins (__always_inline)"       :builtin      16.0 45.0)
+                   ("Function definitions"             :fnname       16.0 45.0)
+                   ("Function calls (bpf_...)"         :fnname-call  16.0 50.0)
+                   ("Strings (\"string literals\")"    :string       16.0 45.0)
+                   ("Struct fields (->tgid)"           :property     16.0 45.0)
+                   ("Operators (+, -, *, >>)"          :operator     15.0 40.0)
+                   ("Brackets (( ) [ ] { })"           :bracket      14.0 35.0)
+                   ("Alerts / Errors (!)"              :err          16.0 45.0))))
+    (princ (format "\n======================================================================\n"))
+    (princ (format " APCA 0.98G-4g Contrast Gate Suite (W3C WCAG 3 Candidate Standard)\n"))
+    (princ (format " Theme: %s | Background: %s\n" theme bg))
+    (princ (format "======================================================================\n"))
+    (princ (format "%-32s | %-8s | %-7s | %-12s | %-8s\n" "Token Role" "Hex" "Lc" "Target Lc" "Status"))
+    (princ (format "---------------------------------+----------+---------+--------------+----------\n"))
+    (dolist (tok tokens)
+      (let* ((name (nth 0 tok))
+             (key  (nth 1 tok))
+             (min-lc (nth 2 tok))
+             (max-lc (nth 3 tok))
+             (hex (plist-get pal key))
+             (lc  (rf-apca-contrast hex bg))
+             (ok  (and (>= lc min-lc) (<= lc max-lc))))
+        (if ok
+            (setq passes (1+ passes))
+          (setq fails (1+ fails)))
+        (princ (format "%-32s | %-8s | %7.2f | [%4.1f..%4.1f]   | %s\n"
+                       name hex lc min-lc max-lc
+                       (if ok "PASS" "FAIL")))))
+    (princ (format "---------------------------------+----------+---------+--------------+----------\n"))
+    (princ (format "APCA Summary: %d Passed, %d Failed.\n\n" passes fails))
+    (zerop fails)))
+
+(when (and noninteractive (not (bound-and-true-p rf-running-all-tests)))
+  (unless (test-apca-contrast-run)
+    (kill-emacs 1)))
+
+(provide 'test-apca-contrast)
+;;; test-apca-contrast.el ends here
