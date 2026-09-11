@@ -189,34 +189,61 @@
          (b (rf-srgb-to-linear (nth 2 rgb))))
     (+ (* r 0.2126729) (* g 0.7151522) (* b 0.0721750))))
 
-(defun rf-apca-from-luminance (txt-y bg-y)
-  "Calculate APCA Lc lightness contrast from raw luminances TXT-Y and BG-Y."
-  (let* ((txt-c (if (> txt-y 0.022) txt-y (+ txt-y (expt (- 0.022 txt-y) 1.414))))
-         (bg-c  (if (> bg-y 0.022)  bg-y  (+ bg-y  (expt (- 0.022 bg-y)  1.414)))))
-    (if (< (abs (- bg-c txt-c)) 0.0005)
-        0.0
-      (if (> bg-c txt-c)
-          (let* ((sapc (* (- (expt bg-c 0.56) (expt txt-c 0.57)) 1.14))
-                 (out  (if (< sapc 0.1) 0.0 (* (- sapc 0.027) 100.0))))
-            (- out))
-        (let* ((sapc (* (- (expt txt-c 0.62) (expt bg-c 0.65)) 1.14))
-               (mag  (if (< sapc 0.1) 0.0 (* (- sapc 0.027) 100.0))))
-          mag)))))
+;; APCA / SAPC 0.0.98G-4g (Somers, A. "Accessible Perceptual Contrast
+;; Algorithm", W3C Silver / WCAG 3 candidate).  Constants and control flow
+;; follow the reference implementation apca-w3 0.1.9 (src/apca-w3.js,
+;; functions `sRGBtoY' and `APCAcontrast'), https://github.com/Myndex/apca-w3.
+;; Two properties of the reference are easy to get wrong and are load-bearing:
+;;  1. Input is the APCA *estimated screen luminance* Ys, obtained with a pure
+;;     2.4 power ("simpleExp", mainTRC) and NO IEC 61966-2-1 linear toe.
+;;     Feeding the piecewise sRGB EOTF (`rf-luminance-y') inflates Y of dark
+;;     colours by up to ~5x and shifts Lc on dark canvases.
+;;  2. Polarity is signed: BoW (dark text on light) -> positive Lc,
+;;     WoB (light text on dark) -> negative Lc.
+(defconst rf-apca-main-trc 2.4 "APCA mainTRC exponent (apca-w3 0.1.9).")
 
-;; APCA 0.98G-4g
+(defun rf-apca-screen-y (hex)
+  "Return APCA 0.0.98G-4g estimated screen luminance Ys of HEX.
+Ys = 0.2126729 R^2.4 + 0.7151522 G^2.4 + 0.0721750 B^2.4 (apca-w3 `sRGBtoY')."
+  (let ((rgb (rf-hex-to-rgb hex)))
+    (+ (* 0.2126729 (expt (nth 0 rgb) rf-apca-main-trc))
+       (* 0.7151522 (expt (nth 1 rgb) rf-apca-main-trc))
+       (* 0.0721750 (expt (nth 2 rgb) rf-apca-main-trc)))))
+
+(defun rf-apca-from-luminance (txt-y bg-y)
+  "Return signed APCA 0.0.98G-4g Lc for screen luminances TXT-Y and BG-Y.
+Positive for BoW (BG-Y > TXT-Y), negative for WoB.  Inputs outside
+[0.0, 1.1] return 0.0 exactly as the reference implementation does."
+  (if (or (< (min txt-y bg-y) 0.0) (> (max txt-y bg-y) 1.1))
+      0.0
+    (let* ((blk-thrs 0.022)
+           (blk-clmp 1.414)
+           (txt-c (if (> txt-y blk-thrs) txt-y (+ txt-y (expt (- blk-thrs txt-y) blk-clmp))))
+           (bg-c  (if (> bg-y blk-thrs)  bg-y  (+ bg-y  (expt (- blk-thrs bg-y)  blk-clmp)))))
+      (cond
+       ((< (abs (- bg-c txt-c)) 0.0005) 0.0)
+       ((> bg-c txt-c)
+        ;; BoW: normBG 0.56, normTXT 0.57, scaleBoW 1.14, loBoWoffset 0.027
+        (let ((sapc (* (- (expt bg-c 0.56) (expt txt-c 0.57)) 1.14)))
+          (if (< sapc 0.1) 0.0 (* (- sapc 0.027) 100.0))))
+       (t
+        ;; WoB: revBG 0.65, revTXT 0.62, scaleWoB 1.14, loWoBoffset 0.027
+        (let ((sapc (* (- (expt bg-c 0.65) (expt txt-c 0.62)) 1.14)))
+          (if (> sapc -0.1) 0.0 (* (+ sapc 0.027) 100.0))))))))
+
 (defun rf-apca-contrast (txt-hex bg-hex)
-  "Calculate APCA Lc lightness contrast from TXT-HEX against BG-HEX."
-  (rf-apca-from-luminance (rf-luminance-y txt-hex) (rf-luminance-y bg-hex)))
+  "Return signed APCA 0.0.98G-4g Lc of TXT-HEX against BG-HEX."
+  (rf-apca-from-luminance (rf-apca-screen-y txt-hex) (rf-apca-screen-y bg-hex)))
 
 (defun rf-lcd-contrast (txt-hex bg-hex)
   "Calculate APCA Lc with LCD black bleed (0.008)."
-  (rf-apca-from-luminance (+ (rf-luminance-y txt-hex) 0.008)
-                          (+ (rf-luminance-y bg-hex) 0.008)))
+  (rf-apca-from-luminance (+ (rf-apca-screen-y txt-hex) 0.008)
+                          (+ (rf-apca-screen-y bg-hex) 0.008)))
 
 (defun rf-oled-contrast (txt-hex bg-hex)
   "Calculate APCA Lc with OLED optical point irradiation (0.94)."
-  (rf-apca-from-luminance (* (rf-luminance-y txt-hex) 0.94)
-                          (rf-luminance-y bg-hex)))
+  (rf-apca-from-luminance (* (rf-apca-screen-y txt-hex) 0.94)
+                          (rf-apca-screen-y bg-hex)))
 
 ;; WCAG 2.1 Relative Luminance Ratio
 (defun rf-wcag-contrast-ratio (hex1 hex2)
