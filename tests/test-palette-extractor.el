@@ -484,23 +484,72 @@ more than 0.5 %."
 
 (rf-spectral-model-self-check)
 
-;; Thibos (1992) Effective Wavelength and Diopters
+;; Longitudinal chromatic aberration of the human eye: chromatic reduced-eye
+;; model of Thibos, Ye, Zhang & Bradley (1992) "The chromatic eye: a new
+;; reduced-eye model of ocular chromatic aberration in humans", Appl. Opt.
+;; 31(19):3594-3600, DOI: 10.1364/AO.31.003594.
+;;   D(lambda) = p - q / (lambda_um - c),  p = 1.68524, q = 0.63346,
+;;   c = 0.21410, zero at 589.3 nm (sodium D line).
+(defconst rf-thibos-p 1.68524 "Thibos et al. (1992) chromatic eye constant p.")
+(defconst rf-thibos-q 0.63346 "Thibos et al. (1992) chromatic eye constant q.")
+(defconst rf-thibos-c 0.21410 "Thibos et al. (1992) chromatic eye constant c (um).")
+
+(defun rf-thibos-defocus-at (lambda-nm)
+  "Chromatic defocus D(lambda) in dioptres at LAMBDA-NM (Thibos et al. 1992)."
+  (- rf-thibos-p (/ rf-thibos-q (- (/ lambda-nm 1000.0) rf-thibos-c))))
+
+(defun rf--primary-luminance-moment (action-fn)
+  "Return per-primary (ACTION-FN weighted by V(lambda)) / Y_i as a list."
+  (let ((w (make-vector rf-spectral-samples 0.0)))
+    (dotimes (i rf-spectral-samples)
+      (aset w i (* (aref rf-cie1931-ybar i) (funcall action-fn (rf--spectral-lambda i)))))
+    (cl-loop for p in (rf-display-primary-spds)
+             for y in (nth 1 rf-srgb-to-xyz-matrix)
+             collect (/ (rf--spectral-integral w p) y))))
+
+(defvar rf--primary-defocus nil "Cached per-primary mean chromatic defocus (D).")
+(defvar rf--primary-centroid nil "Cached per-primary luminance-weighted centroid (nm).")
+
+(defun rf-primary-defocus ()
+  "Per-primary luminance-weighted mean chromatic defocus in dioptres."
+  (or rf--primary-defocus
+      (setq rf--primary-defocus (rf--primary-luminance-moment #'rf-thibos-defocus-at))))
+
+(defun rf-primary-centroid ()
+  "Per-primary luminance-weighted spectral centroid in nm."
+  (or rf--primary-centroid
+      (setq rf--primary-centroid (rf--primary-luminance-moment #'identity))))
+
+(defun rf--primary-luminance-weights (hex)
+  "Return the per-primary luminance contributions (c_i Y_i) of HEX."
+  (cl-loop for c in (mapcar #'rf-srgb-to-linear (rf-hex-to-rgb hex))
+           for y in (nth 1 rf-srgb-to-xyz-matrix)
+           collect (* c y)))
+
 (defun rf-effective-wavelength (hex)
-  (let* ((rgb (rf-hex-to-rgb hex))
-         (r (rf-srgb-to-linear (nth 0 rgb)))
-         (g (rf-srgb-to-linear (nth 1 rgb)))
-         (b (rf-srgb-to-linear (nth 2 rgb)))
-         (y (+ (* r 0.2126729) (* g 0.7151522) (* b 0.0721750))))
-    (if (< y 1e-6)
-        555.0
-      (* 1000.0 (/ (+ (* r 0.2126729 0.612)
-                      (* g 0.7151522 0.535)
-                      (* b 0.0721750 0.465))
-                   y)))))
+  "Luminance-weighted spectral centroid of HEX in nm under the display model.
+Returns the centroid of display white for a colour of zero luminance."
+  (let* ((w (rf--primary-luminance-weights hex))
+         (sum (apply #'+ w)))
+    (if (< sum 1e-9)
+        (/ (cl-loop for l in (rf-primary-centroid)
+                    for y in (nth 1 rf-srgb-to-xyz-matrix) sum (* l y))
+           (apply #'+ (nth 1 rf-srgb-to-xyz-matrix)))
+      (/ (cl-loop for l in (rf-primary-centroid) for wi in w sum (* l wi)) sum))))
 
 (defun rf-thibos-diopters (hex)
-  (let ((lambda-um (/ (rf-effective-wavelength hex) 1000.0)))
-    (- 1.6852 (/ 0.63346 (- lambda-um 0.21410)))))
+  "Luminance-weighted mean chromatic defocus of HEX in dioptres.
+The mean is taken over D(lambda), NOT of D evaluated at a mean wavelength:
+D is strictly concave, so by Jensen's inequality the latter systematically
+underestimates the defocus of broadband or mixed-primary colours (up to
+0.11 D for red/blue mixtures at 5 nm sampling)."
+  (let* ((w (rf--primary-luminance-weights hex))
+         (sum (apply #'+ w)))
+    (if (< sum 1e-9)
+        (/ (cl-loop for d in (rf-primary-defocus)
+                    for y in (nth 1 rf-srgb-to-xyz-matrix) sum (* d y))
+           (apply #'+ (nth 1 rf-srgb-to-xyz-matrix)))
+      (/ (cl-loop for d in (rf-primary-defocus) for wi in w sum (* d wi)) sum))))
 
 (defun rf-lca-disparity (hex1 hex2)
   (abs (- (rf-thibos-diopters hex1) (rf-thibos-diopters hex2))))
