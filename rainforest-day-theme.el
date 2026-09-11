@@ -1,113 +1,119 @@
-;;; rainforest-day.el --- Rainy coniferous forest light theme -*- lexical-binding:t -*-
+;;; rainforest-day-theme.el --- Misty temperate rainforest daylight theme -*- lexical-binding:t -*-
 
 (require 'ef-themes)
 
 (defconst rainforest-day-palette-partial
-  '(;; Tła: zamglony, chłodniejszy deszczowy bór (ciemniejszy od Arcadii o ~10% luminancji)
-    (cursor "#335544")
-    (bg-main "#cbd5c5")       ; zamglony, chłodny bór iglasty
-    (bg-dim "#c0ccbb")        ; mokra ziemia/kamień
-    (bg-alt "#b5c2b0")
-    (fg-main "#192d20")       ; wilgotny cień świerku (APCA Lc: 75.08 - ciągły tekst Lc >= 75)
-    (fg-dim "#405b63")        ; stalowa mgła leśna (APCA Lc: 58.88)
-    (fg-alt "#3d5446")
+  '(;; Canvas: misty coniferous canopy day, soft lichen-granite mist
+    (cursor "#1c6488")        ; Clear mountain rain glint
+    (bg-main "#cbd5c5")       ; Misty canopy air / lichen-tinted wet stone
+    (bg-dim "#c0ccbc")        ; Damp bark shadow
+    (bg-alt "#b6c4b2")        ; Deep canopy daylight shadow
+    (fg-main "#223226")       ; Soft conifer bark shadow: glare-free, ciliary-safe base text
+    (fg-dim "#5a6f62")        ; Misty lichen mulch: quiet italic comments
+    (fg-alt "#22564e")        ; Damp river stone: struct fields and parameters
 
-    (bg-active "#9fb09a")
-    (bg-inactive "#b8c5b3")
-    (border "#8a9c85")
+    (bg-active "#9eb09a")
+    (bg-inactive "#b5c4b2")
+    (border "#8a9e86")
 
-    ;; Barwy semantyczne boru w deszczu
-    (red "#852a1d")           ; wilgotna kora sosny (~6.5:1)
-    (red-warmer "#912812")
-    (red-cooler "#7d2c2e")
-    (red-faint "#6e3f3a")
+    ;; 1:1 Keyface Determinism Palette (Forest layers hierarchy)
+    (red "#8a3024")           ; Dark yew berry: alerts, negation !
+    (red-warmer "#96382a")
+    (red-cooler "#842820")
+    (red-faint "#4c554e")     ; Wet twigs: brackets ( ) [ ] { }
 
-    (green "#1c5a2c")         ; mech leśny (akcent uspokajający jak w Arcadii, ~5.8:1)
-    (green-warmer "#2e5f15")  ; młode igliwie
-    (green-cooler "#115c48")  ; wilgotny świerk
-    (green-faint "#2a5438")
+    (green "#487434")         ; Rich forest moss: data types (int, size_t, uint32_t)
+    (green-warmer "#527c3a")
+    (green-cooler "#3e6e2e")
+    (green-faint "#3b5632")
 
-    (yellow "#634710")        ; promień słońca przez mgłę (~6.0:1)
-    (yellow-warmer "#703e05")
-    (yellow-cooler "#604d2b")
-    (yellow-faint "#594d33")
+    (yellow "#764612")        ; Wet oak wood / fallen leaves: strings ("strings")
+    (yellow-warmer "#7c4806") ; Wet amber resin: numbers (0, 24, 32 in buf[0])
+    (yellow-cooler "#6e4210")
+    (yellow-faint "#5a452a")
 
-    (blue "#1e4678")          ; głęboka woda kałuży (~6.2:1)
-    (blue-warmer "#2b428c")
-    (blue-cooler "#104c7d")
-    (blue-faint "#324968")
+    (blue "#145472")          ; Deep mountain stream: function definitions (is_write_open_flags)
+    (blue-warmer "#266ea0")   ; Cold rain pool water: function calls (bpf_map_lookup_elem)
+    (blue-cooler "#425648")   ; Dark wet slate: operators (+, -, *, >>, &)
+    (blue-faint "#2a4c5e")
 
-    (magenta "#6e3b68")       ; wrzosowisko (~5.5:1)
-    (magenta-warmer "#7d3058")
-    (magenta-cooler "#503e7a")
-    (magenta-faint "#5c4359")
+    (magenta "#763a7c")       ; Wet heather violet: constants and macros (LOTA_PCR_COUNT, NULL)
+    (magenta-warmer "#824288")
+    (magenta-cooler "#703e20") ; Wet cedar wood bark: builtins and attributes (__always_inline, :keywords)
+    (magenta-faint "#583c5e")
 
-    (cyan "#10525e")          ; krople deszczu / mgła (~6.1:1)
-    (cyan-warmer "#1c4e6e")
-    (cyan-cooler "#0a5652")
-    (cyan-faint "#2f4d54")
+    (cyan "#105e30")          ; Deep conifer pine: keywords (struct, while, static, return)
+    (cyan-warmer "#106c64")   ; Deep boreal spruce-lake: preprocessor directives (#define, #include, #endif)
+    (cyan-cooler "#14582c")
+    (cyan-faint "#425447")    ; Damp pine needles: delimiters (, ;)
 
-    ;; Stany i diffy (łagodne dla oka)
-    (bg-added "#a8ccae")
-    (bg-added-faint "#b8d9be")
-    (bg-added-refine "#94bfa0")
-    (fg-added "#12451d")
+    ;; Diffs and panels
+    (bg-added "#b2d4b8")
+    (bg-added-faint "#c2dec6")
+    (bg-added-refine "#a0c8a6")
+    (fg-added "#124e1e")
 
-    (bg-changed "#d6cd96")
-    (bg-changed-faint "#dfd7aa")
-    (bg-changed-refine "#c7be7f")
-    (fg-changed "#4a3c00")
+    (bg-changed "#dcd29a")
+    (bg-changed-faint "#e6deae")
+    (bg-changed-refine "#cfc482")
+    (fg-changed "#564402")
 
-    (bg-removed "#d8b2a8")
-    (bg-removed-faint "#e2c4bc")
-    (bg-removed-refine "#cb9e93")
-    (fg-removed "#691b15")
+    (bg-removed "#dcbeb6")
+    (bg-removed-faint "#e8cec6")
+    (bg-removed-refine "#cfaaa0")
+    (fg-removed "#74221a")
 
-    (bg-mode-line-active "#9ab89e")
-    (fg-mode-line-active "#122b1a")
-    (bg-completion "#adc2b0")
-    (bg-popup "#c2cebe")
-    (bg-hover "#a8c0ab")
-    (bg-hover-secondary "#a0b8aa")
-    (bg-hl-line "#c3cfbf")
-    (bg-paren-match "#96b59d")
-    (bg-err "#dab3aa")
-    (bg-warning "#dad09f")
-    (bg-info "#a2ccb0")
-    (bg-region "#b0c4b2")))
+    (bg-mode-line-active "#9cb29e")
+    (fg-mode-line-active "#1c3222")
+    (bg-completion "#b0c4b2")
+    (bg-popup "#c2d0c0")
+    (bg-hover "#acc0ae")
+    (bg-hover-secondary "#a2b8a4")
+    (bg-hl-line "#c0cbba")
+    (bg-paren-match "#9ab69e")
+    (bg-err "#dab8b0")
+    (bg-warning "#dad2a4")
+    (bg-info "#a8d0b2")
+    (bg-region "#b2c8b4")))
 
 (defconst rainforest-day-palette-mappings-partial
-  '((err red-warmer)
+  '(;; Statuses
+    (err red)
     (warning yellow-warmer)
-    (info green-cooler)
+    (info green)
 
-    (fg-link blue)
-    (fg-link-visited magenta-cooler)
-    (name green-cooler)
-    (keybind cyan)
-    (identifier fg-dim)
-    (fg-prompt green-cooler)
+    (fg-link blue-warmer)
+    (fg-link-visited magenta)
+    (name blue)
+    (keybind red-warmer)
+    (identifier fg-alt)
+    (fg-prompt blue)
 
-    ;; Składnia: bór i zgaszone słońce
-    (builtin green)
-    (comment fg-dim)
-    (constant cyan)
-    (fnname green-warmer)
-    (fnname-call green)
-    (keyword cyan-cooler)
-    (preprocessor blue-faint)
-    (docstring cyan-faint)
-    (string yellow)
-    (type green-cooler)
-    (variable fg-main)
-    (variable-use fg-alt)
+    ;; 1:1 Keyface Determinism Mappings:
+    (preprocessor cyan-warmer)   ; #106c64 - Deep boreal spruce-lake (#define, #include, #endif)
+    (keyword cyan)               ; #105e30 - Deep conifer pine (struct, while, static, return)
+    (type green)                 ; #487434 - Rich forest moss (int, size_t, uint32_t)
+    (constant magenta)           ; #763a7c - Wet heather violet (LOTA_PCR_COUNT, NULL)
+    (number yellow-warmer)       ; #7c4806 - Wet amber resin (0, 24, 32 in buf[0])
+    (builtin magenta-cooler)     ; #703e20 - Wet cedar wood bark (__always_inline, :keywords)
+    (fnname blue)                ; #145472 - Deep mountain stream (is_write_open_flags)
+    (fnname-call blue-warmer)    ; #266ea0 - Cold rain pool water (bpf_map_lookup_elem)
+    (string yellow)              ; #764612 - Wet oak wood ("strings")
+    (property fg-alt)            ; #22564e - Damp river stone (->tgid, .field)
+    (variable fg-main)           ; #223226 - Soft conifer bark shadow (variables)
+    (variable-use fg-main)       ; #223226 - Variable usages
+    (operator blue-cooler)       ; #425648 - Dark wet slate (+, -, *, >>, &)
+    (bracket red-faint)          ; #4c554e - Wet twigs (( ) [ ] { })
+    (delimiter cyan-faint)       ; #425447 - Damp needles (, ;)
+    (comment fg-dim)             ; #5a6f62 - Misty lichen mulch (pure italic)
+    (docstring fg-dim)           ; #5a6f62 - Documentation strings
     (rx-backslash yellow-cooler)
-    (rx-construct red-cooler)
+    (rx-construct red)
 
-    (accent-0 green)
+    (accent-0 blue)
     (accent-1 yellow)
-    (accent-2 cyan)
-    (accent-3 green-warmer)))
+    (accent-2 green)
+    (accent-3 cyan)))
 
 (defconst rainforest-day-palette
   (modus-themes-generate-palette
@@ -120,18 +126,33 @@
 (modus-themes-theme
  'rainforest-day
  'ef-themes
- "Ergonomiczny motyw dzienny boru w deszczu (APCA Lc >= 75 / WCAG 3)."
+ "Misty temperate rainforest daylight theme with organic forest layers and 1:1 keyface determinism."
  'light
  'rainforest-day-palette
  nil
  nil)
 
-;; Komentarze: czysta kursywa bez narzucania wagi czcionki
+;; Universal standard font-lock faces:
 (custom-theme-set-faces
  'rainforest-day
- '(font-lock-comment-face ((t (:foreground "#405b63" :slant italic))))
- '(font-lock-comment-delimiter-face ((t (:foreground "#405b63" :slant italic))))
- '(font-lock-doc-face ((t (:foreground "#405b63" :slant italic)))))
+ '(font-lock-comment-face ((t (:foreground "#5a6f62" :slant italic))))
+ '(font-lock-comment-delimiter-face ((t (:foreground "#5a6f62" :slant italic))))
+ '(font-lock-doc-face ((t (:foreground "#5a6f62" :slant italic))))
+ '(font-lock-preprocessor-face ((t (:foreground "#106c64"))))
+ '(font-lock-keyword-face ((t (:foreground "#105e30"))))
+ '(font-lock-type-face ((t (:foreground "#487434"))))
+ '(font-lock-constant-face ((t (:foreground "#763a7c"))))
+ '(font-lock-number-face ((t (:foreground "#7c4806"))))
+ '(font-lock-builtin-face ((t (:foreground "#703e20"))))
+ '(font-lock-function-name-face ((t (:foreground "#145472"))))
+ '(font-lock-function-call-face ((t (:foreground "#266ea0"))))
+ '(font-lock-string-face ((t (:foreground "#764612"))))
+ '(font-lock-property-name-face ((t (:foreground "#22564e"))))
+ '(font-lock-property-use-face ((t (:foreground "#22564e"))))
+ '(font-lock-operator-face ((t (:foreground "#425648"))))
+ '(font-lock-bracket-face ((t (:foreground "#4c554e"))))
+ '(font-lock-delimiter-face ((t (:foreground "#425447"))))
+ '(font-lock-warning-face ((t (:foreground "#8a3024")))))
 
 (provide 'rainforest-day-theme)
 ;;; rainforest-day-theme.el ends here

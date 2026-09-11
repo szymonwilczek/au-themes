@@ -1,4 +1,5 @@
 ;;; run-all-tests.el --- Master test suite runner -*- lexical-binding: t; -*-
+(require 'test-palette-extractor)
 
 (defvar rf-running-all-tests t
   "Flag indicating that master test suite runner is active.")
@@ -26,34 +27,41 @@
     test-wet-surface-physics))
 
 (defun run-all-rainforest-tests ()
-  "Execute all test suites and compile executive master diagnostic report."
-  (let ((total-modules (length rf-test-modules))
-        (passed-modules 0)
-        (failed-modules nil))
+  "Execute all test suites across both themes and compile executive master diagnostic report."
+  (let* ((themes '(rainforest-night rainforest-day))
+         (total-modules (* (length rf-test-modules) (length themes)))
+         (passed-modules 0)
+         (failed-modules nil))
     (princ "\n######################################################################\n")
     (princ " RAINFOREST THEMES: AUTOMATED SCIENTIFIC & ERGONOMIC TEST SUITE\n")
+    (princ " Themes: rainforest-night, rainforest-day\n")
     (princ "######################################################################\n")
 
-    (dolist (mod rf-test-modules)
-      (require mod)
-      (let* ((fn-name (intern (format "%s-run" (symbol-name mod))))
-             (res (funcall fn-name)))
-        (if res
-            (setq passed-modules (1+ passed-modules))
-          (push mod failed-modules))))
+    (dolist (theme themes)
+      (setq rf-active-theme theme)
+      (princ (format "\n======================================================================\n"))
+      (princ (format " RUNNING TEST SUITES FOR THEME: %s\n" theme))
+      (princ (format "======================================================================\n"))
+      (dolist (mod rf-test-modules)
+        (require mod)
+        (let* ((fn-name (intern (format "%s-run" (symbol-name mod))))
+               (res (funcall fn-name)))
+          (if res
+              (setq passed-modules (1+ passed-modules))
+            (push (cons theme mod) failed-modules)))))
 
     (princ "\n======================================================================\n")
-    (princ " EXECUTIVE TEST SUITE SUMMARY\n")
+    (princ " EXECUTIVE MASTER TEST SUITE SUMMARY\n")
     (princ "======================================================================\n")
-    (princ (format "Total Test Modules Executed: %d\n" total-modules))
-    (princ (format "Passed Modules:              %d\n" passed-modules))
-    (princ (format "Failed Modules:              %d\n" (length failed-modules)))
+    (princ (format "Total Test Executions:       %d (20 modules x 2 themes)\n" total-modules))
+    (princ (format "Passed Test Executions:      %d\n" passed-modules))
+    (princ (format "Failed Test Executions:      %d\n" (length failed-modules)))
     (if failed-modules
         (progn
           (princ (format "Failing Modules:             %S\n" (nreverse failed-modules)))
           (princ "Status: FAILING GATES DETECTED\n")
           nil)
-      (princ "Status: ALL PHYSICAL, OPTICAL & ERGONOMIC GATES PASSED!\n")
+      (princ "Status: ALL 40 PHYSICAL, OPTICAL & ERGONOMIC GATES PASSED!\n")
       t)))
 
 (when noninteractive

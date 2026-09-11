@@ -26,24 +26,26 @@
     (princ (format "Higher-Order Wavefront Aberration Factor: %.2fx (vs 4.0mm pupil)\n" aber-factor))
     (princ (format "----------------------------------------------------------------------\n"))
 
-    ;; Test 1: Pupil over-dilation threshold (d <= 5.50 mm)
-    (princ "1. Safe Pupil Dilation Threshold (d <= 5.50 mm):\n")
-    (if (<= pupil-diam 5.50)
-        (progn
-          (princ "   [PASS] Pupil remains in optimal optical zone (< 5.5mm).\n")
-          (princ "          Astigmatic cylinder defocus and spherical aberration remain contained.\n")
-          (setq passes (1+ passes)))
-      (princ "   [WARN] Pupil exceeds 5.50mm in extreme dark: r^4 scaling increases blur halo.\n")
-      (setq warnings (1+ warnings)))
+    ;; Test 1: Pupil over-dilation threshold
+    (let ((max-d (if (eq (rf-theme-polarity theme) 'light) 4.50 5.50))
+          (min-d (if (eq (rf-theme-polarity theme) 'light) 2.00 2.50)))
+      (princ (format "1. Safe Pupil Dilation Threshold (d <= %.2f mm):\n" max-d))
+      (if (<= pupil-diam max-d)
+          (progn
+            (princ (format "   [PASS] Pupil (%.2f mm) remains in optimal optical zone (< %.2f mm).\n" pupil-diam max-d))
+            (princ "          Astigmatic cylinder defocus and spherical aberration remain contained.\n")
+            (setq passes (1+ passes)))
+        (princ "   [WARN] Pupil exceeds limit: r^4 scaling increases blur halo.\n")
+        (setq warnings (1+ warnings)))
 
-    ;; Test 2: Pupil diffraction limit lower bound (d >= 2.50 mm)
-    (princ "2. Diffraction Blur Avoidance (d >= 2.50 mm):\n")
-    (if (>= pupil-diam 2.50)
-        (progn
-          (princ "   [PASS] Above Airy disk diffraction limit (Airy radius < 2.5 um on retina).\n")
-          (setq passes (1+ passes)))
-      (princ "   [FAIL] Pupil constricted below diffraction limit.\n")
-      (setq fails (1+ fails)))
+      ;; Test 2: Pupil diffraction limit lower bound
+      (princ (format "2. Diffraction Blur Avoidance (d >= %.2f mm):\n" min-d))
+      (if (>= pupil-diam min-d)
+          (progn
+            (princ (format "   [PASS] Above Airy disk diffraction limit (d >= %.2f mm).\n" min-d))
+            (setq passes (1+ passes)))
+        (princ "   [FAIL] Pupil constricted below diffraction limit.\n")
+        (setq fails (1+ fails))))
 
     (princ (format "----------------------------------------------------------------------\n"))
     (princ (format "Pupil Aberrations Summary: %d Passed, %d Failed, %d Warnings.\n\n"

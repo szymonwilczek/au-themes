@@ -14,6 +14,18 @@
 (add-to-list 'custom-theme-load-path default-directory)
 
 (require 'rainforest-night-theme)
+(require 'rainforest-day-theme)
+
+(defvar rf-active-theme 'rainforest-night
+  "Theme currently being evaluated by tests ('rainforest-night or 'rainforest-day).")
+
+(defun rf-theme-polarity (&optional theme-name)
+  "Return 'light or 'dark based on background luminance for THEME-NAME."
+  (let* ((theme (or theme-name rf-active-theme 'rainforest-night))
+         (pal (rainforest-extract-active-palette theme))
+         (bg (plist-get pal :bg-main))
+         (y (rf-luminance-y bg)))
+    (if (> y 0.20) 'light 'dark)))
 
 (defun rainforest-extract-fg-from-spec (spec)
   "Recursively search SPEC for :foreground value."
@@ -39,17 +51,18 @@
             (setq result fg)))))))
 
 (defun rainforest-extract-active-palette (&optional theme-name)
-  "Extract complete semantic color dictionary directly from THEME-NAME (default 'rainforest-night)."
-  (let* ((theme (or theme-name 'rainforest-night))
+  "Extract complete semantic color dictionary directly from THEME-NAME (default `rf-active-theme')."
+  (let* ((theme (or theme-name rf-active-theme 'rainforest-night))
          (partial (cond
                    ((eq theme 'rainforest-night) rainforest-night-palette-partial)
+                   ((eq theme 'rainforest-day) rainforest-day-palette-partial)
                    ((boundp 'rainforest-day-palette-partial) (symbol-value 'rainforest-day-palette-partial))
                    (t nil)))
-         (bg (or (cadr (assq 'bg-main partial)) "#080b09"))
-         (fg (or (cadr (assq 'fg-main partial)) "#90a297"))
-         (dim (or (cadr (assq 'fg-dim partial)) "#48574c"))
-         (cur (or (cadr (assq 'cursor partial)) "#4d93b3"))
-         (hl (or (cadr (assq 'bg-hl-line partial)) "#101612")))
+         (bg (or (cadr (assq 'bg-main partial)) (if (eq theme 'rainforest-day) "#cbd5c5" "#080b09")))
+         (fg (or (cadr (assq 'fg-main partial)) (if (eq theme 'rainforest-day) "#243428" "#90a297")))
+         (dim (or (cadr (assq 'fg-dim partial)) (if (eq theme 'rainforest-day) "#5a6f62" "#48574c")))
+         (cur (or (cadr (assq 'cursor partial)) (if (eq theme 'rainforest-day) "#1c6488" "#4d93b3")))
+         (hl (or (cadr (assq 'bg-hl-line partial)) (if (eq theme 'rainforest-day) "#c0cbba" "#101612"))))
     (list
      :theme theme
      :bg-main bg
@@ -339,7 +352,7 @@ BLUR-ATTENUATION defaults to 0.60 representing a 1.25D cylinder defocus on a 1.2
          (y-peak-blur (+ y-bg (* (- y-tok y-bg) eta))))
     (if (< (+ y-peak-blur y-bg) 1e-6)
         0.0
-      (/ (- y-peak-blur y-bg) (+ y-peak-blur y-bg)))))
+      (/ (abs (- y-peak-blur y-bg)) (+ y-peak-blur y-bg)))))
 
 ;; Intraocular Veiling Glare (CIE 112 / Vos-van den Berg Straylight Spatial Integral)
 (defun rf-veiling-glare-luminance (pal)
