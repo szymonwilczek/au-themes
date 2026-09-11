@@ -239,15 +239,40 @@ Positive for BoW (BG-Y > TXT-Y), negative for WoB.  Inputs outside
   "Return signed APCA 0.0.98G-4g Lc of TXT-HEX against BG-HEX."
   (rf-apca-from-luminance (rf-apca-screen-y txt-hex) (rf-apca-screen-y bg-hex)))
 
+;; Real panel behaviour: the luminance actually leaving a pixel is
+;;   L(Y) = L_black + (L_white - L_black) Y + L_reflected,
+;; with L_black = L_white / CR (native panel contrast ratio) and
+;;   L_reflected = R_d E_ambient / pi
+;; for a diffusely reflecting (anti-glare) front surface.  Under the
+;; IEC 61966-2-1 reference ambient of 64 lx and a typical R_d of 0.5 %,
+;; L_reflected = 0.102 cd/m^2, i.e. 0.13 % of display white.
+(defconst rf-panel-diffuse-reflectance 0.005
+  "Diffuse reflectance of a typical anti-glare display front surface.")
+
+(defconst rf-lcd-contrast-ratio 1000.0
+  "Native (dark-room) contrast ratio of a typical IPS LCD panel.")
+
+(defun rf-reflected-luminance-y ()
+  "Ambient light reflected by the panel, relative to display white."
+  (/ (/ (* rf-panel-diffuse-reflectance rf-ambient-illuminance) float-pi)
+     rf-display-white-luminance))
+
+(defun rf-panel-screen-y (hex black-level)
+  "APCA screen luminance of HEX on a panel with BLACK-LEVEL and ambient reflection."
+  (+ black-level
+     (* (- 1.0 black-level) (rf-apca-screen-y hex))
+     (rf-reflected-luminance-y)))
+
 (defun rf-lcd-contrast (txt-hex bg-hex)
-  "Calculate APCA Lc with LCD black bleed (0.008)."
-  (rf-apca-from-luminance (+ (rf-apca-screen-y txt-hex) 0.008)
-                          (+ (rf-apca-screen-y bg-hex) 0.008)))
+  "APCA Lc on an IPS LCD: native black level plus reflected ambient."
+  (let ((black (/ 1.0 rf-lcd-contrast-ratio)))
+    (rf-apca-from-luminance (rf-panel-screen-y txt-hex black)
+                            (rf-panel-screen-y bg-hex black))))
 
 (defun rf-oled-contrast (txt-hex bg-hex)
-  "Calculate APCA Lc with OLED optical point irradiation (0.94)."
-  (rf-apca-from-luminance (* (rf-apca-screen-y txt-hex) 0.94)
-                          (rf-apca-screen-y bg-hex)))
+  "APCA Lc on an emissive OLED: true black, reflected ambient only."
+  (rf-apca-from-luminance (rf-panel-screen-y txt-hex 0.0)
+                          (rf-panel-screen-y bg-hex 0.0)))
 
 ;; WCAG 2.1 Relative Luminance Ratio
 (defun rf-wcag-contrast-ratio (hex1 hex2)

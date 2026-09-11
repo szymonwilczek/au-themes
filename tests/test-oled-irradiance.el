@@ -3,7 +3,13 @@
 (require 'test-palette-extractor)
 
 (defun test-oled-irradiance-run ()
-  "Evaluate OLED contrast and point irradiation factor (0.94) on emissive panels."
+  "Evaluate legibility on an emissive OLED panel.
+OLED black is emissive-off, so the only floor is the ambient light reflected
+by the front surface, L_reflected = R_d E/pi = 0.102 cd/m^2 (R_d = 0.5 %,
+IEC 61966-2-1 reference ambient 64 lx).  The previous model multiplied text
+luminance by 0.94 as \"optical point irradiation\"; no such attenuation exists -
+irradiation is an apparent-size illusion, not a loss of emitted luminance -
+and it depressed every OLED contrast figure by about 2 Lc."
   (let* ((pal (rainforest-extract-active-palette))
          (bg (plist-get pal :bg-main))
          (theme (plist-get pal :theme))
@@ -26,8 +32,10 @@
                    ("Brackets (( ) [ ] { })"           :bracket      13.0)
                    ("Alerts / Errors (!)"              :err          15.0))))
     (princ (format "\n======================================================================\n"))
-    (princ (format " OLED Optical Irradiation (Factor = 0.94) Simulation Suite\n"))
+    (princ (format " Emissive OLED (True Black + Ambient Reflection) Legibility Suite\n"))
     (princ (format " Theme: %s (%s) | Background: %s\n" theme (rf-theme-polarity theme) bg))
+    (princ (format " Emissive black, reflected ambient %.5f of white (64 lx, R_d %.1f%%)\n"
+                   (rf-reflected-luminance-y) (* 100.0 rf-panel-diffuse-reflectance)))
     (princ (format "======================================================================\n"))
     (princ (format "%-32s | %-8s | %-8s | %-8s | %-8s | %-8s\n"
                    "Token Role" "Hex" "Pure |Lc|" "OLED |Lc|" "Min |Lc|" "Status"))

@@ -3,7 +3,12 @@
 (require 'test-palette-extractor)
 
 (defun test-lcd-black-bleed-run ()
-  "Evaluate display legibility under typical IPS/VA LCD black backlight leakage (0.008)."
+  "Evaluate legibility on an IPS LCD with native black level and ambient reflection.
+The panel model is L(Y) = L_black + (L_white - L_black) Y + L_reflected with
+L_black = L_white/1000 (typical IPS native contrast) and L_reflected =
+R_d E/pi = 0.102 cd/m^2 for R_d = 0.5 % under the IEC 61966-2-1 reference
+ambient of 64 lx.  The previous additive constant of 0.008 (a contrast ratio
+of 125:1) corresponded to no measurable panel property."
   (let* ((pal (rainforest-extract-active-palette))
          (bg (plist-get pal :bg-main))
          (theme (plist-get pal :theme))
@@ -26,8 +31,11 @@
                    ("Brackets (( ) [ ] { })"           :bracket      13.0)
                    ("Alerts / Errors (!)"              :err          15.0))))
     (princ (format "\n======================================================================\n"))
-    (princ (format " LCD Panel Backlight Leakage (Black Bleed = 0.008) Simulation Suite\n"))
+    (princ (format " IPS LCD Black Level + Ambient Reflection Legibility Suite\n"))
     (princ (format " Theme: %s (%s) | Background: %s\n" theme (rf-theme-polarity theme) bg))
+    (princ (format " Black level 1/%.0f, reflected ambient %.5f of white (64 lx, R_d %.1f%%)\n"
+                   rf-lcd-contrast-ratio (rf-reflected-luminance-y)
+                   (* 100.0 rf-panel-diffuse-reflectance)))
     (princ (format "======================================================================\n"))
     (princ (format "%-32s | %-8s | %-8s | %-8s | %-8s | %-8s\n"
                    "Token Role" "Hex" "Pure |Lc|" "LCD |Lc|" "Min |Lc|" "Status"))
