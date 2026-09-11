@@ -18,10 +18,10 @@
 (require 'rainforest-day-theme)
 
 (defvar rf-active-theme 'rainforest-night
-  "Theme currently being evaluated by tests ('rainforest-night or 'rainforest-day).")
+  "Theme currently being evaluated by tests (\\='rainforest-night or \\='rainforest-day).")
 
 (defun rf-theme-polarity (&optional theme-name)
-  "Return 'light or 'dark based on background luminance for THEME-NAME."
+  "Return \\='light or \\='dark based on background luminance for THEME-NAME."
   (let* ((theme (or theme-name rf-active-theme 'rainforest-night))
          (pal (rainforest-extract-active-palette theme))
          (bg (plist-get pal :bg-main))
@@ -417,8 +417,9 @@ and D65 (x=0.3127, y=0.3290); Y row equals `rf-luminance-y' weights.")
   "Return sampled unit-height Gaussian emitter band at PEAK nm with FWHM nm."
   (let ((sigma (/ fwhm (* 2.0 (sqrt (* 2.0 (log 2.0))))))
         (v (make-vector rf-spectral-samples 0.0)))
-    (dotimes (i rf-spectral-samples v)
-      (aset v i (exp (* -0.5 (expt (/ (- (rf--spectral-lambda i) peak) sigma) 2)))))))
+    (dotimes (i rf-spectral-samples)
+      (aset v i (exp (* -0.5 (expt (/ (- (rf--spectral-lambda i) peak) sigma) 2)))))
+    v))
 
 (defun rf--mat3-inverse (m)
   "Return the inverse of 3x3 matrix M (list of rows) by cofactors."
@@ -993,13 +994,14 @@ of the display) using logarithmic steps."
          (steps 2000)
          (ratio (/ (log (/ t2 t1)) steps))
          (sum 0.0))
-    (dotimes (i steps sum)
+    (dotimes (i steps)
       (let* ((th (* t1 (exp (* ratio (+ i 0.5)))))
              (dth (* th ratio))                ; d(theta) in degrees
              (th-rad (* th (/ float-pi 180.0)))
              (dth-rad (* dth (/ float-pi 180.0))))
         (setq sum (+ sum (* (rf-glare-spread-function th)
-                            2.0 float-pi (sin th-rad) (cos th-rad) dth-rad)))))))
+                            2.0 float-pi (sin th-rad) (cos th-rad) dth-rad)))))
+    sum))
 
 (defun rf-veiling-glare-luminance (pal &optional white-cd)
   "Total veiling luminance on the fovea in cd/m^2 for palette PAL.
