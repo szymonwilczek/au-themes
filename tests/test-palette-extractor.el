@@ -755,16 +755,28 @@ AMBIENT-LUM defaults to 0.025 (display veiling/ambient luminance floor)."
          (line-y (+ (* eta eff-fg) (* (- 1.0 eta) eff-bg))))
     (/ (abs (- line-y eff-bg)) (+ line-y eff-bg))))
 
-;; IEC 62471 Retinal Blue Light Hazard Function B(lambda) (peak 435-440 nm)
-(defun rf-blue-light-hazard-eb (hex)
-  "Calculate IEC 62471 / CIE S 009 retinal blue light hazard irradiance E_B.
-Weights derived from integrating B(lambda) against standard sRGB primaries:
-R=0.001, G=0.035, B=0.680."
-  (let* ((rgb (rf-hex-to-rgb hex))
-         (r (rf-srgb-to-linear (nth 0 rgb)))
-         (g (rf-srgb-to-linear (nth 1 rgb)))
-         (b (rf-srgb-to-linear (nth 2 rgb))))
-    (+ (* r 0.001) (* g 0.035) (* b 0.680))))
+;; Retinal blue-light hazard, ICNIRP (2013) Table 2 / IEC 62471:2006 B(lambda).
+;; A display is a large source, so the applicable quantity is the B-weighted
+;; RADIANCE L_B (W m^-2 sr^-1) compared with L_B^EL = 100 W m^-2 sr^-1 for
+;; t > 10^4 s (ICNIRP 2013, eq. 14) - not an irradiance in arbitrary units.
+(defun rf-blue-light-hazard-radiance (hex &optional white-cd)
+  "Blue-light-hazard weighted radiance L_B of HEX in W m^-2 sr^-1.
+WHITE-CD defaults to `rf-display-white-luminance'."
+  (* (/ (or white-cd rf-display-white-luminance) rf-km)
+     (rf-hex-spectral-response hex rf-icnirp-blue-light-hazard)))
+
+(defconst rf-blue-light-hazard-efficacy-d65
+  (/ (rf--spectral-integral rf-icnirp-blue-light-hazard rf-cie-d65-spd)
+     (* rf-km (rf--spectral-integral rf-cie1931-ybar rf-cie-d65-spd)))
+  "Blue-light-hazard efficacy of luminous radiation K_B,v for D65, in W/lm.")
+
+(defun rf-blue-light-hazard-efficacy (hex)
+  "Blue-light-hazard efficacy K_B,v of HEX in W/lm (L_B per unit luminance).
+Independent of display brightness; 0 for a black (zero luminance) colour."
+  (let ((y (rf-luminance-cd hex)))
+    (if (< y 1e-9)
+        0.0
+      (/ (rf-blue-light-hazard-radiance hex) y))))
 
 ;; Pupillary Hippus & Saccadic Local Adaptation (PLR micro-spasm model)
 (defun rf-saccadic-adaptation-delta (hex1 hex2 &optional duty-cycle)
