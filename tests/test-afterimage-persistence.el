@@ -23,7 +23,7 @@ Ref: Rushton (1961); Naka & Rushton (1966); Loomis (1978)."
                            ("Base text (Mineral quartz)"       :fg-main)
                            ("Constants (LOTA_PCR_COUNT)"       :constant)
                            ("Numbers (Golden amber honey)"     :number)
-                           ("Builtins (Cedar wood bark)"       :builtin))))
+                           ("Builtins (Forest viridian)"       :builtin))))
 
     (princ (format "\n======================================================================\n"))
     (princ (format " Palinopsia, Receptor Inertia & Negative Afterimage Decay Suite\n"))
