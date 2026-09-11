@@ -29,25 +29,25 @@
     (green-cooler "#548a56")
     (green-faint "#4c744c")
 
-    (yellow "#a27ca2")        ; STRINGS: Leśna borówka w deszczu / wilgotny wrzos (C*=25.9, LCD=36.99)
+    (yellow "#6ea8c4")        ; STRINGS: Kropla mżawki / czysta woda deszczowa (C*=23.3, LCD=49.20)
     (yellow-warmer "#ba8428") ; Alerty ostrzeżeń (warning): bursztyn ostrzegawczy
-    (yellow-cooler "#94769c")
-    (yellow-faint "#7c5c7c")
+    (yellow-cooler "#6098b0")
+    (yellow-faint "#4a748c")
 
-    (blue "#3886a4")          ; FUNKCJE: Górska woda / czysty potok w deszczu (C*=27.1, LCD=31.96)
-    (blue-warmer "#3c8ca8")
-    (blue-cooler "#2e7470")   ; DWUKROPKI (:foreground itp.): Tafla kałuży w cieniu drzew
-    (blue-faint "#32687c")
+    (blue "#348a66")          ; FUNKCJE: Świerk w ulewie (C*=36.7, LCD=31.06)
+    (blue-warmer "#3c926e")
+    (blue-cooler "#487268")   ; DWUKROPKI (:foreground itp.): Mokry łupek leśny (C*=17.1, LCD=23.28)
+    (blue-faint "#2c5e48")
 
     (magenta "#8e6c7e")       ; SYMBOLE '... : Mokry cedr / wilgotny wrzos w mroku (C*=17.2, LCD=28.30)
     (magenta-warmer "#987484")
     (magenta-cooler "#846678")
     (magenta-faint "#6c5664")
 
-    (cyan "#3c9676")          ; SŁOWA KLUCZOWE (defun, defconst): Szmaragd igliwia w deszczu / mokry nefryt (C*=35.9, LCD=36.43)
-    (cyan-warmer "#449e7e")
-    (cyan-cooler "#368e74")
-    (cyan-faint "#327460")
+    (cyan "#4aa086")          ; SŁOWA KLUCZOWE (defun, defconst): Szmaragd młodych pędów / nefryt (C*=33.0, LCD=41.47)
+    (cyan-warmer "#52a88e")
+    (cyan-cooler "#42987e")
+    (cyan-faint "#366e60")
 
     ;; Diffy i panele
     (bg-added "#0e2414")

@@ -245,21 +245,21 @@ Normy ergonomiczne dla nocnego schronienia:
 - Komentarze (Igliwie ściółki): Lc 18 - 25 (Spokojne tło w czystej kursywie)
 - Elementy składni: Lc >= 28 na LCD przy zachowaniu nasycenia C* <= 38
 
-| Rola w kodzie                      | Token       | Kolor   | Tło     | APCA (Czyste) | Ekran LCD (Bleed) | Ekran OLED (Irrad) | Status Astygmatyzm (Komfort LCD)             |
-|------------------------------------+-------------+---------+---------+---------------+-------------------+--------------------+----------------------------------------------|
+| Rola w kodzie                      | Token       | Kolor   | Tło     | APCA (Czyste) | Ekran LCD (Bleed) | Ekran OLED (Irrad) | Status Astygmatyzm (Komfort LCD)                  |
+|------------------------------------+-------------+---------+---------+---------------+-------------------+--------------------+---------------------------------------------------|
 | Tekst podstawowy (Chłodny kwarc)   | fg-main     | #a6b6b0 | #0d110f |         60.39 |             58.81 |              57.87 | OPTYMALNY: Ostra krawędź bez halacji (Okno 56-62) |
 | Tekst alternatywny (Mokry len)     | fg-main-alt | #abb6a2 | #0d110f |         60.42 |             58.84 |              57.90 | OPTYMALNY: Ostra krawędź bez halacji (Okno 56-62) |
-| Tekst poprzedni (Za ciemny na LCD) | fg-main-old | #9fa896 | #0d110f |         53.04 |             51.52 |              50.80 | ZAGROŻENIE: Rozmycie/hunting na LCD (Lc < 55) |
-| Identyfikatory (Mokry piaskowiec)  | fg-alt      | #889e94 | #0d110f |         46.73 |             45.27 |              44.72 | ZGODNY: Wyraźna definicja w mroku            |
+| Tekst poprzedni (Za ciemny na LCD) | fg-main-old | #9fa896 | #0d110f |         53.04 |             51.52 |              50.80 | ZAGROŻENIE: Rozmycie/hunting na LCD (Lc < 55)     |
+| Identyfikatory (Mokry piaskowiec)  | fg-alt      | #889e94 | #0d110f |         46.73 |             45.27 |              44.72 | ZGODNY: Wyraźna definicja w mroku                 |
 | Kursor (Kropla deszczu)            | cursor      | #4e92a8 | #0d110f |         38.83 |             37.46 |              37.12 | OPTYMALNY: Wyraźny punkt skupienia bez oślepiania |
-| Komentarze / Doc (Ściółka)         | fg-dim      | #4f6154 | #0d110f |         18.72 |             17.76 |              17.77 | OPTYMALNY: Dyskretny cień w tle (Lc 18-25)   |
-| Słowa kluczowe (Szmaragd deszczu)  | cyan        | #3c9676 | #0d110f |         37.81 |             36.43 |              36.14 | ZGODNY: Wyraźna definicja w mroku            |
-| Funkcje (Górska woda/potok)        | blue        | #3886a4 | #0d110f |         33.24 |             31.96 |              31.76 | ZGODNY: Wyraźna definicja w mroku            |
-| Typy (Mokry mech)                  | green       | #608e58 | #0d110f |         35.65 |             34.33 |              34.03 | ZGODNY: Wyraźna definicja w mroku            |
-| Napisy (Leśna borówka w deszczu)   | yellow      | #a27ca2 | #0d110f |         38.35 |             36.99 |              36.66 | ZGODNY: Wyraźna definicja w mroku            |
-| Symbole / Stałe (Mokry cedr)       | magenta     | #8e6c7e | #0d110f |         29.53 |             28.30 |              28.17 | ZGODNY: Wyraźna definicja w mroku            |
-| Dwukropki (Tafla kałuży)           | blue-cooler | #2e7470 | #0d110f |         24.28 |             23.18 |              23.14 | ZGODNY: Wyraźna definicja w mroku            |
-| Alerty / Błędy (Owoc cisa)         | red         | #9e524a | #0d110f |         23.75 |             22.65 |              22.61 | ZGODNY: Wyraźna definicja w mroku            |
+| Komentarze / Doc (Ściółka)         | fg-dim      | #4f6154 | #0d110f |         18.72 |             17.76 |              17.77 | OPTYMALNY: Dyskretny cień w tle (Lc 18-25)        |
+| Słowa kluczowe (Szmaragd deszczu)  | cyan        | #4aa086 | #0d110f |         42.89 |             41.47 |              41.03 | ZGODNY: Wyraźna definicja w mroku                 |
+| Funkcje (Świerk w ulewie)          | blue        | #348a66 | #0d110f |         32.34 |             31.06 |              30.87 | ZGODNY: Wyraźna definicja w mroku                 |
+| Typy (Mokry mech)                  | green       | #608e58 | #0d110f |         35.66 |             34.33 |              34.07 | ZGODNY: Wyraźna definicja w mroku                 |
+| Napisy (Kropla mżawki)             | yellow      | #6ea8c4 | #0d110f |         50.70 |             49.20 |              48.54 | ZGODNY: Wyraźna definicja w mroku                 |
+| Symbole / Stałe (Mokry cedr)       | magenta     | #8e6c7e | #0d110f |         29.53 |             28.30 |              28.17 | ZGODNY: Wyraźna definicja w mroku                 |
+| Dwukropki (Mokry łupek leśny)      | blue-cooler | #487268 | #0d110f |         24.40 |             23.28 |              23.24 | ZGODNY: Wyraźna definicja w mroku                 |
+| Alerty / Błędy (Owoc cisa)         | red         | #9e524a | #0d110f |         23.76 |             22.65 |              22.61 | ZGODNY: Wyraźna definicja w mroku                 |
 #+TBLFM: $5='(APCA $3 $4) :: $6='(LCD $3 $4) :: $7='(OLED $3 $4) :: $8='(ASTIG $2 $3 $4)
 
 ** Optyka oka i aberracja chromatyczna (Model Thibosa 1992, S/P i C*)
@@ -268,36 +268,36 @@ Wymagania dla astygmatyzmu:
 - Czułość mezopowa S/P $\ge 0.90$ (optymalne pobudzanie pręcików w nocy)
 - Nasycenie barwy $C^* \le 38$ (brak neonów, głęboki deszczowy pigment) oraz $C^* \le 12$ dla tekstu podstawowego
 
-| Rola w kodzie                      | Token       | Kolor   | Baza    | Efektywna λ | D(Thibos) | Aberracja ΔD | Czułość S/P | Nasycenie C* | Status Optyczny (Astygmatyzm)                           |
-|------------------------------------+-------------+---------+---------+-------------+-----------+--------------+-------------+--------------+---------------------------------------------------------|
-| Tekst bazowy (Chłodny kwarc)       | fg-main     | #a6b6b0 | #a6b6b0 | 543.9 nm    | -0.236 D  | 0.000 D      |        1.01 |          6.8 | OPTYMALNY: Wspólna płaszczyzna ogniskowa (ΔD <= 0.25 D) |
-| Identyfikatory (Piaskowiec)        | fg-alt      | #889e94 | #a6b6b0 | 542.7 nm    | -0.243 D  | 0.007 D      |        1.01 |         10.1 | OPTYMALNY: Wspólna płaszczyzna ogniskowa (ΔD <= 0.25 D) |
-| Kursor (Kropla deszczu)            | cursor      | #4e92a8 | #a6b6b0 | 531.0 nm    | -0.314 D  | 0.078 D      |        1.26 |         23.7 | OPTYMALNY: Wspólna płaszczyzna ogniskowa (ΔD <= 0.25 D) |
-| Komentarze (Ściółka iglasta)       | fg-dim      | #4f6154 | #a6b6b0 | 542.2 nm    | -0.246 D  | 0.010 D      |        0.98 |         11.0 | OPTYMALNY: Wspólna płaszczyzna ogniskowa (ΔD <= 0.25 D) |
-| Słowa kluczowe (Szmaragd deszczu)  | cyan        | #3c9676 | #a6b6b0 | 533.6 nm    | -0.297 D  | 0.061 D      |        1.03 |         35.9 | OPTYMALNY: Wspólna płaszczyzna ogniskowa (ΔD <= 0.25 D) |
-| Funkcje (Górska woda/potok)        | blue        | #3886a4 | #a6b6b0 | 527.9 nm    | -0.334 D  | 0.099 D      |        1.34 |         27.1 | OPTYMALNY: Wspólna płaszczyzna ogniskowa (ΔD <= 0.25 D) |
-| Typy (Mokry mech)                  | green       | #608e58 | #a6b6b0 | 540.8 nm    | -0.254 D  | 0.018 D      |        0.90 |         35.9 | OPTYMALNY: Wspólna płaszczyzna ogniskowa (ΔD <= 0.25 D) |
-| Napisy (Leśna borówka)             | yellow      | #a27ca2 | #a6b6b0 | 552.1 nm    | -0.189 D  | 0.047 D      |        1.08 |         25.9 | OPTYMALNY: Wspólna płaszczyzna ogniskowa (ΔD <= 0.25 D) |
-| Symbole / Stałe (Mokry cedr)       | magenta     | #8e6c7e | #a6b6b0 | 554.7 nm    | -0.174 D  | 0.061 D      |        0.98 |         17.2 | OPTYMALNY: Wspólna płaszczyzna ogniskowa (ΔD <= 0.25 D) |
-| Dwukropki (Tafla kałuży)           | blue-cooler | #2e7470 | #a6b6b0 | 531.3 nm    | -0.311 D  | 0.075 D      |        1.14 |         23.2 | OPTYMALNY: Wspólna płaszczyzna ogniskowa (ΔD <= 0.25 D) |
-| Alerty (Owoc cisa)                 | red         | #9e524a | #a6b6b0 | 574.6 nm    | -0.061 D  | 0.174 D      |        0.65 |         36.0 | OPTYMALNY: Wspólna płaszczyzna ogniskowa (ΔD <= 0.25 D) |
+| Rola w kodzie                     | Token       | Kolor   | Baza    | Efektywna λ | D(Thibos) | Aberracja ΔD | Czułość S/P | Nasycenie C* | Status Optyczny (Astygmatyzm)                           |
+|-----------------------------------+-------------+---------+---------+-------------+-----------+--------------+-------------+--------------+---------------------------------------------------------|
+| Tekst bazowy (Chłodny kwarc)      | fg-main     | #a6b6b0 | #a6b6b0 | 543.9 nm    | -0.236 D  | 0.000 D      |        1.01 |          6.8 | OPTYMALNY: Wspólna płaszczyzna ogniskowa (ΔD <= 0.25 D) |
+| Identyfikatory (Piaskowiec)       | fg-alt      | #889e94 | #a6b6b0 | 542.7 nm    | -0.243 D  | 0.007 D      |        1.01 |         10.1 | OPTYMALNY: Wspólna płaszczyzna ogniskowa (ΔD <= 0.25 D) |
+| Kursor (Kropla deszczu)           | cursor      | #4e92a8 | #a6b6b0 | 531.0 nm    | -0.314 D  | 0.078 D      |        1.26 |         23.7 | OPTYMALNY: Wspólna płaszczyzna ogniskowa (ΔD <= 0.25 D) |
+| Komentarze (Ściółka iglasta)      | fg-dim      | #4f6154 | #a6b6b0 | 542.2 nm    | -0.246 D  | 0.010 D      |        0.98 |         11.0 | OPTYMALNY: Wspólna płaszczyzna ogniskowa (ΔD <= 0.25 D) |
+| Słowa kluczowe (Szmaragd deszczu) | cyan        | #4aa086 | #a6b6b0 | 534.1 nm    | -0.294 D  | 0.059 D      |        1.05 |         33.0 | OPTYMALNY: Wspólna płaszczyzna ogniskowa (ΔD <= 0.25 D) |
+| Funkcje (Świerk w ulewie)         | blue        | #348a66 | #a6b6b0 | 533.9 nm    | -0.296 D  | 0.060 D      |        1.00 |         36.7 | OPTYMALNY: Wspólna płaszczyzna ogniskowa (ΔD <= 0.25 D) |
+| Typy (Mokry mech)                 | green       | #608e58 | #a6b6b0 | 540.8 nm    | -0.254 D  | 0.018 D      |        0.90 |         35.9 | OPTYMALNY: Wspólna płaszczyzna ogniskowa (ΔD <= 0.25 D) |
+| Napisy (Kropla mżawki)            | yellow      | #6ea8c4 | #a6b6b0 | 533.5 nm    | -0.298 D  | 0.063 D      |        1.24 |         23.3 | OPTYMALNY: Wspólna płaszczyzna ogniskowa (ΔD <= 0.25 D) |
+| Symbole / Stałe (Mokry cedr)      | magenta     | #8e6c7e | #a6b6b0 | 554.7 nm    | -0.174 D  | 0.061 D      |        0.98 |         17.2 | OPTYMALNY: Wspólna płaszczyzna ogniskowa (ΔD <= 0.25 D) |
+| Dwukropki (Mokry łupek leśny)     | blue-cooler | #487268 | #a6b6b0 | 536.6 nm    | -0.279 D  | 0.043 D      |        1.06 |         17.1 | OPTYMALNY: Wspólna płaszczyzna ogniskowa (ΔD <= 0.25 D) |
+| Alerty (Owoc cisa)                | red         | #9e524a | #a6b6b0 | 576.8 nm    | -0.061 D  | 0.174 D      |        0.65 |         36.0 | OPTYMALNY: Wspólna płaszczyzna ogniskowa (ΔD <= 0.25 D) |
 #+TBLFM: $5='(WAVE $3) :: $6='(THIBOS $3) :: $7='(ΔD $3 $4) :: $8='(SP $3) :: $9='(CHROMA $3) :: $10='(OPTIC $2 $3 $4)
 
 ** Weryfikacja odległości percepcyjnej między składnikami (min. 5000)
-| Porównanie ról                         | Kolor 1 | Kolor 2 | Dystans (Δ) | Status       |
-|----------------------------------------+---------+---------+-------------+--------------|
-| Kwarc (txt) vs Piaskowiec (fg-alt)     | #a6b6b0 | #889e94 |        6575 | Rozróżnialne |
-| Kwarc (txt) vs Komentarz (Ściółka)     | #a6b6b0 | #4f6154 |       69540 | Rozróżnialne |
-| Piaskowiec (fg-alt) vs Komentarz       | #889e94 | #4f6154 |       33573 | Rozróżnialne |
-| Szmaragd (defun) vs Woda (fnname)      | #3c9676 | #3886a4 |        6980 | Rozróżnialne |
-| Szmaragd (defun) vs Borówka (string)   | #3c9676 | #a27ca2 |       33264 | Rozróżnialne |
-| Szmaragd (defun) vs Mech (type)        | #3c9676 | #608e58 |        5713 | Rozróżnialne |
-| Woda (fnname) vs Borówka (string)      | #3886a4 | #a27ca2 |       27901 | Rozróżnialne |
-| Woda (fnname) vs Mech (type)           | #3886a4 | #608e58 |       19692 | Rozróżnialne |
-| Mech (type) vs Borówka (string)        | #608e58 | #a27ca2 |       26071 | Rozróżnialne |
-| Tafla (:builtin) vs Cedr ('constant)   | #2e7470 | #8e6c7e |       22777 | Rozróżnialne |
-| Szmaragd (defun) vs Tafla (:builtin)   | #3c9676 | #2e7470 |        5197 | Rozróżnialne |
-| Cedr ('constant) vs Borówka (string)   | #8e6c7e | #a27ca2 |        5218 | Rozróżnialne |
+| Porównanie ról                       | Kolor 1 | Kolor 2 | Dystans (Δ) | Status       |
+|--------------------------------------+---------+---------+-------------+--------------|
+| Kwarc (txt) vs Piaskowiec (fg-alt)   | #a6b6b0 | #889e94 |        6575 | Rozróżnialne |
+| Kwarc (txt) vs Komentarz (Ściółka)   | #a6b6b0 | #4f6154 |       69540 | Rozróżnialne |
+| Piaskowiec (fg-alt) vs Komentarz     | #889e94 | #4f6154 |       33573 | Rozróżnialne |
+| Szmaragd (defun) vs Świerk (fnname)  | #4aa086 | #348a66 |        5888 | Rozróżnialne |
+| Szmaragd (defun) vs Kropla (string)  | #4aa086 | #6ea8c4 |       13566 | Rozróżnialne |
+| Szmaragd (defun) vs Mech (type)      | #4aa086 | #608e58 |        8131 | Rozróżnialne |
+| Świerk (fnname) vs Kropla (string)   | #348a66 | #6ea8c4 |       35372 | Rozróżnialne |
+| Świerk (fnname) vs Mech (type)       | #348a66 | #608e58 |        5068 | Rozróżnialne |
+| Mech (type) vs Kropla (string)       | #608e58 | #6ea8c4 |       33717 | Rozróżnialne |
+| Łupek (:builtin) vs Cedr ('constant) | #487268 | #8e6c7e |       13352 | Rozróżnialne |
+| Szmaragd (defun) vs Łupek (:builtin) | #4aa086 | #487268 |       11000 | Rozróżnialne |
+| Cedr ('constant) vs Kropla (string)  | #8e6c7e | #6ea8c4 |       29461 | Rozróżnialne |
 #+TBLFM: $4='(Δ $2 $3)
 
 * rainforest-day (Weryfikacja ergonomiczna dla zamglonego boru w dzień)
