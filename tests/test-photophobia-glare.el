@@ -96,7 +96,9 @@ Ref: CIE Discomfort Glare Index; CIE S 026:2018; Noseda et al. (2010, 2017) Natu
                        ((memq key '(:string :number :builtin :err :fg-dim :preprocessor)) 0.35)
                        ;; Short-wavelength tokens (constants, function calls, cursor): safe neuro threshold
                        (t 0.65))))
-             (ok (and (<= m-val max-m) (<= mp 2.10))))
+             (max-mp 2.00)
+             ;; Use 0.001 epsilon for IEEE 754 floating point precision around 2.00
+             (ok (and (<= m-val max-m) (<= mp (+ max-mp 0.001)))))
         (if ok
             (setq passes (1+ passes))
           (setq fails (1+ fails)))
