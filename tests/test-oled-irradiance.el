@@ -39,6 +39,7 @@
              (min-lc (if (eq polarity 'light)
                          (cond ((eq key :fg-main) 60.0)
                                ((eq key :fg-dim) 30.0)
+                               ((eq key :cursor) 35.0)
                                (t 45.0))
                        (nth 2 tok)))
              (hex (plist-get pal key))

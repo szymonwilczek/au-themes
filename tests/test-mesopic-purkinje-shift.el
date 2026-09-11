@@ -29,7 +29,10 @@ Ref: CIE Publication 191 (2010); Rea, Freyssinier-Nova & Bullough (2004)."
     (dolist (tok tokens)
       (let* ((label    (nth 0 tok))
              (key      (nth 1 tok))
-             (min-lum  (nth 2 tok))
+             (polarity (rf-theme-polarity theme))
+             (min-lum  (if (and (eq polarity 'light) (eq key :fg-main))
+                           0.010
+                         (nth 2 tok)))
              (max-rat  (nth 3 tok))
              (hex      (plist-get pal key))
              (y-phot   (rf-luminance-y hex))

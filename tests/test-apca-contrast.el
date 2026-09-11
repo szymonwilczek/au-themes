@@ -48,6 +48,18 @@
     (princ (format " APCA 0.98G-4g Contrast Gate Suite (W3C WCAG 3 Candidate Standard)\n"))
     (princ (format " Theme: %s (%s) | Background: %s\n" theme polarity bg))
     (princ (format "======================================================================\n"))
+    ;; Physical Overcast Canvas Gate for Daylight polarity
+    (when (eq polarity 'light)
+      (let* ((bg-y (rf-luminance-y bg))
+             (bg-ok (and (>= bg-y 0.4000) (<= bg-y 0.5200))))
+        (princ "Overcast Canopy Canvas Luminance Check:\n")
+        (if bg-ok
+            (progn
+              (princ (format "   [PASS] Overcast canopy canvas luminance Y=%.4f in [0.40..0.52] (eliminates paper-white glare)\n" bg-y))
+              (setq passes (1+ passes)))
+          (princ (format "   [FAIL] Canvas luminance Y=%.4f out of bounds [0.40..0.52] (too bright/paper white)\n" bg-y))
+          (setq fails (1+ fails)))
+        (princ "----------------------------------------------------------------------\n")))
     (princ (format "%-32s | %-8s | %-7s | %-12s | %-8s\n" "Token Role" "Hex" "Lc" "Target Lc" "Status"))
     (princ (format "---------------------------------+----------+---------+--------------+----------\n"))
     (dolist (tok tokens)
@@ -57,13 +69,19 @@
              (max-lc (nth 3 tok))
              (hex (plist-get pal key))
              (lc  (abs (rf-apca-contrast hex bg)))
-             (ok  (and (>= lc min-lc) (<= lc max-lc))))
+             (y-tok (rf-luminance-y hex))
+             ;; Enforce ink ceiling (Y <= 0.0850) on light canvas to block pale/washed-out pastels
+             (ink-ok (if (and (eq polarity 'light) (not (memq key '(:fg-dim :cursor))))
+                         (<= y-tok 0.0850)
+                       t))
+             (ok  (and (>= lc min-lc) (<= lc max-lc) ink-ok)))
         (if ok
             (setq passes (1+ passes))
           (setq fails (1+ fails)))
-        (princ (format "%-32s | %-8s | %7.2f | [%4.1f..%4.1f]   | %s\n"
+        (princ (format "%-32s | %-8s | %7.2f | [%4.1f..%4.1f]   | %s%s\n"
                        name hex lc min-lc max-lc
-                       (if ok "PASS" "FAIL")))))
+                       (if ok "PASS" "FAIL")
+                       (if (not ink-ok) (format " (Y=%.4f > 0.085)" y-tok) "")))))
     (princ (format "---------------------------------+----------+---------+--------------+----------\n"))
     (princ (format "APCA Summary: %d Passed, %d Failed.\n\n" passes fails))
     (zerop fails)))

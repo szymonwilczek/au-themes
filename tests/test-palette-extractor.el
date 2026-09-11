@@ -58,11 +58,11 @@
                    ((eq theme 'rainforest-day) rainforest-day-palette-partial)
                    ((boundp 'rainforest-day-palette-partial) (symbol-value 'rainforest-day-palette-partial))
                    (t nil)))
-         (bg (or (cadr (assq 'bg-main partial)) (if (eq theme 'rainforest-day) "#cbd5c5" "#080b09")))
-         (fg (or (cadr (assq 'fg-main partial)) (if (eq theme 'rainforest-day) "#243428" "#90a297")))
-         (dim (or (cadr (assq 'fg-dim partial)) (if (eq theme 'rainforest-day) "#5a6f62" "#48574c")))
-         (cur (or (cadr (assq 'cursor partial)) (if (eq theme 'rainforest-day) "#1c6488" "#4d93b3")))
-         (hl (or (cadr (assq 'bg-hl-line partial)) (if (eq theme 'rainforest-day) "#c0cbba" "#101612"))))
+         (bg (or (cadr (assq 'bg-main partial)) (if (eq theme 'rainforest-day) "#b2beaf" "#080b09")))
+         (fg (or (cadr (assq 'fg-main partial)) (if (eq theme 'rainforest-day) "#122216" "#90a297")))
+         (dim (or (cadr (assq 'fg-dim partial)) (if (eq theme 'rainforest-day) "#485a4c" "#48574c")))
+         (cur (or (cadr (assq 'cursor partial)) (if (eq theme 'rainforest-day) "#105476" "#4d93b3")))
+         (hl (or (cadr (assq 'bg-hl-line partial)) (if (eq theme 'rainforest-day) "#a2af9f" "#101612"))))
     (list
      :theme theme
      :bg-main bg
