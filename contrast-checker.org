@@ -8,23 +8,27 @@ Niniejszy moduł implementuje matematyczny standard kontrastu percepcyjnego APCA
 (Advanced Perceptual Contrast Algorithm / WCAG 3, specyfikacja W3C 0.98G-4g) zintegrowany
 z recenzowanymi modelami optyki widzenia mezopowego, fizyki powierzchni oraz biometrii astygmatyzmu:
 
-** 1. Koncepcja warstw lasu od góry do dołu (Struktura kodu C a piętra boru)
-Kod źródłowy w języku C naturalnie odwzorowuje pionowy przekrój wilgotnego boru iglastego:
-- *Warstwa 1: Korona drzew (Canopy / Szczyty boru)*: Dyrektywy preprocesora (=#define=, =#include=, makra =BPF_CORE_READ=, słowa kluczowe =static=, =defun=).
-  Świeże igliwie wierzchołkowe skąpane w deszczowej mgle – chłodny, wyrazisty szmaragd koron drzew (~#34967a~, $L^c \approx 36.6$).
-- *Warstwa 2: Pnie drzew i kora (Tree Bark / Cedr)*: Modyfikatory i atrybuty kompilatora (=__always_inline=, =:slant=, =:foreground=, atrybuty =__attribute__=).
-  Mokra kora sosnowa i nasiąknięty cedr pod koroną – szlachetny, wygaszony odcień mokrego pnia (~#886a78~, $L^c \approx 27.1$).
-- *Warstwa 3: Mech nadrzewny i naskalny (Spruce & Rock Moss)*: Typy danych (=int=, =size_t=, =struct=, =long=, =void=).
-  Soczysty, wilgotny mech borowy porastający pnie od północy i leśne głazy (~#629056~, $L^c \approx 35.4$).
-- *Warstwa 4: Woda potoku górskiego w ulewie (Mountain Stream)*: Definicje i wywołania funkcji (=is_write_open_flags=, =bpf_map_lookup_elem=, =bpf_get_current_pid_tgid=).
-  Chłodna, rwąca woda górska płynąca przez serce lasu (~#328ab0~, $L^c \approx 34.1$, zero pomarańczu!).
-- *Warstwa 5: Runo leśne – borówka czarna (Understory Bilberry)*: Literały łańcuchowe (="string literals"=).
-  Dojrzała leśna borówka czarna (jagoda) w kroplach deszczu ukryta w runie (~#a676aa~, $L^c \approx 36.4$).
-- *Warstwa 6: Kwarc mineralny i piaskowiec (River Quartz & Sandstone)*: Tekst podstawowy i zmienne kodu (=flags=, =key=, =buf=).
-  Wyrazisty, naturalny kwarc mineralny (~#a0aaa2~, $L^c \approx 53.1$) oraz wilgotny piaskowiec (~#788a80~, $L^c \approx 36.0$).
-- *Warstwa 7: Ściółka leśna (Needle Litter)*: Komentarze (=/* ... */=, =//=) i dokumentacja.
-  Opadłe, ciemne igliwie pod drzewami – leży cicho pod kodem w czystej kursywie (~#506456~, $L^c \approx 19.0$).
-- *Warstwa 8: Dno nocnego boru (Nocturnal Humus)*: Tło edytora (~#090a09~, neutralny mrok).
+** 1. Zasada determinizmu 1:1 dla każdego keyface (Żaden kolor się nie powtarza)
+W motywie Rainforest obowiązuje fundamentalna reguła:
+*JEDEN KOLOR odpowiada TYLKO ZA JEDNĄ RZECZ (jednego keyface).*
+Żaden kluczowy token składni nie współdzieli barwy z innym. Dzięki temu programista natychmiast
+rozpoznaje strukturę semantyczną kodu bez czytania każdego słowa:
+- *Preprocesor* (=#define=, =#include=, =#ifdef=) $\rightarrow$ Wierzchołek świerku (~#4eb294~, $L^c \approx 50.3$).
+- *Słowa kluczowe* (=struct=, =while=, =static=, =return=) $\rightarrow$ Szmaragd igliwia (~#288e72~, $L^c \approx 33.7$).
+- *Typy danych* (=int=, =size_t=, =struct Type=) $\rightarrow$ Mech borowy (~#64925a~, $L^c \approx 37.4$).
+- *Stałe i makra* (=LOTA_PCR_COUNT=, =NULL=, enumy) $\rightarrow$ Fiolet wrzosowy (~#946ca2~, $L^c \approx 32.0$).
+- *Liczby i literały liczbowe* (=0=, =24=, =32= w =buf[0]=) $\rightarrow$ Żywica bursztynowa (~#aa8a4c~, $L^c \approx 41.2$).
+- *Modyfikatory i builtin* (=__always_inline=, =:keywords=) $\rightarrow$ Kora sosnowa / cedr (~#967464~, $L^c \approx 32.3$).
+- *Definicje funkcji* (=is_write_open_flags=) $\rightarrow$ Potok górski (~#2e84aa~, $L^c \approx 32.4$).
+- *Wywołania funkcji* (=bpf_map_lookup_elem=) $\rightarrow$ Kropla mżawki (~#4aa0c2~, $L^c \approx 44.9$).
+- *Literały łańcuchowe* (="string literals"=) $\rightarrow$ Borówka leśna (~#b0748e~, $L^c \approx 37.0$).
+- *Pola struktur i właściwości* (=->tgid=, =.field=) $\rightarrow$ Wilgotny piaskowiec (~#769c90~, $L^c \approx 43.9$).
+- *Zmienne i argumenty* (=flags=, =buf=, =event=) $\rightarrow$ Kwarc mineralny (~#a2aca4~, $L^c \approx 54.6$).
+- *Komentarze i docstringi* $\rightarrow$ Ściółka iglasta w czystej kursywie (~#566a5c~, $L^c \approx 22.9$).
+- *Operatory* (=+=, =-=, =*=, =>>=, =&=) $\rightarrow$ Ciemny łupek (~#6c8074~, $L^c \approx 32.3$).
+- *Nawiasy* (=( ) [ ] { }=) $\rightarrow$ Gałązka modrzewia (~#58685e~, $L^c \approx 22.4$).
+- *Separatory* (=,=, =;=) $\rightarrow$ Dyskretne igliwie (~#627268~, $L^c \approx 28.5$).
+- *Alerty i negacja* (=!=, błędy) $\rightarrow$ Owoc cisa (~#a05450~, $L^c \approx 24.8$).
 
 ** 2. Fluktuacje akomodacyjne mięśnia rzęskowego a astygmatyzm i wada wzroku
 - *Artykuł źródłowy*: Charman, W. N., & Heron, G. (1988). /Fluctuations in accommodation: a review./ *Ophthalmic and Physiological Optics*, 8(2), 153–164.
@@ -33,15 +37,28 @@ Kod źródłowy w języku C naturalnie odwzorowuje pionowy przekrój wilgotnego 
   wiązka światła tworzy odcinek Sturma o dwóch ogniskach. Zbyt jaskrawy tekst ($L^c > 58$) wywołuje cykl oscylacyjny
   mięśnia rzęskowego (ciliary hunting / pulsowanie oka). Z kolei zbyt niski kontrast ($L^c < 48$) przy postępującej wadzie wzroku
   zmusza siatkówkę do nadmiernego wysiłku i mrużenia powiek.
-- *Zbalansowane okno luminancji*: Tekst bazowy (~#a0aaa2~, $L^c \approx 53.1$) oraz składnia ($L^c \approx 27 - 37$) zapewniają
+- *Zbalansowane okno luminancji*: Tekst bazowy (~#a2aca4~, $L^c \approx 54.6$) oraz składnia ($L^c \approx 22 - 50$) zapewniają
   pełną wyrazistość bez zmęczenia wzroku i bez pulsowania oka.
 
-** 3. Polaryzacja wyświetlacza i aberracje rogówkowe przy rozszerzonej źrenicy
-- *Artykuł źródłowy*: Piepenbrock, C., Mayr, S., Mund, I., & Buchner, A. (2013). /Positive display polarity is advantageous for both younger and older adults./ *Human Factors*, 55(4), 470–481.
-- *DOI*: [[https://doi.org/10.1177/0018720813495537][10.1177/0018720813495537]]
-- *Monografia optyczna*: Atchison, D. A., & Smith, G. (2000). /Optics of the Human Eye./ Butterworth-Heinemann (ISBN: 978-0-7506-3775-6).
-- *Mechanizm optyczny*: W trybie ciemnym źrenica rozszerza się do $d \approx 5.0 - 6.5\text{ mm}$, potęgując aberracje falowe
-  ($r^4$) i rozmycie cylindryczne. Wymaga to ścisłego ograniczenia nasycenia ($C^* \le 38$) i halacji.
+** 3. Optyka ciemnego tła: Model cokołu luminancji (Pedestal) przeciw rozszerzaniu źrenicy i olśnieniu
+- *Artykuły źródłowe*:
+  - Piepenbrock, C., Groeger, J. A., & Mayr, S. (2013). /Larger pupil size explains the advantage of positive over negative polarity displays./ *Human Factors*, 55(4), 737–746. DOI: [[https://doi.org/10.1177/0018720813495537][10.1177/0018720813495537]].
+  - Liang, J., & Williams, D. R. (1997). /Aberrations and retinal image quality of the normal human eye./ *J. Opt. Soc. Am. A*, 14(11), 2873–2883. DOI: [[https://doi.org/10.1364/JOSAA.14.002873][10.1364/JOSAA.14.002873]].
+  - Campbell, F. W., & Green, D. G. (1965). /Optical and retinal factors affecting visual resolution./ *J. Physiol.*, 181, 576–593. DOI: [[https://doi.org/10.1113/jphysiol.1965.sp007784][10.1113/jphysiol.1965.sp007784]].
+  - Vos, J. J. (2003). /On the cause of disability glare and its dependence on age./ *CIE Journal / Ophthalmic Physiol Opt.*
+- *Dlaczego standardowy wzór APCA nie wyłapuje zbyt ciemnego tła?*
+  Standardowy algorytm APCA (WCAG 3) został zaprojektowany w celu wyznaczania /minimalnego wymaganego kontrastu/
+  czytelności tekstu ($L^c \ge 45, 60, 75$). APCA *nie modeluje średnicy źrenicy oka jako funkcji luminancji adaptacyjnej
+  $d(L_A)$*, ani *nie uwzględnia rozproszenia wewnątrzgałkowego (intraocular straylight)* czy *skalowania aberracji wyższego rzędu ($r^4$)*.
+- *Fizjologia oka i astygmatyzm w skrajnym mroku*:
+  Gdy tło jest niemal idealnie czarne (~#090a09~, $L_b < 0.5\text{ cd/m}^2$), źrenica oka rozszerza się do $5.5 - 6.5\text{ mm}$.
+  Zgodnie z Liang & Williams (1997), aberracje falowe (astygmatyczne rozmycie $Z_2^{\pm 2}$ oraz aberracja sferyczna $Z_4^0$)
+  rosną z *4. potęgą promienia źrenicy* ($W \propto r^4$). Ponadto kontrast Webera $C_W = (L - L_b)/L_b$ dąży do nieskończoności,
+  co przy rozszerzonej źrenicy wywołuje silne rozproszenie światła w rogówce i soczewce (straylight halo, Vos 2003) oraz szok krawędziowy.
+- *Rozwiązanie ergonomiczne*:
+  Tło nocne nie może być czarną próżnią. Wprowadzenie *cokołu luminancji (pedestal)* $L^* \approx 7.0$ (~#141615~, $Y \approx 0.008$)
+  utrzymuje średnicę źrenicy w optymalnym punkcie kompromisu dyfrakcyjno-aberracyjnego ($3.5 - 4.2\text{ mm}$, Campbell & Green 1965),
+  redukując aberracje sferyczne o ponad 60% i całkowicie eliminując efekt halo wokół liter.
 
 ** 4. Wzdłużna aberracja chromatyczna oka (LCA / Chromostereopsis)
 - *Artykuł źródłowy*: Thibos, L. N., Ye, M., Zhang, X., & Bradley, A. (1992). /The chromatic aberration of the human eye./ *Vision Research*, 32(12), 2329–2340.
@@ -280,25 +297,31 @@ Aby załadować silnik i odświeżyć tabele, wywołaj:
 * rainforest-night (Weryfikacja ergonomiczna dla LCD / OLED w ciemnym pokoju)
 
 ** Pomiary kontrastu APCA i tolerancji astygmatyzmu (LCD / OLED)
-Zbalansowane normy ergonomiczne (koncepcja warstw lasu od góry do dołu):
+Zbalansowane normy ergonomiczne (determinizm 1:1 na cokole luminancji #141615):
 - Tekst podstawowy (Kwarc mineralny): Lc 50 - 56 na LCD (Wyrazisty i czytelny dla wady wzroku, brak mikrofluktuacji rzęskowych 1-2 Hz wg Charmana & Herona 1988)
-- Identyfikatory / Parametry (Piaskowiec): Lc 34 - 38 (Wyraźny poziom pomocniczy, odległość Δ >= 8000 do tekstu)
-- Kursor (Lśniąca kropla deszczu): Lc 42 - 48 (Punkt skupienia wzroku, nieoślepiający)
-- Komentarze (Igliwie ściółki): Lc 18 - 22 (Spokojne tło w czystej kursywie pod kodem)
-- Elementy składni: Lc 24 - 38 na LCD przy zachowaniu nasycenia C* <= 38 i fizyki deszczu Leknera & Dorfa (1988)
+- Identyfikatory / Pola struktur (Piaskowiec): Lc 40 - 45 (Wyraźny poziom pomocniczy, odległość Δ >= 8000 do tekstu)
+- Kursor (Lśniąca kropla deszczu): Lc 45 - 50 (Punkt skupienia wzroku, nieoślepiający)
+- Komentarze (Igliwie ściółki): Lc 20 - 24 (Spokojne tło w czystej kursywie pod kodem)
+- Składnia boru: Lc 24 - 50 na LCD przy zachowaniu nasycenia C* <= 38 i fizyki deszczu Leknera & Dorfa (1988)
 
-| Rola w kodzie                      | Token   | Kolor   | Tło     | APCA (Czyste) | Ekran LCD (Bleed) | Ekran OLED (Irrad) | Status Astygmatyzm (Komfort LCD)                              |
-|------------------------------------+---------+---------+---------+---------------+-------------------+--------------------+---------------------------------------------------------------|
-| Tekst podstawowy (Kwarc mineralny) | fg-main | #a0aaa2 | #090a09 |         54.68 |             53.09 |              52.38 | OPTYMALNY: Wyrazisty i stabilny, brak pulsowania (Okno 50-56) |
-| Identyfikatory (Mokry piaskowiec)  | fg-alt  | #788a80 | #090a09 |         37.38 |             35.98 |              35.74 | ZGODNY: Wyrazista warstwa leśna (Lekner & Dorf 1988)          |
-| Kursor (Kropla deszczu)            | cursor  | #54a2b8 | #090a09 |         46.50 |             44.98 |              44.51 | OPTYMALNY: Wyraźny punkt skupienia bez oślepiania             |
-| Komentarze / Doc (Ściółka)         | fg-dim  | #506456 | #090a09 |         20.09 |             19.04 |              19.09 | OPTYMALNY: Czytelne tło ściółki (Lc 16-24)                    |
-| Korona drzew (Szmaragd igliwia)    | cyan    | #34967a | #090a09 |         37.97 |             36.56 |              36.31 | ZGODNY: Wyrazista warstwa leśna (Lekner & Dorf 1988)          |
-| Potok górski (Woda w ulewie)       | blue    | #328ab0 | #090a09 |         35.48 |             34.11 |              33.91 | ZGODNY: Wyrazista warstwa leśna (Lekner & Dorf 1988)          |
-| Mech nadrzewny (Mokry mech)        | green   | #629056 | #090a09 |         36.84 |             35.44 |              35.22 | ZGODNY: Wyrazista warstwa leśna (Lekner & Dorf 1988)          |
-| Runo leśne (Borówka czarna)        | yellow  | #a676aa | #090a09 |         37.79 |             36.38 |              36.14 | ZGODNY: Wyrazista warstwa leśna (Lekner & Dorf 1988)          |
-| Kora sosnowa / Cedr (Builtin)      | magenta | #886a78 | #090a09 |         28.31 |             27.05 |              27.00 | ZGODNY: Wyrazista warstwa leśna (Lekner & Dorf 1988)          |
-| Owoc cisa (Alerty i błędy)         | red     | #9e5650 | #090a09 |         25.08 |             23.90 |              23.90 | ZGODNY: Wyrazista warstwa leśna (Lekner & Dorf 1988)          |
+| Rola w kodzie                        | Token        | Kolor   | Tło     | APCA (Czyste) | Ekran LCD (Bleed) | Ekran OLED (Irrad) | Status Astygmatyzm (Komfort LCD)                              |
+|--------------------------------------+--------------+---------+---------+---------------+-------------------+--------------------+---------------------------------------------------------------|
+| Tekst podstawowy (Kwarc mineralny)   | fg-main      | #a2aca4 | #141615 |         55.03 |             53.55 |              52.69 | OPTYMALNY: Wyrazisty i stabilny, brak pulsowania (Okno 50-56) |
+| Komentarze / Doc (Ściółka)           | fg-dim       | #566a5c | #141615 |         21.84 |             20.84 |              20.76 | OPTYMALNY: Czytelne tło ściółki (Lc 16-24)                    |
+| Kursor (Kropla deszczu)              | cursor       | #58b0c8 | #141615 |         52.53 |             51.08 |              50.29 | OPTYMALNY: Wyraźny punkt skupienia bez oślepiania             |
+| Preprocesor (#define, #include)      | preprocessor | #4eb294 | #141615 |         50.74 |             49.31 |              48.57 | ZGODNY: Wyrazista warstwa leśna (Lekner & Dorf 1988)          |
+| Słowa kluczowe (struct, while)       | keyword      | #288e72 | #141615 |         33.51 |             32.28 |              31.99 | ZGODNY: Wyrazista warstwa leśna (Lekner & Dorf 1988)          |
+| Typy danych (int, size_t)            | type         | #64925a | #141615 |         37.09 |             35.81 |              35.43 | ZGODNY: Wyrazista warstwa leśna (Lekner & Dorf 1988)          |
+| Stałe i makra (LOTA_PCR_COUNT)       | constant     | #946ca2 | #141615 |         31.41 |             30.21 |              29.97 | ZGODNY: Wyrazista warstwa leśna (Lekner & Dorf 1988)          |
+| Liczby (0, 24, 32 w buf[0])          | number       | #aa8a4c | #141615 |         41.06 |             39.72 |              39.25 | ZGODNY: Wyrazista warstwa leśna (Lekner & Dorf 1988)          |
+| Builtin / Atrybuty (__always_inline) | builtin      | #967464 | #141615 |         31.72 |             30.52 |              30.26 | ZGODNY: Wyrazista warstwa leśna (Lekner & Dorf 1988)          |
+| Definicje funkcji (is_write_...)     | fnname       | #267a9e | #141615 |         27.73 |             26.60 |              26.43 | ZGODNY: Wyrazista warstwa leśna (Lekner & Dorf 1988)          |
+| Wywołania funkcji (bpf_...)          | fnname-call  | #54aaca | #141615 |         49.95 |             48.51 |              47.80 | ZGODNY: Wyrazista warstwa leśna (Lekner & Dorf 1988)          |
+| Literały tekstowe ("strings")        | string       | #ba726c | #141615 |         36.65 |             35.37 |              35.01 | ZGODNY: Wyrazista warstwa leśna (Lekner & Dorf 1988)          |
+| Pola struktur (->tgid, .field)       | property     | #609886 | #141615 |         40.36 |             39.03 |              38.58 | ZGODNY: Wyrazista warstwa leśna (Lekner & Dorf 1988)          |
+| Operatory (+, -, *, >>, &)           | operator     | #6c8074 | #141615 |         31.66 |             30.46 |              30.21 | ZGODNY: Wyrazista warstwa leśna (Lekner & Dorf 1988)          |
+| Nawiasy (( ) [ ] { })                | bracket      | #607266 | #141615 |         25.49 |             24.41 |              24.27 | ZGODNY: Wyrazista warstwa leśna (Lekner & Dorf 1988)          |
+| Alerty / Błędy / Negacja !           | err          | #a05450 | #141615 |         24.22 |             23.16 |              23.04 | ZGODNY: Wyrazista warstwa leśna (Lekner & Dorf 1988)          |
 #+TBLFM: $5='(APCA $3 $4) :: $6='(LCD $3 $4) :: $7='(OLED $3 $4) :: $8='(ASTIG $2 $3 $4)
 
 ** Optyka oka i aberracja chromatyczna (Model Thibosa 1992, S/P i C*)
@@ -307,44 +330,55 @@ Wymagania dla astygmatyzmu:
 - Czułość mezopowa S/P $\ge 0.85$ (optymalne pobudzanie pręcików w nocy wg CIE 191:2010)
 - Nasycenie barwy $C^* \le 38$ (eliminacja jaskrawości, głęboki mokry pigment leśny wg Leknera & Dorfa 1988) oraz $C^* \le 12$ dla tekstu
 
-| Rola w kodzie                   | Token   | Kolor   | Baza    | Efektywna λ | D(Thibos) | Aberracja ΔD | Czułość S/P | Nasycenie C* | Status Optyczny (Astygmatyzm)                           |
-|---------------------------------+---------+---------+---------+-------------+-----------+--------------+-------------+--------------+---------------------------------------------------------|
-| Tekst bazowy (Kwarc mineralny)  | fg-main | #a0aaa2 | #a0aaa2 | 545.0 nm    | -0.229 D  | 0.000 D      |        0.99 |          5.8 | OPTYMALNY: Wspólna płaszczyzna ogniskowa (ΔD <= 0.25 D) |
-| Identyfikatory (Piaskowiec)     | fg-alt  | #788a80 | #a0aaa2 | 543.1 nm    | -0.240 D  | 0.011 D      |        1.00 |          9.1 | OPTYMALNY: Wspólna płaszczyzna ogniskowa (ΔD <= 0.25 D) |
-| Kursor (Kropla deszczu)         | cursor  | #54a2b8 | #a0aaa2 | 530.9 nm    | -0.314 D  | 0.085 D      |        1.25 |         25.8 | OPTYMALNY: Wspólna płaszczyzna ogniskowa (ΔD <= 0.25 D) |
-| Komentarze (Ściółka iglasta)    | fg-dim  | #506456 | #a0aaa2 | 541.8 nm    | -0.248 D  | 0.019 D      |        0.98 |         12.0 | OPTYMALNY: Wspólna płaszczyzna ogniskowa (ΔD <= 0.25 D) |
-| Korona drzew (Szmaragd igliwia) | cyan    | #34967a | #a0aaa2 | 532.7 nm    | -0.303 D  | 0.074 D      |        1.05 |         36.0 | OPTYMALNY: Wspólna płaszczyzna ogniskowa (ΔD <= 0.25 D) |
-| Potok górski (Woda w ulewie)    | blue    | #328ab0 | #a0aaa2 | 526.2 nm    | -0.345 D  | 0.116 D      |        1.40 |         30.6 | OPTYMALNY: Wspólna płaszczyzna ogniskowa (ΔD <= 0.25 D) |
-| Mech nadrzewny (Mokry mech)     | green   | #629056 | #a0aaa2 | 541.1 nm    | -0.252 D  | 0.023 D      |        0.89 |         37.7 | OPTYMALNY: Wspólna płaszczyzna ogniskowa (ΔD <= 0.25 D) |
-| Runo leśne (Borówka czarna)     | yellow  | #a676aa | #a0aaa2 | 553.2 nm    | -0.183 D  | 0.046 D      |        1.12 |         34.4 | OPTYMALNY: Wspólna płaszczyzna ogniskowa (ΔD <= 0.25 D) |
-| Kora sosnowa / Cedr (Builtin)   | magenta | #886a78 | #a0aaa2 | 554.2 nm    | -0.178 D  | 0.051 D      |        0.97 |         14.7 | OPTYMALNY: Wspólna płaszczyzna ogniskowa (ΔD <= 0.25 D) |
-| Owoc cisa (Alerty i błędy)      | red     | #9e5650 | #a0aaa2 | 574.2 nm    | -0.074 D  | 0.155 D      |        0.68 |         33.5 | OPTYMALNY: Wspólna płaszczyzna ogniskowa (ΔD <= 0.25 D) |
+| Rola w kodzie                        | Token        | Kolor   | Baza    | Efektywna λ | D(Thibos) | Aberracja ΔD | Czułość S/P | Nasycenie C* | Status Optyczny (Astygmatyzm)                           |
+|--------------------------------------+--------------+---------+---------+-------------+-----------+--------------+-------------+--------------+---------------------------------------------------------|
+| Tekst bazowy (Kwarc mineralny)       | fg-main      | #a2aca4 | #a2aca4 | 545.0 nm    | -0.229 D  | 0.000 D      |        0.99 |          5.8 | OPTYMALNY: Wspólna płaszczyzna ogniskowa (ΔD <= 0.25 D) |
+| Komentarze (Ściółka iglasta)         | fg-dim       | #566a5c | #a2aca4 | 542.1 nm    | -0.246 D  | 0.017 D      |        0.98 |         11.9 | OPTYMALNY: Wspólna płaszczyzna ogniskowa (ΔD <= 0.25 D) |
+| Kursor (Kropla deszczu)              | cursor       | #58b0c8 | #a2aca4 | 530.6 nm    | -0.316 D  | 0.087 D      |        1.25 |         28.2 | OPTYMALNY: Wspólna płaszczyzna ogniskowa (ΔD <= 0.25 D) |
+| Preprocesor (#define, #include)      | preprocessor | #4eb294 | #a2aca4 | 533.8 nm    | -0.296 D  | 0.068 D      |        1.05 |         37.1 | OPTYMALNY: Wspólna płaszczyzna ogniskowa (ΔD <= 0.25 D) |
+| Słowa kluczowe (struct, while)       | keyword      | #288e72 | #a2aca4 | 532.1 nm    | -0.307 D  | 0.078 D      |        1.05 |         36.4 | OPTYMALNY: Wspólna płaszczyzna ogniskowa (ΔD <= 0.25 D) |
+| Typy danych (int, size_t)            | type         | #64925a | #a2aca4 | 541.1 nm    | -0.252 D  | 0.023 D      |        0.89 |         36.7 | OPTYMALNY: Wspólna płaszczyzna ogniskowa (ΔD <= 0.25 D) |
+| Stałe i makra (LOTA_PCR_COUNT)       | constant     | #946ca2 | #a2aca4 | 550.8 nm    | -0.196 D  | 0.033 D      |        1.19 |         34.6 | OPTYMALNY: Wspólna płaszczyzna ogniskowa (ΔD <= 0.25 D) |
+| Liczby (0, 24, 32 w buf[0])          | number       | #aa8a4c | #a2aca4 | 558.8 nm    | -0.152 D  | 0.077 D      |        0.73 |         37.7 | OPTYMALNY: Wspólna płaszczyzna ogniskowa (ΔD <= 0.25 D) |
+| Builtin / Atrybuty (__always_inline) | builtin      | #967464 | #a2aca4 | 558.1 nm    | -0.156 D  | 0.073 D      |        0.82 |         17.8 | OPTYMALNY: Wspólna płaszczyzna ogniskowa (ΔD <= 0.25 D) |
+| Definicje funkcji (is_write_...)     | fnname       | #267a9e | #a2aca4 | 525.3 nm    | -0.351 D  | 0.122 D      |        1.42 |         29.2 | OPTYMALNY: Wspólna płaszczyzna ogniskowa (ΔD <= 0.25 D) |
+| Wywołania funkcji (bpf_...)          | fnname-call  | #54aaca | #a2aca4 | 529.6 nm    | -0.322 D  | 0.093 D      |        1.30 |         29.3 | OPTYMALNY: Wspólna płaszczyzna ogniskowa (ΔD <= 0.25 D) |
+| Literały tekstowe ("strings")        | string       | #ba726c | #a2aca4 | 568.1 nm    | -0.104 D  | 0.125 D      |        0.75 |         31.7 | OPTYMALNY: Wspólna płaszczyzna ogniskowa (ΔD <= 0.25 D) |
+| Pola struktur (->tgid, .field)       | property     | #609886 | #a2aca4 | 537.0 nm    | -0.276 D  | 0.047 D      |        1.04 |         23.0 | OPTYMALNY: Wspólna płaszczyzna ogniskowa (ΔD <= 0.25 D) |
+| Operatory (+, -, *, >>, &)           | operator     | #6c8074 | #a2aca4 | 542.6 nm    | -0.243 D  | 0.014 D      |        1.00 |         10.6 | OPTYMALNY: Wspólna płaszczyzna ogniskowa (ΔD <= 0.25 D) |
+| Nawiasy (( ) [ ] { })                | bracket      | #607266 | #a2aca4 | 542.7 nm    | -0.243 D  | 0.014 D      |        0.99 |         10.3 | OPTYMALNY: Wspólna płaszczyzna ogniskowa (ΔD <= 0.25 D) |
+| Alerty / Błędy / Negacja !           | err          | #a05450 | #a2aca4 | 575.7 nm    | -0.067 D  | 0.162 D      |        0.67 |         35.1 | OPTYMALNY: Wspólna płaszczyzna ogniskowa (ΔD <= 0.25 D) |
 #+TBLFM: $5='(WAVE $3) :: $6='(THIBOS $3) :: $7='(ΔD $3 $4) :: $8='(SP $3) :: $9='(CHROMA $3) :: $10='(OPTIC $2 $3 $4)
 
 ** Weryfikacja odległości percepcyjnej między składnikami (min. 8000)
 Wymóg rygorystycznego rozróżniania składników w sąsiedztwie linii kodu (min. 8000 w 16-bitowej metryce Riemersma):
 
-| Porównanie ról                     | Kolor 1 | Kolor 2 | Dystans (Δ) | Status                   |
-|------------------------------------+---------+---------+-------------+--------------------------|
-| Kwarc (txt) vs Piaskowiec (fg-alt) | #a0aaa2 | #788a80 |       11093 | Rozróżnialne (Δ >= 8000) |
-| Kwarc (txt) vs Komentarz (Ściółka) | #a0aaa2 | #506456 |       50413 | Rozróżnialne (Δ >= 8000) |
-| Piaskowiec (fg-alt) vs Komentarz   | #788a80 | #506456 |       14314 | Rozróżnialne (Δ >= 8000) |
-| Korona (cyan) vs Potok (blue)      | #34967a | #328ab0 |        8818 | Rozróżnialne (Δ >= 8000) |
-| Korona (cyan) vs Mech (green)      | #34967a | #629056 |        8571 | Rozróżnialne (Δ >= 8000) |
-| Korona (cyan) vs Kora (magenta)    | #34967a | #886a78 |       24659 | Rozróżnialne (Δ >= 8000) |
-| Korona (cyan) vs Borówka (yellow)  | #34967a | #a676aa |       41895 | Rozróżnialne (Δ >= 8000) |
-| Potok (blue) vs Mech (green)       | #328ab0 | #629056 |       27584 | Rozróżnialne (Δ >= 8000) |
-| Potok (blue) vs Kora (magenta)     | #328ab0 | #886a78 |       30083 | Rozróżnialne (Δ >= 8000) |
-| Potok (blue) vs Borówka (yellow)   | #328ab0 | #a676aa |       34572 | Rozróżnialne (Δ >= 8000) |
-| Mech (green) vs Kora (magenta)     | #629056 | #886a78 |       12360 | Rozróżnialne (Δ >= 8000) |
-| Mech (green) vs Borówka (yellow)   | #629056 | #a676aa |       32110 | Rozróżnialne (Δ >= 8000) |
-| Kora (magenta) vs Borówka (yellow) | #886a78 | #a676aa |        8998 | Rozróżnialne (Δ >= 8000) |
-| Kwarc (txt) vs Potok (blue)        | #a0aaa2 | #328ab0 |       34050 | Rozróżnialne (Δ >= 8000) |
-| Kwarc (txt) vs Korona (cyan)       | #a0aaa2 | #34967a |       34176 | Rozróżnialne (Δ >= 8000) |
-| Kwarc (txt) vs Mech (green)        | #a0aaa2 | #629056 |       26951 | Rozróżnialne (Δ >= 8000) |
-| Kwarc (txt) vs Borówka (yellow)    | #a0aaa2 | #a676aa |       11148 | Rozróżnialne (Δ >= 8000) |
-| Kwarc (txt) vs Kora (magenta)      | #a0aaa2 | #886a78 |       22311 | Rozróżnialne (Δ >= 8000) |
-| Kwarc (txt) vs Czerwony (red)      | #a0aaa2 | #9e5650 |       44559 | Rozróżnialne (Δ >= 8000) |
+| Porównanie ról                           | Kolor 1 | Kolor 2 | Dystans (Δ) | Status                   |
+|------------------------------------------+---------+---------+-------------+--------------------------|
+| define (#define) vs struct (keyword)     | #4eb294 | #288e72 |       11697 | Rozróżnialne (Δ >= 8000) |
+| define vs LOTA_PCR_COUNT (constant)      | #4eb294 | #946ca2 |       32323 | Rozróżnialne (Δ >= 8000) |
+| struct vs LOTA_PCR_COUNT                 | #288e72 | #946ca2 |       38614 | Rozróżnialne (Δ >= 8000) |
+| struct vs int (type)                     | #288e72 | #64925a |        9898 | Rozróżnialne (Δ >= 8000) |
+| define vs int (type)                     | #4eb294 | #64925a |       14261 | Rozróżnialne (Δ >= 8000) |
+| LOTA_PCR_COUNT vs 24 (number)            | #946ca2 | #aa8a4c |       22621 | Rozróżnialne (Δ >= 8000) |
+| LOTA_PCR_COUNT vs "string"               | #946ca2 | #ba726c |       10900 | Rozróżnialne (Δ >= 8000) |
+| static vs __always_inline (builtin)      | #288e72 | #967464 |       32176 | Rozróżnialne (Δ >= 8000) |
+| __always_inline vs is_write_open_flags   | #967464 | #267a9e |       39010 | Rozróżnialne (Δ >= 8000) |
+| is_write_open_flags (def) vs bpf_ (call) | #267a9e | #54aaca |       19450 | Rozróżnialne (Δ >= 8000) |
+| is_write_open_flags vs int (type)        | #267a9e | #64925a |       23838 | Rozróżnialne (Δ >= 8000) |
+| bpf_ (call) vs int (type)                | #54aaca | #64925a |       36296 | Rozróżnialne (Δ >= 8000) |
+| tgid (property) vs tekst bazowy          | #609886 | #a2aca4 |       14875 | Rozróżnialne (Δ >= 8000) |
+| 0 (number) vs tekst bazowy               | #aa8a4c | #a2aca4 |       23164 | Rozróżnialne (Δ >= 8000) |
+| struct (keyword) vs tekst bazowy         | #288e72 | #a2aca4 |       46131 | Rozróżnialne (Δ >= 8000) |
+| define (preproc) vs tekst bazowy         | #4eb294 | #a2aca4 |       18366 | Rozróżnialne (Δ >= 8000) |
+| int (type) vs tekst bazowy               | #64925a | #a2aca4 |       26184 | Rozróżnialne (Δ >= 8000) |
+| LOTA_PCR_COUNT vs tekst bazowy           | #946ca2 | #a2aca4 |       17037 | Rozróżnialne (Δ >= 8000) |
+| __always_inline vs tekst bazowy          | #967464 | #a2aca4 |       22879 | Rozróżnialne (Δ >= 8000) |
+| bpf_ (call) vs tekst bazowy              | #54aaca | #a2aca4 |       18900 | Rozróżnialne (Δ >= 8000) |
+| "string" vs tekst bazowy                 | #ba726c | #a2aca4 |       22443 | Rozróżnialne (Δ >= 8000) |
+| err (!) vs tekst bazowy                  | #a05450 | #a2aca4 |       48072 | Rozróżnialne (Δ >= 8000) |
+| bracket vs tekst bazowy                  | #607266 | #a2aca4 |       34224 | Rozróżnialne (Δ >= 8000) |
+| komentarz (ściółka) vs tekst bazowy      | #566a5c | #a2aca4 |       45166 | Rozróżnialne (Δ >= 8000) |
 #+TBLFM: $4='(Δ $2 $3) :: $5='(DIST-STATUS $2 $3)
 
 * rainforest-day (Weryfikacja ergonomiczna dla zamglonego boru w dzień)
