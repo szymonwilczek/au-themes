@@ -3,81 +3,81 @@
 (require 'ef-themes)
 
 (defconst rainforest-night-palette-partial
-  '(;; Płótno: dno boru z cokołem luminancji (pedestal L*=7.0 zapobiegający rozszerzaniu źrenicy i aberracji r^4)
-    (cursor "#58b0c8")        ; KURSOR: Lśniąca kropla deszczu w świetle księżyca (APCA LCD: 49.32)
-    (bg-main "#141615")       ; PODŁOŻE BORU: Organiczna ziemia z cokołem luminancji (L*=7.0, redukcja rozproszenia straylight)
-    (bg-dim "#1a1d1b")        ; Nasiąknięty pień świerku
-    (bg-alt "#202422")        ; Głęboki cień pod gałęziami
-    (fg-main "#a2aca4")       ; KWARC MINERALNY: Zrównoważony tekst bazowy (APCA LCD: 54.64, C*=5.8 - bez pulsowania rzęskowego)
-    (fg-dim "#566a5c")        ; ŚCIÓŁKA IGLASTA: Komentarze w czystej kursywie (APCA LCD: 22.86, czytelna i dyskretna)
-    (fg-alt "#609886")        ; WILGOTNY PIASKOWIEC: Pola struktur i parametry (APCA LCD: 41.5, Δ do tekstu = 14 875)
+  '(;; Canvas: dark wet forest floor with luminance pedestal (L*=4.78 to prevent pupil over-dilation and r^4 wavefront aberration)
+    (cursor "#54a8be")        ; Raindrop glint highlight
+    (bg-main "#0e110f")       ; Wet forest soil with pedestal (L*=4.78, prevents straylight halo and edge shock)
+    (bg-dim "#141715")        ; Damp bark shadow
+    (bg-alt "#1a1e1b")        ; Deep canopy shadow
+    (fg-main "#9aa49c")       ; Mineral quartz: balanced base text (Lc=49.6, C*=5.9, prevents ciliary hunting)
+    (fg-dim "#526456")        ; Damp conifer needles: comments in italic (Lc=18.9, discrete background)
+    (fg-alt "#609886")        ; Wet stone: struct fields and parameters (Lc=39.4, delta to base = 10,247)
 
-    (bg-active "#222824")
-    (bg-inactive "#161917")
-    (border "#1c201e")
+    (bg-active "#1c221e")
+    (bg-inactive "#121513")
+    (border "#181c19")
 
-    ;; PALETA DETERMINIZMU 1:1 (Lekner & Dorf 1988 C* <= 38.0, Thibos ΔD <= 0.25 D, Δ >= 8000)
-    (red "#a05450")           ; OWOC CISA: Błędy, alerty, negacja ! (C*=35.1, LCD=24.83)
+    ;; 1:1 Keyface Determinism Palette (Lekner & Dorf 1988 C* <= 38.0, Thibos delta-D <= 0.25 D, delta >= 8000)
+    (red "#a05450")           ; Yew berry: errors, alerts, negation ! (Lc=23.5, C*=35.1)
     (red-warmer "#aa5a54")
     (red-cooler "#964e4a")
-    (red-faint "#607266")     ; GAŁĄZKA MODRZEWIA: Nawiasy ( ) [ ] { } (LCD Lc = 24.4)
+    (red-faint "#607266")     ; Larch twig: brackets ( ) [ ] { } (Lc=24.8)
 
-    (green "#64925a")         ; WARSTWA 3 (MECH BOROWY / TYPY: int, size_t, struct Type): (C*=36.7, LCD=37.41)
+    (green "#64925a")         ; Forest moss: data types (int, size_t, struct Type) (Lc=36.2, C*=36.7)
     (green-warmer "#6e9c62")
     (green-cooler "#5a8850")
     (green-faint "#527848")
 
-    (yellow "#ba726c")        ; WARSTWA 5 (BORÓWKA LEŚNA / STRINGS: "napisy"): (C*=31.7, LCD=35.37)
-    (yellow-warmer "#aa8a4c") ; ŻYWICA BURSZTYNOWA / LICZBY (0, 24, 32 w buf[0] itp.): (C*=37.7, LCD=41.21)
+    (yellow "#ba726c")        ; Forest lingonberry: string literals ("strings") (Lc=35.7, C*=31.7)
+    (yellow-warmer "#aa8a4c") ; Amber resin: numeric literals (0, 24, 32 in buf[0]) (Lc=40.1, C*=37.7)
     (yellow-cooler "#a46a84")
     (yellow-faint "#8e586e")
 
-    (blue "#267a9e")          ; WARSTWA 4A (POTOK GÓRSKI / DEFINICJE FUNKCJI: is_write_open_flags): (C*=30.3, LCD=30.90)
-    (blue-warmer "#54aaca")   ; WARSTWA 4B (KROPLA MŻAWKI / WYWOŁANIA FUNKCJI: bpf_...): (C*=29.7, LCD=45.60)
-    (blue-cooler "#6c8074")   ; CIEMNY ŁUPEK / OPERATORY: +, -, *, >>, & (C*=10.7, LCD=32.30)
+    (blue "#267a9e")          ; Mountain stream: function definitions (is_write_open_flags) (Lc=27.0, C*=29.2)
+    (blue-warmer "#54aaca")   ; Drizzle splash: function calls (bpf_map_lookup_elem) (Lc=48.9, C*=29.3)
+    (blue-cooler "#6c8074")   ; Dark slate: operators (+, -, *, >>, &) (Lc=30.8, C*=10.6)
     (blue-faint "#206886")
 
-    (magenta "#946ca2")       ; WARSTWA 2B (FIOLET WRZOSOWY / STAŁE I MAKRA: LOTA_PCR_COUNT, NULL): (C*=34.6, LCD=31.97)
+    (magenta "#946ca2")       ; Heather violet: constants and macros (LOTA_PCR_COUNT, NULL) (Lc=30.6, C*=34.6)
     (magenta-warmer "#9e74ac")
-    (magenta-cooler "#967464") ; WARSTWA 2A (KORA SOSNY I CEDR / BUILTIN: __always_inline, :keywords): (C*=17.8, LCD=32.31)
+    (magenta-cooler "#967464") ; Pine and cedar bark: builtins and attributes (__always_inline, :keywords) (Lc=30.9, C*=17.8)
     (magenta-faint "#76584c")
 
-    (cyan "#288e72")          ; SŁOWA KLUCZOWE JĘZYKA (struct, while, static, return): Szmaragd igliwia (C*=36.4, LCD=33.73)
-    (cyan-warmer "#4eb294")   ; PREPROCESOR (#define, #include): Wierzchołek świerku (C*=37.2, LCD=50.30)
+    (cyan "#288e72")          ; Deep conifer emerald: keywords (struct, while, static, return) (Lc=32.6, C*=36.4)
+    (cyan-warmer "#4eb294")   ; Spruce crown: preprocessor directives (#define, #include) (Lc=49.7, C*=37.1)
     (cyan-cooler "#208468")
-    (cyan-faint "#627268")    ; SUBTELNE IGLIWIE / DELIMITERY: przecinki, średniki
+    (cyan-faint "#627268")    ; Subtle needles: delimiters (, ;)
 
-    ;; Diffy i panele
-    (bg-added "#102616")
-    (bg-added-faint "#0a1a0f")
-    (bg-added-refine "#16341e")
+    ;; Diffs and panels
+    (bg-added "#0e2214")
+    (bg-added-faint "#08160d")
+    (bg-added-refine "#122e1b")
     (fg-added "#58b260")
 
-    (bg-changed "#24200a")
-    (bg-changed-faint "#181406")
-    (bg-changed-refine "#302a0e")
+    (bg-changed "#201c08")
+    (bg-changed-faint "#141205")
+    (bg-changed-refine "#2a240c")
     (fg-changed "#bca436")
 
-    (bg-removed "#28100e")
-    (bg-removed-faint "#1a0a09")
-    (bg-removed-refine "#361412")
+    (bg-removed "#240e0c")
+    (bg-removed-faint "#160807")
+    (bg-removed-refine "#301210")
     (fg-removed "#c0524a")
 
-    (bg-mode-line-active "#181c1a")
-    (fg-mode-line-active "#a6b4a8")
-    (bg-completion "#161a18")
-    (bg-popup "#141816")
-    (bg-hover "#1c221e")
-    (bg-hover-secondary "#241c22")
-    (bg-hl-line "#161a17")
-    (bg-paren-match "#18281e")
-    (bg-err "#26100e")
-    (bg-warning "#201606")
-    (bg-info "#0c1e12")
-    (bg-region "#1a261c")))
+    (bg-mode-line-active "#141816")
+    (fg-mode-line-active "#9aa89e")
+    (bg-completion "#121614")
+    (bg-popup "#101412")
+    (bg-hover "#18201a")
+    (bg-hover-secondary "#201820")
+    (bg-hl-line "#121614")
+    (bg-paren-match "#16241a")
+    (bg-err "#220e0c")
+    (bg-warning "#1c1405")
+    (bg-info "#0a1a10")
+    (bg-region "#162218")))
 
 (defconst rainforest-night-palette-mappings-partial
-  '(;; Statusy
+  '(;; Statuses
     (err red)
     (warning yellow-warmer)
     (info green)
@@ -89,24 +89,24 @@
     (identifier fg-alt)
     (fg-prompt blue)
 
-    ;; DETERMINIZM 1:1 DLA KAŻDEGO KEYFACE (ŻADEN KOLOR SIĘ NIE POWTARZA):
-    (preprocessor cyan-warmer)   ; #4eb294 - Preprocesor (#define, #include)
-    (keyword cyan)               ; #288e72 - Słowa kluczowe (struct, while, static, return)
-    (type green)                 ; #64925a - Typy danych (int, size_t, struct Type)
-    (constant magenta)           ; #946ca2 - Stałe i enumy (LOTA_PCR_COUNT, NULL, enum)
-    (number yellow-warmer)       ; #aa8a4c - Liczby (0, 24, 32 w buf[0] itp.)
-    (builtin magenta-cooler)     ; #967464 - Builtin i atrybuty (__always_inline, :keywords)
-    (fnname blue)                ; #267a9e - Definicje funkcji (is_write_open_flags)
-    (fnname-call blue-warmer)    ; #54aaca - Wywołania funkcji (bpf_map_lookup_elem)
-    (string yellow)              ; #ba726c - Literały tekstowe ("strings")
-    (property fg-alt)            ; #609886 - Pola struktur (->tgid, .field)
-    (variable fg-main)           ; #a2aca4 - Zmienne i argumenty
-    (variable-use fg-main)       ; #a2aca4 - Użycia zmiennych
-    (operator blue-cooler)       ; #6c8074 - Operatory (+, -, *, >>, &)
-    (bracket red-faint)          ; #607266 - Nawiasy (( ) [ ] { })
-    (delimiter cyan-faint)       ; #627268 - Separatory (, ;)
-    (comment fg-dim)             ; #566a5c - Ściółka iglasta (komentarze)
-    (docstring fg-dim)           ; #566a5c - Ściółka iglasta (dokumentacja)
+    ;; 1:1 Keyface Determinism Mappings (distinct color per syntax role):
+    (preprocessor cyan-warmer)   ; #4eb294 - Preprocessor directives (#define, #include)
+    (keyword cyan)               ; #288e72 - Language keywords (struct, while, static, return)
+    (type green)                 ; #64925a - Data types (int, size_t, struct Type)
+    (constant magenta)           ; #946ca2 - Constants and enums (LOTA_PCR_COUNT, NULL)
+    (number yellow-warmer)       ; #aa8a4c - Numeric literals (0, 24, 32 in buf[0])
+    (builtin magenta-cooler)     ; #967464 - Builtins and attributes (__always_inline, :keywords)
+    (fnname blue)                ; #267a9e - Function definitions (is_write_open_flags)
+    (fnname-call blue-warmer)    ; #54aaca - Function calls (bpf_map_lookup_elem)
+    (string yellow)              ; #ba726c - String literals ("strings")
+    (property fg-alt)            ; #609886 - Struct fields and properties (->tgid, .field)
+    (variable fg-main)           ; #9aa49c - Variables and identifiers
+    (variable-use fg-main)       ; #9aa49c - Variable usages
+    (operator blue-cooler)       ; #6c8074 - Operators (+, -, *, >>, &)
+    (bracket red-faint)          ; #607266 - Brackets and delimiters (( ) [ ] { })
+    (delimiter cyan-faint)       ; #627268 - Separators (, ;)
+    (comment fg-dim)             ; #526456 - Comments (pure italic)
+    (docstring fg-dim)           ; #526456 - Documentation strings
     (rx-backslash yellow-cooler)
     (rx-construct red)
 
@@ -126,18 +126,18 @@
 (modus-themes-theme
  'rainforest-night
  'ef-themes
- "Deszczowe schronienie w borze nocą (APCA Lc / WCAG 3, determinizm 1:1, cokół luminancji przeciw aberracji oka)."
+ "Deep rainy forest shelter night theme (APCA Lc / WCAG 3, 1:1 determinism, luminance pedestal against pupil aberration)."
  'dark
  'rainforest-night-palette
  nil
  nil)
 
-;; Dyskretne, deterministyczne dopasowanie twarzy i wsparcie LSP / Eglot:
+;; Deterministic universal face mappings (standard font-lock faces):
 (custom-theme-set-faces
  'rainforest-night
- '(font-lock-comment-face ((t (:foreground "#566a5c" :slant italic))))
- '(font-lock-comment-delimiter-face ((t (:foreground "#566a5c" :slant italic))))
- '(font-lock-doc-face ((t (:foreground "#566a5c" :slant italic))))
+ '(font-lock-comment-face ((t (:foreground "#526456" :slant italic))))
+ '(font-lock-comment-delimiter-face ((t (:foreground "#526456" :slant italic))))
+ '(font-lock-doc-face ((t (:foreground "#526456" :slant italic))))
  '(font-lock-preprocessor-face ((t (:foreground "#4eb294"))))
  '(font-lock-keyword-face ((t (:foreground "#288e72"))))
  '(font-lock-type-face ((t (:foreground "#64925a"))))
@@ -152,9 +152,7 @@
  '(font-lock-operator-face ((t (:foreground "#6c8074"))))
  '(font-lock-bracket-face ((t (:foreground "#607266"))))
  '(font-lock-delimiter-face ((t (:foreground "#627268"))))
- ;; LSP / Eglot semantic tokens (makra w wyrażeniach jak LOTA_PCR_COUNT jako stała fiolet wrzosowy):
- '(eglot-semantic-macro ((t (:foreground "#946ca2"))))
- '(eglot-semantic-property ((t (:foreground "#609886")))))
+ '(font-lock-warning-face ((t (:foreground "#a05450")))))
 
 (provide 'rainforest-night-theme)
 ;;; rainforest-night-theme.el ends here
