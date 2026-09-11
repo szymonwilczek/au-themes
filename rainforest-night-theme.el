@@ -8,46 +8,46 @@
     (bg-main "#0d110f")       ; Ciemna, bezpieczna próchnica boru pod osłoną nocy
     (bg-dim "#131815")        ; Nasiąknięty pień świerku
     (bg-alt "#19201c")        ; Głęboki cień pod gałęziami
-    (fg-main "#abb6a2")       ; Mokry len (APCA LCD: 58.84, OLED: 57.90 - ostra definicja bez rozlewania)
+    (fg-main "#a6b6b0")       ; Chłodny kwarc mineralny (APCA LCD: 58.81, OLED: 57.87, C*=6.8 - idealna definicja dla astygmatyzmu)
     ;; Komentarze: ciemne igliwie w ściółce (leży cicho pod kodem)
-    (fg-dim "#4f6154")        ; APCA Lc ≈ 23
+    (fg-dim "#4f6154")        ; APCA Lc ≈ 18
     ;; Argumenty i identyfikatory (txt, bg): wilgotny piaskowiec
-    (fg-alt "#8fa08b")        ; APCA Lc ≈ 51.8, Δ do komentarzy = 33 872
+    (fg-alt "#889e94")        ; APCA LCD: 45.27, C*=10.1, Δ do tekstu bazowego = 6 575
 
     (bg-active "#202a24")
     (bg-inactive "#111513")
     (border "#1c2520")
 
-    ;; Składnia: głębokie, soczyste barwy przesiąknięte deszczem (brak wyblakłych pasteli)
-    (red "#b54a3e")           ; Alerty: wilgotny owoc cisa
-    (red-warmer "#c05432")
-    (red-cooler "#aa4c50")
-    (red-faint "#884e46")
+    ;; Składnia: głębokie, soczyste barwy przesiąknięte deszczem (C* <= 38, Thibos ΔD <= 0.25 D)
+    (red "#9e524a")           ; Alerty: wilgotny owoc cisa w deszczu
+    (red-warmer "#ab5a50")
+    (red-cooler "#964e4e")
+    (red-faint "#7c4642")
 
-    (green "#549842")         ; TYPY: Soczysty, mokry mech borowy (APCA Lc ≈ 44)
-    (green-warmer "#62a038")
-    (green-cooler "#489850")
-    (green-faint "#4c7a3e")
+    (green "#608e58")         ; TYPY: Soczysty, mokry mech leśny (C*=35.9, LCD=34.33)
+    (green-warmer "#6c9860")
+    (green-cooler "#548a56")
+    (green-faint "#4c744c")
 
-    (yellow "#ba8428")        ; STRINGS: Mokra, złota żywica sosnowa (APCA Lc ≈ 47)
-    (yellow-warmer "#c47c20")
-    (yellow-cooler "#ab8432")
-    (yellow-faint "#8a6e38")
+    (yellow "#9a8c54")        ; STRINGS: Mokry bursztyn leśny / zmyta żywica (C*=31.9, LCD=38.86)
+    (yellow-warmer "#a6945c")
+    (yellow-cooler "#8e8450")
+    (yellow-faint "#787046")
 
-    (blue "#388a66")          ; FUNKCJE: Głęboki świerk w deszczu (APCA Lc ≈ 38)
-    (blue-warmer "#448f58")
-    (blue-cooler "#3a8576")   ; DWUKROPKI (:foreground itp.): Wilgotna patyna skały
-    (blue-faint "#3c6e5a")
+    (blue "#3886a4")          ; FUNKCJE: Górska woda / czysty potok w deszczu (C*=27.1, LCD=31.96)
+    (blue-warmer "#3c8ca8")
+    (blue-cooler "#2e7470")   ; DWUKROPKI (:foreground itp.): Tafla kałuży w cieniu drzew
+    (blue-faint "#32687c")
 
-    (magenta "#a65248")       ; SYMBOLE '... : Mokry owoc jarzębiny / kora dębu (APCA Lc ≈ 30)
-    (magenta-warmer "#b0503c")
-    (magenta-cooler "#9a5652")
-    (magenta-faint "#7a4e48")
+    (magenta "#8e6c7e")       ; SYMBOLE '... : Mokry cedr / wilgotny wrzos w mroku (C*=17.2, LCD=28.30)
+    (magenta-warmer "#987484")
+    (magenta-cooler "#846678")
+    (magenta-faint "#6c5664")
 
-    (cyan "#b56834")          ; SŁOWA KLUCZOWE (defun, defconst): Mokra kora modrzewia (APCA Lc ≈ 38)
-    (cyan-warmer "#bf6e2a")
-    (cyan-cooler "#a8693c")
-    (cyan-faint "#865836")
+    (cyan "#3c9676")          ; SŁOWA KLUCZOWE (defun, defconst): Szmaragd igliwia w deszczu / mokry nefryt (C*=35.9, LCD=36.43)
+    (cyan-warmer "#449e7e")
+    (cyan-cooler "#368e74")
+    (cyan-faint "#327460")
 
     ;; Diffy i panele
     (bg-added "#0e2414")
@@ -123,7 +123,7 @@
 (modus-themes-theme
  'rainforest-night
  'ef-themes
- "Deszczowe schronienie w borze nocą (APCA Lc / WCAG 3, kora, igliwie i żywica)."
+ "Deszczowe schronienie w borze nocą (APCA Lc / WCAG 3, optyka astygmatyzmu, nefryt, kwarc i leśny bursztyn)."
  'dark
  'rainforest-night-palette
  nil

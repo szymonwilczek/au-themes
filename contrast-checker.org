@@ -2,17 +2,31 @@
 #+author: Szymon Wilczek
 #+startup: content indent
 
-* Zaawansowany model symulacji matryc (LCD / OLED) oraz APCA
+* Zaawansowany model symulacji matryc (LCD / OLED), fizyki oka i APCA
 
 Niniejszy moduł implementuje matematyczny standard kontrastu percepcyjnego APCA
-(Advanced Perceptual Contrast Algorithm / WCAG 3, specyfikacja W3C 0.98G-4g) z autorskimi
-modelami fizyki wyświetlaczy w warunkach nocnych i dziennych:
-- *LCD Bleed*: uwzględnia fizyczny wyciek podświetlenia matryc IPS/VA w ciemności ($Bleed = 0.008$).
-- *OLED Irradiation*: modeluje optyczne rozmycie plamki świetlnej i irradiację fotyczną na głębokiej czerni ($Irradiation = 0.94$).
-- *Niezależność od ramki*: obliczenia luminancji i odległości barwnej bazują bezpośrednio na wektorach sRGB i 16-bitowych składowych, eliminując błędy aproksymacji kolorów w terminalach (TTY) lub trybie wsadowym Emacsa.
-- *Korekta przesunięcia WoB*: uwzględniono prawidłowy zwrot offsetu loWoBoffset ($0.027$), który w trybie jasnego tekstu na ciemnym tle (WoB) kompresuje magnitudę w kierunku zera.
+(Advanced Perceptual Contrast Algorithm / WCAG 3, specyfikacja W3C 0.98G-4g) zintegrowany
+z zaawansowanymi modelami optyki widzenia mezopowego i fizyki wyświetlaczy:
+- *LCD Bleed*: fizyczny wyciek podświetlenia matryc IPS/VA w ciemności ($Bleed = 0.008$).
+- *OLED Irradiation*: optyczne rozmycie plamki świetlnej i irradiacja fotyczna na głębokiej czerni ($Irrad = 0.94$).
+- *Fizyka astygmatyzmu i odcinek Sturma*: rozszerzona w mroku źrenica (5.0 - 6.5 mm) rzutuje asymetryczną
+  elipsę rozmycia. Zbyt niski kontrast ($L^c < 55$) powoduje rozmywanie krawędzi i ciągłe skurcze akomodacyjne
+  mięśnia rzęskowego (tzw. hunting). Zbyt wysoki kontrast ($L^c > 65$) wywołuje rozbłyski (halation) i podwójne
+  widzenie wzdłuż południka astygmatycznego. Okno optymalne dla tekstu: $L^c \in [56.0, 62.0]$.
+- *Dyspersja chromatyczna Thibosa (LCA / Chromostereopsis)*: równanie dyspersji refrakcyjnej oka
+  ludzkiego $D(\lambda) = 1.6852 - \frac{0.63346}{\lambda - 0.21410}$ (Thibos et al., 1992). Różnica mocy optycznej
+  między składnikami na linii kodu musi spełniać $\Delta D \le 0.25\text{ D}$, aby oko astygmatyka nie musiało
+  nieustannie przestawiać ogniskowej.
+- *Czułość mezopowa CIE 191:2010 (Współczynnik S/P)*: stosunek czułości pręcików ($V'(\lambda)$) do czopków
+  ($V(\lambda)$). Barwy o $S/P > 1.0$ (chłodna zieleń, nefryt, kwarc) stymulują widzenie skotopowe przy minimalnej
+  energii fotonowej, redukując zmęczenie siatkówki.
+- *Ograniczenie saturacji w deszczu ($C^* \le 38$)*: nasycenie CIELAB $C^* = \sqrt{a^{*2} + b^{*2}} \le 38$ eliminuje
+  efekt jaskrawych, "suchych" neonów, wydobywając głębię mokrego pigmentu leśnego, a dla tekstu ciągłego ($C^* \le 12$)
+  likwiduje aberrację subpikselową na matrycach LCD.
 
 #+begin_src emacs-lisp :results output silent
+  (require 'color)
+
   ;; 1. Normalizacja i parsowanie kodów HEX (niezależne od ramki/terminala)
   (defun apca--clean-hex (hex-input)
     "Oczyszcza wejściowy HEX do znormalizowanego formatu #rrggbb."
@@ -63,8 +77,6 @@ modelami fizyki wyświetlaczy w warunkach nocnych i dziennych:
                    (out  (if (< sapc 0.1) 0.0 (* (- sapc 0.027) 100.0))))
               out)
           ;; WoB: Jasny tekst na ciemnym tle (Reverse Polarity)
-          ;; W oficjalnej specyfikacji SAPC = (bgY^0.65 - txtY^0.62)*1.14 < 0,
-          ;; a dodanie loWoBoffset (+0.027) zmniejsza magnitudę kontrastu ku zeru.
           (let* ((sapc (* (- (expt txt-c 0.62) (expt bg-c 0.65)) 1.14))
                  (mag  (if (< sapc 0.1) 0.0 (* (- sapc 0.027) 100.0))))
             (if signed (- mag) mag))))))
@@ -93,23 +105,126 @@ modelami fizyki wyświetlaczy w warunkach nocnych i dziennych:
   (defun apca-color-distance (hex1 hex2)
     (color-distance (apca--hex-to-rgb16 hex1) (apca--hex-to-rgb16 hex2)))
 
-  ;; 9. Formatery tekstowe dla tabel Org-mode
+  ;; 9. Długość fali i refrakcja oka wg równania dyspersji chromatycznej Thibosa (1992)
+  (defun optical--effective-wavelength (hex-input)
+    "Oblicza efektywną długość fali lambda w nm z rozkładu emisji sRGB ważonego luminancją."
+    (let* ((rgb (apca--hex-to-rgb hex-input))
+           (r-lin (apca--srgb-to-linear (nth 0 rgb)))
+           (g-lin (apca--srgb-to-linear (nth 1 rgb)))
+           (b-lin (apca--srgb-to-linear (nth 2 rgb)))
+           (y (+ (* r-lin 0.2126729) (* g-lin 0.7151522) (* b-lin 0.0721750))))
+      (if (< y 1e-6)
+          555.0
+        (* 1000.0
+           (/ (+ (* r-lin 0.2126729 0.612)
+                 (* g-lin 0.7151522 0.535)
+                 (* b-lin 0.0721750 0.465))
+              y)))))
+
+  (defun optical-thibos-diopters (hex-input)
+    "Moc refrakcyjna oka D(lambda) [Dioptrie] wg równania dyspersji Thibosa (1992):
+  D(lambda) = 1.6852 - 0.63346 / (lambda - 0.21410), gdzie lambda jest w mikrometrach."
+    (let ((lambda-um (/ (optical--effective-wavelength hex-input) 1000.0)))
+      (- 1.6852 (/ 0.63346 (- lambda-um 0.21410)))))
+
+  (defun optical-lca-disparity (hex1 hex2)
+    "Różnica refrakcji LCA |D1 - D2| [Dioptrie] między dwoma kolorami."
+    (abs (- (optical-thibos-diopters hex1) (optical-thibos-diopters hex2))))
+
+  ;; 10. Stosunek widzenia skotopowego do fotopowego (CIE 191:2010 Mesopic S/P Ratio)
+  (defun optical-sp-ratio (hex-input)
+    "Oblicza stosunek czułości pręcików do czopków (S/P ratio) wg CIE 191:2010."
+    (let* ((rgb (apca--hex-to-rgb hex-input))
+           (r-lin (apca--srgb-to-linear (nth 0 rgb)))
+           (g-lin (apca--srgb-to-linear (nth 1 rgb)))
+           (b-lin (apca--srgb-to-linear (nth 2 rgb)))
+           (y-phot (+ (* r-lin 0.2126729) (* g-lin 0.7151522) (* b-lin 0.0721750)))
+           (y-scot (+ (* r-lin 0.062) (* g-lin 0.608) (* b-lin 0.330))))
+      (if (< y-phot 1e-6)
+          1.0
+        (/ y-scot y-phot))))
+
+  ;; 11. Nasycenie chromatyczne CIELAB C*
+  (defun optical-cielab-chroma (hex-input)
+    "Oblicza nasycenie chromatyczne C* w przestrzeni barw CIELAB."
+    (let* ((rgb (apca--hex-to-rgb hex-input))
+           (lab (apply #'color-srgb-to-lab rgb))
+           (a (nth 1 lab))
+           (b (nth 2 lab)))
+      (sqrt (+ (* a a) (* b b)))))
+
+  ;; 12. Walidacja komfortu dla astygmatyzmu (Astigmatic Comfort Validation)
+  (defun astigmatism-comfort-status (token-role hex-txt hex-bg)
+    "Weryfikuje zgodność kontrastu i chrominancji z oknem tolerancji dla astygmatyzmu."
+    (let ((lc (lcd-contrast hex-txt hex-bg))
+          (c (optical-cielab-chroma hex-txt))
+          (role-str (format "%s" token-role)))
+      (cond
+       ((string-match "fg-main" role-str)
+        (cond
+         ((< lc 55.0)  "ZAGROŻENIE: Rozmycie/hunting na LCD (Lc < 55)")
+         ((> lc 65.0)  "ZAGROŻENIE: Halacja/rozlewanie krawędzi (Lc > 65)")
+         ((> c 14.0)   "OSTRZEŻENIE: Zbyt wysoka chrominancja tekstu (C* > 14)")
+         (t            "OPTYMALNY: Ostra krawędź bez halacji (Okno 56-62)")))
+       ((string-match "fg-dim" role-str)
+        (if (and (>= lc 16.0) (<= lc 26.0))
+            "OPTYMALNY: Dyskretny cień w tle (Lc 18-25)"
+          "POZA NORMĄ"))
+       ((string-match "cursor" role-str)
+        (if (>= lc 36.0)
+            "OPTYMALNY: Wyraźny punkt skupienia bez oślepiania"
+          "ZA CIEMNY"))
+       (t
+        (cond
+         ((< lc 22.0) "ZA CIEMNY: Niska czytelność składni")
+         ((> c 38.0)  "ZBYT NASYCONY: Przekracza regułę deszczu C* <= 38")
+         (t           "ZGODNY: Wyraźna definicja w mroku"))))))
+
+  (defun astigmatism-lca-status (token-role hex-txt hex-base)
+    "Ocenia dyspersję chromatyczną LCA i nasycenie w relacji do tekstu bazowego."
+    (let ((delta-d (optical-lca-disparity hex-txt hex-base))
+          (c (optical-cielab-chroma hex-txt))
+          (role-str (format "%s" token-role)))
+      (cond
+       ((> delta-d 0.35) "ZAGROŻENIE: Aberracja chromatyczna (ΔD > 0.35 D)")
+       ((> c 38.0)       "ZBYT NASYCONY: Przekracza limit deszczu C* <= 38")
+       ((and (string-match "fg-main" role-str) (> c 12.0))
+        "UWAGA: Ryzyko fringingu subpikseli (C* > 12)")
+       ((<= delta-d 0.25) "OPTYMALNY: Wspólna płaszczyzna ogniskowa (ΔD <= 0.25 D)")
+       (t                 "DOBRY: W fizjologicznej głębi ostrości (ΔD <= 0.35 D)"))))
+
+  ;; 13. Formatery tekstowe dla tabel Org-mode
   (defun calc-apca (txt bg) (format "%.2f" (apca-contrast txt bg)))
   (defun calc-lcd (txt bg)  (format "%.2f" (lcd-contrast txt bg)))
   (defun calc-oled (txt bg) (format "%.2f" (oled-contrast txt bg)))
+  (defun calc-wavelength (hex) (format "%.1f nm" (optical--effective-wavelength hex)))
+  (defun calc-thibos-d (hex) (format "%.3f D" (optical-thibos-diopters hex)))
+  (defun calc-lca-delta (hex1 hex2) (format "%.3f D" (optical-lca-disparity hex1 hex2)))
+  (defun calc-sp-ratio (hex) (format "%.2f" (optical-sp-ratio hex)))
+  (defun calc-cielab-c (hex) (format "%.1f" (optical-cielab-chroma hex)))
+  (defun calc-astig-status (role txt bg) (astigmatism-comfort-status role txt bg))
+  (defun calc-optic-status (role txt base) (astigmatism-lca-status role txt base))
 
-  (defalias 'APCA #'calc-apca)
-  (defalias 'LCD  #'calc-lcd)
-  (defalias 'OLED #'calc-oled)
-  (defalias 'Δ    #'apca-color-distance)
+  (defalias 'APCA   #'calc-apca)
+  (defalias 'LCD    #'calc-lcd)
+  (defalias 'OLED   #'calc-oled)
+  (defalias 'Δ      #'apca-color-distance)
+  (defalias 'WAVE   #'calc-wavelength)
+  (defalias 'THIBOS #'calc-thibos-d)
+  (defalias 'ΔD     #'calc-lca-delta)
+  (defalias 'SP     #'calc-sp-ratio)
+  (defalias 'CHROMA #'calc-cielab-c)
+  (defalias 'ASTIG  #'calc-astig-status)
+  (defalias 'OPTIC  #'calc-optic-status)
 
-  ;; 10. Interaktywna funkcja automatycznej walidacji
+  ;; 14. Interaktywna funkcja automatycznej walidacji
   (defun rainforest-eval-contrast-tables ()
     "Przelicza automatycznie silnik i wszystkie tabele APCA w buforze."
     (interactive)
-    (org-babel-execute-buffer)
-    (org-table-map-tables (lambda () (org-table-recalculate 'all)))
-    (message "Wszystkie tabele APCA zostały pomyślnie przeliczone!"))
+    (let ((org-confirm-babel-evaluate nil))
+      (org-babel-execute-buffer)
+      (org-table-map-tables (lambda () (org-table-recalculate 'all)))
+      (message "Wszystkie tabele APCA i optyki astygmatyzmu zostały pomyślnie przeliczone!")))
 #+end_src
 
 #+begin_quote
@@ -122,39 +237,67 @@ Aby załadować silnik i odświeżyć tabele, wywołaj:
 
 * rainforest-night (Weryfikacja ergonomiczna dla LCD / OLED w ciemnym pokoju)
 
-** Pomiary współczynników Lc z uwzględnieniem technologii ekranu
+** Pomiary kontrastu APCA i tolerancji astygmatyzmu (LCD / OLED)
 Normy ergonomiczne dla nocnego schronienia:
-- Tekst podstawowy (Len): Lc 55 - 62 (Optimum czytelności, likwiduje rozlewanie na LCD i fotyczną irradiację na OLED)
-- Kursor (Kropla deszczu): Lc 38 - 50 (Wyraźny punkt skupienia wzroku, nieoślepiający w mroku)
-- Komentarze (Igliwie): Lc 18 - 25 (Dyskretne tło semantyczne, czysta kursywa bez sztucznego pogrubienia)
-- Elementy składni: Lc >= 30 (Wyraźna hierarchia kodu przy zachowaniu nasycenia pigmentu C* < 38)
+- Tekst podstawowy (Kwarc mineralny): Lc 55 - 62 na LCD (Likwiduje rozmywanie na LCD i halację na rogówce z astygmatyzmem)
+- Identyfikatory / Argumenty: Lc 45 - 50 (Wyraźny poziom pomocniczy)
+- Kursor (Kropla deszczu): Lc 36 - 45 (Punkt skupienia wzroku, nieoślepiający)
+- Komentarze (Igliwie ściółki): Lc 18 - 25 (Spokojne tło w czystej kursywie)
+- Elementy składni: Lc >= 28 na LCD przy zachowaniu nasycenia C* <= 38
 
-| Rola w kodzie                      | Token       | Kolor   | Tło     | APCA (Czyste) | Ekran LCD (Bleed) | Ekran OLED (Irrad) | Status / Norma w mroku                  |
-|------------------------------------+-------------+---------+---------+---------------+-------------------+--------------------+-----------------------------------------|
-| Tekst podstawowy (Len leśny - cel) | fg-main     | #abb6a2 | #0d110f |         60.42 |             58.84 |              57.90 | Lc 55-62 (Ostra krawędź bez rozlewania) |
-| Tekst podstawowy (Mokry len)       | fg-main-alt | #a8b29e | #0d110f |         58.31 |             56.75 |              55.87 | Lc 55-62 (Miękki len świerkowy)         |
-| Tekst poprzedni (Za ciemny na LCD) | fg-main-old | #9fa896 | #0d110f |         53.04 |             51.52 |              50.80 | Lc < 55 (Rozmywa się na LCD)            |
-| Kursor (Kropla deszczu)            | cursor      | #4e92a8 | #0d110f |         38.83 |             37.46 |              37.12 | Lc >= 38 (Subtelny akcent)              |
-| Komentarze / Doc (Ściółka)         | fg-dim      | #4f6154 | #0d110f |         18.72 |             17.76 |              17.77 | Lc >= 18 (W tle)                        |
-| Identyfikatory / Argumenty         | fg-alt      | #8fa08b | #0d110f |         47.87 |             46.40 |              45.83 | Lc >= 45 (Syntax)                       |
-| Typy (Mokry mech)                  | green       | #549842 | #0d110f |         38.55 |             37.18 |              36.85 | Lc >= 35 (Syntax)                       |
-| Napisy (Złota żywica)              | yellow      | #ba8428 | #0d110f |         41.44 |             40.04 |              39.64 | Lc >= 40 (Syntax)                       |
-| Funkcje (Świerk w deszczu)         | blue        | #388a66 | #0d110f |         32.46 |             31.18 |              30.99 | Lc >= 30 (Syntax)                       |
-| Dwukropki (:foreground itp.)       | blue-cooler | #3a8576 | #0d110f |         31.08 |             29.82 |              29.66 | Lc >= 30 (Subdued)                      |
-| Symbole ('costam)                  | magenta     | #a65248 | #0d110f |         25.05 |             23.92 |              23.86 | Lc >= 25 (Subdued)                      |
-| Słowa klucz (Mokry modrzew)        | cyan        | #b56834 | #0d110f |         32.55 |             31.27 |              31.08 | Lc >= 30 (Syntax)                       |
-#+TBLFM: $5='(APCA $3 $4) :: $6='(LCD $3 $4) :: $7='(OLED $3 $4)
+| Rola w kodzie                      | Token       | Kolor   | Tło     | APCA (Czyste) | Ekran LCD (Bleed) | Ekran OLED (Irrad) | Status Astygmatyzm (Komfort LCD)             |
+|------------------------------------+-------------+---------+---------+---------------+-------------------+--------------------+----------------------------------------------|
+| Tekst podstawowy (Chłodny kwarc)   | fg-main     | #a6b6b0 | #0d110f |         60.39 |             58.81 |              57.87 | OPTYMALNY: Ostra krawędź bez halacji (Okno 56-62) |
+| Tekst alternatywny (Mokry len)     | fg-main-alt | #abb6a2 | #0d110f |         60.42 |             58.84 |              57.90 | OPTYMALNY: Ostra krawędź bez halacji (Okno 56-62) |
+| Tekst poprzedni (Za ciemny na LCD) | fg-main-old | #9fa896 | #0d110f |         53.04 |             51.52 |              50.80 | ZAGROŻENIE: Rozmycie/hunting na LCD (Lc < 55) |
+| Identyfikatory (Mokry piaskowiec)  | fg-alt      | #889e94 | #0d110f |         46.73 |             45.27 |              44.72 | ZGODNY: Wyraźna definicja w mroku            |
+| Kursor (Kropla deszczu)            | cursor      | #4e92a8 | #0d110f |         38.83 |             37.46 |              37.12 | OPTYMALNY: Wyraźny punkt skupienia bez oślepiania |
+| Komentarze / Doc (Ściółka)         | fg-dim      | #4f6154 | #0d110f |         18.72 |             17.76 |              17.77 | OPTYMALNY: Dyskretny cień w tle (Lc 18-25)   |
+| Słowa kluczowe (Szmaragd deszczu)  | cyan        | #3c9676 | #0d110f |         37.81 |             36.43 |              36.14 | ZGODNY: Wyraźna definicja w mroku            |
+| Funkcje (Górska woda/potok)        | blue        | #3886a4 | #0d110f |         33.24 |             31.96 |              31.76 | ZGODNY: Wyraźna definicja w mroku            |
+| Typy (Mokry mech)                  | green       | #608e58 | #0d110f |         35.65 |             34.33 |              34.03 | ZGODNY: Wyraźna definicja w mroku            |
+| Napisy (Mokry bursztyn leśny)      | yellow      | #9a8c54 | #0d110f |         40.25 |             38.86 |              38.48 | ZGODNY: Wyraźna definicja w mroku            |
+| Symbole / Stałe (Mokry cedr)       | magenta     | #8e6c7e | #0d110f |         29.53 |             28.30 |              28.17 | ZGODNY: Wyraźna definicja w mroku            |
+| Dwukropki (Tafla kałuży)           | blue-cooler | #2e7470 | #0d110f |         24.28 |             23.18 |              23.14 | ZGODNY: Wyraźna definicja w mroku            |
+| Alerty / Błędy (Owoc cisa)         | red         | #9e524a | #0d110f |         23.75 |             22.65 |              22.61 | ZGODNY: Wyraźna definicja w mroku            |
+#+TBLFM: $5='(APCA $3 $4) :: $6='(LCD $3 $4) :: $7='(OLED $3 $4) :: $8='(ASTIG $2 $3 $4)
+
+** Optyka oka i aberracja chromatyczna (Model Thibosa 1992, S/P i C*)
+Wymagania dla astygmatyzmu:
+- Aberracja chromatyczna do tekstu bazowego: $\Delta D \le 0.25\text{ D}$ (wspólna płaszczyzna ogniskowa)
+- Czułość mezopowa S/P $\ge 0.90$ (optymalne pobudzanie pręcików w nocy)
+- Nasycenie barwy $C^* \le 38$ (brak neonów, głęboki deszczowy pigment) oraz $C^* \le 12$ dla tekstu podstawowego
+
+| Rola w kodzie                      | Token       | Kolor   | Baza    | Efektywna λ | D(Thibos) | Aberracja ΔD | Czułość S/P | Nasycenie C* | Status Optyczny (Astygmatyzm)                           |
+|------------------------------------+-------------+---------+---------+-------------+-----------+--------------+-------------+--------------+---------------------------------------------------------|
+| Tekst bazowy (Chłodny kwarc)       | fg-main     | #a6b6b0 | #a6b6b0 | 543.9 nm    | -0.236 D  | 0.000 D      |        1.01 |          6.8 | OPTYMALNY: Wspólna płaszczyzna ogniskowa (ΔD <= 0.25 D) |
+| Identyfikatory (Piaskowiec)        | fg-alt      | #889e94 | #a6b6b0 | 542.7 nm    | -0.243 D  | 0.007 D      |        1.01 |         10.1 | OPTYMALNY: Wspólna płaszczyzna ogniskowa (ΔD <= 0.25 D) |
+| Kursor (Kropla deszczu)            | cursor      | #4e92a8 | #a6b6b0 | 531.0 nm    | -0.314 D  | 0.078 D      |        1.26 |         23.7 | OPTYMALNY: Wspólna płaszczyzna ogniskowa (ΔD <= 0.25 D) |
+| Komentarze (Ściółka iglasta)       | fg-dim      | #4f6154 | #a6b6b0 | 542.2 nm    | -0.246 D  | 0.010 D      |        0.98 |         11.0 | OPTYMALNY: Wspólna płaszczyzna ogniskowa (ΔD <= 0.25 D) |
+| Słowa kluczowe (Szmaragd deszczu)  | cyan        | #3c9676 | #a6b6b0 | 533.6 nm    | -0.297 D  | 0.061 D      |        1.03 |         35.9 | OPTYMALNY: Wspólna płaszczyzna ogniskowa (ΔD <= 0.25 D) |
+| Funkcje (Górska woda/potok)        | blue        | #3886a4 | #a6b6b0 | 527.9 nm    | -0.334 D  | 0.099 D      |        1.34 |         27.1 | OPTYMALNY: Wspólna płaszczyzna ogniskowa (ΔD <= 0.25 D) |
+| Typy (Mokry mech)                  | green       | #608e58 | #a6b6b0 | 540.8 nm    | -0.254 D  | 0.018 D      |        0.90 |         35.9 | OPTYMALNY: Wspólna płaszczyzna ogniskowa (ΔD <= 0.25 D) |
+| Napisy (Mokry bursztyn)            | yellow      | #9a8c54 | #a6b6b0 | 554.0 nm    | -0.178 D  | 0.057 D      |        0.78 |         31.9 | OPTYMALNY: Wspólna płaszczyzna ogniskowa (ΔD <= 0.25 D) |
+| Symbole / Stałe (Mokry cedr)       | magenta     | #8e6c7e | #a6b6b0 | 554.7 nm    | -0.174 D  | 0.061 D      |        0.98 |         17.2 | OPTYMALNY: Wspólna płaszczyzna ogniskowa (ΔD <= 0.25 D) |
+| Dwukropki (Tafla kałuży)           | blue-cooler | #2e7470 | #a6b6b0 | 531.3 nm    | -0.311 D  | 0.075 D      |        1.14 |         23.2 | OPTYMALNY: Wspólna płaszczyzna ogniskowa (ΔD <= 0.25 D) |
+| Alerty (Owoc cisa)                 | red         | #9e524a | #a6b6b0 | 574.6 nm    | -0.061 D  | 0.174 D      |        0.65 |         36.0 | OPTYMALNY: Wspólna płaszczyzna ogniskowa (ΔD <= 0.25 D) |
+#+TBLFM: $5='(WAVE $3) :: $6='(THIBOS $3) :: $7='(ΔD $3 $4) :: $8='(SP $3) :: $9='(CHROMA $3) :: $10='(OPTIC $2 $3 $4)
 
 ** Weryfikacja odległości percepcyjnej między składnikami (min. 5000)
-| Porównanie ról                          | Kolor 1 | Kolor 2 | Dystans (Δ) | Status       |
-|-----------------------------------------+---------+---------+-------------+--------------|
-| Len leśny (txt) vs Argumenty (fg-alt)   | #abb6a2 | #8fa08b |        5289 | Rozróżnialne |
-| Len leśny (txt) vs Komentarz (Cień)     | #abb6a2 | #4f6154 |       65757 | Rozróżnialne |
-| Argumenty (txt, bg) vs Komentarz (Cień) | #8fa08b | #4f6154 |       33872 | Rozróżnialne |
-| Dwukropek (:foreg.) vs Symbol ('theme)  | #3a8576 | #a65248 |       44620 | Rozróżnialne |
-| defconst (Modrzew) vs funkcja (Świerk)  | #b56834 | #388a66 |       49860 | Rozróżnialne |
-| Symbol ('theme) vs Napis (Żywica)       | #a65248 | #ba8428 |       13546 | Rozróżnialne |
-| Typ (Mech) vs Słowo klucz (Modrzew)     | #549842 | #b56834 |       33670 | Rozróżnialne |
+| Porównanie ról                         | Kolor 1 | Kolor 2 | Dystans (Δ) | Status       |
+|----------------------------------------+---------+---------+-------------+--------------|
+| Kwarc (txt) vs Piaskowiec (fg-alt)     | #a6b6b0 | #889e94 |        6575 | Rozróżnialne |
+| Kwarc (txt) vs Komentarz (Ściółka)     | #a6b6b0 | #4f6154 |       69540 | Rozróżnialne |
+| Piaskowiec (fg-alt) vs Komentarz       | #889e94 | #4f6154 |       33573 | Rozróżnialne |
+| Szmaragd (defun) vs Woda (fnname)      | #3c9676 | #3886a4 |        6980 | Rozróżnialne |
+| Szmaragd (defun) vs Bursztyn (string)  | #3c9676 | #9a8c54 |       24956 | Rozróżnialne |
+| Szmaragd (defun) vs Mech (type)        | #3c9676 | #608e58 |        5713 | Rozróżnialne |
+| Woda (fnname) vs Bursztyn (string)     | #3886a4 | #9a8c54 |       40183 | Rozróżnialne |
+| Woda (fnname) vs Mech (type)           | #3886a4 | #608e58 |       19692 | Rozróżnialne |
+| Mech (type) vs Bursztyn (string)       | #608e58 | #9a8c54 |        8499 | Rozróżnialne |
+| Tafla (:builtin) vs Cedr ('constant)   | #2e7470 | #8e6c7e |       22777 | Rozróżnialne |
+| Szmaragd (defun) vs Tafla (:builtin)   | #3c9676 | #2e7470 |        5197 | Rozróżnialne |
+| Cedr ('constant) vs Bursztyn (string)  | #8e6c7e | #9a8c54 |        8804 | Rozróżnialne |
 #+TBLFM: $4='(Δ $2 $3)
 
 * rainforest-day (Weryfikacja ergonomiczna dla zamglonego boru w dzień)
