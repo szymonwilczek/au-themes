@@ -69,7 +69,7 @@
     (bg-popup "#0a0e0c")
     (bg-hover "#141a16")
     (bg-hover-secondary "#1c141c")
-    (bg-hl-line "#0d120f")
+    (bg-hl-line "#141b16")
     (bg-paren-match "#122216")
     (bg-err "#1e0808")
     (bg-warning "#181004")
