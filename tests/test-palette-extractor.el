@@ -58,11 +58,11 @@
                    ((eq theme 'rainforest-day) rainforest-day-palette-partial)
                    ((boundp 'rainforest-day-palette-partial) (symbol-value 'rainforest-day-palette-partial))
                    (t nil)))
-         (bg (or (cadr (assq 'bg-main partial)) (if (eq theme 'rainforest-day) "#b2beaf" "#080b09")))
+         (bg (or (cadr (assq 'bg-main partial)) (if (eq theme 'rainforest-day) "#b2beaf" "#060706")))
          (fg (or (cadr (assq 'fg-main partial)) (if (eq theme 'rainforest-day) "#122216" "#90a297")))
          (dim (or (cadr (assq 'fg-dim partial)) (if (eq theme 'rainforest-day) "#485a4c" "#48574c")))
          (cur (or (cadr (assq 'cursor partial)) (if (eq theme 'rainforest-day) "#105476" "#4d93b3")))
-         (hl (or (cadr (assq 'bg-hl-line partial)) (if (eq theme 'rainforest-day) "#a2af9f" "#101612"))))
+         (hl (or (cadr (assq 'bg-hl-line partial)) (if (eq theme 'rainforest-day) "#a2af9f" "#0e110f"))))
     (list
      :theme theme
      :bg-main bg
@@ -77,7 +77,7 @@
      :type (or (rainforest-get-theme-face-fg theme 'font-lock-type-face)
                (cadr (assq 'green partial)) "#5c9648")
      :constant (or (rainforest-get-theme-face-fg theme 'font-lock-constant-face)
-                   (cadr (assq 'magenta partial)) "#7e528a")
+                   (cadr (assq 'magenta partial)) "#745c18")
      :number (or (rainforest-get-theme-face-fg theme 'font-lock-number-face)
                  (cadr (assq 'yellow-warmer partial)) "#ba8432")
      :builtin (or (rainforest-get-theme-face-fg theme 'font-lock-builtin-face)

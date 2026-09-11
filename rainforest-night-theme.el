@@ -5,16 +5,16 @@
 (defconst rainforest-night-palette-partial
   '(;; Canvas: deep nocturnal forest humus under steady midnight rain
     (cursor "#4d93b3")        ; Night rain droplet glint
-    (bg-main "#080b09")       ; Soaked midnight forest humus
-    (bg-dim "#0f1310")        ; Damp bark shadow
-    (bg-alt "#161a17")        ; Deep canopy shadow
+    (bg-main "#060706")       ; Deep nocturnal forest humus under midnight rain
+    (bg-dim "#0a0c0a")        ; Damp bark shadow
+    (bg-alt "#111412")        ; Deep canopy shadow
     (fg-main "#90a297")       ; Calm river quartz: glare-free, ciliary-safe base text
     (fg-dim "#48574c")        ; Dark damp needle mulch: quiet italic comments
     (fg-alt "#56938b")        ; Damp river stone: struct fields and parameters
 
-    (bg-active "#1c221e")
-    (bg-inactive "#0c0f0d")
-    (border "#141815")
+    (bg-active "#141815")
+    (bg-inactive "#080a09")
+    (border "#101311")
 
     ;; 1:1 Keyface Determinism Palette (Forest layers hierarchy)
     (red "#b0423d")           ; Dark yew berry: alerts, negation !
@@ -37,10 +37,10 @@
     (blue-cooler "#5b7264")   ; Dark wet slate: operators (+, -, *, >>, &)
     (blue-faint "#2a526d")
 
-    (magenta "#9360a3")       ; Wet heather violet: constants and macros (LOTA_PCR_COUNT, NULL)
-    (magenta-warmer "#a06bb2")
+    (magenta "#745c18")       ; Ancient golden lichen: constants and macros (LOTA_PCR_COUNT, NULL)
+    (magenta-warmer "#7e641e")
     (magenta-cooler "#a46344") ; Wet cedar wood bark: builtins and attributes (__always_inline, :keywords)
-    (magenta-faint "#6e477a")
+    (magenta-faint "#5c4610")
 
     (cyan "#2a7c40")          ; Deep conifer pine: keywords (struct, while, static, return)
     (cyan-warmer "#288c86")   ; Wet boreal spruce-lake: preprocessor directives (#define, #include, #endif)
@@ -63,18 +63,18 @@
     (bg-removed-refine "#2c0e0c")
     (fg-removed "#b44a42")
 
-    (bg-mode-line-active "#101412")
+    (bg-mode-line-active "#0e110f")
     (fg-mode-line-active "#98a89c")
-    (bg-completion "#0c100e")
-    (bg-popup "#0a0e0c")
-    (bg-hover "#141a16")
-    (bg-hover-secondary "#1c141c")
-    (bg-hl-line "#101612")
-    (bg-paren-match "#122216")
+    (bg-completion "#0a0c0a")
+    (bg-popup "#080a09")
+    (bg-hover "#111412")
+    (bg-hover-secondary "#141715")
+    (bg-hl-line "#0e110f")
+    (bg-paren-match "#101a12")
     (bg-err "#1e0808")
     (bg-warning "#181004")
     (bg-info "#08140c")
-    (bg-region "#121e14")))
+    (bg-region "#101812")))
 
 (defconst rainforest-night-palette-mappings-partial
   '(;; Statuses
@@ -93,7 +93,7 @@
     (preprocessor cyan-warmer)   ; #288c86 - Wet boreal spruce-lake (#define, #include, #endif)
     (keyword cyan)               ; #2a7c40 - Deep conifer pine (struct, while, static, return)
     (type green)                 ; #639c4c - Rich forest moss (int, size_t, uint32_t)
-    (constant magenta)           ; #9360a3 - Wet heather violet (LOTA_PCR_COUNT, NULL)
+    (constant magenta)           ; #745c18 - Ancient golden lichen (LOTA_PCR_COUNT, NULL)
     (number yellow-warmer)       ; #bc842f - Wet amber resin (0, 24, 32 in buf[0])
     (builtin magenta-cooler)     ; #a46344 - Wet cedar wood bark (__always_inline, :keywords)
     (fnname blue)                ; #2e7092 - Deep mountain stream (is_write_open_flags)
@@ -141,7 +141,7 @@
  '(font-lock-preprocessor-face ((t (:foreground "#288c86"))))
  '(font-lock-keyword-face ((t (:foreground "#2a7c40"))))
  '(font-lock-type-face ((t (:foreground "#639c4c"))))
- '(font-lock-constant-face ((t (:foreground "#9360a3"))))
+ '(font-lock-constant-face ((t (:foreground "#745c18"))))
  '(font-lock-number-face ((t (:foreground "#bc842f"))))
  '(font-lock-builtin-face ((t (:foreground "#a46344"))))
  '(font-lock-function-name-face ((t (:foreground "#2e7092"))))
