@@ -11,7 +11,6 @@ numeric gate of 8000 corresponded to dE00 between 9.7 and 19.7 depending
 on the hue pair."
   (let* ((pal (rainforest-extract-active-palette))
          (theme (plist-get pal :theme))
-         (base (plist-get pal :fg-main))
          (passes 0)
          (fails 0)
          (tokens-to-check '(:preprocessor :keyword :type :constant :number
@@ -81,8 +80,8 @@ on the hue pair."
              (k2   (nth 2 pair))
              (h1   (plist-get pal k1))
              (h2   (plist-get pal k2))
-             (dist (rf-color-distance h1 h2))
-             (ok   (>= dist 8000)))
+             (dist (rf-delta-e-2000 h1 h2))
+             (ok   (>= dist 10.0)))
         (if ok
             (setq passes (1+ passes))
           (setq fails (1+ fails)))
