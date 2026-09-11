@@ -62,7 +62,7 @@
          (fg (or (cadr (assq 'fg-main partial)) (if (eq theme 'rainforest-day) "#122216" "#9c9a96")))
          (dim (or (cadr (assq 'fg-dim partial)) (if (eq theme 'rainforest-day) "#485a4c" "#526456")))
          (cur (or (cadr (assq 'cursor partial)) (if (eq theme 'rainforest-day) "#105476" "#56a0c4")))
-         (hl (or (cadr (assq 'bg-hl-line partial)) (if (eq theme 'rainforest-day) "#a2af9f" "#211e18"))))
+         (hl (or (cadr (assq 'bg-hl-line partial)) (if (eq theme 'rainforest-day) "#a2af9f" "#182026"))))
     (list
      :theme theme
      :bg-main bg
