@@ -689,13 +689,51 @@ EYES to 2 (binocular; monocular viewing scales the flux by 0.1)."
   (let ((r (/ pupil-diam-mm 2.0)))
     (expt (/ r 2.0) 4.0))) ; Normalized to standard 4mm pupil (r=2mm)
 
-;; Helmholtz-Kohlrausch brightness factor (Fairchild & Pirrotta 1991)
+;; Helmholtz-Kohlrausch perceived lightness & brightness factor:
+;; Fairchild, M. D. & Pirrotta, E. (1991). "Predicting the lightness of chromatic
+;; object colors using CIELAB", Color Res. Appl. 16(6):385-393, DOI: 10.1002/col.5080160608.
+
+(defun rf-fairchild-pirrotta-lightness (hex)
+  "Compute equivalent achromatic lightness L** of HEX per Fairchild & Pirrotta (1991).
+L** modifies CIE 1976 L* to account for the Helmholtz-Kohlrausch effect on surface
+colours: L** = L* + f2(L*) * f1(h_ab) * C*ab."
+  (let* ((lab (rf-hex-to-cielab hex))
+         (l-star (nth 0 lab))
+         (a-star (nth 1 lab))
+         (b-star (nth 2 lab))
+         (c-star (sqrt (+ (* a-star a-star) (* b-star b-star))))
+         (h-rad (atan b-star a-star))
+         (h-deg (let ((d (* h-rad (/ 180.0 float-pi))))
+                  (if (< d 0.0) (+ d 360.0) d)))
+         ;; f1: hue dependency, peaks at blue (~270 deg) and red (~0/360 deg), minimum at yellow (90 deg)
+         (f1 (+ (* 0.116 (abs (sin (* (/ (- h-deg 90.0) 2.0) (/ float-pi 180.0)))))
+                0.085))
+         ;; f2: lightness dependency, vanishes at L* = 100 (diffuse white), increases for dark colours
+         (f2 (max 0.0 (- 2.5 (* 0.025 l-star)))))
+    (+ l-star (* f2 f1 c-star))))
+
 (defun rf-helmholtz-kohlrausch-factor (hex)
-  "Compute perceived brightness multiplier B/Y due to chromatic saturation."
-  (let* ((c (rf-cielab-chroma hex))
-         ;; Empirical H-K multiplier: saturated colors stimulate human brightness channel
-         (hk (+ 1.0 (* 0.012 c))))
-    hk))
+  "Compute perceived equivalent luminance multiplier B/Y per Fairchild & Pirrotta (1991).
+Derives the ratio of matched achromatic luminance to physical photopic luminance
+from the equivalent achromatic lightness L**."
+  (let* ((lab (rf-hex-to-cielab hex))
+         (l-star (nth 0 lab))
+         (l-double-star (rf-fairchild-pirrotta-lightness hex)))
+    (if (< l-star 0.01)
+        1.0
+      (let* ((eps (/ 216.0 24389.0))
+             (kappa (/ 24389.0 27.0))
+             ;; Inverse CIELAB transfer function: f_inv((L* + 16)/116) = Y/Yn
+             (f-inv (lambda (l)
+                      (let ((fy (/ (+ l 16.0) 116.0)))
+                        (if (> fy (expt eps (/ 1.0 3.0)))
+                            (expt fy 3.0)
+                          (/ (- (* 116.0 fy) 16.0) kappa)))))
+             (y-orig (funcall f-inv l-star))
+             (y-match (funcall f-inv l-double-star)))
+        (if (< y-orig 1e-6)
+            1.0
+          (/ y-match y-orig))))))
 
 ;; =============================================================================
 ;; Advanced Biophysical & Physiological Models
