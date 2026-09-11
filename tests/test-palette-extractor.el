@@ -558,15 +558,47 @@ underestimates the defocus of broadband or mixed-primary colours (up to
 (defun rf-color-distance (hex1 hex2)
   (color-distance (rf-hex-to-rgb16 hex1) (rf-hex-to-rgb16 hex2)))
 
-;; Pupil diameter model (de Groot & Gebhard 1952)
-(defun rf-pupil-diameter (bg-luminance-cd-m2)
-  "Estimate pupil diameter in mm as a function of field luminance (cd/m2)."
-  (let ((l (max 0.001 bg-luminance-cd-m2)))
-    ;; d = 4.9 - 3 * tanh(0.4 * (log10(l) + 1.0))
-    (- 4.9 (* 3.0 (/ (- (exp (* 0.4 (+ (log l 10) 1.0)))
-                        (exp (- (* 0.4 (+ (log l 10) 1.0)))))
-                     (+ (exp (* 0.4 (+ (log l 10) 1.0)))
-                        (exp (- (* 0.4 (+ (log l 10) 1.0))))))))))
+;; Viewing geometry (declared assumption, used for every angular quantity).
+(defconst rf-viewing-distance-mm 600.0
+  "Eye-to-screen distance in mm (ISO 9241-303 recommends >= 400 mm).")
+(defconst rf-display-width-mm 597.7
+  "Active display width in mm (27-inch 16:9 panel).")
+(defconst rf-display-height-mm 336.2
+  "Active display height in mm (27-inch 16:9 panel).")
+(defconst rf-observer-age 30.0
+  "Observer age in years, used by the pupil model.")
+
+(defun rf-degrees (opposite-mm)
+  "Angle in degrees subtended by OPPOSITE-MM at `rf-viewing-distance-mm'."
+  (* 2.0 (/ 180.0 float-pi) (atan (/ (* 0.5 opposite-mm) rf-viewing-distance-mm))))
+
+(defun rf-display-field-area-deg2 ()
+  "Solid-angle area of the display in square degrees."
+  (* (rf-degrees rf-display-width-mm) (rf-degrees rf-display-height-mm)))
+
+;; Pupil diameter: unified formula of Watson & Yellott (2012) "A unified
+;; formula for light-adapted pupil size", J. Vis. 12(10):12,
+;; DOI: 10.1167/12.10.12, which wraps Stanley & Davies (1995) corneal flux
+;; density with the age term of Winn et al. (1994).  The formula previously
+;; used here, d = 4.9 - 3 tanh[0.4 (log10 L + 1)], was attributed to
+;; de Groot & Gebhard (1952) but is a shifted Moon & Spencer (1944)
+;; expression: de Groot & Gebhard is d = 7.175 exp[-0.00092 (7.597 +
+;; log10 L)^3], and Moon & Spencer carries no +1 decade offset for
+;; luminance in cd/m^2 (cf. Watson & Yellott 2012, Table 1).  Neither
+;; accounts for adapting field size, which for a screen is the dominant
+;; term.
+(defun rf-pupil-diameter (luminance-cd-m2 &optional field-deg2 age eyes)
+  "Pupil diameter in mm for adapting LUMINANCE-CD-M2 (Watson & Yellott 2012).
+FIELD-DEG2 defaults to the display field area, AGE to `rf-observer-age',
+EYES to 2 (binocular; monocular viewing scales the flux by 0.1)."
+  (let* ((l (max 1e-6 luminance-cd-m2))
+         (a (or field-deg2 (rf-display-field-area-deg2)))
+         (y (or age rf-observer-age))
+         (e (if (eq (or eyes 2) 1) 0.1 1.0))
+         (f (/ (* l a e) 846.0))
+         (fp (expt f 0.41))
+         (d-sd (- 7.75 (* 5.75 (/ fp (+ fp 2.0))))))
+    (+ d-sd (* (- y 28.58) (- 0.021323 (* 0.0095623 d-sd))))))
 
 ;; Wavefront aberration ratio scaling W proportional to r^4
 (defun rf-wavefront-aberration-factor (pupil-diam-mm)

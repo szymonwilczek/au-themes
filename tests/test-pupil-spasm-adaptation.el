@@ -77,8 +77,12 @@ Ref: Loewenfeld (1993) The Pupil; Binda & Murray (2015) PNAS; Mathôt (2018) JoV
 
     ;; Part 3: Pupillary Steady-State Deadband
     (princ "\nPart 3: Pupillary Steady-State Deadband Check:\n")
-    (let* ((ambient-cd (if (eq polarity 'light) 50.0 1.5))
-           (pupil-mm (rf-pupil-diameter (+ (* bg-y 100.0) ambient-cd)))
+    ;; Adapting field: the viewport at the IEC 61966-2-1 reference white plus
+    ;; the reference display veiling glare (0.2 cd/m2); the previous ad-hoc
+    ;; 1.5 / 50 cd/m2 ambient terms had no standard basis.
+    (let* ((pupil-mm (rf-pupil-diameter
+                      (+ (* (rf-viewport-mean-luminance-y pal) rf-display-white-luminance)
+                         rf-reference-veiling-glare)))
            (deadband-ok (and (>= pupil-mm 2.0) (<= pupil-mm 7.5))))
       (if deadband-ok
           (progn

@@ -3,13 +3,17 @@
 (require 'test-palette-extractor)
 
 (defun test-pupil-aberrations-run ()
-  "Evaluate pupil aperture and higher-order wavefront aberrations per Liang & Williams (1997)."
+  "Evaluate pupil aperture and higher-order wavefront aberrations per Liang & Williams (1997).
+The adapting field is the whole 80x40 viewport at the IEC 61966-2-1
+reference white luminance, not the background colour alone: the pupil
+integrates corneal flux over the field (Stanley & Davies 1995), so using
+only the canvas luminance under-drives the model."
   (let* ((pal (rainforest-extract-active-palette))
          (bg (plist-get pal :bg-main))
          (theme (plist-get pal :theme))
-         ;; Assume typical calibrated desktop display peak white 120 cd/m2
-         (y-bg (rf-luminance-y bg))
-         (l-bg (* y-bg 120.0)) ; background luminance in cd/m2
+         (view-y (rf-viewport-mean-luminance-y pal))
+         (l-bg (* view-y rf-display-white-luminance))
+         (field-deg2 (rf-display-field-area-deg2))
          (pupil-diam (rf-pupil-diameter l-bg))
          (aber-factor (rf-wavefront-aberration-factor pupil-diam))
          (passes 0)
@@ -18,11 +22,13 @@
     (princ (format "\n======================================================================\n"))
     (princ (format " Pupil Dynamics & r^4 Wavefront Aberration Suite\n"))
     (princ (format " Ref: Liang & Williams (1997), DOI: 10.1364/JOSAA.14.002873\n"))
-    (princ (format " Ref: Piepenbrock et al. (2013), DOI: 10.1177/0018720813495537\n"))
+    (princ (format " Ref: Watson & Yellott (2012), DOI: 10.1167/12.10.12 (pupil size)\n"))
     (princ (format " Theme: %s | Background: %s\n" theme bg))
     (princ (format "======================================================================\n"))
-    (princ (format "Field Physical Luminance (120 cd/m2 peak): %.4f cd/m2\n" l-bg))
-    (princ (format "Calculated Steady-State Pupil Diameter:   %.2f mm\n" pupil-diam))
+    (princ (format "Adapting field: %.0f deg2 at %.0f cd/m2 white -> %.4f cd/m2\n"
+                   field-deg2 rf-display-white-luminance l-bg))
+    (princ (format "Pupil Diameter (Watson-Yellott, age %.0f):  %.2f mm\n"
+                   rf-observer-age pupil-diam))
     (princ (format "Higher-Order Wavefront Aberration Factor: %.2fx (vs 4.0mm pupil)\n" aber-factor))
     (princ (format "----------------------------------------------------------------------\n"))
 

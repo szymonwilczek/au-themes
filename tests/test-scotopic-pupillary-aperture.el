@@ -65,8 +65,9 @@ Ref: Stiles & Crawford (1933) Proc. R. Soc.; Fan & Yao (2011) Autism Res.; Westh
 
     ;; Part 2: Stiles-Crawford Marginal Pupil Aberration Attenuation
     (princ "\nPart 2: Stiles-Crawford Directional Sensitivity (SCE-I) at Pupil Margin:\n")
-    (let* ((ambient-cd (if (eq polarity 'light) 50.0 1.5))
-           (pupil-diam (rf-pupil-diameter (+ (* bg-y 100.0) ambient-cd)))
+    (let* ((pupil-diam (rf-pupil-diameter
+                        (+ (* mean-viewport-y rf-display-white-luminance)
+                           rf-reference-veiling-glare)))
            (pupil-radius (/ pupil-diam 2.0))
            ;; Stiles-Crawford directional sensitivity formula: eta(r) = 10^(-rho * r^2) with rho ~ 0.05
            (rho 0.05)
