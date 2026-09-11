@@ -25,7 +25,11 @@
     test-spatial-frequency-csf
     test-determinism-1to1
     test-wet-surface-physics
-    test-photophobia-glare))
+    test-photophobia-glare
+    test-pattern-glare-cortical
+    test-macular-hazard-blue-light
+    test-pupil-spasm-adaptation
+    test-astigmatism-meridional-blur))
 
 (defun run-all-rainforest-tests ()
   "Execute all test suites across both themes and compile executive master diagnostic report."

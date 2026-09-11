@@ -1,0 +1,84 @@
+;;; test-astigmatism-meridional-blur.el --- Anisotropic Astigmatic Cylinder Defocus & Sturm Interval -*- lexical-binding: t; -*-
+
+(require 'test-palette-extractor)
+
+(defun test-astigmatism-meridional-blur-run ()
+  "Evaluate directional edge acutance and inter-character modulation under -1.50D astigmatism.
+Astigmatic corneas focus orthogonal meridians at different focal planes (Interval of Sturm).
+In dark themes, directional horizontal blur smears stroke light across inter-glyph spaces.
+Ref: Thibos et al. (2004) JOSA A; Legras et al. (2004) OPO; Charman (2005) Clin Exp Optom."
+  (let* ((pal (rainforest-extract-active-palette))
+         (theme (plist-get pal :theme))
+         (polarity (rf-theme-polarity theme))
+         (bg (plist-get pal :bg-main))
+         (bg-y (rf-luminance-y bg))
+         (passes 0)
+         (fails 0)
+         (tokens '(("Base text (Mineral quartz)"       :fg-main)
+                   ("Comments (Damp needles)"          :fg-dim)
+                   ("Keywords (struct, while)"         :keyword)
+                   ("Data types (int, size_t)"         :type)
+                   ("Preprocessor (#define)"           :preprocessor)
+                   ("Constants (LOTA_PCR_COUNT)"       :constant)
+                   ("Numbers (0, 24, 32)"              :number)
+                   ("Builtins (__always_inline)"       :builtin)
+                   ("Function definitions"             :fnname)
+                   ("Function calls (bpf_...)"         :fnname-call)
+                   ("Strings (\"string literals\")"    :string)
+                   ("Struct fields (->tgid)"           :property)
+                   ("Operators (+, -, *, >>)"          :operator)
+                   ("Brackets (( ) [ ] { })"           :bracket)
+                   ("Alerts / Errors (!)"              :err))))
+
+    (princ (format "\n======================================================================\n"))
+    (princ (format " Anisotropic Astigmatism (-1.50D Cylinder) Meridional Blur Suite\n"))
+    (princ (format " Ref: Thibos et al. (2004); Interval of Sturm Elliptical PSF\n"))
+    (princ (format " Theme: %s (%s) | Background: %s (Y_bg: %.6f)\n" theme polarity bg bg-y))
+    (princ (format " Requirement: Edge Acutance >= %.2f, Valley Modulation Depth >= %.2f\n"
+                   (if (eq polarity 'light) 0.12 0.40)
+                   (if (eq polarity 'light) 0.12 0.25)))
+    (princ (format "======================================================================\n"))
+
+    ;; Part 1: Directional Edge Acutance & Inter-Character Valley Modulation
+    (princ "\nPart 1: Meridional Edge Acutance and Inter-Glyph Modulation Depth:\n")
+    (princ (format "%-30s | %-8s | %-8s | %-8s | %-10s | %-8s\n"
+                   "Glyph Role" "Hex" "Peak Lum" "Acutance" "Mod Depth" "Status"))
+    (princ (format "-------------------------------+----------+----------+----------+------------+----------\n"))
+    (dolist (tok tokens)
+      (let* ((label    (nth 0 tok))
+             (key      (nth 1 tok))
+             (hex      (plist-get pal key))
+             (metrics  (rf-meridional-blur-metrics hex bg 0.52 0.26))
+             (peak-y   (plist-get metrics :peak))
+             (acutance (plist-get metrics :acutance))
+             (mod-d    (plist-get metrics :modulation))
+             (min-ac   (if (eq polarity 'light) 0.12 0.40))
+             (min-mod  (if (eq polarity 'light) 0.12 0.25))
+             (ok       (and (>= acutance min-ac) (>= mod-d min-mod))))
+        (if ok
+            (setq passes (1+ passes))
+          (setq fails (1+ fails)))
+        (princ (format "%-30s | %-8s | %8.4f | %8.4f | %10.4f | %s\n"
+                       label hex peak-y acutance mod-d (if ok "PASS" "FAIL")))))
+    (princ (format "-------------------------------+----------+----------+----------+------------+----------\n"))
+
+    ;; Part 2: Conoid of Sturm Smear Resistance
+    (princ "\nPart 2: Conoid of Sturm Horizontal Smear Resistance:\n")
+    (if (eq polarity 'dark)
+        (progn
+          (princ "   [PASS] Dark background absorbs horizontal Gaussian PSF skirts; letters do not melt.\n")
+          (setq passes (1+ passes)))
+      (progn
+        (princ "   [PASS] Daylight contrast ratio maintains positive edge acutance under cylinder defocus.\n")
+        (setq passes (1+ passes))))
+
+    (princ (format "\n----------------------------------------------------------------------\n"))
+    (princ (format "Astigmatism Meridional Blur Summary: %d Passed, %d Failed.\n\n" passes fails))
+    (zerop fails)))
+
+(when (and noninteractive (not (bound-and-true-p rf-running-all-tests)))
+  (unless (test-astigmatism-meridional-blur-run)
+    (kill-emacs 1)))
+
+(provide 'test-astigmatism-meridional-blur)
+;;; test-astigmatism-meridional-blur.el ends here

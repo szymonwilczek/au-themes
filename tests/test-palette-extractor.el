@@ -415,5 +415,53 @@ DGI = 10 * log10(sum(G_i))."
         0.0
       (* 10.0 (log sum-g 10)))))
 
+;; Wilkins Pattern Glare & Cortical Visual Stress (Wilkins 1995, 2016)
+(defun rf-wilkins-line-michelson (token-hex bg-hex &optional duty-cycle ambient-lum)
+  "Calculate local Michelson contrast C_M of a text line against background.
+DUTY-CYCLE defaults to 0.35 (35% stroke fill on a line).
+AMBIENT-LUM defaults to 0.025 (display veiling/ambient luminance floor)."
+  (let* ((eta (or duty-cycle 0.35))
+         (amb (or ambient-lum 0.025))
+         (eff-bg (+ (rf-luminance-y bg-hex) amb))
+         (eff-fg (+ (rf-luminance-y token-hex) amb))
+         (line-y (+ (* eta eff-fg) (* (- 1.0 eta) eff-bg))))
+    (/ (abs (- line-y eff-bg)) (+ line-y eff-bg))))
+
+;; IEC 62471 Retinal Blue Light Hazard Function B(lambda) (peak 435-440 nm)
+(defun rf-blue-light-hazard-eb (hex)
+  "Calculate IEC 62471 / CIE S 009 retinal blue light hazard irradiance E_B.
+Weights derived from integrating B(lambda) against standard sRGB primaries:
+R=0.001, G=0.035, B=0.680."
+  (let* ((rgb (rf-hex-to-rgb hex))
+         (r (rf-srgb-to-linear (nth 0 rgb)))
+         (g (rf-srgb-to-linear (nth 1 rgb)))
+         (b (rf-srgb-to-linear (nth 2 rgb))))
+    (+ (* r 0.001) (* g 0.035) (* b 0.680))))
+
+;; Pupillary Hippus & Saccadic Local Adaptation (PLR micro-spasm model)
+(defun rf-saccadic-adaptation-delta (hex1 hex2 &optional duty-cycle)
+  "Calculate local foveal adaptation jump Delta-L during saccades between HEX1 and HEX2.
+DUTY-CYCLE defaults to 0.25 (foveal ink coverage fraction)."
+  (let* ((eta (or duty-cycle 0.25))
+         (y1 (rf-luminance-y hex1))
+         (y2 (rf-luminance-y hex2)))
+    (* eta (abs (- y1 y2)))))
+
+;; Astigmatic Anisotropic Cylinder (-1.50D) Meridional Blur & Edge Acutance
+(defun rf-meridional-blur-metrics (token-hex bg-hex &optional peak-eta valley-beta)
+  "Compute blurred peak luminance, valley fill, modulation depth, and Edge Acutance
+under an uncorrected -1.50D astigmatic cylinder defocus.
+PEAK-ETA defaults to 0.52 (core stroke peak retention).
+VALLEY-BETA defaults to 0.26 (inter-character gap valley fill)."
+  (let* ((eta (or peak-eta 0.52))
+         (beta (or valley-beta 0.26))
+         (bg-y (rf-luminance-y bg-hex))
+         (tok-y (rf-luminance-y token-hex))
+         (y-peak (+ bg-y (* (- tok-y bg-y) eta)))
+         (y-valley (+ bg-y (* (- tok-y bg-y) beta)))
+         (mod-depth (/ (abs (- y-peak y-valley)) (max 1e-4 (+ y-peak y-valley))))
+         (acutance (/ (abs (- y-peak bg-y)) (* 1.8 (max 1e-4 (+ y-peak bg-y))))))
+    (list :peak y-peak :valley y-valley :modulation mod-depth :acutance acutance)))
+
 (provide 'test-palette-extractor)
 ;;; test-palette-extractor.el ends here
