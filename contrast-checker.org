@@ -8,54 +8,59 @@ Niniejszy moduł implementuje matematyczny standard kontrastu percepcyjnego APCA
 (Advanced Perceptual Contrast Algorithm / WCAG 3, specyfikacja W3C 0.98G-4g) zintegrowany
 z recenzowanymi modelami optyki widzenia mezopowego, fizyki powierzchni oraz biometrii astygmatyzmu:
 
-** 1. Fizyka mokrych powierzchni leśnych (Dlaczego deszcz przyciemnia barwy)
-- *Artykuł źródłowy*: Lekner, J., & Dorf, M. C. (1988). /Why some things are darker when wet./ *Applied Optics*, 27(7), 1278–1280.
-- *DOI*: [[https://doi.org/10.1364/AO.27.001278][10.1364/AO.27.001278]]
-- *Mechanizm fizyczny*: Woda tworząca cienki film na porowatych powierzchniach (kora, igliwie, ściółka, skały)
-  posiada współczynnik załamania $n_w \approx 1.333$, który zbliża się do współczynnika podłoża organicznego
-  ($n \approx 1.50 - 1.55$). Zgodnie ze wzorami Fresnela, współczynnik odbicia pojedynczego rozproszenia spada o ~90%
-  ($R_{air} \approx 4.4\% \to R_{water} \approx 0.47\%$). Zewnętrzna granica woda-powietrze wywołuje całkowite wewnętrzne
-  odbicie promieni rozproszonych wstecznie pod kątem $\theta > \theta_c \approx 48.6^\circ$, zmuszając fotony do wielokrotnych
-  przejść przez warstwę pigmentu. Zgodnie z prawem Beera-Lamberta ($I = I_0 e^{-\alpha x}$), wydłużenie drogi optycznej
-  powoduje potęgową absorpcję widmową. W rezultacie *mokre obiekty leśne stają się wyraźnie ciemniejsze* (niższa luminancja $Y$,
-  optymalne $L^c \approx 20 - 32$) oraz zyskują głęboką, czystą mineralno-roślinną saturację ($C^* \le 38$) bez suchych neonów.
+** 1. Koncepcja warstw lasu od góry do dołu (Struktura kodu C a piętra boru)
+Kod źródłowy w języku C naturalnie odwzorowuje pionowy przekrój wilgotnego boru iglastego:
+- *Warstwa 1: Korona drzew (Canopy / Szczyty boru)*: Dyrektywy preprocesora (=#define=, =#include=, makra =BPF_CORE_READ=, słowa kluczowe =static=, =defun=).
+  Świeże igliwie wierzchołkowe skąpane w deszczowej mgle – chłodny, wyrazisty szmaragd koron drzew (~#34967a~, $L^c \approx 36.6$).
+- *Warstwa 2: Pnie drzew i kora (Tree Bark / Cedr)*: Modyfikatory i atrybuty kompilatora (=__always_inline=, =:slant=, =:foreground=, atrybuty =__attribute__=).
+  Mokra kora sosnowa i nasiąknięty cedr pod koroną – szlachetny, wygaszony odcień mokrego pnia (~#886a78~, $L^c \approx 27.1$).
+- *Warstwa 3: Mech nadrzewny i naskalny (Spruce & Rock Moss)*: Typy danych (=int=, =size_t=, =struct=, =long=, =void=).
+  Soczysty, wilgotny mech borowy porastający pnie od północy i leśne głazy (~#629056~, $L^c \approx 35.4$).
+- *Warstwa 4: Woda potoku górskiego w ulewie (Mountain Stream)*: Definicje i wywołania funkcji (=is_write_open_flags=, =bpf_map_lookup_elem=, =bpf_get_current_pid_tgid=).
+  Chłodna, rwąca woda górska płynąca przez serce lasu (~#328ab0~, $L^c \approx 34.1$, zero pomarańczu!).
+- *Warstwa 5: Runo leśne – borówka czarna (Understory Bilberry)*: Literały łańcuchowe (="string literals"=).
+  Dojrzała leśna borówka czarna (jagoda) w kroplach deszczu ukryta w runie (~#a676aa~, $L^c \approx 36.4$).
+- *Warstwa 6: Kwarc mineralny i piaskowiec (River Quartz & Sandstone)*: Tekst podstawowy i zmienne kodu (=flags=, =key=, =buf=).
+  Wyrazisty, naturalny kwarc mineralny (~#a0aaa2~, $L^c \approx 53.1$) oraz wilgotny piaskowiec (~#788a80~, $L^c \approx 36.0$).
+- *Warstwa 7: Ściółka leśna (Needle Litter)*: Komentarze (=/* ... */=, =//=) i dokumentacja.
+  Opadłe, ciemne igliwie pod drzewami – leży cicho pod kodem w czystej kursywie (~#506456~, $L^c \approx 19.0$).
+- *Warstwa 8: Dno nocnego boru (Nocturnal Humus)*: Tło edytora (~#090a09~, neutralny mrok).
 
-** 2. Fluktuacje akomodacyjne mięśnia rzęskowego a astygmatyzm (Geneza zjawiska "pulsującego oka")
+** 2. Fluktuacje akomodacyjne mięśnia rzęskowego a astygmatyzm i wada wzroku
 - *Artykuł źródłowy*: Charman, W. N., & Heron, G. (1988). /Fluctuations in accommodation: a review./ *Ophthalmic and Physiological Optics*, 8(2), 153–164.
 - *DOI*: [[https://doi.org/10.1111/j.1475-1313.1988.tb01090.x][10.1111/j.1475-1313.1988.tb01090.x]]
-- *Mechanizm biometryczny*: Układ akomodacyjny oka człowieka wykazuje ciągłe mikrofluktuacje o wysokiej częstotliwości
-  (HFC: 1.0 - 2.3 Hz). W oku z astygmatyzmem wiązka światła nie tworzy pojedynczego ogniska, lecz odcinek ogniskowy Sturma
-  o dwóch prostopadłych południkach załamania. Gdy tekst na ciemnym tle ma zbyt wysoką luminancję ($Y > 0.40$, $L^c > 55$),
-  ostra krawędź tworzy silny sygnał rozmycia wzdłuż jednego południka. Pętla sprzężenia zwrotnego mięśnia rzęskowego wpada
-  w nieustanny oscylacyjny cykl poszukiwania ostrości (tzw. ciliary hunting) z częstotliwością 1–2 Hz, co użytkownik odczuwa
-  dosłownie jako *fizyczne pulsowanie oka* i szybkie zmęczenie astenopijne.
-- *Rozwiązanie medyczno-ergonomiczne*: Obniżenie luminancji tekstu podstawowego do zgaszonego kwarcu (~#96a098~, $Y \approx 0.31$,
-  $L^c \approx 47 - 49$) wygasza nadmierny gradient brzegowy na siatkówce, stabilizując ognisko w krążku najmniejszego rozproszenia
-  i całkowicie likwidując pulsowanie oka.
+- *Mechanizm biometryczny*: Układ akomodacyjny oka wykazuje mikrofluktuacje (HFC: 1.0 - 2.3 Hz). Przy astygmatyzmie
+  wiązka światła tworzy odcinek Sturma o dwóch ogniskach. Zbyt jaskrawy tekst ($L^c > 58$) wywołuje cykl oscylacyjny
+  mięśnia rzęskowego (ciliary hunting / pulsowanie oka). Z kolei zbyt niski kontrast ($L^c < 48$) przy postępującej wadzie wzroku
+  zmusza siatkówkę do nadmiernego wysiłku i mrużenia powiek.
+- *Zbalansowane okno luminancji*: Tekst bazowy (~#a0aaa2~, $L^c \approx 53.1$) oraz składnia ($L^c \approx 27 - 37$) zapewniają
+  pełną wyrazistość bez zmęczenia wzroku i bez pulsowania oka.
 
 ** 3. Polaryzacja wyświetlacza i aberracje rogówkowe przy rozszerzonej źrenicy
 - *Artykuł źródłowy*: Piepenbrock, C., Mayr, S., Mund, I., & Buchner, A. (2013). /Positive display polarity is advantageous for both younger and older adults./ *Human Factors*, 55(4), 470–481.
 - *DOI*: [[https://doi.org/10.1177/0018720813495537][10.1177/0018720813495537]]
 - *Monografia optyczna*: Atchison, D. A., & Smith, G. (2000). /Optics of the Human Eye./ Butterworth-Heinemann (ISBN: 978-0-7506-3775-6).
-- *Mechanizm optyczny*: W trybie ciemnym (polaryzacja negatywna) niska średnia luminancja ekranu powoduje fizjologiczne
-  rozszerzenie źrenicy do $d \approx 5.0 - 6.5\text{ mm}$ (wobec $2.5 - 3.5\text{ mm}$ w dzień). Aberracje czoła fali wyższego
-  rzędu (aberracja sferyczna $Z_4^0$, koma $Z_3^{\pm 1}$) skalują się z czwartą potęgą promienia źrenicy ($r^4$). Przy astygmatyzmie
-  ($Z_2^{\pm 2}$) powoduje to asymetryczną elipsę plamki rozmycia i rozlewanie światła (halation).
+- *Mechanizm optyczny*: W trybie ciemnym źrenica rozszerza się do $d \approx 5.0 - 6.5\text{ mm}$, potęgując aberracje falowe
+  ($r^4$) i rozmycie cylindryczne. Wymaga to ścisłego ograniczenia nasycenia ($C^* \le 38$) i halacji.
 
 ** 4. Wzdłużna aberracja chromatyczna oka (LCA / Chromostereopsis)
 - *Artykuł źródłowy*: Thibos, L. N., Ye, M., Zhang, X., & Bradley, A. (1992). /The chromatic aberration of the human eye./ *Vision Research*, 32(12), 2329–2340.
 - *DOI*: [[https://doi.org/10.1016/0042-6989(92)90099-B][10.1016/0042-6989(92)90099-B]]
 - *Równanie dyspersji Cauchy'ego*:
   $$D(\lambda) = 1.6852 - \frac{0.63346}{\lambda - 0.21410}\quad (\lambda\text{ w }\mu\text{m})$$
-  Fizjologiczna głębia ostrości oka w warunkach mezopowych wynosi $\pm 0.25\text{ D}$. Różnica refrakcyjna między elementami
-  składni kodu musi spełniać $\Delta D = |D(\lambda_1) - D(\lambda_2)| \le 0.25\text{ D}$, aby oko nie musiało refokusować
-  pomiędzy sąsiadującymi tokenami w linii.
+  Różnica refrakcyjna między składnikami składni kodu musi spełniać $\Delta D \le 0.25\text{ D}$.
 
-** 5. Percepcyjny kontrast jasności APCA (WCAG 3) i fotometria mezopowa
+** 5. Fizyka mokrych powierzchni leśnych
+- *Artykuł źródłowy*: Lekner, J., & Dorf, M. C. (1988). /Why some things are darker when wet./ *Applied Optics*, 27(7), 1278–1280.
+- *DOI*: [[https://doi.org/10.1364/AO.27.001278][10.1364/AO.27.001278]]
+- *Mechanizm*: Woda ($n_w \approx 1.333$) eliminuje odbicie Fresnela i powoduje całkowite wewnętrzne odbicie,
+  pogłębiając absorpcję barwną (prawo Beera-Lamberta) bez sztucznych, suchych neonów ($C^* \le 38$).
+
+** 6. Percepcyjny kontrast jasności APCA (WCAG 3) i fotometria mezopowa
 - *Specyfikacja APCA*: Somers, A. (2022). /Advanced Perceptual Contrast Algorithm 0.98G-4g./ W3C Visual Contrast Subgroup.
   [[https://git.apcacontrast.com/documentation/APCA_in_a_Nutshell][Dokumentacja APCA]]
 - *Fotometria mezopowa*: CIE 191:2010. /Recommended System for Mesopic Photometry Based on Visual Performance./
-  [[https://cie.co.at/publications/recommended-system-mesopic-photometry-based-visual-performance][Raport CIE 191:2010]] (Współczynnik S/P: $V'(\lambda)/V(\lambda)$).
+  [[https://cie.co.at/publications/recommended-system-mesopic-photometry-based-visual-performance][Raport CIE 191:2010]]
 
 #+begin_src emacs-lisp :results output silent
   (require 'color)
@@ -96,20 +101,15 @@ z recenzowanymi modelami optyki widzenia mezopowego, fizyki powierzchni oraz bio
 
   ;; 4. Standardowy algorytm APCA (W3C 0.98G-4g) bazujący na luminancji Y
   (defun apca--contrast-from-luminance (txt-y bg-y &optional signed)
-    "Oblicza kontrast Lc z fizycznych luminancji TXT-Y i BG-Y wg specyfikacji APCA 0.98G-4g.
-  Domyślnie zwraca dodatnią magnitudę |Lc| odpowiednią do tabel norm ergonomicznych.
-  Gdy SIGNED jest nie-nil, zwraca wartość ze znakiem (ujemną dla WoB)."
-    (let* (;; Soft-clamping poziomu czerni (SoftToe flare compensation)
-           (txt-c (if (> txt-y 0.022) txt-y (+ txt-y (expt (- 0.022 txt-y) 1.414))))
+    "Oblicza kontrast Lc z fizycznych luminancji TXT-Y i BG-Y wg specyfikacji APCA 0.98G-4g."
+    (let* ((txt-c (if (> txt-y 0.022) txt-y (+ txt-y (expt (- 0.022 txt-y) 1.414))))
            (bg-c  (if (> bg-y 0.022)  bg-y  (+ bg-y  (expt (- 0.022 bg-y)  1.414)))))
       (if (< (abs (- bg-c txt-c)) 0.0005)
           0.0
         (if (> bg-c txt-c)
-            ;; BoW: Ciemny tekst na jasnym tle (Normal Polarity)
             (let* ((sapc (* (- (expt bg-c 0.56) (expt txt-c 0.57)) 1.14))
                    (out  (if (< sapc 0.1) 0.0 (* (- sapc 0.027) 100.0))))
               out)
-          ;; WoB: Jasny tekst na ciemnym tle (Reverse Polarity)
           (let* ((sapc (* (- (expt txt-c 0.62) (expt bg-c 0.65)) 1.14))
                  (mag  (if (< sapc 0.1) 0.0 (* (- sapc 0.027) 100.0))))
             (if signed (- mag) mag))))))
@@ -186,7 +186,7 @@ z recenzowanymi modelami optyki widzenia mezopowego, fizyki powierzchni oraz bio
            (b (nth 2 lab)))
       (sqrt (+ (* a a) (* b b)))))
 
-  ;; 12. Walidacja komfortu dla astygmatyzmu (Astigmatic Comfort Validation)
+  ;; 12. Walidacja komfortu dla astygmatyzmu i wady wzroku (Zbalansowane progi światła)
   (defun astigmatism-comfort-status (token-role hex-txt hex-bg)
     "Weryfikuje zgodność kontrastu i chrominancji z oknem tolerancji dla astygmatyzmu.
   Poparte badaniami: Charman & Heron (1988, DOI: 10.1111/j.1475-1313.1988.tb01090.x)
@@ -197,23 +197,23 @@ z recenzowanymi modelami optyki widzenia mezopowego, fizyki powierzchni oraz bio
       (cond
        ((string-match "fg-main" role-str)
         (cond
-         ((> lc 54.0)  "ZAGROŻENIE: Mikrofluktuacje rzęskowe / pulsowanie oka (Charman 1988; Lc > 54)")
-         ((< lc 42.0)  "ZAGROŻENIE: Niewystarczająca czytelność tekstu (Lc < 42)")
+         ((> lc 58.0)  "ZAGROŻENIE: Mikrofluktuacje rzęskowe / pulsowanie oka (Charman 1988; Lc > 58)")
+         ((< lc 48.0)  "ZAGROŻENIE: Zbyt ciemny tekst bazowy dla wady wzroku (Lc < 48)")
          ((> c 12.0)   "OSTRZEŻENIE: Fringing subpikseli na LCD (C* > 12)")
-         (t            "OPTYMALNY: Stabilna akomodacja, brak pulsowania (Okno 45-52)")))
+         (t            "OPTYMALNY: Wyrazisty i stabilny, brak pulsowania (Okno 50-56)")))
        ((string-match "fg-dim" role-str)
-        (if (and (>= lc 11.0) (<= lc 18.0))
-            "OPTYMALNY: Ciche tło w ściółce (Lc 12-18)"
+        (if (and (>= lc 16.0) (<= lc 24.0))
+            "OPTYMALNY: Czytelne tło ściółki (Lc 16-24)"
           "POZA NORMĄ"))
        ((string-match "cursor" role-str)
-        (if (>= lc 35.0)
+        (if (>= lc 40.0)
             "OPTYMALNY: Wyraźny punkt skupienia bez oślepiania"
           "ZA CIEMNY"))
        (t
         (cond
-         ((< lc 19.0) "ZA CIEMNY: Niska czytelność składni (Lc < 19)")
+         ((< lc 22.0) "ZA CIEMNY: Niska czytelność składni (Lc < 22)")
          ((> c 38.0)  "ZBYT NASYCONY: Przekracza limit deszczu C* <= 38")
-         (t           "ZGODNY: Mokry pigment leśny (Lekner & Dorf 1988)"))))))
+         (t           "ZGODNY: Wyrazista warstwa leśna (Lekner & Dorf 1988)"))))))
 
   (defun astigmatism-lca-status (token-role hex-txt hex-base)
     "Ocenia dyspersję chromatyczną LCA i nasycenie w relacji do tekstu bazowego
@@ -280,25 +280,25 @@ Aby załadować silnik i odświeżyć tabele, wywołaj:
 * rainforest-night (Weryfikacja ergonomiczna dla LCD / OLED w ciemnym pokoju)
 
 ** Pomiary kontrastu APCA i tolerancji astygmatyzmu (LCD / OLED)
-Normy ergonomiczne dla nocnego schronienia (mokry bór nocą):
-- Tekst podstawowy (Zgaszony kwarc mineralny): Lc 45 - 52 na LCD (Eliminuje mikrofluktuacje rzęskowe 1-2 Hz wg Charmana & Herona 1988 i halację rogówki)
-- Identyfikatory / Argumenty (Piaskowiec): Lc 30 - 35 (Wyraźny poziom pomocniczy, odległość Δ >= 8000 do tekstu)
-- Kursor (Kropla deszczu): Lc 35 - 42 (Punkt skupienia wzroku, nieoślepiający)
-- Komentarze (Igliwie ściółki): Lc 12 - 18 (Spokojne tło w czystej kursywie pod kodem)
-- Elementy składni: Lc 20 - 32 na LCD przy zachowaniu reguły deszczu Leknera & Dorfa (1988) i nasycenia C* <= 38
+Zbalansowane normy ergonomiczne (koncepcja warstw lasu od góry do dołu):
+- Tekst podstawowy (Kwarc mineralny): Lc 50 - 56 na LCD (Wyrazisty i czytelny dla wady wzroku, brak mikrofluktuacji rzęskowych 1-2 Hz wg Charmana & Herona 1988)
+- Identyfikatory / Parametry (Piaskowiec): Lc 34 - 38 (Wyraźny poziom pomocniczy, odległość Δ >= 8000 do tekstu)
+- Kursor (Lśniąca kropla deszczu): Lc 42 - 48 (Punkt skupienia wzroku, nieoślepiający)
+- Komentarze (Igliwie ściółki): Lc 18 - 22 (Spokojne tło w czystej kursywie pod kodem)
+- Elementy składni: Lc 24 - 38 na LCD przy zachowaniu nasycenia C* <= 38 i fizyki deszczu Leknera & Dorfa (1988)
 
-| Rola w kodzie                     | Token   | Kolor   | Tło     | APCA (Czyste) | Ekran LCD (Bleed) | Ekran OLED (Irrad) | Status Astygmatyzm (Komfort LCD)                             |
-|-----------------------------------+---------+---------+---------+---------------+-------------------+--------------------+--------------------------------------------------------------|
-| Tekst podstawowy (Zgaszony kwarc) | fg-main | #96a098 | #090a09 |         49.34 |             47.80 |              47.25 | OPTYMALNY: Stabilna akomodacja, brak pulsowania (Okno 45-52) |
-| Identyfikatory (Mokry piaskowiec) | fg-alt  | #708078 | #090a09 |         32.86 |             31.53 |              31.39 | ZGODNY: Mokry pigment leśny (Lekner & Dorf 1988)             |
-| Kursor (Kropla deszczu)           | cursor  | #4e92a8 | #090a09 |         39.14 |             37.72 |              37.44 | OPTYMALNY: Wyraźny punkt skupienia bez oślepiania            |
-| Komentarze / Doc (Ściółka)        | fg-dim  | #445448 | #090a09 |         14.11 |             13.28 |              13.35 | OPTYMALNY: Ciche tło w ściółce (Lc 12-18)                    |
-| Słowa kluczowe (Szmaragd igliwia) | cyan    | #248466 | #090a09 |         29.95 |             28.66 |              28.59 | ZGODNY: Mokry pigment leśny (Lekner & Dorf 1988)             |
-| Funkcje i wywołania (Woda potoku) | blue    | #28769e | #090a09 |         27.12 |             25.90 |              25.87 | ZGODNY: Mokry pigment leśny (Lekner & Dorf 1988)             |
-| Typy (Mokry mech borowy)          | green   | #588046 | #090a09 |         29.86 |             28.58 |              28.50 | ZGODNY: Mokry pigment leśny (Lekner & Dorf 1988)             |
-| Napisy (Leśna borówka w deszczu)  | yellow  | #946498 | #090a09 |         29.51 |             28.23 |              28.16 | ZGODNY: Mokry pigment leśny (Lekner & Dorf 1988)             |
-| Symbole / Builtin (Mokry cedr)    | magenta | #72586a | #090a09 |         20.28 |             19.22 |              19.28 | ZGODNY: Mokry pigment leśny (Lekner & Dorf 1988)             |
-| Alerty / Błędy (Owoc cisa)        | red     | #944e48 | #090a09 |         21.56 |             20.47 |              20.51 | ZGODNY: Mokry pigment leśny (Lekner & Dorf 1988)             |
+| Rola w kodzie                      | Token   | Kolor   | Tło     | APCA (Czyste) | Ekran LCD (Bleed) | Ekran OLED (Irrad) | Status Astygmatyzm (Komfort LCD)                              |
+|------------------------------------+---------+---------+---------+---------------+-------------------+--------------------+---------------------------------------------------------------|
+| Tekst podstawowy (Kwarc mineralny) | fg-main | #a0aaa2 | #090a09 |         54.68 |             53.09 |              52.38 | OPTYMALNY: Wyrazisty i stabilny, brak pulsowania (Okno 50-56) |
+| Identyfikatory (Mokry piaskowiec)  | fg-alt  | #788a80 | #090a09 |         37.38 |             35.98 |              35.74 | ZGODNY: Wyrazista warstwa leśna (Lekner & Dorf 1988)          |
+| Kursor (Kropla deszczu)            | cursor  | #54a2b8 | #090a09 |         46.50 |             44.98 |              44.51 | OPTYMALNY: Wyraźny punkt skupienia bez oślepiania             |
+| Komentarze / Doc (Ściółka)         | fg-dim  | #506456 | #090a09 |         20.09 |             19.04 |              19.09 | OPTYMALNY: Czytelne tło ściółki (Lc 16-24)                    |
+| Korona drzew (Szmaragd igliwia)    | cyan    | #34967a | #090a09 |         37.97 |             36.56 |              36.31 | ZGODNY: Wyrazista warstwa leśna (Lekner & Dorf 1988)          |
+| Potok górski (Woda w ulewie)       | blue    | #328ab0 | #090a09 |         35.48 |             34.11 |              33.91 | ZGODNY: Wyrazista warstwa leśna (Lekner & Dorf 1988)          |
+| Mech nadrzewny (Mokry mech)        | green   | #629056 | #090a09 |         36.84 |             35.44 |              35.22 | ZGODNY: Wyrazista warstwa leśna (Lekner & Dorf 1988)          |
+| Runo leśne (Borówka czarna)        | yellow  | #a676aa | #090a09 |         37.79 |             36.38 |              36.14 | ZGODNY: Wyrazista warstwa leśna (Lekner & Dorf 1988)          |
+| Kora sosnowa / Cedr (Builtin)      | magenta | #886a78 | #090a09 |         28.31 |             27.05 |              27.00 | ZGODNY: Wyrazista warstwa leśna (Lekner & Dorf 1988)          |
+| Owoc cisa (Alerty i błędy)         | red     | #9e5650 | #090a09 |         25.08 |             23.90 |              23.90 | ZGODNY: Wyrazista warstwa leśna (Lekner & Dorf 1988)          |
 #+TBLFM: $5='(APCA $3 $4) :: $6='(LCD $3 $4) :: $7='(OLED $3 $4) :: $8='(ASTIG $2 $3 $4)
 
 ** Optyka oka i aberracja chromatyczna (Model Thibosa 1992, S/P i C*)
@@ -307,44 +307,44 @@ Wymagania dla astygmatyzmu:
 - Czułość mezopowa S/P $\ge 0.85$ (optymalne pobudzanie pręcików w nocy wg CIE 191:2010)
 - Nasycenie barwy $C^* \le 38$ (eliminacja jaskrawości, głęboki mokry pigment leśny wg Leknera & Dorfa 1988) oraz $C^* \le 12$ dla tekstu
 
-| Rola w kodzie                     | Token   | Kolor   | Baza    | Efektywna λ | D(Thibos) | Aberracja ΔD | Czułość S/P | Nasycenie C* | Status Optyczny (Astygmatyzm)                           |
-|-----------------------------------+---------+---------+---------+-------------+-----------+--------------+-------------+--------------+---------------------------------------------------------|
-| Tekst bazowy (Zgaszony kwarc)     | fg-main | #96a098 | #96a098 | 544.9 nm    | -0.229 D  | 0.000 D      |        0.99 |          5.9 | OPTYMALNY: Wspólna płaszczyzna ogniskowa (ΔD <= 0.25 D) |
-| Identyfikatory (Piaskowiec)       | fg-alt  | #708078 | #96a098 | 543.1 nm    | -0.240 D  | 0.011 D      |        1.00 |          7.9 | OPTYMALNY: Wspólna płaszczyzna ogniskowa (ΔD <= 0.25 D) |
-| Kursor (Kropla deszczu)           | cursor  | #4e92a8 | #96a098 | 531.0 nm    | -0.314 D  | 0.084 D      |        1.26 |         23.7 | OPTYMALNY: Wspólna płaszczyzna ogniskowa (ΔD <= 0.25 D) |
-| Komentarze (Ściółka iglasta)      | fg-dim  | #445448 | #96a098 | 542.1 nm    | -0.246 D  | 0.016 D      |        0.98 |         10.3 | OPTYMALNY: Wspólna płaszczyzna ogniskowa (ΔD <= 0.25 D) |
-| Słowa kluczowe (Szmaragd igliwia) | cyan    | #248466 | #96a098 | 532.4 nm    | -0.305 D  | 0.076 D      |        1.03 |         36.0 | OPTYMALNY: Wspólna płaszczyzna ogniskowa (ΔD <= 0.25 D) |
-| Funkcje i wywołania (Woda potoku) | blue    | #28769e | #96a098 | 524.8 nm    | -0.354 D  | 0.124 D      |        1.46 |         29.9 | OPTYMALNY: Wspólna płaszczyzna ogniskowa (ΔD <= 0.25 D) |
-| Typy (Mokry mech borowy)          | green   | #588046 | #96a098 | 541.7 nm    | -0.249 D  | 0.019 D      |        0.87 |         37.2 | OPTYMALNY: Wspólna płaszczyzna ogniskowa (ΔD <= 0.25 D) |
-| Napisy (Leśna borówka w deszczu)  | yellow  | #946498 | #96a098 | 554.3 nm    | -0.177 D  | 0.053 D      |        1.14 |         35.1 | OPTYMALNY: Wspólna płaszczyzna ogniskowa (ΔD <= 0.25 D) |
-| Symbole / Builtin (Mokry cedr)    | magenta | #72586a | #96a098 | 553.5 nm    | -0.181 D  | 0.048 D      |        1.01 |         15.3 | OPTYMALNY: Wspólna płaszczyzna ogniskowa (ΔD <= 0.25 D) |
-| Alerty / Błędy (Owoc cisa)        | red     | #944e48 | #96a098 | 575.8 nm    | -0.066 D  | 0.163 D      |        0.66 |         33.2 | OPTYMALNY: Wspólna płaszczyzna ogniskowa (ΔD <= 0.25 D) |
+| Rola w kodzie                   | Token   | Kolor   | Baza    | Efektywna λ | D(Thibos) | Aberracja ΔD | Czułość S/P | Nasycenie C* | Status Optyczny (Astygmatyzm)                           |
+|---------------------------------+---------+---------+---------+-------------+-----------+--------------+-------------+--------------+---------------------------------------------------------|
+| Tekst bazowy (Kwarc mineralny)  | fg-main | #a0aaa2 | #a0aaa2 | 545.0 nm    | -0.229 D  | 0.000 D      |        0.99 |          5.8 | OPTYMALNY: Wspólna płaszczyzna ogniskowa (ΔD <= 0.25 D) |
+| Identyfikatory (Piaskowiec)     | fg-alt  | #788a80 | #a0aaa2 | 543.1 nm    | -0.240 D  | 0.011 D      |        1.00 |          9.1 | OPTYMALNY: Wspólna płaszczyzna ogniskowa (ΔD <= 0.25 D) |
+| Kursor (Kropla deszczu)         | cursor  | #54a2b8 | #a0aaa2 | 530.9 nm    | -0.314 D  | 0.085 D      |        1.25 |         25.8 | OPTYMALNY: Wspólna płaszczyzna ogniskowa (ΔD <= 0.25 D) |
+| Komentarze (Ściółka iglasta)    | fg-dim  | #506456 | #a0aaa2 | 541.8 nm    | -0.248 D  | 0.019 D      |        0.98 |         12.0 | OPTYMALNY: Wspólna płaszczyzna ogniskowa (ΔD <= 0.25 D) |
+| Korona drzew (Szmaragd igliwia) | cyan    | #34967a | #a0aaa2 | 532.7 nm    | -0.303 D  | 0.074 D      |        1.05 |         36.0 | OPTYMALNY: Wspólna płaszczyzna ogniskowa (ΔD <= 0.25 D) |
+| Potok górski (Woda w ulewie)    | blue    | #328ab0 | #a0aaa2 | 526.2 nm    | -0.345 D  | 0.116 D      |        1.40 |         30.6 | OPTYMALNY: Wspólna płaszczyzna ogniskowa (ΔD <= 0.25 D) |
+| Mech nadrzewny (Mokry mech)     | green   | #629056 | #a0aaa2 | 541.1 nm    | -0.252 D  | 0.023 D      |        0.89 |         37.7 | OPTYMALNY: Wspólna płaszczyzna ogniskowa (ΔD <= 0.25 D) |
+| Runo leśne (Borówka czarna)     | yellow  | #a676aa | #a0aaa2 | 553.2 nm    | -0.183 D  | 0.046 D      |        1.12 |         34.4 | OPTYMALNY: Wspólna płaszczyzna ogniskowa (ΔD <= 0.25 D) |
+| Kora sosnowa / Cedr (Builtin)   | magenta | #886a78 | #a0aaa2 | 554.2 nm    | -0.178 D  | 0.051 D      |        0.97 |         14.7 | OPTYMALNY: Wspólna płaszczyzna ogniskowa (ΔD <= 0.25 D) |
+| Owoc cisa (Alerty i błędy)      | red     | #9e5650 | #a0aaa2 | 574.2 nm    | -0.074 D  | 0.155 D      |        0.68 |         33.5 | OPTYMALNY: Wspólna płaszczyzna ogniskowa (ΔD <= 0.25 D) |
 #+TBLFM: $5='(WAVE $3) :: $6='(THIBOS $3) :: $7='(ΔD $3 $4) :: $8='(SP $3) :: $9='(CHROMA $3) :: $10='(OPTIC $2 $3 $4)
 
 ** Weryfikacja odległości percepcyjnej między składnikami (min. 8000)
 Wymóg rygorystycznego rozróżniania składników w sąsiedztwie linii kodu (min. 8000 w 16-bitowej metryce Riemersma):
 
-| Porównanie ról                      | Kolor 1 | Kolor 2 | Dystans (Δ) | Status                   |
-|-------------------------------------+---------+---------+-------------+--------------------------|
-| Kwarc (txt) vs Piaskowiec (fg-alt)  | #96a098 | #708078 |       10352 | Rozróżnialne (Δ >= 8000) |
-| Kwarc (txt) vs Komentarz (Ściółka)  | #96a098 | #445448 |       56327 | Rozróżnialne (Δ >= 8000) |
-| Piaskowiec (fg-alt) vs Komentarz    | #708078 | #445448 |       18542 | Rozróżnialne (Δ >= 8000) |
-| Szmaragd (cyan) vs Woda (blue)      | #248466 | #28769e |        9835 | Rozróżnialne (Δ >= 8000) |
-| Szmaragd (cyan) vs Mech (green)     | #248466 | #588046 |        9022 | Rozróżnialne (Δ >= 8000) |
-| Szmaragd (cyan) vs Cedr (magenta)   | #248466 | #72586a |       21914 | Rozróżnialne (Δ >= 8000) |
-| Szmaragd (cyan) vs Borówka (yellow) | #248466 | #946498 |       40623 | Rozróżnialne (Δ >= 8000) |
-| Woda (blue) vs Mech (green)         | #28769e | #588046 |       27084 | Rozróżnialne (Δ >= 8000) |
-| Woda (blue) vs Cedr (magenta)       | #28769e | #72586a |       23684 | Rozróżnialne (Δ >= 8000) |
-| Woda (blue) vs Borówka (yellow)     | #28769e | #946498 |       29245 | Rozróżnialne (Δ >= 8000) |
-| Mech (green) vs Cedr (magenta)      | #588046 | #72586a |       11483 | Rozróżnialne (Δ >= 8000) |
-| Mech (green) vs Borówka (yellow)    | #588046 | #946498 |       29289 | Rozróżnialne (Δ >= 8000) |
-| Cedr (magenta) vs Borówka (yellow)  | #72586a | #946498 |        8811 | Rozróżnialne (Δ >= 8000) |
-| Kwarc (txt) vs Woda (blue)          | #96a098 | #28769e |       36139 | Rozróżnialne (Δ >= 8000) |
-| Kwarc (txt) vs Szmaragd (cyan)      | #96a098 | #248466 |       40772 | Rozróżnialne (Δ >= 8000) |
-| Kwarc (txt) vs Mech (green)         | #96a098 | #588046 |       30851 | Rozróżnialne (Δ >= 8000) |
-| Kwarc (txt) vs Borówka (yellow)     | #96a098 | #946498 |       14523 | Rozróżnialne (Δ >= 8000) |
-| Kwarc (txt) vs Cedr (magenta)       | #96a098 | #72586a |       29480 | Rozróżnialne (Δ >= 8000) |
-| Kwarc (txt) vs Czerwony (red)       | #96a098 | #944e48 |       42698 | Rozróżnialne (Δ >= 8000) |
+| Porównanie ról                     | Kolor 1 | Kolor 2 | Dystans (Δ) | Status                   |
+|------------------------------------+---------+---------+-------------+--------------------------|
+| Kwarc (txt) vs Piaskowiec (fg-alt) | #a0aaa2 | #788a80 |       11093 | Rozróżnialne (Δ >= 8000) |
+| Kwarc (txt) vs Komentarz (Ściółka) | #a0aaa2 | #506456 |       50413 | Rozróżnialne (Δ >= 8000) |
+| Piaskowiec (fg-alt) vs Komentarz   | #788a80 | #506456 |       14314 | Rozróżnialne (Δ >= 8000) |
+| Korona (cyan) vs Potok (blue)      | #34967a | #328ab0 |        8818 | Rozróżnialne (Δ >= 8000) |
+| Korona (cyan) vs Mech (green)      | #34967a | #629056 |        8571 | Rozróżnialne (Δ >= 8000) |
+| Korona (cyan) vs Kora (magenta)    | #34967a | #886a78 |       24659 | Rozróżnialne (Δ >= 8000) |
+| Korona (cyan) vs Borówka (yellow)  | #34967a | #a676aa |       41895 | Rozróżnialne (Δ >= 8000) |
+| Potok (blue) vs Mech (green)       | #328ab0 | #629056 |       27584 | Rozróżnialne (Δ >= 8000) |
+| Potok (blue) vs Kora (magenta)     | #328ab0 | #886a78 |       30083 | Rozróżnialne (Δ >= 8000) |
+| Potok (blue) vs Borówka (yellow)   | #328ab0 | #a676aa |       34572 | Rozróżnialne (Δ >= 8000) |
+| Mech (green) vs Kora (magenta)     | #629056 | #886a78 |       12360 | Rozróżnialne (Δ >= 8000) |
+| Mech (green) vs Borówka (yellow)   | #629056 | #a676aa |       32110 | Rozróżnialne (Δ >= 8000) |
+| Kora (magenta) vs Borówka (yellow) | #886a78 | #a676aa |        8998 | Rozróżnialne (Δ >= 8000) |
+| Kwarc (txt) vs Potok (blue)        | #a0aaa2 | #328ab0 |       34050 | Rozróżnialne (Δ >= 8000) |
+| Kwarc (txt) vs Korona (cyan)       | #a0aaa2 | #34967a |       34176 | Rozróżnialne (Δ >= 8000) |
+| Kwarc (txt) vs Mech (green)        | #a0aaa2 | #629056 |       26951 | Rozróżnialne (Δ >= 8000) |
+| Kwarc (txt) vs Borówka (yellow)    | #a0aaa2 | #a676aa |       11148 | Rozróżnialne (Δ >= 8000) |
+| Kwarc (txt) vs Kora (magenta)      | #a0aaa2 | #886a78 |       22311 | Rozróżnialne (Δ >= 8000) |
+| Kwarc (txt) vs Czerwony (red)      | #a0aaa2 | #9e5650 |       44559 | Rozróżnialne (Δ >= 8000) |
 #+TBLFM: $4='(Δ $2 $3) :: $5='(DIST-STATUS $2 $3)
 
 * rainforest-day (Weryfikacja ergonomiczna dla zamglonego boru w dzień)
