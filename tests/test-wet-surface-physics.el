@@ -7,7 +7,6 @@
   (let* ((pal (rainforest-extract-active-palette))
          (theme (plist-get pal :theme))
          (passes 0)
-         (warnings 0)
          (fails 0)
          ;; Lekner & Dorf (1988) show that water (n=1.333) causes total internal reflection in porous organic matter.
          ;; This increases light absorption, darkening wet surfaces while capping dry surface scatter.
