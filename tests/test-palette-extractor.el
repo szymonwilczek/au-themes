@@ -5,11 +5,17 @@
 (require 'subr-x)
 
 ;; Ensure paths to dependencies
-(let ((dotfiles-dir "/home/wolfie/Dokumenty/GitHub/dotfiles/emacs/.config/emacs/elpa"))
-  (dolist (pkg '("modus-themes-20260730.719" "ef-themes-2.2.0"))
-    (let ((p (expand-file-name pkg dotfiles-dir)))
-      (when (file-directory-p p)
-        (add-to-list 'load-path p)))))
+(let ((possible-dirs (list (getenv "EMACS_ELPA_DIR")
+                           (getenv "ELPA_DIR")
+                           "~/.config/emacs/elpa"
+                           "~/.emacs.d/elpa"
+                           "/home/wolfie/Dokumenty/GitHub/dotfiles/emacs/.config/emacs/elpa")))
+  (dolist (dir possible-dirs)
+    (when (and dir (file-directory-p dir))
+      (dolist (pkg '("modus-themes" "ef-themes"))
+        (dolist (match (file-expand-wildcards (expand-file-name (concat pkg "*") dir)))
+          (when (file-directory-p match)
+            (add-to-list 'load-path match)))))))
 
 (add-to-list 'load-path default-directory)
 (add-to-list 'custom-theme-load-path default-directory)
@@ -1057,11 +1063,11 @@ melanopic daylight (D65) equivalent, not an arbitrary unit."
 (defun rf-melanopic-photopic-ratio (hex)
   "Return the melanopic daylight efficacy ratio mel-DER of HEX (CIE S 026:2018).
 This is melanopic EDI divided by photopic luminance; D65 has mel-DER = 1
-by definition."
+by definition. Returns nil for zero luminance (black)."
   (let ((y (rf-luminance-y hex))
         (m (rf-melanopic-irradiance hex)))
     (if (< y 1e-6)
-        0.0
+        nil
       (/ m y))))
 
 (defun rf-hopkinson-glare-constant (token-hex bg-hex &optional solid-angle ambient-lum)
@@ -1077,14 +1083,12 @@ AMBIENT-LUM defaults to 1.5 cd/m2 ambient field adaptation."
                 (+ lb (* 0.07 (sqrt omega) ls))))))
 
 (defun rf-hopkinson-dgi (tokens bg-hex &optional solid-angle ambient-lum)
-  "Calculate cumulative CIE Discomfort Glare Index (DGI in dB) for TOKENS.
-DGI = 10 * log10(sum(G_i))."
+  "Calculate cumulative Hopkinson/BRS Discomfort Glare Index (DGI in dB) for TOKENS.
+DGI = 10 * log10(sum(G_i)). Returns a large negative floor for negligible glare."
   (let ((sum-g 0.0))
     (dolist (tok tokens)
       (setq sum-g (+ sum-g (rf-hopkinson-glare-constant tok bg-hex solid-angle ambient-lum))))
-    (if (< sum-g 1e-6)
-        0.0
-      (* 10.0 (log sum-g 10)))))
+    (* 10.0 (log (max 1e-6 sum-g) 10))))
 
 ;; Wilkins Pattern Glare & Cortical Visual Stress (Wilkins 1995, 2016)
 (defun rf-wilkins-line-michelson (token-hex bg-hex &optional duty-cycle ambient-lum)

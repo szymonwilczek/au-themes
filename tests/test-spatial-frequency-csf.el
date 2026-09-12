@@ -45,8 +45,8 @@
              (y-txt (rf-luminance-y hex))
              (y-bg  (rf-luminance-y bg))
              ;; Michelson contrast: m = (L_max - L_min) / (L_max + L_min)
-             (m (/ (- (max y-txt y-bg) (min y-txt y-bg))
-                   (+ (max y-txt y-bg) (min y-txt y-bg))))
+             (denom (+ (max y-txt y-bg) (min y-txt y-bg)))
+             (m (if (< denom 1e-9) 0.0 (/ (- (max y-txt y-bg) (min y-txt y-bg)) denom)))
              (ok (>= m min-m)))
         (if ok
             (setq passes (1+ passes))

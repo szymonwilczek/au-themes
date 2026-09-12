@@ -18,7 +18,8 @@ Ref: Leibowitz & Owens (1978) Science; Charman (1982) OPO; Heath (1956) JOSA."
          (passes 0)
          (fails 0)
          (apca-lc (abs (rf-apca-contrast fg bg)))
-         (michelson (/ (abs (- fg-y bg-y)) (+ fg-y bg-y)))
+         (denom (+ fg-y bg-y))
+         (michelson (if (< denom 1e-9) 0.0 (/ (abs (- fg-y bg-y)) denom)))
          ;; Spatial frequency energy in glyph edge: Michelson contrast * peak stroke luminance
          (edge-energy (* michelson (max fg-y bg-y))))
 
@@ -37,7 +38,7 @@ Ref: Leibowitz & Owens (1978) Science; Charman (1982) OPO; Heath (1956) JOSA."
             (princ (format "   [PASS] Edge Energy E_hf = %.4f >= %.3f: Anchors ciliary muscle at 50-60cm screen plane.\n"
                            edge-energy min-energy))
             (setq passes (1+ passes)))
-        (princ (format "   [FAIL] Edge Energy E_hf = %.4f < %.3f: Insufficient stimulus; eyes drift into dark focus (80-100cm).\n"
+        (princ (format "   [FAIL] Edge Energy E_hf = %.4f < %.3f: Insufficient stimulus; eyes drift into dark focus (~1.5 D, ~67cm).\n"
                        edge-energy min-energy))
         (setq fails (1+ fails))))
 
