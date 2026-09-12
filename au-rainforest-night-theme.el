@@ -9,8 +9,8 @@
     (bg-dim "#26211d")                 ; Inactive windows, dim canvas
     (bg-alt "#36322f")                 ; Subtle borders, alternating stripes
     (fg-main "#9ca69e")                ; Default buffer text
-    (fg-dim "#5e7460")                 ; Comments, metadata
-    (fg-alt "#6ea288")                 ; Struct properties
+    (fg-dim "#586c5a")                 ; Comments, metadata
+    (fg-alt "#6ea288")                 ; Struct properties (soft wet mountain lichen / birch jade)
     (fg-var "#98aba0")                 ; Variable definitions
     (bg-active "#56524f")              ; Active modeline, focused bars
     (bg-inactive "#25241d")            ; Inactive modeline
@@ -22,10 +22,10 @@
     (red-cooler "#a44a42")             ; Diff deletions, removal markers
     (red-faint "#687e6b")              ; Structural brackets
 
-    (green "#7d933d")                  ; Primitive types
-    (green-warmer "#ac5d6e")           ; Constant values
+    (green "#5ca660")                  ; Primitive types (wet canopy moss / fern green)
+    (green-warmer "#b05c70")           ; Constant values (wild heather / rosehip berry)
     (green-cooler "#a47028")           ; Control keywords
-    (green-faint "#5e7460")            ; Documentation strings, inline comments
+    (green-faint "#586c5a")            ; Documentation strings, inline comments
 
     (yellow "#a47028")                 ; Keyword alias
     (yellow-warmer "#bca03c")          ; Numeric literals
@@ -35,12 +35,12 @@
     (blue "#227086")                   ; Function definitions
     (blue-warmer "#4e92a4")            ; Function calls
     (blue-cooler "#5e8274")            ; Binary and unary operators
-    (blue-faint "#468a5c")             ; Built-in functions
+    (blue-faint "#398a80")             ; Built-in functions (deep pine creek viridian)
 
     (magenta "#8c6238")                ; Composite types: struct, union, enum
     (magenta-warmer "#62a28c")         ; Extended library types
     (magenta-cooler "#72627e")         ; Rare syntax nodes, special escapes
-    (magenta-faint "#5e7460")          ; Inactive conditional blocks
+    (magenta-faint "#586c5a")          ; Inactive conditional blocks
 
     (cyan "#a47028")                   ; Keyword fallback w extractorze
     (cyan-warmer "#7e5a28")            ; Preprocessor alias
@@ -105,10 +105,10 @@
 
     ;; Syntax Mappings:
     (keyword green-cooler)             ; Mapped on #a47028
-    (builtin blue-faint)               ; Mapped on #5478a2
-    (type green)                       ; Mapped on #869e42
+    (builtin blue-faint)               ; Mapped on #398a80
+    (type green)                       ; Mapped on #5ca660
     (preprocessor yellow-cooler)       ; Mapped on #7e5a28
-    (constant green-warmer)            ; Mapped on #b06676
+    (constant green-warmer)            ; Mapped on #b05c70
     (number yellow-warmer)             ; Mapped on #bca03c
     (fnname blue)                      ; Mapped on #227086
     (fnname-call blue-warmer)          ; Mapped on #4e92a4
@@ -119,8 +119,8 @@
     (operator blue-cooler)             ; Mapped on #5e8274
     (bracket red-faint)                ; Mapped on #687e6b
     (delimiter cyan-faint)             ; Mapped on #6c786e
-    (comment green-faint)              ; Buffer comments -> #5e7460
-    (docstring green-faint)            ; In-source docstrings -> #5e7460
+    (comment green-faint)              ; Buffer comments -> #586c5a
+    (docstring green-faint)            ; In-source docstrings -> #586c5a
     (rx-backslash yellow-cooler)       ; Regex backslashes
     (rx-construct red)                 ; Regex constructs
 
