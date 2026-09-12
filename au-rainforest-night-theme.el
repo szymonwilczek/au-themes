@@ -3,49 +3,48 @@
 (require 'ef-themes)
 
 (defconst au-rainforest-night-palette-partial
-  '(;; Canvas & Chrome (Deep ef-autumn nocturnal forest baseline)
-    (cursor "#4e92a8")        ; Mineral steel-rain blue: soothing raindrop glint in the wet forest
+  '(;; Canvas & Chrome
+    (cursor "#4e92a8")
     (bg-main "#0f0e06")
     (bg-dim "#26211d")
     (bg-alt "#36322f")
-    (fg-main "#9ca69e")       ; Tranquil silver-mist quartz
-    (fg-dim "#58685a")        ; Damp quiet pine needles
-    (fg-alt "#a08c4a")        ; Warm forest lichen
-    (fg-var "#a2ada4")        ; Birch mist quartz: variable definitions
+    (fg-main "#9ca69e")
+    (fg-dim "#58685a")
+    (fg-alt "#a08c4a")
+    (fg-var "#a2ada4")
     (bg-active "#56524f")
     (bg-inactive "#25241d")
     (border "#58514f")
 
-    ;; Deep Temperate Rainforest Palette (Terrestrial Greens, Cedar Bark, Mountain Waters)
-    (red "#b6463e")           ; Mountain yew crimson: alerts, errors, negation !
-    (red-warmer "#b26236")    ; Warm cedar resin amber: strings ("strings")
-    (red-cooler "#b6463e")
-    (red-faint "#6c806e")     ; Damp wet spruce twigs: brackets ( ) [ ] { }
+    (red "#d15f55")
+    (red-warmer "#b26236")
+    (red-cooler "#d15f55")
+    (red-faint "#6c806e")
 
-    (green "#7aa854")         ; Wet canopy moss: data types (int, size_t, uint32_t)
-    (green-warmer "#869c44")  ; Sunlit forest olive foliage: constants (LOTA_PCR_COUNT, NULL)
-    (green-cooler "#388844")  ; Wet terrestrial fir needle green: keywords (static, while, return, struct)
-    (green-faint "#58685a")   ; Quiet pine needles in mist: comments
+    (green "#7aa854")
+    (green-warmer "#869c44")
+    (green-cooler "#3b8c49")
+    (green-faint "#58685a")
 
-    (yellow "#388844")        ; Keyword alias: wet terrestrial fir needle green
-    (yellow-warmer "#caa240") ; Warm golden forest honey: numbers (0, 24, 32 in buf[0])
-    (yellow-cooler "#8c5020") ; Weathered cedar tree bark brown: preprocessor (#define)
-    (yellow-faint "#58685a")  ; Quiet pine needles in mist
+    (yellow "#3b8c49")
+    (yellow-warmer "#caa240")
+    (yellow-cooler "#8c5020")
+    (yellow-faint "#58685a")
 
-    (blue "#3e84be")          ; Mountain river stream water: function definitions (is_write_open_flags)
-    (blue-warmer "#66a4d2")   ; Nocturnal rain cascade: function calls (bpf_map_lookup_elem, BPF_CORE_READ)
-    (blue-cooler "#6e867c")   ; Neutral river slate quartz: operators (?, &, :, +, -, *, ->)
-    (blue-faint "#60a28c")    ; Soft mountain sage / tree lichen: builtins (__always_inline, sizeof)
+    (blue "#3e84be")
+    (blue-warmer "#66a4d2")
+    (blue-cooler "#6e867c")
+    (blue-faint "#63a58f")
 
-    (magenta "#869c44")       ; Forest olive foliage: constants (LOTA_PCR_COUNT, NULL)
-    (magenta-warmer "#60a28c")
-    (magenta-cooler "#60a28c") ; Soft mountain sage: builtins (__always_inline)
+    (magenta "#869c44")
+    (magenta-warmer "#63a58f")
+    (magenta-cooler "#63a58f")
     (magenta-faint "#58685a")
 
-    (cyan "#388844")          ; Wet terrestrial fir needle green (keywords)
-    (cyan-warmer "#8c5020")   ; Weathered cedar tree bark brown: preprocessor
-    (cyan-cooler "#6e867c")   ; Neutral river slate quartz
-    (cyan-faint "#7c7672")    ; Muted river pebble / flint: delimiters (, ;)
+    (cyan "#3b8c49")
+    (cyan-warmer "#8c5020")
+    (cyan-cooler "#6e867c")
+    (cyan-faint "#8e8884")
 
     ;; Panels and Diffs
     (bg-red-intense "#b02930")
@@ -83,7 +82,7 @@
     (bg-popup "#201e16")
     (bg-hover "#265f4a")
     (bg-hover-secondary "#55345a")
-    (bg-hl-line "#18201a")
+    (bg-hl-line "#141c16")
     (bg-paren-match "#2f6c4a")
     (bg-err "#461204")
     (bg-warning "#353504")
@@ -146,6 +145,7 @@
  nil
  nil)
 
+;; Backward-compatibility aliases
 (defvaralias 'rainforest-night-palette 'au-rainforest-night-palette)
 (defvaralias 'rainforest-night-palette-partial 'au-rainforest-night-palette-partial)
 
