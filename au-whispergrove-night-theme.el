@@ -5,16 +5,16 @@
 (defconst au-whispergrove-night-palette-partial
   '(;; Canvas & Chrome
     (cursor "#4a9cb2")                 ; Point / cursor indicator
-    (bg-main "#0f0e06")                ; Primary canvas background
-    (bg-dim "#26211d")                 ; Inactive windows, dim canvas
-    (bg-alt "#36322f")                 ; Subtle borders, alternating stripes
+    (bg-main "#0a0d08")                ; Primary canvas background
+    (bg-dim "#1a1e17")                 ; Inactive windows, dim canvas
+    (bg-alt "#282e24")                 ; Subtle borders, alternating stripes
     (fg-main "#9ca69e")                ; Default buffer text
     (fg-dim "#586c5a")                 ; Comments, metadata
-    (fg-alt "#6ea288")                 ; Struct properties (soft wet mountain lichen / birch jade)
+    (fg-alt "#6ea288")                 ; Struct properties
     (fg-var "#98aba0")                 ; Variable definitions
-    (bg-active "#56524f")              ; Active modeline, focused bars
-    (bg-inactive "#25241d")            ; Inactive modeline
-    (border "#58514f")                 ; Window dividers
+    (bg-active "#3e463a")              ; Active modeline frame, focused bars
+    (bg-inactive "#1a1e17")            ; Inactive modeline
+    (border "#424a3e")                 ; Window dividers
 
     ;; Basic Chromatic Scale
     (red "#b6463e")                    ; Errors, critical warnings
@@ -22,8 +22,8 @@
     (red-cooler "#a44a42")             ; Diff deletions, removal markers
     (red-faint "#687e6b")              ; Structural brackets
 
-    (green "#5ca660")                  ; Primitive types (wet canopy moss / fern green)
-    (green-warmer "#b05c70")           ; Constant values (wild heather / rosehip berry)
+    (green "#5ca660")                  ; Primitive types
+    (green-warmer "#b05c70")           ; Constant values
     (green-cooler "#a47028")           ; Control keywords
     (green-faint "#586c5a")            ; Documentation strings, inline comments
 
@@ -35,7 +35,7 @@
     (blue "#227086")                   ; Function definitions
     (blue-warmer "#4e92a4")            ; Function calls
     (blue-cooler "#5e8274")            ; Binary and unary operators
-    (blue-faint "#398a80")             ; Built-in functions (deep pine creek viridian)
+    (blue-faint "#398a80")             ; Built-in functions
 
     (magenta "#8c6238")                ; Composite types: struct, union, enum
     (magenta-warmer "#62a28c")         ; Extended library types
@@ -77,13 +77,13 @@
     (bg-removed-refine "#6f1a16")      ; Diff removed word-level highlight
     (fg-removed "#ffbfbf")             ; Diff removed foreground text
 
-    (bg-mode-line-active "#382c26")    ; Active modeline surface
-    (fg-mode-line-active "#d8d4ca")    ; Active modeline primary text
+    (bg-mode-line-active "#1e2420")    ; Active modeline surface
+    (fg-mode-line-active "#9ca69e")    ; Active modeline primary text
     (bg-completion "#202622")          ; Minibuffer completion selected row
-    (bg-popup "#1c1e18")               ; Autocomplete tooltip surface
+    (bg-popup "#151912")               ; Autocomplete tooltip surface
     (bg-hover "#24382e")               ; Mouse hover overlay
     (bg-hover-secondary "#362a3c")     ; Secondary hover overlay
-    (bg-hl-line "#161c16")             ; Current line indicator
+    (bg-hl-line "#12160f")             ; Current line indicator
     (bg-paren-match "#284c38")         ; Matching delimiter highlight
     (bg-err "#3a1210")                 ; Flymake error inline box
     (bg-warning "#30260a")             ; Flymake warning inline box
