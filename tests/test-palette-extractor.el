@@ -281,6 +281,13 @@ Positive for BoW (BG-Y > TXT-Y), negative for WoB.  Inputs outside
   (/ (/ (* rf-panel-diffuse-reflectance rf-ambient-illuminance) float-pi)
      rf-display-white-luminance))
 
+(defun rf-display-physical-floor-y (&optional oled-p)
+  "Physical luminance floor of the panel (black level + diffuse ambient reflection).
+Values are normalised relative to display white (IEC 61966-2-1 ambient).
+If OLED-P is non-nil, assume emissive zero black floor."
+  (+ (if oled-p 0.0 (/ 1.0 rf-lcd-contrast-ratio))
+     (rf-reflected-luminance-y)))
+
 (defun rf-panel-screen-y (hex black-level)
   "APCA screen luminance of HEX on a panel with BLACK-LEVEL and ambient reflection."
   (+ black-level
@@ -1082,13 +1089,16 @@ DGI = 10 * log10(sum(G_i))."
 (defun rf-wilkins-line-michelson (token-hex bg-hex &optional duty-cycle ambient-lum)
   "Calculate local Michelson contrast C_M of a text line against background.
 DUTY-CYCLE defaults to 0.35 (35% stroke fill on a line).
-AMBIENT-LUM defaults to 0.025 (display veiling/ambient luminance floor)."
+AMBIENT-LUM defaults to the physical panel floor (`rf-display-physical-floor-y')."
   (let* ((eta (or duty-cycle 0.35))
-         (amb (or ambient-lum 0.025))
+         (amb (or ambient-lum (rf-display-physical-floor-y)))
          (eff-bg (+ (rf-luminance-y bg-hex) amb))
          (eff-fg (+ (rf-luminance-y token-hex) amb))
-         (line-y (+ (* eta eff-fg) (* (- 1.0 eta) eff-bg))))
-    (/ (abs (- line-y eff-bg)) (+ line-y eff-bg))))
+         (line-y (+ (* eta eff-fg) (* (- 1.0 eta) eff-bg)))
+         (denom (+ line-y eff-bg)))
+    (if (< denom 1e-9)
+        0.0
+      (/ (abs (- line-y eff-bg)) denom))))
 
 ;; Retinal blue-light hazard, ICNIRP (2013) Table 2 / IEC 62471:2006 B(lambda).
 ;; A display is a large source, so the applicable quantity is the B-weighted
