@@ -10,7 +10,7 @@
     (bg-alt "#36322f")                 ; Subtle borders, alternating stripes
     (fg-main "#9ca69e")                ; Default buffer text
     (fg-dim "#546656")                 ; Comments, metadata
-    (fg-alt "#a2864a")                 ; Struct properties
+    (fg-alt "#a68846")                 ; Struct properties
     (fg-var "#98aba0")                 ; Variable definitions
     (bg-active "#56524f")              ; Active modeline, focused bars
     (bg-inactive "#25241d")            ; Inactive modeline
@@ -18,12 +18,12 @@
 
     ;; Basic Chromatic Scale
     (red "#b6463e")                    ; Errors, critical warnings
-    (red-warmer "#9e4e58")             ; String literals
+    (red-warmer "#9e604e")             ; String literals
     (red-cooler "#a44a42")             ; Diff deletions, removal markers
-    (red-faint "#697e6c")              ; Structural brackets
+    (red-faint "#687e6b")              ; Structural brackets
 
-    (green "#44a260")                  ; Primitive types
-    (green-warmer "#869e42")           ; Constant values
+    (green "#869e42")                  ; Primitive types
+    (green-warmer "#a46c76")           ; Constant values
     (green-cooler "#a47028")           ; Control keywords
     (green-faint "#546656")            ; Documentation strings, inline comments
 
@@ -35,7 +35,7 @@
     (blue "#227086")                   ; Function definitions
     (blue-warmer "#4e92a4")            ; Function calls
     (blue-cooler "#5e8274")            ; Binary and unary operators
-    (blue-faint "#2c8674")             ; Built-in functions
+    (blue-faint "#4a7852")             ; Built-in functions
 
     (magenta "#8c6238")                ; Composite types: struct, union, enum
     (magenta-warmer "#62a28c")         ; Extended library types
@@ -105,19 +105,19 @@
 
     ;; Syntax Mappings:
     (keyword green-cooler)             ; Mapped on #a47028
-    (builtin blue-faint)               ; Mapped on #2c8674
-    (type green)                       ; Mapped on #44a260
+    (builtin blue-faint)               ; Mapped on #4a7852
+    (type green)                       ; Mapped on #869e42
     (preprocessor yellow-cooler)       ; Mapped on #7e5a28
-    (constant green-warmer)            ; Mapped on #869e42
+    (constant green-warmer)            ; Mapped on #a46c76
     (number yellow-warmer)             ; Mapped on #bca03c
     (fnname blue)                      ; Mapped on #227086
     (fnname-call blue-warmer)          ; Mapped on #4e92a4
-    (string red-warmer)                ; Mapped on #9e4e58
-    (property fg-alt)                  ; Mapped on #a2864a
+    (string red-warmer)                ; Mapped on #9e604e
+    (property fg-alt)                  ; Mapped on #a68846
     (variable fg-var)                  ; Mapped on #98aba0
-    (variable-use fg-main)             ; Mapped on #9ca69e
+    (variable-use fg-main)             ; Variable usage -> #9ca69e
     (operator blue-cooler)             ; Mapped on #5e8274
-    (bracket red-faint)                ; Mapped on #697e6c
+    (bracket red-faint)                ; Mapped on #687e6b
     (delimiter cyan-faint)             ; Mapped on #6c786e
     (comment green-faint)              ; Buffer comments -> #546656
     (docstring green-faint)            ; In-source docstrings -> #546656
