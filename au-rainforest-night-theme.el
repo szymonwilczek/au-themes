@@ -10,7 +10,7 @@
     (bg-alt "#36322f")                 ; Subtle borders, alternating stripes
     (fg-main "#9ca69e")                ; Default buffer text
     (fg-dim "#5e7460")                 ; Comments, metadata
-    (fg-alt "#a68846")                 ; Struct properties
+    (fg-alt "#6ea288")                 ; Struct properties
     (fg-var "#98aba0")                 ; Variable definitions
     (bg-active "#56524f")              ; Active modeline, focused bars
     (bg-inactive "#25241d")            ; Inactive modeline
@@ -35,7 +35,7 @@
     (blue "#227086")                   ; Function definitions
     (blue-warmer "#4e92a4")            ; Function calls
     (blue-cooler "#5e8274")            ; Binary and unary operators
-    (blue-faint "#4f8177")             ; Built-in functions
+    (blue-faint "#468a5c")             ; Built-in functions
 
     (magenta "#8c6238")                ; Composite types: struct, union, enum
     (magenta-warmer "#62a28c")         ; Extended library types
@@ -105,7 +105,7 @@
 
     ;; Syntax Mappings:
     (keyword green-cooler)             ; Mapped on #a47028
-    (builtin blue-faint)               ; Mapped on #4a7852
+    (builtin blue-faint)               ; Mapped on #5478a2
     (type green)                       ; Mapped on #869e42
     (preprocessor yellow-cooler)       ; Mapped on #7e5a28
     (constant green-warmer)            ; Mapped on #b06676
@@ -113,7 +113,7 @@
     (fnname blue)                      ; Mapped on #227086
     (fnname-call blue-warmer)          ; Mapped on #4e92a4
     (string red-warmer)                ; Mapped on #9e604e
-    (property fg-alt)                  ; Mapped on #a68846
+    (property fg-alt)                  ; Mapped on #6ea288
     (variable fg-var)                  ; Mapped on #98aba0
     (variable-use fg-main)             ; Variable usage -> #9ca69e
     (operator blue-cooler)             ; Mapped on #5e8274
