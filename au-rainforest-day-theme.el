@@ -8,9 +8,10 @@
     (bg-main "#b2beaf")       ; Overcast canopy air / wet lichen-slate stone (Y=0.4939)
     (bg-dim "#a6b4a4")        ; Damp bark shadow
     (bg-alt "#9eb09e")        ; Deep canopy daylight shadow
-    (fg-main "#122216")       ; Deep conifer bark shadow: glare-free, ciliary-safe base text
+    (fg-main "#0e2016")       ; Deep conifer bark shadow: glare-free, ciliary-safe base text
     (fg-dim "#485a4c")        ; Misty lichen needles: quiet italic comments
-    (fg-alt "#1c443c")        ; Damp river stone: struct fields and parameters
+    (fg-alt "#295540")        ; Birch jade / mountain lichen: struct fields and parameters
+    (fg-var "#2c4a38")        ; Variable definitions
 
     (bg-active "#8ea28c")
     (bg-inactive "#a2b4a0")
@@ -18,34 +19,34 @@
 
     ;; 1:1 Keyface Determinism Palette (Forest layers hierarchy)
     (red "#843428")           ; Dark yew berry: alerts, negation !
-    (red-warmer "#923c30")
-    (red-cooler "#7c2e22")
-    (red-faint "#344238")     ; Wet twigs: brackets ( ) [ ] { }
+    (red-warmer "#551a0c")    ; Deep cedar clay: string literals ("strings")
+    (red-cooler "#7c2e22")    ; Diff deletions
+    (red-faint "#354437")     ; Wet twigs: brackets ( ) [ ] { }
 
-    (green "#6c3e00")         ; Deep amber resin: data types (int, size_t, uint32_t)
-    (green-warmer "#764402")
-    (green-cooler "#623800")
-    (green-faint "#4c2806")
+    (green "#005d39")         ; Wet canopy moss: primitive types (int, size_t, uint32_t)
+    (green-warmer "#79243e")  ; Wild heather / rosehip: constants and macros (LOTA_PCR_COUNT, NULL)
+    (green-cooler "#4e3111")  ; Deep amber oak: control keywords (struct, while, static, return, if)
+    (green-faint "#485a4c")   ; Documentation strings, inline comments
 
-    (yellow "#4c2806")        ; Dark oak wood / fallen leaves: strings ("strings")
-    (yellow-warmer "#084c68") ; Deep lake cyan: numbers (0, 24, 32 in buf[0])
-    (yellow-cooler "#442404")
-    (yellow-faint "#3a2004")
+    (yellow "#4e3111")        ; Keyword alias
+    (yellow-warmer "#555400") ; Golden amber honey: numeric literals (0, 24, 32 in buf[0])
+    (yellow-cooler "#393000") ; Deep olive bronze wood: preprocessor directives (#define, #include)
+    (yellow-faint "#4a4436")  ; Informational tooltips, fringe markers
 
-    (blue "#065842")          ; Boreal spruce lake: function definitions (is_write_open_flags)
-    (blue-warmer "#124a76")   ; Cold rain pool blue: function calls (bpf_map_lookup_elem, BPF_CORE_READ)
-    (blue-cooler "#2a3e30")   ; Dark wet slate: operators (+, -, *, >>, ==, &)
-    (blue-faint "#183a48")
+    (blue "#2e3b50")          ; Boreal spruce lake: function definitions (is_write_open_flags)
+    (blue-warmer "#225176")   ; Cold rain pool blue: function calls (bpf_map_lookup_elem, BPF_CORE_READ)
+    (blue-cooler "#2c493e")   ; Wet slate needle: operators (+, -, *, >>, ==, &)
+    (blue-faint "#004b44")    ; Pine creek viridian: built-in functions (sizeof, typeof, alignof)
 
-    (magenta "#541a58")       ; Deep heather plum: constants and macros (LOTA_PCR_COUNT, SI_KERNEL, NULL)
-    (magenta-warmer "#5e1e62")
-    (magenta-cooler "#5a240e") ; Deep cedar wood bark: builtins (sizeof, typeof, alignof, __always_inline)
-    (magenta-faint "#421446")
+    (magenta "#5a2e18")       ; Composite types fallback
+    (magenta-warmer "#295540")
+    (magenta-cooler "#502842")
+    (magenta-faint "#485a4c")
 
-    (cyan "#0a5022")          ; Deep pine green: keywords (struct, while, static, return, if)
-    (cyan-warmer "#27346d")   ; Deep river slate: preprocessor directives (#define, #include, #endif)
-    (cyan-cooler "#08461e")
-    (cyan-faint "#2a3a30")    ; Damp pine needles: delimiters (, ;)
+    (cyan "#4e3111")          ; Keyword fallback
+    (cyan-warmer "#393000")   ; Preprocessor alias
+    (cyan-cooler "#2c493e")   ; Operator alias
+    (cyan-faint "#3b463d")    ; Damp pine needles: punctuation delimiters (, ;)
 
     ;; Diffs and panels
     (bg-added "#a2c8a8")
@@ -83,37 +84,37 @@
     (info green)
 
     (fg-link blue-warmer)
-    (fg-link-visited magenta)
+    (fg-link-visited blue)
     (name blue)
-    (keybind red-warmer)
+    (keybind red)
     (identifier fg-alt)
     (fg-prompt blue)
 
     ;; 1:1 Keyface Determinism Mappings:
-    (preprocessor cyan-warmer)   ; #27346d - Deep river slate (#define, #include, #endif)
-    (keyword cyan)               ; #0a5022 - Deep pine green (struct, while, static, return, if)
-    (type green)                 ; #6c3e00 - Deep amber resin (int, size_t, uint32_t)
-    (constant magenta)           ; #541a58 - Deep heather plum (LOTA_PCR_COUNT, SI_KERNEL, NULL)
-    (number yellow-warmer)       ; #084c68 - Deep lake cyan (0, 24, 32 in buf[0])
-    (builtin magenta-cooler)     ; #5a240e - Deep cedar wood bark (sizeof, typeof, alignof, __always_inline)
-    (fnname blue)                ; #065842 - Boreal spruce lake (is_write_open_flags)
-    (fnname-call blue-warmer)    ; #124a76 - Cold rain pool blue (bpf_map_lookup_elem, BPF_CORE_READ)
-    (string yellow)              ; #4c2806 - Dark oak wood ("strings")
-    (property fg-alt)            ; #1c443c - Damp river stone (->tgid, .field)
-    (variable fg-main)           ; #122216 - Deep conifer bark shadow (variables)
-    (variable-use fg-main)       ; #122216 - Variable usages
-    (operator blue-cooler)       ; #2a3e30 - Dark wet slate (+, -, *, >>, ==, &)
-    (bracket red-faint)          ; #344238 - Wet twigs (( ) [ ] { })
-    (delimiter cyan-faint)       ; #2a3a30 - Damp needles (, ;)
-    (comment fg-dim)             ; #485a4c - Misty lichen needles (pure italic)
-    (docstring fg-dim)           ; #485a4c - Documentation strings
+    (keyword green-cooler)
+    (builtin blue-faint)
+    (type green)
+    (preprocessor yellow-cooler)
+    (constant green-warmer)
+    (number yellow-warmer)
+    (fnname blue)
+    (fnname-call blue-warmer)
+    (string red-warmer)
+    (property fg-alt)
+    (variable fg-var)
+    (variable-use fg-main)
+    (operator blue-cooler)
+    (bracket red-faint)
+    (delimiter cyan-faint)
+    (comment green-faint)
+    (docstring green-faint)
     (rx-backslash yellow-cooler)
     (rx-construct red)
 
     (accent-0 blue)
-    (accent-1 yellow)
-    (accent-2 green)
-    (accent-3 cyan)))
+    (accent-1 green)
+    (accent-2 yellow)
+    (accent-3 green-warmer)))
 
 (defconst au-rainforest-day-palette
   (modus-themes-generate-palette
