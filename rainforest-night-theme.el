@@ -43,7 +43,7 @@
     (magenta-faint "#64aebb")
 
     (cyan "#2c8446")          ; Deep conifer pine: keywords (struct, while, static, return)
-    (cyan-warmer "#a46032")   ; Deep wet chestnut bark: preprocessor and macro directives (__uint, #define, __always_inline)
+    (cyan-warmer "#7a6450")   ; Dark walnut elm bark: preprocessor and macro directives (__uint, #define)
     (cyan-cooler "#2a8044")
     (cyan-faint "#586e60")    ; Damp pine needles: delimiters (, ;)
 
@@ -91,7 +91,7 @@
     (fg-prompt blue)
 
     ;; 1:1 Keyface Determinism Mappings:
-    (preprocessor cyan-warmer)   ; #a46032 - Deep wet chestnut bark (__uint, BPF_CORE_READ, #define)
+    (preprocessor cyan-warmer)   ; #7a6450 - Dark walnut elm bark (__uint, BPF_CORE_READ, #define)
     (keyword cyan)               ; #2c8446 - Deep conifer pine (struct, while, static, return)
     (type green)                 ; #6ca253 - Rich forest moss (int, size_t, uint32_t)
     (constant magenta)           ; #248692 - Abyssal cold tarn (LOTA_PCR_COUNT, NULL)
@@ -139,7 +139,7 @@
  '(font-lock-comment-face ((t (:foreground "#526456" :slant italic))))
  '(font-lock-comment-delimiter-face ((t (:foreground "#526456" :slant italic))))
  '(font-lock-doc-face ((t (:foreground "#526456" :slant italic))))
- '(font-lock-preprocessor-face ((t (:foreground "#a46032"))))
+ '(font-lock-preprocessor-face ((t (:foreground "#7a6450"))))
  '(font-lock-keyword-face ((t (:foreground "#2c8446"))))
  '(font-lock-type-face ((t (:foreground "#6ca253"))))
  '(font-lock-constant-face ((t (:foreground "#248692"))))
