@@ -4,7 +4,7 @@
 
 (defconst au-rainforest-night-palette-partial
   '(;; Canvas & Chrome (Deep ef-autumn nocturnal forest baseline)
-    (cursor "#d89020")
+    (cursor "#4e92a8")        ; Mineral steel-rain blue: soothing raindrop glint in the wet forest
     (bg-main "#0f0e06")
     (bg-dim "#26211d")
     (bg-alt "#36322f")
