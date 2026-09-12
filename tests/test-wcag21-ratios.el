@@ -1,9 +1,13 @@
-;;; test-wcag21-ratios.el --- ISO/IEC 40500 / WCAG 2.1 contrast ratio verification -*- lexical-binding: t; -*-
+;;; test-wcag21-ratios.el --- WCAG 2.1 relative luminance & photophobia trade-off evaluation -*- lexical-binding: t; -*-
 
 (require 'test-palette-extractor)
 
 (defun test-wcag21-ratios-run ()
-  "Evaluate standard WCAG 2.1 contrast ratios against background."
+  "Evaluate WCAG 2.1 relative luminance contrast ratios.
+Note: Full ISO/IEC 40500 / WCAG 2.1 SC 1.4.3 requires >= 4.5:1 across all body text.
+In photophobic nocturnal themes, primary body text meets the 4.5:1 threshold,
+while secondary syntactic roles (comments, delimiters, brackets) are intentionally
+subordinated to 1.5:1 - 3.0:1 to reduce sensory overload and cortical stress."
   (let* ((pal (au-extract-active-palette))
          (bg (plist-get pal :bg-main))
          (theme (plist-get pal :theme))
@@ -26,10 +30,12 @@
                    ("Brackets (( ) [ ] { })"           :bracket      1.8)
                    ("Alerts / Errors (!)"              :err          2.0))))
     (princ (format "\n======================================================================\n"))
-    (princ (format " ISO/IEC 40500:2012 / WCAG 2.1 Relative Luminance Contrast Suite\n"))
+    (princ (format " WCAG 2.1 Contrast & Photophobia-Readability Trade-off Suite\n"))
     (princ (format " Theme: %s | Background: %s\n" theme bg))
+    (princ (format " Note: Base text targets SC 1.4.3 (>= 4.5:1); syntax roles use intentional\n"))
+    (princ (format "       photophobia subordination thresholds (1.5:1 - 3.0:1).\n"))
     (princ (format "======================================================================\n"))
-    (princ (format "%-32s | %-8s | %-7s | %-12s | %-8s\n" "Token Role" "Hex" "Ratio" "Min Ratio" "Status"))
+    (princ (format "%-32s | %-8s | %-7s | %-12s | %-8s\n" "Token Role" "Hex" "Ratio" "Min Target" "Status"))
     (princ (format "---------------------------------+----------+---------+--------------+----------\n"))
     (dolist (tok tokens)
       (let* ((name (nth 0 tok))

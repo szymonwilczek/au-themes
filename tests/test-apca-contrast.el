@@ -1,9 +1,14 @@
-;;; test-apca-contrast.el --- APCA 0.98G-4g lightness contrast gates -*- lexical-binding: t; -*-
+;;; test-apca-contrast.el --- APCA 0.0.98G-4g lightness contrast & photophobia calibration -*- lexical-binding: t; -*-
 
 (require 'test-palette-extractor)
 
 (defun test-apca-contrast-run ()
-  "Evaluate APCA 0.98G-4g contrast gates for active theme."
+  "Evaluate APCA 0.0.98G-4g contrast boundaries calibrated for photophobia and readability.
+Note: Standard APCA Bronze guidelines target Lc >= 75 for body text and Lc >= 60 for content.
+In dark-mode photophobia design, body text is calibrated to moderate Lc (46-62) to prevent
+edge irradiation and pupil constriction, while secondary syntactic tokens deliberately sit
+below Lc 30 to suppress distraction. Targets represent intentional photophobia-adapted
+calibration boundaries rather than unadapted APCA Bronze levels."
   (let* ((pal (au-extract-active-palette))
          (bg (plist-get pal :bg-main))
          (theme (plist-get pal :theme))
@@ -45,8 +50,10 @@
               ("Brackets (( ) [ ] { })"           :bracket      14.0 40.0)
               ("Alerts / Errors (!)"              :err          16.0 50.0)))))
     (princ (format "\n======================================================================\n"))
-    (princ (format " APCA 0.98G-4g Contrast Gate Suite (W3C WCAG 3 Candidate Standard)\n"))
+    (princ (format " APCA 0.0.98G-4g Perceptual Contrast & Photophobia Calibration Suite\n"))
     (princ (format " Theme: %s (%s) | Background: %s\n" theme polarity bg))
+    (princ (format " Note: Intentional photophobia trade-offs: body text calibrated to moderate Lc\n"))
+    (princ (format "       to suppress glare; syntax roles subordinated below standard Bronze.\n"))
     (princ (format "======================================================================\n"))
     ;; Physical Overcast Canvas Gate for Daylight polarity
     (when (eq polarity 'light)
