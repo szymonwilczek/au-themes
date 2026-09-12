@@ -39,7 +39,7 @@
 
     (magenta "#248692")       ; Abyssal cold tarn: constants and macros (LOTA_PCR_COUNT, NULL)
     (magenta-warmer "#8cd0e4")
-    (magenta-cooler "#3ea47c") ; Cold forest viridian: builtins and attributes (__always_inline, bpf_map_lookup_elem)
+    (magenta-cooler "#1e9c92") ; Cold forest viridian: builtins and attributes (__always_inline, bpf_map_lookup_elem)
     (magenta-faint "#64aebb")
 
     (cyan "#2c8446")          ; Deep conifer pine: keywords (struct, while, static, return)
@@ -96,7 +96,7 @@
     (type green)                 ; #6ca253 - Rich forest moss (int, size_t, uint32_t)
     (constant magenta)           ; #248692 - Abyssal cold tarn (LOTA_PCR_COUNT, NULL)
     (number yellow-warmer)       ; #c69038 - Wet amber resin (0, 24, 32 in buf[0])
-    (builtin magenta-cooler)     ; #3ea47c - Cold forest viridian (__always_inline, bpf_map_lookup_elem)
+    (builtin magenta-cooler)     ; #1e9c92 - Cold forest viridian (__always_inline, bpf_map_lookup_elem)
     (fnname blue)                ; #2c7094 - Deep mountain stream (is_write_open_flags)
     (fnname-call blue-warmer)    ; #469cd8 - Cold rain water pool (bpf_map_lookup_elem, BPF_CORE_READ)
     (string yellow)              ; #bd803e - Wet oak wood ("strings")
@@ -144,7 +144,7 @@
  '(font-lock-type-face ((t (:foreground "#6ca253"))))
  '(font-lock-constant-face ((t (:foreground "#248692"))))
  '(font-lock-number-face ((t (:foreground "#bfa03c"))))
- '(font-lock-builtin-face ((t (:foreground "#3ea47c"))))
+ '(font-lock-builtin-face ((t (:foreground "#1e9c92"))))
  '(font-lock-function-name-face ((t (:foreground "#2c7094"))))
  '(font-lock-function-call-face ((t (:foreground "#469cd8"))))
  '(font-lock-string-face ((t (:foreground "#8e4c1c"))))

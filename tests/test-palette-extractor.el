@@ -132,7 +132,7 @@
          :number (or (rainforest-get-theme-face-fg theme 'font-lock-number-face)
                      (cadr (assq 'yellow-warmer partial)) "#c69038")
          :builtin (or (rainforest-get-theme-face-fg theme 'font-lock-builtin-face)
-                      (cadr (assq 'magenta-cooler partial)) "#3ea47c")
+                      (cadr (assq 'magenta-cooler partial)) "#1e9c92")
          :fnname (or (rainforest-get-theme-face-fg theme 'font-lock-function-name-face)
                      (cadr (assq 'blue partial)) "#2c7094")
          :fnname-call (or (rainforest-get-theme-face-fg theme 'font-lock-function-call-face)
