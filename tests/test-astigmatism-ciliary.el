@@ -4,7 +4,7 @@
 
 (defun test-astigmatism-ciliary-run ()
   "Evaluate ciliary muscle stability and astigmatism tolerance per Charman & Heron (1988)."
-  (let* ((pal (rainforest-extract-active-palette))
+  (let* ((pal (au-extract-active-palette))
          (bg (plist-get pal :bg-main))
          (theme (plist-get pal :theme))
          (polarity (rf-theme-polarity theme))

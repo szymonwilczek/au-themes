@@ -24,7 +24,7 @@ Ref: CIE 191:2010 Recommended System for Mesopic Photometry Based on Visual
 Performance, ISBN 978-3-901906-88-6; Rea, Bullough, Freyssinier-Nova &
 Bierman (2004) Lighting Res. Technol. 36(2):85-109,
 DOI: 10.1191/1365782804li114oa."
-  (let* ((pal (rainforest-extract-active-palette))
+  (let* ((pal (au-extract-active-palette))
          (theme (plist-get pal :theme))
          (polarity (rf-theme-polarity theme))
          (passes 0)

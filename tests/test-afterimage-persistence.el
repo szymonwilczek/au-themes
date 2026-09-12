@@ -9,7 +9,7 @@ photochemical recovery.  Brief fixations on bright cursor blocks or alert badges
 leave residual afterimages that burn into the fovea, obscuring subsequent text.
 Afterimage optical density at t = 1.0s must remain <= 5.5% (anchors <= 5.0%).
 Ref: Rushton (1961); Naka & Rushton (1966); Loomis (1978)."
-  (let* ((pal (rainforest-extract-active-palette))
+  (let* ((pal (au-extract-active-palette))
          (theme (plist-get pal :theme))
          (polarity (rf-theme-polarity theme))
          (bg (plist-get pal :bg-main))

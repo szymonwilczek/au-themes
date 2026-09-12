@@ -7,7 +7,7 @@
 Monochromatic deep red (>620 nm) stimulates dural and meningeal nociceptors, triggering retro-orbital
 eye ache, photophobic lancinating pain, and migraine aura.
 Ref: Burstein et al. (2015) Nature Rev. Neurosci.; Noseda et al. (2010); Digre & Brennan (2012)."
-  (let* ((pal (rainforest-extract-active-palette))
+  (let* ((pal (au-extract-active-palette))
          (theme (plist-get pal :theme))
          (polarity (rf-theme-polarity theme))
          (bg (plist-get pal :bg-main))

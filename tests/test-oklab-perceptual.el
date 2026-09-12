@@ -4,7 +4,7 @@
 
 (defun test-oklab-perceptual-run ()
   "Evaluate Oklch perceptual parameters [L C h] per Ottosson (2020)."
-  (let* ((pal (rainforest-extract-active-palette))
+  (let* ((pal (au-extract-active-palette))
          (theme (plist-get pal :theme))
          (bg (plist-get pal :bg-main))
          (polarity (rf-theme-polarity theme))

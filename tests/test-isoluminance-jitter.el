@@ -8,7 +8,7 @@ When two distinct syntax colors share identical luminance (Delta-Y ~ 0), the mag
 system fails to detect an achromatic boundary edge, producing perceptual edge jitter,
 wobbling letter contours, and visual confusion.
 Ref: Livingstone & Hubel (1987) J. Neurosci.; Mullen (1985) J. Physiol.; Gegenfurtner (2003)."
-  (let* ((pal (rainforest-extract-active-palette))
+  (let* ((pal (au-extract-active-palette))
          (theme (plist-get pal :theme))
          (polarity (rf-theme-polarity theme))
          (bg (plist-get pal :bg-main))

@@ -1,4 +1,4 @@
-#+title: Rainforest Themes - Advanced LCD/OLED Ergonomic & APCA Checker
+#+title: Whispergrove Themes - Advanced LCD/OLED Ergonomic & APCA Checker
 #+author: Szymon Wilczek
 #+startup: content indent
 
@@ -9,7 +9,7 @@ This module implements the mathematical standard of APCA perceptual contrast
 with peer-reviewed models of mesopic visual optics, surface physics, and astigmatic biometrics:
 
 ** 1. 1:1 Keyface Determinism Principle (Forest Layers Hierarchy)
-Rainforest strictly enforces the determinism rule:
+Whispergrove strictly enforces the determinism rule:
 *ONE COLOR corresponds to EXACTLY ONE SYNTAX ROLE (keyface).*
 No two key syntax tokens share the same color. Colors are structured along the organic vertical layers of a nocturnal rain forest:
 - *Preprocessor* (=#define=, =#include=) -> Wet boreal spruce-lake (~#288c86~).
@@ -241,7 +241,7 @@ No two key syntax tokens share the same color. Colors are structured along the o
   (defalias 'DIST-STATUS #'calc-dist-status)
 
   ;; 14. Automated table recalculation command
-  (defun rainforest-eval-contrast-tables ()
+  (defun whispergrove-eval-contrast-tables ()
     "Recalculate engine and all APCA tables in current buffer."
     (interactive)
     (let ((org-confirm-babel-evaluate nil))
@@ -250,7 +250,7 @@ No two key syntax tokens share the same color. Colors are structured along the o
       (message "All APCA and ophthalmic tables successfully recalculated!")))
 #+end_src
 
-* rainforest-night (Ergonomic Verification for LCD / OLED in Dark Room)
+* whispergrove-night (Ergonomic Verification for LCD / OLED in Dark Room)
 
 ** Contrast Measurements and Astigmatism Tolerance (LCD / OLED)
 Ergonomic standards on deep nocturnal humus (~#080b09~):
@@ -330,7 +330,7 @@ Strict syntax discriminability requirement for adjacent tokens in code (min. 800
 | comments (needles) vs base text          | #48574c | #90a297 |        49944 | Distinguishable (Δ >= 8000) |
 #+TBLFM: $4='(Δ $2 $3) :: $5='(DIST-STATUS $2 $3)
 
-* rainforest-day (Ergonomic Verification for Foggy Daytime)
+* whispergrove-day (Ergonomic Verification for Foggy Daytime)
 
 ** Daytime Lc Contrast Measurements (Black on White)
 | Code Role                  | Token   | Color   | Background | APCA (Pure) | APCA Standard / Status      |

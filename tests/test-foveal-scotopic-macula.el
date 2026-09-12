@@ -5,7 +5,7 @@
 (defun test-foveal-scotopic-macula-run ()
   "Evaluate foveal L+M cone luminance fraction for high-frequency glyphs.
 Ref: Curcio et al. (1991), Bone et al. (1988), Stockman & Sharpe (2000)."
-  (let* ((pal (rainforest-extract-active-palette))
+  (let* ((pal (au-extract-active-palette))
          (theme (plist-get pal :theme))
          (passes 0)
          (fails 0)

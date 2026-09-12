@@ -4,7 +4,7 @@
 
 (defun test-wcag21-ratios-run ()
   "Evaluate standard WCAG 2.1 contrast ratios against background."
-  (let* ((pal (rainforest-extract-active-palette))
+  (let* ((pal (au-extract-active-palette))
          (bg (plist-get pal :bg-main))
          (theme (plist-get pal :theme))
          (passes 0)

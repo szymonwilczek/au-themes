@@ -4,7 +4,7 @@
 
 (defun test-apca-contrast-run ()
   "Evaluate APCA 0.98G-4g contrast gates for active theme."
-  (let* ((pal (rainforest-extract-active-palette))
+  (let* ((pal (au-extract-active-palette))
          (bg (plist-get pal :bg-main))
          (theme (plist-get pal :theme))
          (polarity (rf-theme-polarity theme))

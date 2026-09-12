@@ -5,7 +5,7 @@
 (defun test-glare-veiling-luminance-run ()
   "Evaluate intraocular veiling glare spatial integral and token contrast retention.
 Ref: CIE 112-1994; Vos & van den Berg (1999); IESNA TM-12-12."
-  (let* ((pal (rainforest-extract-active-palette))
+  (let* ((pal (au-extract-active-palette))
          (theme (plist-get pal :theme))
          (polarity (rf-theme-polarity theme))
          (bg (plist-get pal :bg-main))

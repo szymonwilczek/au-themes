@@ -7,7 +7,7 @@
 At ~3 cycles/degree (typical editor line frequency), alternating high-contrast stripes
 trigger cortical hyperexcitation, optical shimmer illusions, nausea, and migraine aura.
 Ref: Wilkins et al. (1984, 2016) Brain; Evans & Stevenson (2008); Allen et al. (2008)."
-  (let* ((pal (rainforest-extract-active-palette))
+  (let* ((pal (au-extract-active-palette))
          (theme (plist-get pal :theme))
          (polarity (rf-theme-polarity theme))
          (bg (plist-get pal :bg-main))

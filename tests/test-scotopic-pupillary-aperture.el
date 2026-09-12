@@ -8,7 +8,7 @@ In dark rooms with wide pupils (6.5-7.5mm), peripheral rays cause spherical aber
 In ASD, prolonged pupillary latency impairs light constriction. Viewport total energy
 must not cross the photopic activation threshold (~10 cd/m2 on 100 cd/m2 displays).
 Ref: Stiles & Crawford (1933) Proc. R. Soc.; Fan & Yao (2011) Autism Res.; Westheimer (1967)."
-  (let* ((pal (rainforest-extract-active-palette))
+  (let* ((pal (au-extract-active-palette))
          (theme (plist-get pal :theme))
          (polarity (rf-theme-polarity theme))
          (bg (plist-get pal :bg-main))

@@ -8,7 +8,7 @@ The adapting field is the whole 80x40 viewport at the IEC 61966-2-1
 reference white luminance, not the background colour alone: the pupil
 integrates corneal flux over the field (Stanley & Davies 1995), so using
 only the canvas luminance under-drives the model."
-  (let* ((pal (rainforest-extract-active-palette))
+  (let* ((pal (au-extract-active-palette))
          (bg (plist-get pal :bg-main))
          (theme (plist-get pal :theme))
          (view-y (rf-viewport-mean-luminance-y pal))

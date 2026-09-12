@@ -10,7 +10,7 @@ IEC 61966-2-1 reference ambient 64 lx).  The previous model multiplied text
 luminance by 0.94 as \"optical point irradiation\"; no such attenuation exists -
 irradiation is an apparent-size illusion, not a loss of emitted luminance -
 and it depressed every OLED contrast figure by about 2 Lc."
-  (let* ((pal (rainforest-extract-active-palette))
+  (let* ((pal (au-extract-active-palette))
          (bg (plist-get pal :bg-main))
          (theme (plist-get pal :theme))
          (passes 0)

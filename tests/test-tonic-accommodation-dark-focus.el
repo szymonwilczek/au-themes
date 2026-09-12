@@ -8,7 +8,7 @@ In dark rooms with astigmatism/photophobia, lack of crisp edge contrast causes t
 muscle to relax into tonic dark focus (resting point ~80-100cm instead of screen 50-60cm).
 High-frequency edge contrast on fg-main must provide an unambiguous accommodation lock.
 Ref: Leibowitz & Owens (1978) Science; Charman (1982) OPO; Heath (1956) JOSA."
-  (let* ((pal (rainforest-extract-active-palette))
+  (let* ((pal (au-extract-active-palette))
          (theme (plist-get pal :theme))
          (polarity (rf-theme-polarity theme))
          (bg (plist-get pal :bg-main))

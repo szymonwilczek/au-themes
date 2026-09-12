@@ -4,7 +4,7 @@
 
 (defun test-straylight-glare-run ()
   "Evaluate intraocular forward straylight and disability glare per Vos (2003)."
-  (let* ((pal (rainforest-extract-active-palette))
+  (let* ((pal (au-extract-active-palette))
          (bg (plist-get pal :bg-main))
          (fg (plist-get pal :fg-main))
          (theme (plist-get pal :theme))

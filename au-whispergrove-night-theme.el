@@ -1,8 +1,8 @@
-;;; au-rainforest-night-theme.el --- Deep nocturnal rainy forest theme for Au-themes -*- lexical-binding:t -*-
+;;; au-whispergrove-night-theme.el --- Deep nocturnal whisper grove theme for Au-themes -*- lexical-binding:t -*-
 
 (require 'ef-themes)
 
-(defconst au-rainforest-night-palette-partial
+(defconst au-whispergrove-night-palette-partial
   '(;; Canvas & Chrome
     (cursor "#4a9cb2")                 ; Point / cursor indicator
     (bg-main "#0f0e06")                ; Primary canvas background
@@ -91,7 +91,7 @@
     (bg-region "#1a3226")              ; Mouse/keyboard marked region
     (fg-line-number-inactive "#546458"))) ; Inactive line numbers margin
 
-(defconst au-rainforest-night-palette-mappings-partial
+(defconst au-whispergrove-night-palette-mappings-partial
   '((err red)
     (warning yellow-warmer)
     (info green)
@@ -129,27 +129,22 @@
     (accent-2 yellow)
     (accent-3 green-warmer)))
 
-(defconst au-rainforest-night-palette
+(defconst au-whispergrove-night-palette
   (modus-themes-generate-palette
-   au-rainforest-night-palette-partial
+   au-whispergrove-night-palette-partial
    nil
    nil
-   (append au-rainforest-night-palette-mappings-partial ef-themes-palette-common)))
+   (append au-whispergrove-night-palette-mappings-partial ef-themes-palette-common)))
 
 ;;;###theme-autoload
 (modus-themes-theme
- 'au-rainforest-night
+ 'au-whispergrove-night
  'ef-themes
- "Au Rainforest Night: deep nocturnal rainy forest theme calibrated for autistic sensory-profile and photophobia."
+ "Au Whispergrove Night: deep nocturnal rainy forest theme calibrated for autistic sensory-profile and photophobia."
  'dark
- 'au-rainforest-night-palette
+ 'au-whispergrove-night-palette
  nil
  nil)
 
-;; Backward-compatibility aliases
-(defvaralias 'rainforest-night-palette 'au-rainforest-night-palette)
-(defvaralias 'rainforest-night-palette-partial 'au-rainforest-night-palette-partial)
-
-(provide 'au-rainforest-night-theme)
-(provide 'rainforest-night-theme)
-;;; au-rainforest-night-theme.el ends here
+(provide 'au-whispergrove-night-theme)
+;;; au-whispergrove-night-theme.el ends here

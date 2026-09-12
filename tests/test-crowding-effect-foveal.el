@@ -8,7 +8,7 @@ In autism, the cortical integration field (Bouma's window) is broader and lacks 
 When punctuation, brackets, and operators have equal luminance to identifiers, Bouma's window
 merges adjacent tokens into a solid clump. Delimiters must maintain subordinate energy.
 Ref: Levi (2008) Vision Res.; Pelli et al. (2004); Bouma (1970) Nature; Baldassi et al. (2009)."
-  (let* ((pal (rainforest-extract-active-palette))
+  (let* ((pal (au-extract-active-palette))
          (theme (plist-get pal :theme))
          (polarity (rf-theme-polarity theme))
          (bg (plist-get pal :bg-main))

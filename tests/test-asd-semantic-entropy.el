@@ -7,7 +7,7 @@
 Autism spectrum processing exhibits detail-focused processing (weak central coherence).
 Excessive chroma variance ('code christmas tree') causes sensory noise and cognitive overwhelm.
 Ref: Happé & Frith (2006) J. Autism Dev. Disord.; Shannon (1948); Ottosson (2020)."
-  (let* ((pal (rainforest-extract-active-palette))
+  (let* ((pal (au-extract-active-palette))
          (theme (plist-get pal :theme))
          (polarity (rf-theme-polarity theme))
          (bg (plist-get pal :bg-main))

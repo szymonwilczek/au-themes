@@ -4,7 +4,7 @@
 
 (defun test-wet-surface-physics-run ()
   "Evaluate wet surface optical saturation limits per Lekner & Dorf (1988)."
-  (let* ((pal (rainforest-extract-active-palette))
+  (let* ((pal (au-extract-active-palette))
          (theme (plist-get pal :theme))
          (passes 0)
          (fails 0)

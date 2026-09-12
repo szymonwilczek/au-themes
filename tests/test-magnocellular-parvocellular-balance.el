@@ -9,7 +9,7 @@ is fragile and triggers involuntary saccadic micro-jitters when background surfa
 Backgrounds (hl-line, region) must have minimal luminance contrast (Lc < 12.0), leaving
 all semantic differentiation to the slow, detailed, color-sensitive P-pathway.
 Ref: Livingstone & Hubel (1988) Science; Milne et al. (2002) NeuroReport; Merigan & Maunsell (1993)."
-  (let* ((pal (rainforest-extract-active-palette))
+  (let* ((pal (au-extract-active-palette))
          (theme (plist-get pal :theme))
          (polarity (rf-theme-polarity theme))
          (bg (plist-get pal :bg-main))

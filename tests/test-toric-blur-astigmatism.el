@@ -5,7 +5,7 @@
 (defun test-toric-blur-astigmatism-run ()
   "Evaluate blurred edge Michelson contrast under 1.25D toric astigmatic defocus.
 Ref: Legras et al. (2004) Ophthalmic Physiol Opt; Charman (2005) Clin Exp Optom."
-  (let* ((pal (rainforest-extract-active-palette))
+  (let* ((pal (au-extract-active-palette))
          (theme (plist-get pal :theme))
          (bg (plist-get pal :bg-main))
          (polarity (rf-theme-polarity theme))

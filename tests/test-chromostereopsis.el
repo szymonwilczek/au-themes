@@ -4,7 +4,7 @@
 
 (defun test-chromostereopsis-run ()
   "Evaluate chromostereopsis and binocular chromatic dispersion per Thibos (1992)."
-  (let* ((pal (rainforest-extract-active-palette))
+  (let* ((pal (au-extract-active-palette))
          (theme (plist-get pal :theme))
          (passes 0)
          (fails 0)

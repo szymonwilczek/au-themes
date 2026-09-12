@@ -4,7 +4,7 @@
 
 (defun test-lca-chromatic-run ()
   "Evaluate LCA chromatic dispersion per Thibos et al. (1992)."
-  (let* ((pal (rainforest-extract-active-palette))
+  (let* ((pal (au-extract-active-palette))
          (theme (plist-get pal :theme))
          (base (plist-get pal :fg-main))
          (base-d (rf-thibos-diopters base))

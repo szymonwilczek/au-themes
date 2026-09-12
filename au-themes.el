@@ -26,15 +26,15 @@
 ;; - Reduced blue light and macular hazard mitigation
 ;;
 ;; Available themes in the Au collection:
-;; - `au-rainforest-night`: Deep nocturnal rainy forest sanctuary (LCD/OLED calibrated)
-;; - `au-rainforest-day`: Misty temperate rainforest canopy daylight
+;; - `au-whispergrove-night`: Deep nocturnal whisper grove sanctuary (LCD/OLED calibrated)
+;; - `au-whispergrove-day`: Misty temperate whisper grove canopy daylight
 ;;
 ;; All themes in this suite use the `au-` prefix.
 
 ;;; Code:
 
-(require 'au-rainforest-day-theme)
-(require 'au-rainforest-night-theme)
+(require 'au-whispergrove-day-theme)
+(require 'au-whispergrove-night-theme)
 
 (defgroup au-themes ()
   "Sensory-safe, scientifically gated themes for autism and neurodivergence."
@@ -42,31 +42,28 @@
   :prefix "au-themes-")
 
 (defcustom au-themes-collection
-  '(au-rainforest-night
-    au-rainforest-day)
+  '(au-whispergrove-night
+    au-whispergrove-day)
   "List of themes included in the Au-themes collection."
   :type '(repeat symbol)
   :group 'au-themes)
 
 ;;;###autoload
 (defun au-themes-toggle ()
-  "Toggle between `au-rainforest-day' and `au-rainforest-night'."
+  "Toggle between `au-whispergrove-day' and `au-whispergrove-night'."
   (interactive)
-  (if (eq (car custom-enabled-themes) 'au-rainforest-day)
+  (if (eq (car custom-enabled-themes) 'au-whispergrove-day)
       (progn
-        (disable-theme 'au-rainforest-day)
-        (load-theme 'au-rainforest-night t)
-        (message "Włączono au-rainforest-night"))
+        (disable-theme 'au-whispergrove-day)
+        (load-theme 'au-whispergrove-night t)
+        (message "Włączono au-whispergrove-night"))
     (progn
-      (disable-theme 'au-rainforest-night)
-      (load-theme 'au-rainforest-day t)
-      (message "Włączono au-rainforest-day"))))
+      (disable-theme 'au-whispergrove-night)
+      (load-theme 'au-whispergrove-day t)
+      (message "Włączono au-whispergrove-day"))))
 
 ;;;###autoload
 (defalias 'au-toggle #'au-themes-toggle)
-
-;;;###autoload
-(defalias 'rainforest-toggle #'au-themes-toggle)
 
 ;;;###autoload
 (when (and (boundp 'custom-theme-load-path)
@@ -75,5 +72,4 @@
                (file-name-as-directory (file-name-directory load-file-name))))
 
 (provide 'au-themes)
-(provide 'rainforest)
 ;;; au-themes.el ends here

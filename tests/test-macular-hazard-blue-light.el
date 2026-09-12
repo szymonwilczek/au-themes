@@ -24,7 +24,7 @@ margin is ~3 orders of magnitude, so no palette choice can be defended as
 Ref: ICNIRP (2013) Health Phys. 105(1):74-96, DOI 10.1097/HP.0b013e318289a611;
 IEC 62471:2006 / CIE S 009:2002; Algvere, Marshall & Seregard (2006)
 Acta Ophthalmol. Scand. 84(1):4-15, DOI 10.1111/j.1600-0420.2005.00627.x."
-  (let* ((pal (rainforest-extract-active-palette))
+  (let* ((pal (au-extract-active-palette))
          (theme (plist-get pal :theme))
          (polarity (rf-theme-polarity theme))
          (bg (plist-get pal :bg-main))

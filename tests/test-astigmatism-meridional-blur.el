@@ -7,7 +7,7 @@
 Astigmatic corneas focus orthogonal meridians at different focal planes (Interval of Sturm).
 In dark themes, directional horizontal blur smears stroke light across inter-glyph spaces.
 Ref: Thibos et al. (2004) JOSA A; Legras et al. (2004) OPO; Charman (2005) Clin Exp Optom."
-  (let* ((pal (rainforest-extract-active-palette))
+  (let* ((pal (au-extract-active-palette))
          (theme (plist-get pal :theme))
          (polarity (rf-theme-polarity theme))
          (bg (plist-get pal :bg-main))

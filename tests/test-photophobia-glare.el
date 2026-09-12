@@ -6,7 +6,7 @@
   "Evaluate clinical photophobia risk, CIE Discomfort Glare Index (DGI),
 CIE S 026 melanopic irradiance, and photoreceptor saturation/bleaching glare.
 Ref: CIE Discomfort Glare Index; CIE S 026:2018; Noseda et al. (2010, 2017) Nature Neurosci / Brain."
-  (let* ((pal (rainforest-extract-active-palette))
+  (let* ((pal (au-extract-active-palette))
          (theme (plist-get pal :theme))
          (polarity (rf-theme-polarity theme))
          (bg (plist-get pal :bg-main))

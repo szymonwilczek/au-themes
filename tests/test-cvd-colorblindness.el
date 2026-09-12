@@ -9,7 +9,7 @@ Brettel, Viénot & Mollon (1997) J. Opt. Soc. Am. A 14(10):2647-2655,
 DOI: 10.1364/JOSAA.14.002647, using the Smith & Pokorny (1975) cone
 fundamentals over Judd-Vos corrected XYZ, as in Viénot, Brettel & Mollon
 (1999) Color Res. Appl. 24(4):243-252."
-  (let* ((pal (rainforest-extract-active-palette))
+  (let* ((pal (au-extract-active-palette))
          (theme (plist-get pal :theme))
          (passes 0)
          (fails 0)

@@ -4,7 +4,7 @@
 
 (defun test-spatial-frequency-csf-run ()
   "Evaluate typographical stroke contrast against Barten (1999) CSF threshold under astigmatic defocus."
-  (let* ((pal (rainforest-extract-active-palette))
+  (let* ((pal (au-extract-active-palette))
          (bg (plist-get pal :bg-main))
          (theme (plist-get pal :theme))
          (passes 0)

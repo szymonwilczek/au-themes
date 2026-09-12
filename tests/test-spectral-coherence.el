@@ -4,7 +4,7 @@
 
 (defun test-spectral-coherence-run ()
   "Evaluate natural illumination coherence under wet forest canopy filtration."
-  (let* ((pal (rainforest-extract-active-palette))
+  (let* ((pal (au-extract-active-palette))
          (theme (plist-get pal :theme))
          (passes 0)
          (warnings 0)

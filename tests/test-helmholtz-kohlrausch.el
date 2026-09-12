@@ -5,7 +5,7 @@
 (defun test-helmholtz-kohlrausch-run ()
   "Evaluate Helmholtz-Kohlrausch perceived brightness.
 Uses the published model of Fairchild & Pirrotta (1991)."
-  (let* ((pal (rainforest-extract-active-palette))
+  (let* ((pal (au-extract-active-palette))
          (theme (plist-get pal :theme))
          (passes 0)
          (tokens '(("Base text (Mineral quartz)"       :fg-main)

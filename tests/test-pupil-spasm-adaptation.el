@@ -8,7 +8,7 @@ In nocturnal coding with dark-dilated pupils (5-7mm), sharp luminance transition
 adjacent syntax tokens trigger rapid iris oscillations (pupillary hippus) and ciliary spasm,
 causing ocular ache, photophobia flare-up, and asthenopic exhaustion.
 Ref: Loewenfeld (1993) The Pupil; Binda & Murray (2015) PNAS; Mathôt (2018) JoV."
-  (let* ((pal (rainforest-extract-active-palette))
+  (let* ((pal (au-extract-active-palette))
          (theme (plist-get pal :theme))
          (polarity (rf-theme-polarity theme))
          (bg (plist-get pal :bg-main))

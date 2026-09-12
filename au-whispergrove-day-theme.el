@@ -1,8 +1,8 @@
-;;; au-rainforest-day-theme.el --- Misty temperate rainforest daylight theme for Au-themes -*- lexical-binding:t -*-
+;;; au-whispergrove-day-theme.el --- Misty temperate whisper grove daylight theme for Au-themes -*- lexical-binding:t -*-
 
 (require 'ef-themes)
 
-(defconst au-rainforest-day-palette-partial
+(defconst au-whispergrove-day-palette-partial
   '(;; Canvas & Chrome
     (cursor "#005a82")                 ; Point / cursor indicator
     (bg-main "#c5cec4")                ; Primary canvas background
@@ -77,7 +77,7 @@
     (bg-info "#b0d4b8")                ; Flymake info inline box
     (bg-region "#b2bebc")))            ; Mouse/keyboard marked region
 
-(defconst au-rainforest-day-palette-mappings-partial
+(defconst au-whispergrove-day-palette-mappings-partial
   '((err red)
     (warning yellow-warmer)
     (info green)
@@ -115,27 +115,22 @@
     (accent-2 yellow)
     (accent-3 green-warmer)))
 
-(defconst au-rainforest-day-palette
+(defconst au-whispergrove-day-palette
   (modus-themes-generate-palette
-   au-rainforest-day-palette-partial
+   au-whispergrove-day-palette-partial
    nil
    nil
-   (append au-rainforest-day-palette-mappings-partial ef-themes-palette-common)))
+   (append au-whispergrove-day-palette-mappings-partial ef-themes-palette-common)))
 
 ;;;###theme-autoload
 (modus-themes-theme
- 'au-rainforest-day
+ 'au-whispergrove-day
  'ef-themes
- "Au Rainforest Day: daylight theme with clean, single-point palette configuration."
+ "Au Whispergrove Day: daylight theme with clean, single-point palette configuration."
  'light
- 'au-rainforest-day-palette
+ 'au-whispergrove-day-palette
  nil
  nil)
 
-;; Backward-compatibility aliases
-(defvaralias 'rainforest-day-palette 'au-rainforest-day-palette)
-(defvaralias 'rainforest-day-palette-partial 'au-rainforest-day-palette-partial)
-
-(provide 'au-rainforest-day-theme)
-(provide 'rainforest-day-theme)
-;;; au-rainforest-day-theme.el ends here
+(provide 'au-whispergrove-day-theme)
+;;; au-whispergrove-day-theme.el ends here

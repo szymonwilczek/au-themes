@@ -9,7 +9,7 @@ L_black = L_white/1000 (typical IPS native contrast) and L_reflected =
 R_d E/pi = 0.102 cd/m^2 for R_d = 0.5 % under the IEC 61966-2-1 reference
 ambient of 64 lx.  The previous additive constant of 0.008 (a contrast ratio
 of 125:1) corresponded to no measurable panel property."
-  (let* ((pal (rainforest-extract-active-palette))
+  (let* ((pal (au-extract-active-palette))
          (bg (plist-get pal :bg-main))
          (theme (plist-get pal :theme))
          (passes 0)

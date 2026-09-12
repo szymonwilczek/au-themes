@@ -9,8 +9,8 @@ ISO-CIE 11664-6:2014), not with Emacs' `color-distance', which is an
 unpublished sRGB heuristic that is not perceptually uniform: the same
 numeric gate of 8000 corresponded to dE00 between 9.7 and 19.7 depending
 on the hue pair."
-  (let* ((theme (or rf-active-theme 'rainforest-night))
-         (pal (rainforest-extract-active-palette theme))
+  (let* ((theme (or rf-active-theme 'au-whispergrove-night))
+         (pal (au-extract-active-palette theme))
          (passes 0)
          (fails 0)
          (tokens-to-check '(:preprocessor :keyword :type :constant :number

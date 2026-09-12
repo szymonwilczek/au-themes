@@ -7,7 +7,7 @@
 In photophobia, high contrast jumps between adjacent syntax tokens (e.g. keyword -> bracket -> literal)
 cause retinal micro-flicker during fixational eye movements and micro-saccades.
 Ref: Martinez-Conde et al. (2004) Nature Rev. Neurosci.; APCA Guidelines (Somers 2022)."
-  (let* ((pal (rainforest-extract-active-palette))
+  (let* ((pal (au-extract-active-palette))
          (theme (plist-get pal :theme))
          (polarity (rf-theme-polarity theme))
          (bg (plist-get pal :bg-main))
