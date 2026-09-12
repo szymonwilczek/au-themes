@@ -8,9 +8,9 @@
     (bg-main "#080a08")       ; Deep nocturnal conifer charcoal: eliminates warm brownish gamma wash
     (bg-dim "#060806")        ; Damp bark shadow
     (bg-alt "#0c0e0c")        ; Deep canopy shadow
-    (fg-main "#9c9a96")       ; Soft river slate: calm, glare-free, ciliary-safe base text
-    (fg-dim "#526456")        ; Dark damp needle mulch: quiet italic comments
-    (fg-alt "#8c8e56")        ; Damp olive lichen: struct fields and parameters
+    (fg-main "#a09e98")       ; Soft river slate: calm, glare-free, ciliary-safe base text
+    (fg-dim "#566858")        ; Dark damp needle mulch: quiet italic comments
+    (fg-alt "#92964e")        ; Damp olive lichen: struct fields and parameters
 
     (bg-active "#141814")
     (bg-inactive "#050605")
@@ -20,32 +20,32 @@
     (red "#be4a44")           ; Dark yew berry: alerts, negation !
     (red-warmer "#c8524c")
     (red-cooler "#b4423c")
-    (red-faint "#5b7162")     ; Wet twigs: brackets ( ) [ ] { }
+    (red-faint "#607868")     ; Wet twigs: brackets ( ) [ ] { }
 
-    (green "#6ca253")         ; Rich forest moss: data types (int, size_t, uint32_t)
+    (green "#6ca452")         ; Rich forest moss: data types (int, size_t, uint32_t)
     (green-warmer "#7ab65e")
     (green-cooler "#5e9846")
     (green-faint "#4a6250")
 
-    (yellow "#8e4c1c")        ; Wet oak wood / fallen leaves: strings ("strings")
+    (yellow "#a05828")        ; Wet oak wood / fallen leaves: strings ("strings")
     (yellow-warmer "#bfa03c") ; Wet amber resin: numbers (0, 24, 32 in buf[0])
     (yellow-cooler "#aa7234")
     (yellow-faint "#8c5e2a")
 
-    (blue "#2c7094")          ; Deep mountain stream: function definitions (is_write_open_flags)
+    (blue "#327c9e")          ; Deep mountain stream: function definitions (is_write_open_flags)
     (blue-warmer "#469cd8")   ; Cold rain water pool: function calls (bpf_map_lookup_elem, BPF_CORE_READ)
-    (blue-cooler "#688272")   ; Dark wet slate: operators (+, -, *, >>, &)
+    (blue-cooler "#6c8676")   ; Dark wet slate: operators (+, -, *, >>, &)
     (blue-faint "#2c5672")
 
-    (magenta "#248692")       ; Abyssal cold tarn: constants and macros (LOTA_PCR_COUNT, NULL)
+    (magenta "#1e9496")       ; Abyssal cold tarn: constants and macros (LOTA_PCR_COUNT, NULL)
     (magenta-warmer "#8cd0e4")
     (magenta-cooler "#1e9c92") ; Cold forest viridian: builtins and attributes (__always_inline, bpf_map_lookup_elem)
     (magenta-faint "#64aebb")
 
     (cyan "#2c8446")          ; Deep conifer pine: keywords (struct, while, static, return)
-    (cyan-warmer "#7a6450")   ; Dark walnut elm bark: preprocessor and macro directives (__uint, #define)
+    (cyan-warmer "#a46032")   ; Dark walnut elm bark: preprocessor and macro directives (__uint, #define)
     (cyan-cooler "#2a8044")
-    (cyan-faint "#586e60")    ; Damp pine needles: delimiters (, ;)
+    (cyan-faint "#5a7062")    ; Damp pine needles: delimiters (, ;)
 
     ;; Diffs and panels
     (bg-added "#0a1c10")
@@ -91,23 +91,23 @@
     (fg-prompt blue)
 
     ;; 1:1 Keyface Determinism Mappings:
-    (preprocessor cyan-warmer)   ; #7a6450 - Dark walnut elm bark (__uint, BPF_CORE_READ, #define)
+    (preprocessor cyan-warmer)   ; #a46032 - Dark walnut elm bark (__uint, BPF_CORE_READ, #define)
     (keyword cyan)               ; #2c8446 - Deep conifer pine (struct, while, static, return)
-    (type green)                 ; #6ca253 - Rich forest moss (int, size_t, uint32_t)
-    (constant magenta)           ; #248692 - Abyssal cold tarn (LOTA_PCR_COUNT, NULL)
+    (type green)                 ; #6ca452 - Rich forest moss (int, size_t, uint32_t)
+    (constant magenta)           ; #1e9496 - Abyssal cold tarn (LOTA_PCR_COUNT, NULL)
     (number yellow-warmer)       ; #c69038 - Wet amber resin (0, 24, 32 in buf[0])
     (builtin magenta-cooler)     ; #1e9c92 - Cold forest viridian (__always_inline, bpf_map_lookup_elem)
-    (fnname blue)                ; #2c7094 - Deep mountain stream (is_write_open_flags)
+    (fnname blue)                ; #327c9e - Deep mountain stream (is_write_open_flags)
     (fnname-call blue-warmer)    ; #469cd8 - Cold rain water pool (bpf_map_lookup_elem, BPF_CORE_READ)
-    (string yellow)              ; #bd803e - Wet oak wood ("strings")
-    (property fg-alt)            ; #8c8e56 - Damp olive lichen (->tgid, .field)
-    (variable fg-main)           ; #9c9a96 - Soft river slate (variables)
-    (variable-use fg-main)       ; #9c9a96 - Variable usages
-    (operator blue-cooler)       ; #688272 - Dark wet slate (+, -, *, >>, &)
-    (bracket red-faint)          ; #5b7162 - Wet twigs (( ) [ ] { })
-    (delimiter cyan-faint)       ; #586e60 - Damp needles (, ;)
-    (comment fg-dim)             ; #526456 - Dark needle mulch (pure italic)
-    (docstring fg-dim)           ; #526456 - Documentation strings
+    (string yellow)              ; #a05828 - Wet oak wood ("strings")
+    (property fg-alt)            ; #92964e - Damp olive lichen (->tgid, .field)
+    (variable fg-main)           ; #a09e98 - Soft river slate (variables)
+    (variable-use fg-main)       ; #a09e98 - Variable usages
+    (operator blue-cooler)       ; #6c8676 - Dark wet slate (+, -, *, >>, &)
+    (bracket red-faint)          ; #607868 - Wet twigs (( ) [ ] { })
+    (delimiter cyan-faint)       ; #5a7062 - Damp needles (, ;)
+    (comment fg-dim)             ; #566858 - Dark needle mulch (pure italic)
+    (docstring fg-dim)           ; #566858 - Documentation strings
     (rx-backslash yellow-cooler)
     (rx-construct red)
 
@@ -139,22 +139,22 @@
  '(font-lock-comment-face ((t (:foreground "#526456" :slant italic))))
  '(font-lock-comment-delimiter-face ((t (:foreground "#526456" :slant italic))))
  '(font-lock-doc-face ((t (:foreground "#526456" :slant italic))))
- '(font-lock-preprocessor-face ((t (:foreground "#7a6450"))))
+ '(font-lock-preprocessor-face ((t (:foreground "#a46032"))))
  '(font-lock-keyword-face ((t (:foreground "#2c8446"))))
- '(font-lock-type-face ((t (:foreground "#6ca253"))))
- '(font-lock-constant-face ((t (:foreground "#248692"))))
+ '(font-lock-type-face ((t (:foreground "#6ca452"))))
+ '(font-lock-constant-face ((t (:foreground "#1e9496"))))
  '(font-lock-number-face ((t (:foreground "#bfa03c"))))
  '(font-lock-builtin-face ((t (:foreground "#1e9c92"))))
- '(font-lock-function-name-face ((t (:foreground "#2c7094"))))
+ '(font-lock-function-name-face ((t (:foreground "#327c9e"))))
  '(font-lock-function-call-face ((t (:foreground "#469cd8"))))
- '(font-lock-string-face ((t (:foreground "#8e4c1c"))))
- '(font-lock-variable-name-face ((t (:foreground "#9c9a96"))))
- '(font-lock-variable-use-face ((t (:foreground "#9c9a96"))))
- '(font-lock-property-name-face ((t (:foreground "#8c8e56"))))
- '(font-lock-property-use-face ((t (:foreground "#8c8e56"))))
- '(font-lock-operator-face ((t (:foreground "#688272"))))
- '(font-lock-bracket-face ((t (:foreground "#5b7162"))))
- '(font-lock-delimiter-face ((t (:foreground "#586e60"))))
+ '(font-lock-string-face ((t (:foreground "#a05828"))))
+ '(font-lock-variable-name-face ((t (:foreground "#a09e98"))))
+ '(font-lock-variable-use-face ((t (:foreground "#a09e98"))))
+ '(font-lock-property-name-face ((t (:foreground "#92964e"))))
+ '(font-lock-property-use-face ((t (:foreground "#92964e"))))
+ '(font-lock-operator-face ((t (:foreground "#6c8676"))))
+ '(font-lock-bracket-face ((t (:foreground "#607868"))))
+ '(font-lock-delimiter-face ((t (:foreground "#5a7062"))))
  '(font-lock-warning-face ((t (:foreground "#be4a44"))))
  '(region ((t (:background "#162e1b" :extend t))))
  '(line-number ((t (:foreground "#343c36")))))
