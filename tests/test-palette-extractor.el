@@ -17,8 +17,12 @@
 (require 'rainforest-night-theme)
 (require 'rainforest-day-theme)
 
-(defvar rf-active-theme 'rainforest-night
-  "Theme currently being evaluated by tests (\\='rainforest-night or \\='rainforest-day).")
+(defvar rf-active-theme
+  (let ((env (getenv "RF_TEST_THEMES")))
+    (if (and env (not (string-empty-p env)))
+        (intern (car (split-string env "[, ]+" t)))
+      'rainforest-night))
+  "Theme currently being evaluated by tests (\='rainforest-night or \='rainforest-day).")
 
 (defun rf-theme-polarity (&optional theme-name)
   "Return \\='light or \\='dark based on background luminance for THEME-NAME."
