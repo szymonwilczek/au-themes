@@ -3,7 +3,7 @@
 (require 'test-palette-extractor)
 
 (defun test-foveal-scotopic-macula-run ()
-  "Evaluate foveal L+M cone luminance fraction for high-frequency glyphs.
+  "Evaluate foveal non-S (R+G) luminance fraction for high-frequency glyphs.
 Ref: Curcio et al. (1991), Bone et al. (1988), Stockman & Sharpe (2000)."
   (let* ((pal (au-extract-active-palette))
          (theme (plist-get pal :theme))
@@ -18,9 +18,10 @@ Ref: Curcio et al. (1991), Bone et al. (1988), Stockman & Sharpe (2000)."
                    ("Data types (int, size_t)"         :type         0.850)
                    ("Comments (Damp needles)"          :fg-dim       0.850))))
     (princ (format "\n======================================================================\n"))
-    (princ (format " Foveal S-Cone Deficiency & Macular Tritanopia Gate Suite\n"))
-    (princ (format " Ref: Curcio et al. (1991) J. Comp. Neurol; Bone et al. (1988) Vision Res\n"))
-    (princ (format " Requirement: L+M cone luminance fraction F_(L+M) >= 85.0%%\n"))
+    (princ (format " Foveal S-Cone Exclusion & Macular Pigment Transmission Suite\n"))
+    (princ (format " Ref: Curcio et al. (1991) J. Comp. Neurol (0.1 mm S-free foveola);\n"))
+    (princ (format "      Bone et al. (1988) Vision Res (macular lutein/zeaxanthin absorption)\n"))
+    (princ (format " Requirement: Non-S (R+G) photopic luminance fraction F_(L+M) >= 85.0%%\n"))
     (princ (format " Theme: %s\n" theme))
     (princ (format "======================================================================\n"))
     (princ (format "%-32s | %-8s | %-12s | %-12s | %-8s\n"

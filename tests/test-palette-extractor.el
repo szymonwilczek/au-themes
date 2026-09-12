@@ -109,7 +109,7 @@
              :operator (or (au-get-theme-face-fg theme 'font-lock-operator-face) (funcall get-c 'operator) "#cfbcba")
              :bracket (or (au-get-theme-face-fg theme 'font-lock-bracket-face) (funcall get-c 'bracket) "#cfbcba")
              :delimiter (or (au-get-theme-face-fg theme 'font-lock-delimiter-face) (funcall get-c 'delimiter) "#cfbcba")
-             :err (or (au-get-theme-face-fg theme 'font-lock-warning-face) (funcall get-c 'err) "#f06a3f"))))
+             :err (or (au-get-theme-face-fg theme 'error) (funcall get-c 'err) "#f06a3f"))))
       (let* ((partial (cond
                        ((memq theme '(au-whispergrove-night whispergrove-night))
                         au-whispergrove-night-palette-partial)
@@ -170,7 +170,7 @@
                         (au-get-theme-face-fg theme 'font-lock-delimiter-face)
                         "#cfbcba")
          :err (or (cadr (assq 'red partial))
-                  (au-get-theme-face-fg theme 'font-lock-warning-face)
+                  (au-get-theme-face-fg theme 'error)
                   "#b43a34"))))))
 
 
@@ -771,11 +771,12 @@ from the equivalent achromatic lightness L**."
 ;; Advanced Biophysical & Physiological Models
 ;; =============================================================================
 
-;; Foveal Macular Tritanopia / L+M Cone Fraction
+;; Foveal Macular Tritanopia / Non-S-Cone (R+G) Luminance Fraction
 (defun rf-foveal-lm-fraction (hex)
-  "Calculate the fraction of photopic luminance derived from L- and M-cones.
-Central foveola (0.35 mm macular zone) lacks S-cones and contains macular pigment
-absorbing short wavelengths. Fine strokes rely on L+M cone stimulation."
+  "Calculate the fraction of photopic luminance derived from R+G (L+M cone) channels.
+In the central foveola (0.1 mm S-cone free zone, Curcio et al. 1991), fine strokes
+rely on L- and M-cone pathways, while macular carotenoid pigment (Bone et al. 1988)
+strongly attenuates short wavelengths. High blue content degrades optical sharpness."
   (let* ((rgb (rf-hex-to-rgb hex))
          (rl (rf-srgb-to-linear (nth 0 rgb)))
          (gl (rf-srgb-to-linear (nth 1 rgb)))
