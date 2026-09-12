@@ -9,7 +9,7 @@
     (bg-dim "#26211d")                 ; Inactive windows, dim canvas
     (bg-alt "#36322f")                 ; Subtle borders, alternating stripes
     (fg-main "#9ca69e")                ; Default buffer text
-    (fg-dim "#546656")                 ; Comments, metadata
+    (fg-dim "#5e7460")                 ; Comments, metadata
     (fg-alt "#a68846")                 ; Struct properties
     (fg-var "#98aba0")                 ; Variable definitions
     (bg-active "#56524f")              ; Active modeline, focused bars
@@ -22,10 +22,10 @@
     (red-cooler "#a44a42")             ; Diff deletions, removal markers
     (red-faint "#687e6b")              ; Structural brackets
 
-    (green "#869e42")                  ; Primitive types
-    (green-warmer "#a46c76")           ; Constant values
+    (green "#7d933d")                  ; Primitive types
+    (green-warmer "#ac5d6e")           ; Constant values
     (green-cooler "#a47028")           ; Control keywords
-    (green-faint "#546656")            ; Documentation strings, inline comments
+    (green-faint "#5e7460")            ; Documentation strings, inline comments
 
     (yellow "#a47028")                 ; Keyword alias
     (yellow-warmer "#bca03c")          ; Numeric literals
@@ -35,12 +35,12 @@
     (blue "#227086")                   ; Function definitions
     (blue-warmer "#4e92a4")            ; Function calls
     (blue-cooler "#5e8274")            ; Binary and unary operators
-    (blue-faint "#4a7852")             ; Built-in functions
+    (blue-faint "#4f8177")             ; Built-in functions
 
     (magenta "#8c6238")                ; Composite types: struct, union, enum
     (magenta-warmer "#62a28c")         ; Extended library types
     (magenta-cooler "#72627e")         ; Rare syntax nodes, special escapes
-    (magenta-faint "#546656")          ; Inactive conditional blocks
+    (magenta-faint "#5e7460")          ; Inactive conditional blocks
 
     (cyan "#a47028")                   ; Keyword fallback w extractorze
     (cyan-warmer "#7e5a28")            ; Preprocessor alias
@@ -108,7 +108,7 @@
     (builtin blue-faint)               ; Mapped on #4a7852
     (type green)                       ; Mapped on #869e42
     (preprocessor yellow-cooler)       ; Mapped on #7e5a28
-    (constant green-warmer)            ; Mapped on #a46c76
+    (constant green-warmer)            ; Mapped on #b06676
     (number yellow-warmer)             ; Mapped on #bca03c
     (fnname blue)                      ; Mapped on #227086
     (fnname-call blue-warmer)          ; Mapped on #4e92a4
@@ -119,8 +119,8 @@
     (operator blue-cooler)             ; Mapped on #5e8274
     (bracket red-faint)                ; Mapped on #687e6b
     (delimiter cyan-faint)             ; Mapped on #6c786e
-    (comment green-faint)              ; Buffer comments -> #546656
-    (docstring green-faint)            ; In-source docstrings -> #546656
+    (comment green-faint)              ; Buffer comments -> #5e7460
+    (docstring green-faint)            ; In-source docstrings -> #5e7460
     (rx-backslash yellow-cooler)       ; Regex backslashes
     (rx-construct red)                 ; Regex constructs
 
