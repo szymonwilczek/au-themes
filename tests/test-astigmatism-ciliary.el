@@ -26,25 +26,29 @@
     (princ (format " Theme: %s (%s) | Background: %s\n" theme polarity bg))
     (princ (format "======================================================================\n"))
 
-    ;; Test 1: Base text ciliary hunting upper bound
-    (princ (format "1. Ciliary Hunting Upper Bound (|Lc| <= %.1f):\n" max-ciliary-lc))
-    (princ (format "   Measured |Lc|: %.2f on background %s\n" lc-fg bg))
-    (if (<= lc-fg max-ciliary-lc)
-        (progn
-          (princ "   [PASS] Within stability window (excessive edge glare & ciliary pulsation avoided).\n")
-          (setq passes (1+ passes)))
-      (princ "   [FAIL] Excess contrast: causes ciliary hunting and character pulsation.\n")
-      (setq fails (1+ fails)))
-
-    ;; Test 2: Base text astigmatic blur threshold
-    (princ (format "2. Astigmatic Blur & Retinal Threshold (|Lc| >= %.1f):\n" min-blur-lc))
-    (princ (format "   Measured LCD |Lc|: %.2f\n" lc-lcd))
+    ;; Test 1: Accommodative micro-fluctuation stability threshold (Charman & Heron 1988)
+    ;; Accommodative micro-fluctuations increase when luminance and contrast drop below threshold.
+    ;; Sufficient contrast is required to suppress hunting and maintain stable ciliary tone.
+    (princ (format "1. Accommodative Stability Threshold (|Lc| >= %.1f):\n" min-blur-lc))
+    (princ (format "   Measured LCD |Lc|: %.2f on background %s\n" lc-lcd bg))
     (if (>= lc-lcd min-blur-lc)
         (progn
-          (princ "   [PASS] Sufficient luminance difference for uncorrected Sturm conoid focus.\n")
+          (princ "   [PASS] Sufficient edge gradient to suppress ciliary hunting and maintain focus.\n")
           (setq passes (1+ passes)))
-      (princ "   [FAIL] Insufficient contrast: causes squinting and ocular fatigue.\n")
+      (princ "   [FAIL] Insufficient contrast: triggers accommodative hunting and ocular strain.\n")
       (setq fails (1+ fails)))
+
+    ;; Test 2: Photophobic edge glare & irradiation ceiling
+    ;; Note: In literature (Charman & Heron 1988, Gray et al. 1993), hunting does NOT increase with high contrast.
+    ;; An upper bound serves to prevent high-luminance edge irradiation in photophobic / migraine states.
+    (princ (format "2. Photophobic Edge Irradiation Ceiling (|Lc| <= %.1f):\n" max-ciliary-lc))
+    (princ (format "   Measured |Lc|: %.2f\n" lc-fg))
+    (if (<= lc-fg max-ciliary-lc)
+        (progn
+          (princ "   [PASS] Within photophobic comfort window; excessive irradiation spreading avoided.\n")
+          (setq passes (1+ passes)))
+      (princ "   [WARN] High contrast: risk of glare irradiation in photophobia.\n")
+      (setq warnings (1+ warnings)))
 
     ;; Test 3: Subpixel color fringing on base text (CIELAB C* <= 12.0)
     (princ "3. Base Text Subpixel Fringing (C* <= 12.0):\n")
