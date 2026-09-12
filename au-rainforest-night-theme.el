@@ -8,33 +8,33 @@
     (bg-main "#0f0e06")
     (bg-dim "#26211d")
     (bg-alt "#36322f")
-    (fg-main "#b2a09c")
-    (fg-dim "#58685a")
+    (fg-main "#9ca69e")       ; Tranquil silver-mist quartz
+    (fg-dim "#58685a")        ; Damp quiet pine needles
     (fg-alt "#a08c4a")        ; Warm forest lichen
-    (fg-var "#aba094")        ; Light birch quartz: variable definitions
+    (fg-var "#a2ada4")        ; Birch mist quartz: variable definitions
     (bg-active "#56524f")
     (bg-inactive "#25241d")
     (border "#58514f")
 
-    ;; Deep Temperate Rainforest Palette (Pure Forest Greens, Authentic Cedar Bark, Atmospheric Rain Blues)
-    (red "#b6463e")           ; Deep mountain yew crimson: alerts, errors, negation !
-    (red-warmer "#b26236")    ; Luminous warm amber / chestnut resin: strings ("strings")
+    ;; Deep Temperate Rainforest Palette (Terrestrial Greens, Cedar Bark, Mountain Waters)
+    (red "#b6463e")           ; Mountain yew crimson: alerts, errors, negation !
+    (red-warmer "#b26236")    ; Warm cedar resin amber: strings ("strings")
     (red-cooler "#b6463e")
     (red-faint "#6c806e")     ; Damp wet spruce twigs: brackets ( ) [ ] { }
 
-    (green "#7aa854")         ; Warm wet forest moss / fern: data types (int, size_t, uint32_t)
-    (green-warmer "#869c44")  ; Deep forest olive foliage / lichen: constants (LOTA_PCR_COUNT, NULL)
-    (green-cooler "#368846")  ; Deep terrestrial fir / pine needle green: keywords (static, while, return, struct)
-    (green-faint "#58685a")   ; Quiet forest needles: comments
+    (green "#7aa854")         ; Wet canopy moss: data types (int, size_t, uint32_t)
+    (green-warmer "#869c44")  ; Sunlit forest olive foliage: constants (LOTA_PCR_COUNT, NULL)
+    (green-cooler "#388844")  ; Wet terrestrial fir needle green: keywords (static, while, return, struct)
+    (green-faint "#58685a")   ; Quiet pine needles in mist: comments
 
-    (yellow "#368846")        ; Keyword alias: deep terrestrial fir needle green
+    (yellow "#388844")        ; Keyword alias: wet terrestrial fir needle green
     (yellow-warmer "#caa240") ; Warm golden forest honey: numbers (0, 24, 32 in buf[0])
-    (yellow-cooler "#885226") ; Weathered dark cedar tree bark brown: preprocessor (#define)
-    (yellow-faint "#58685a")  ; Quiet forest needles
+    (yellow-cooler "#8c5020") ; Weathered cedar tree bark brown: preprocessor (#define)
+    (yellow-faint "#58685a")  ; Quiet pine needles in mist
 
     (blue "#3e84be")          ; Mountain river stream water: function definitions (is_write_open_flags)
     (blue-warmer "#66a4d2")   ; Nocturnal rain cascade: function calls (bpf_map_lookup_elem, BPF_CORE_READ)
-    (blue-cooler "#6c8278")   ; Mountain river slate quartz / flint: operators (?, &, :, +, -, *, ->)
+    (blue-cooler "#6e867c")   ; Neutral river slate quartz: operators (?, &, :, +, -, *, ->)
     (blue-faint "#60a28c")    ; Soft mountain sage / tree lichen: builtins (__always_inline, sizeof)
 
     (magenta "#869c44")       ; Forest olive foliage: constants (LOTA_PCR_COUNT, NULL)
@@ -42,9 +42,9 @@
     (magenta-cooler "#60a28c") ; Soft mountain sage: builtins (__always_inline)
     (magenta-faint "#58685a")
 
-    (cyan "#368846")          ; Deep terrestrial fir needle green (keywords)
-    (cyan-warmer "#885226")   ; Weathered dark cedar tree bark brown: preprocessor
-    (cyan-cooler "#6c8278")   ; Mountain river slate quartz / flint
+    (cyan "#388844")          ; Wet terrestrial fir needle green (keywords)
+    (cyan-warmer "#8c5020")   ; Weathered cedar tree bark brown: preprocessor
+    (cyan-cooler "#6e867c")   ; Neutral river slate quartz
     (cyan-faint "#7c7672")    ; Muted river pebble / flint: delimiters (, ;)
 
     ;; Panels and Diffs
@@ -83,7 +83,7 @@
     (bg-popup "#201e16")
     (bg-hover "#265f4a")
     (bg-hover-secondary "#55345a")
-    (bg-hl-line "#28241e")
+    (bg-hl-line "#18201a")
     (bg-paren-match "#2f6c4a")
     (bg-err "#461204")
     (bg-warning "#353504")
@@ -104,23 +104,23 @@
     (fg-prompt blue)
 
     ;; Syntax Mappings:
-    (keyword cyan)               ; #368846 - Deep forest fir needle green (static, struct, while, return)
-    (builtin blue-faint)         ; #60a28c - Soft mountain sage / tree lichen (__always_inline, sizeof)
-    (type green)                 ; #7aa854 - Warm wet forest moss / fern (int, void, size_t, uint32_t)
-    (preprocessor yellow-cooler) ; #885226 - Weathered dark cedar bark brown (#define, macro directives)
-    (constant green-warmer)      ; #869c44 - Forest olive foliage (LOTA_PCR_COUNT, NULL)
-    (number yellow-warmer)       ; #caa240 - Warm golden forest honey (0, 24, 32 in buf[0])
-    (fnname blue)                ; #3e84be - Mountain river stream water (is_write_open_flags)
-    (fnname-call blue-warmer)    ; #66a4d2 - Nocturnal rain cascade (bpf_map_lookup_elem, BPF_CORE_READ)
-    (string red-warmer)          ; #b26236 - Luminous warm amber / chestnut resin ("strings")
-    (property fg-alt)            ; #a08c4a - Warm forest lichen (->tgid, .field)
-    (variable fg-var)            ; #aba094 - Light birch quartz (variable definitions/names)
-    (variable-use fg-main)       ; #b2a09c - Base text (variable usages)
-    (operator blue-cooler)       ; #6c8278 - Mountain river slate / flint quartz (?, &, :, +, -, *, ->)
-    (bracket red-faint)          ; #6c806e - Damp wet spruce twigs (( ) [ ] { })
-    (delimiter cyan-faint)       ; #7c7672 - Muted river pebble / flint (;, ,)
-    (comment green-faint)        ; #58685a - Quiet forest needles (italic)
-    (docstring green-faint)      ; #58685a - Documentation strings (italic)
+    (keyword cyan)
+    (builtin blue-faint)
+    (type green)
+    (preprocessor yellow-cooler)
+    (constant green-warmer)
+    (number yellow-warmer)
+    (fnname blue)
+    (fnname-call blue-warmer)
+    (string red-warmer)
+    (property fg-alt)
+    (variable fg-var)
+    (variable-use fg-main)
+    (operator blue-cooler)
+    (bracket red-faint)
+    (delimiter cyan-faint)
+    (comment green-faint)
+    (docstring green-faint)
     (rx-backslash yellow-cooler)
     (rx-construct red)
 
@@ -146,15 +146,14 @@
  nil
  nil)
 
-;; Universal standard font-lock faces and LSP Eglot overrides:
 (custom-theme-set-faces
  'au-rainforest-night
- '(default ((t (:background "#0f0e06" :foreground "#b2a09c"))))
+ '(default ((t (:background "#0f0e06" :foreground "#9ca69e"))))
  '(font-lock-comment-face ((t (:foreground "#58685a" :slant italic))))
  '(font-lock-comment-delimiter-face ((t (:foreground "#58685a" :slant italic))))
  '(font-lock-doc-face ((t (:foreground "#58685a" :slant italic))))
- '(font-lock-preprocessor-face ((t (:foreground "#885226"))))
- '(font-lock-keyword-face ((t (:foreground "#368846"))))
+ '(font-lock-preprocessor-face ((t (:foreground "#8c5020"))))
+ '(font-lock-keyword-face ((t (:foreground "#388844"))))
  '(font-lock-type-face ((t (:foreground "#7aa854"))))
  '(font-lock-constant-face ((t (:foreground "#869c44"))))
  '(font-lock-number-face ((t (:foreground "#caa240"))))
@@ -162,27 +161,25 @@
  '(font-lock-function-name-face ((t (:foreground "#3e84be"))))
  '(font-lock-function-call-face ((t (:foreground "#66a4d2"))))
  '(font-lock-string-face ((t (:foreground "#b26236"))))
- '(font-lock-variable-name-face ((t (:foreground "#aba094"))))
- '(font-lock-variable-use-face ((t (:foreground "#b2a09c"))))
+ '(font-lock-variable-name-face ((t (:foreground "#a2ada4"))))
+ '(font-lock-variable-use-face ((t (:foreground "#9ca69e"))))
  '(font-lock-property-name-face ((t (:foreground "#a08c4a"))))
  '(font-lock-property-use-face ((t (:foreground "#a08c4a"))))
- '(font-lock-operator-face ((t (:foreground "#6c8278"))))
+ '(font-lock-operator-face ((t (:foreground "#6e867c"))))
  '(font-lock-bracket-face ((t (:foreground "#6c806e"))))
  '(font-lock-delimiter-face ((t (:foreground "#7c7672"))))
  '(font-lock-warning-face ((t (:foreground "#b6463e"))))
 
- ;; Eglot LSP semantic tokens - ensure function calls NEVER get masked by variable faces:
  '(eglot-semantic-variable ((t (:inherit nil :foreground nil))))
  '(eglot-semantic-defaultLibrary ((t (:inherit nil :foreground nil))))
  '(eglot-semantic-readonly ((t (:inherit nil :foreground nil))))
- '(eglot-semantic-function ((t (:inherit font-lock-function-call-face :foreground "#66a4d2"))))
- '(eglot-semantic-method ((t (:inherit font-lock-function-call-face :foreground "#66a4d2"))))
- '(eglot-semantic-macro ((t (:inherit font-lock-preprocessor-face :foreground "#885226"))))
+ '(eglot-semantic-function ((t (:inherit font-lock-function-call-face :foreground nil))))
+ '(eglot-semantic-method ((t (:inherit font-lock-function-call-face :foreground nil))))
+ '(eglot-semantic-macro ((t (:inherit nil :foreground nil))))
 
  '(region ((t (:background "#3f1324" :extend t))))
  '(line-number ((t (:foreground "#887c8a")))))
 
-;; Backward-compatibility aliases
 (defvaralias 'rainforest-night-palette 'au-rainforest-night-palette)
 (defvaralias 'rainforest-night-palette-partial 'au-rainforest-night-palette-partial)
 
