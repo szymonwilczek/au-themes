@@ -132,28 +132,6 @@
  nil
  nil)
 
-;; Universal standard font-lock faces:
-(custom-theme-set-faces
- 'au-rainforest-day
- '(font-lock-comment-face ((t (:foreground "#485a4c" :slant italic))))
- '(font-lock-comment-delimiter-face ((t (:foreground "#485a4c" :slant italic))))
- '(font-lock-doc-face ((t (:foreground "#485a4c" :slant italic))))
- '(font-lock-preprocessor-face ((t (:foreground "#27346d"))))
- '(font-lock-keyword-face ((t (:foreground "#0a5022"))))
- '(font-lock-type-face ((t (:foreground "#6c3e00"))))
- '(font-lock-constant-face ((t (:foreground "#541a58"))))
- '(font-lock-number-face ((t (:foreground "#084c68"))))
- '(font-lock-builtin-face ((t (:foreground "#5a240e"))))
- '(font-lock-function-name-face ((t (:foreground "#065842"))))
- '(font-lock-function-call-face ((t (:foreground "#124a76"))))
- '(font-lock-string-face ((t (:foreground "#4c2806"))))
- '(font-lock-property-name-face ((t (:foreground "#1c443c"))))
- '(font-lock-property-use-face ((t (:foreground "#1c443c"))))
- '(font-lock-operator-face ((t (:foreground "#2a3e30"))))
- '(font-lock-bracket-face ((t (:foreground "#344238"))))
- '(font-lock-delimiter-face ((t (:foreground "#2a3a30"))))
- '(font-lock-warning-face ((t (:foreground "#843428")))))
-
 ;; Backward-compatibility aliases
 (defvaralias 'rainforest-day-palette 'au-rainforest-day-palette)
 (defvaralias 'rainforest-day-palette-partial 'au-rainforest-day-palette-partial)

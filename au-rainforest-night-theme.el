@@ -146,40 +146,6 @@
  nil
  nil)
 
-(custom-theme-set-faces
- 'au-rainforest-night
- '(default ((t (:background "#0f0e06" :foreground "#9ca69e"))))
- '(font-lock-comment-face ((t (:foreground "#58685a" :slant italic))))
- '(font-lock-comment-delimiter-face ((t (:foreground "#58685a" :slant italic))))
- '(font-lock-doc-face ((t (:foreground "#58685a" :slant italic))))
- '(font-lock-preprocessor-face ((t (:foreground "#8c5020"))))
- '(font-lock-keyword-face ((t (:foreground "#388844"))))
- '(font-lock-type-face ((t (:foreground "#7aa854"))))
- '(font-lock-constant-face ((t (:foreground "#869c44"))))
- '(font-lock-number-face ((t (:foreground "#caa240"))))
- '(font-lock-builtin-face ((t (:foreground "#60a28c"))))
- '(font-lock-function-name-face ((t (:foreground "#3e84be"))))
- '(font-lock-function-call-face ((t (:foreground "#66a4d2"))))
- '(font-lock-string-face ((t (:foreground "#b26236"))))
- '(font-lock-variable-name-face ((t (:foreground "#a2ada4"))))
- '(font-lock-variable-use-face ((t (:foreground "#9ca69e"))))
- '(font-lock-property-name-face ((t (:foreground "#a08c4a"))))
- '(font-lock-property-use-face ((t (:foreground "#a08c4a"))))
- '(font-lock-operator-face ((t (:foreground "#6e867c"))))
- '(font-lock-bracket-face ((t (:foreground "#6c806e"))))
- '(font-lock-delimiter-face ((t (:foreground "#7c7672"))))
- '(font-lock-warning-face ((t (:foreground "#b6463e"))))
-
- '(eglot-semantic-variable ((t (:inherit nil :foreground nil))))
- '(eglot-semantic-defaultLibrary ((t (:inherit nil :foreground nil))))
- '(eglot-semantic-readonly ((t (:inherit nil :foreground nil))))
- '(eglot-semantic-function ((t (:inherit font-lock-function-call-face :foreground nil))))
- '(eglot-semantic-method ((t (:inherit font-lock-function-call-face :foreground nil))))
- '(eglot-semantic-macro ((t (:inherit nil :foreground nil))))
-
- '(region ((t (:background "#3f1324" :extend t))))
- '(line-number ((t (:foreground "#887c8a")))))
-
 (defvaralias 'rainforest-night-palette 'au-rainforest-night-palette)
 (defvaralias 'rainforest-night-palette-partial 'au-rainforest-night-palette-partial)
 
