@@ -1,8 +1,8 @@
-;;; rainforest-night-theme.el --- Deep rainy forest shelter theme -*- lexical-binding:t -*-
+;;; au-rainforest-night-theme.el --- Deep nocturnal rainy forest theme for Au-themes -*- lexical-binding:t -*-
 
 (require 'ef-themes)
 
-(defconst rainforest-night-palette-partial
+(defconst au-rainforest-night-palette-partial
   '(;; Canvas & Chrome (Deep ef-autumn nocturnal forest baseline)
     (cursor "#d89020")
     (bg-main "#0f0e06")
@@ -91,7 +91,7 @@
     (bg-region "#3f1324")
     (fg-line-number-inactive "#887c8a")))
 
-(defconst rainforest-night-palette-mappings-partial
+(defconst au-rainforest-night-palette-mappings-partial
   '((err red)
     (warning yellow-warmer)
     (info green)
@@ -129,26 +129,26 @@
     (accent-2 yellow-warmer)
     (accent-3 green-warmer)))
 
-(defconst rainforest-night-palette
+(defconst au-rainforest-night-palette
   (modus-themes-generate-palette
-   rainforest-night-palette-partial
+   au-rainforest-night-palette-partial
    nil
    nil
-   (append rainforest-night-palette-mappings-partial ef-themes-palette-common)))
+   (append au-rainforest-night-palette-mappings-partial ef-themes-palette-common)))
 
 ;;;###theme-autoload
 (modus-themes-theme
- 'rainforest-night
+ 'au-rainforest-night
  'ef-themes
- "Deep nocturnal rainy forest theme - pure greens, authentic bark browns, atmospheric rain blues."
+ "Au Rainforest Night: deep nocturnal rainy forest theme calibrated for autistic sensory-profile and photophobia."
  'dark
- 'rainforest-night-palette
+ 'au-rainforest-night-palette
  nil
  nil)
 
 ;; Universal standard font-lock faces and LSP Eglot overrides:
 (custom-theme-set-faces
- 'rainforest-night
+ 'au-rainforest-night
  '(default ((t (:background "#0f0e06" :foreground "#b2a09c"))))
  '(font-lock-comment-face ((t (:foreground "#58685a" :slant italic))))
  '(font-lock-comment-delimiter-face ((t (:foreground "#58685a" :slant italic))))
@@ -182,5 +182,10 @@
  '(region ((t (:background "#3f1324" :extend t))))
  '(line-number ((t (:foreground "#887c8a")))))
 
+;; Backward-compatibility aliases
+(defvaralias 'rainforest-night-palette 'au-rainforest-night-palette)
+(defvaralias 'rainforest-night-palette-partial 'au-rainforest-night-palette-partial)
+
+(provide 'au-rainforest-night-theme)
 (provide 'rainforest-night-theme)
-;;; rainforest-night-theme.el ends here
+;;; au-rainforest-night-theme.el ends here

@@ -1,8 +1,8 @@
-;;; rainforest-day-theme.el --- Misty temperate rainforest daylight theme -*- lexical-binding:t -*-
+;;; au-rainforest-day-theme.el --- Misty temperate rainforest daylight theme for Au-themes -*- lexical-binding:t -*-
 
 (require 'ef-themes)
 
-(defconst rainforest-day-palette-partial
+(defconst au-rainforest-day-palette-partial
   '(;; Canvas: misty coniferous canopy day, soft lichen-granite mist under steady rain
     (cursor "#105476")        ; Clear mountain rain glint
     (bg-main "#b2beaf")       ; Overcast canopy air / wet lichen-slate stone (Y=0.4939)
@@ -76,7 +76,7 @@
     (bg-info "#98c2a2")
     (bg-region "#a0b8a4")))
 
-(defconst rainforest-day-palette-mappings-partial
+(defconst au-rainforest-day-palette-mappings-partial
   '(;; Statuses
     (err red)
     (warning yellow-warmer)
@@ -115,26 +115,26 @@
     (accent-2 green)
     (accent-3 cyan)))
 
-(defconst rainforest-day-palette
+(defconst au-rainforest-day-palette
   (modus-themes-generate-palette
-   rainforest-day-palette-partial
+   au-rainforest-day-palette-partial
    nil
    nil
-   (append rainforest-day-palette-mappings-partial ef-themes-palette-common)))
+   (append au-rainforest-day-palette-mappings-partial ef-themes-palette-common)))
 
 ;;;###theme-autoload
 (modus-themes-theme
- 'rainforest-day
+ 'au-rainforest-day
  'ef-themes
- "Misty temperate rainforest daylight theme with organic forest layers and 1:1 keyface determinism."
+ "Au Rainforest Day: misty temperate rainforest daylight theme with organic forest layers."
  'light
- 'rainforest-day-palette
+ 'au-rainforest-day-palette
  nil
  nil)
 
 ;; Universal standard font-lock faces:
 (custom-theme-set-faces
- 'rainforest-day
+ 'au-rainforest-day
  '(font-lock-comment-face ((t (:foreground "#485a4c" :slant italic))))
  '(font-lock-comment-delimiter-face ((t (:foreground "#485a4c" :slant italic))))
  '(font-lock-doc-face ((t (:foreground "#485a4c" :slant italic))))
@@ -154,5 +154,10 @@
  '(font-lock-delimiter-face ((t (:foreground "#2a3a30"))))
  '(font-lock-warning-face ((t (:foreground "#843428")))))
 
+;; Backward-compatibility aliases
+(defvaralias 'rainforest-day-palette 'au-rainforest-day-palette)
+(defvaralias 'rainforest-day-palette-partial 'au-rainforest-day-palette-partial)
+
+(provide 'au-rainforest-day-theme)
 (provide 'rainforest-day-theme)
-;;; rainforest-day-theme.el ends here
+;;; au-rainforest-day-theme.el ends here

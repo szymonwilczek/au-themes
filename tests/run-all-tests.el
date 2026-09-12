@@ -46,26 +46,28 @@
     test-isoluminance-jitter
     test-afterimage-persistence))
 
-(defvar rf-test-themes
-  (let ((env (getenv "RF_TEST_THEMES")))
+(defvar au-test-themes
+  (let ((env (or (getenv "AU_TEST_THEMES") (getenv "RF_TEST_THEMES"))))
     (if (and env (not (string-empty-p env)))
         (mapcar #'intern (split-string env "[, ]+" t))
-      '(rainforest-night rainforest-day)))
-  "Themes evaluated by `run-all-rainforest-tests'.
-Override with the RF_TEST_THEMES environment variable, e.g.
-RF_TEST_THEMES=rainforest-night to gate a single variant.")
+      '(au-rainforest-night au-rainforest-day)))
+  "Themes evaluated by `run-all-au-tests'.
+Override with the AU_TEST_THEMES or RF_TEST_THEMES environment variable, e.g.
+AU_TEST_THEMES=au-rainforest-night to gate a single variant.")
 
-(defun run-all-rainforest-tests ()
-  "Execute all test suites across `rf-test-themes' and compile executive master diagnostic report."
+(defvaralias 'rf-test-themes 'au-test-themes)
+
+(defun run-all-au-tests ()
+  "Execute all test suites across `au-test-themes' and compile executive master diagnostic report."
   (interactive)
   (let ((run-body
          (lambda ()
-           (let* ((themes rf-test-themes)
+           (let* ((themes au-test-themes)
                   (total-modules (* (length rf-test-modules) (length themes)))
                   (passed-modules 0)
                   (failed-modules nil))
              (princ "\n######################################################################\n")
-             (princ " RAINFOREST THEMES: AUTOMATED SCIENTIFIC & ERGONOMIC TEST SUITE\n")
+             (princ " AU THEMES: AUTOMATED SCIENTIFIC & ERGONOMIC TEST SUITE\n")
              (princ (format " Themes: %s\n" (mapconcat #'symbol-name themes ", ")))
              (princ "######################################################################\n")
 
@@ -97,12 +99,14 @@ RF_TEST_THEMES=rainforest-night to gate a single variant.")
                (princ (format "Status: ALL %d PHYSICAL, OPTICAL & ERGONOMIC GATES PASSED!\n" total-modules))
                t)))))
     (if (called-interactively-p 'any)
-        (with-output-to-temp-buffer "*Rainforest Test Results*"
+        (with-output-to-temp-buffer "*Au Themes Test Results*"
           (funcall run-body))
       (funcall run-body))))
 
+(defalias 'run-all-rainforest-tests #'run-all-au-tests)
+
 (when noninteractive
-  (unless (run-all-rainforest-tests)
+  (unless (run-all-au-tests)
     (kill-emacs 1)))
 
 (provide 'run-all-tests)

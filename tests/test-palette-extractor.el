@@ -14,19 +14,23 @@
 (add-to-list 'load-path default-directory)
 (add-to-list 'custom-theme-load-path default-directory)
 
-(require 'rainforest-night-theme)
-(require 'rainforest-day-theme)
+(require 'au-rainforest-night-theme)
+(require 'au-rainforest-day-theme)
+(require 'rainforest-night-theme nil t)
+(require 'rainforest-day-theme nil t)
 
 (defvar rf-active-theme
-  (let ((env (getenv "RF_TEST_THEMES")))
+  (let ((env (or (getenv "AU_TEST_THEMES") (getenv "RF_TEST_THEMES"))))
     (if (and env (not (string-empty-p env)))
         (intern (car (split-string env "[, ]+" t)))
-      'rainforest-night))
-  "Theme currently being evaluated by tests (\='rainforest-night or \='rainforest-day).")
+      'au-rainforest-night))
+  "Theme currently being evaluated by tests (\='au-rainforest-night or \='au-rainforest-day).")
+
+(defvaralias 'au-active-theme 'rf-active-theme)
 
 (defun rf-theme-polarity (&optional theme-name)
   "Return \\='light or \\='dark based on background luminance for THEME-NAME."
-  (let* ((theme (or theme-name rf-active-theme 'rainforest-night))
+  (let* ((theme (or theme-name rf-active-theme 'au-rainforest-night))
          (pal (rainforest-extract-active-palette theme))
          (bg (plist-get pal :bg-main))
          (y (rf-luminance-y bg)))
@@ -80,7 +84,7 @@
 
 (defun rainforest-extract-active-palette (&optional theme-name)
   "Extract complete semantic color dictionary directly from THEME-NAME (default `rf-active-theme')."
-  (let* ((theme (or theme-name rf-active-theme 'rainforest-night)))
+  (let* ((theme (or theme-name rf-active-theme 'au-rainforest-night)))
     (if (string-prefix-p "ef-" (symbol-name theme))
         (progn
           (require 'ef-themes nil t)
@@ -109,15 +113,21 @@
              :delimiter (or (rainforest-get-theme-face-fg theme 'font-lock-delimiter-face) (funcall get-c 'delimiter) "#cfbcba")
              :err (or (rainforest-get-theme-face-fg theme 'font-lock-warning-face) (funcall get-c 'err) "#f06a3f"))))
       (let* ((partial (cond
-                       ((eq theme 'rainforest-night) rainforest-night-palette-partial)
-                       ((eq theme 'rainforest-day) rainforest-day-palette-partial)
-                       ((boundp 'rainforest-day-palette-partial) (symbol-value 'rainforest-day-palette-partial))
+                       ((memq theme '(au-rainforest-night rainforest-night))
+                        (if (boundp 'au-rainforest-night-palette-partial)
+                            au-rainforest-night-palette-partial
+                          rainforest-night-palette-partial))
+                       ((memq theme '(au-rainforest-day rainforest-day))
+                        (if (boundp 'au-rainforest-day-palette-partial)
+                            au-rainforest-day-palette-partial
+                          rainforest-day-palette-partial))
                        (t nil)))
-             (bg (or (cadr (assq 'bg-main partial)) (if (eq theme 'rainforest-day) "#b2beaf" "#0f0e06")))
-             (fg (or (cadr (assq 'fg-main partial)) (if (eq theme 'rainforest-day) "#122216" "#cfbcba")))
-             (dim (or (cadr (assq 'fg-dim partial)) (if (eq theme 'rainforest-day) "#485a4c" "#887c8a")))
-             (cur (or (cadr (assq 'cursor partial)) (if (eq theme 'rainforest-day) "#105476" "#ffaa33")))
-             (hl (or (cadr (assq 'bg-hl-line partial)) (if (eq theme 'rainforest-day) "#a2af9f" "#302a3a"))))
+             (is-day (memq theme '(au-rainforest-day rainforest-day)))
+             (bg (or (cadr (assq 'bg-main partial)) (if is-day "#b2beaf" "#0f0e06")))
+             (fg (or (cadr (assq 'fg-main partial)) (if is-day "#122216" "#cfbcba")))
+             (dim (or (cadr (assq 'fg-dim partial)) (if is-day "#485a4c" "#887c8a")))
+             (cur (or (cadr (assq 'cursor partial)) (if is-day "#105476" "#ffaa33")))
+             (hl (or (cadr (assq 'bg-hl-line partial)) (if is-day "#a2af9f" "#302a3a"))))
         (list
          :theme theme
          :bg-main bg
@@ -153,6 +163,10 @@
                         (cadr (assq 'fg-main partial)) "#cfbcba")
          :err (or (rainforest-get-theme-face-fg theme 'font-lock-warning-face)
                   (cadr (assq 'red partial)) "#b43a34"))))))
+
+(defalias 'au-extract-active-palette #'rainforest-extract-active-palette)
+(defalias 'au-get-theme-face-fg #'rainforest-get-theme-face-fg)
+(defalias 'au-get-theme-face-bg #'rainforest-get-theme-face-bg)
 
 ;; =============================================================================
 ;; Color Conversion & Photometric Mathematics
