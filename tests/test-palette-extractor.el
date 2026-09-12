@@ -122,7 +122,7 @@
          :fg-dim dim
          :cursor cur
          :preprocessor (or (rainforest-get-theme-face-fg theme 'font-lock-preprocessor-face)
-                           (cadr (assq 'cyan-warmer partial)) "#7a6450")
+                           (cadr (assq 'cyan-warmer partial)) "#a46032")
          :keyword (or (rainforest-get-theme-face-fg theme 'font-lock-keyword-face)
                       (cadr (assq 'cyan partial)) "#2c8446")
          :type (or (rainforest-get-theme-face-fg theme 'font-lock-type-face)
