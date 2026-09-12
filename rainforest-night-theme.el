@@ -17,33 +17,33 @@
 
     ;; Deep Temperate Rainforest Palette (Pure Greens, Real Bark Browns, Deep Rain Blues)
     (red "#c04840")           ; Deep mountain yew berry crimson: alerts, errors, negation !
-    (red-warmer "#b8842e")    ; Warm golden oak wood resin: strings ("strings")
+    (red-warmer "#c48420")    ; Glistening wet oak wood resin: strings ("strings")
     (red-cooler "#c04840")
-    (red-faint "#5c7a6c")     ; Damp wet twigs: brackets ( ) [ ] { }
+    (red-faint "#54826e")     ; Wet spruce twigs: brackets ( ) [ ] { }
 
-    (green "#6ebd46")         ; Rich wet moss emerald: data types (int, size_t, uint32_t)
-    (green-warmer "#88aa44")  ; Deep forest olive foliage: constants (LOTA_PCR_COUNT, NULL)
-    (green-cooler "#389e6c")  ; Deep conifer pine needle green: keywords (static, while, return, struct)
+    (green "#5ecd38")         ; Deep wet soaked forest moss emerald: data types (int, size_t, uint32_t)
+    (green-warmer "#86b432")  ; Wet forest lichen foliage: constants (LOTA_PCR_COUNT, NULL)
+    (green-cooler "#2aa86c")  ; Deep wet conifer pine needle green: keywords (static, while, return, struct)
     (green-faint "#687c6e")   ; Quiet forest needles: comments
 
-    (yellow "#389e6c")        ; Keyword alias: deep conifer pine needle green
-    (yellow-warmer "#c8a23c") ; Warm golden amber resin: numbers (0, 24, 32 in buf[0])
-    (yellow-cooler "#9e6c3e") ; Weathered dark pine bark brown: preprocessor (#define)
+    (yellow "#2aa86c")        ; Keyword alias: deep wet conifer pine needle green
+    (yellow-warmer "#d2a42e") ; Wet glowing amber resin: numbers (0, 24, 32 in buf[0])
+    (yellow-cooler "#ab6426") ; Rain-soaked dark cedar bark brown: preprocessor (#define)
     (yellow-faint "#687c6e")  ; Quiet forest needles
 
-    (blue "#3a94d0")          ; Clear mountain torrent blue: function definitions (is_write_open_flags)
-    (blue-warmer "#5c96c4")   ; Pure rain water mist blue: function calls (bpf_map_lookup_elem, BPF_CORE_READ)
-    (blue-cooler "#689ea4")   ; Cool river slate quartz: operators (?, &, :, +, -, *, ->)
-    (blue-faint "#447caa")    ; Tranquil mountain glacial lake blue: builtins (__always_inline, sizeof)
+    (blue "#2aa0e4")          ; Crystalline mountain torrent cascade: function definitions (is_write_open_flags)
+    (blue-warmer "#4ea2dc")   ; Pure nocturnal rain water stream: function calls (bpf_map_lookup_elem, BPF_CORE_READ)
+    (blue-cooler "#52a8b4")   ; Wet glistening river slate quartz: operators (?, &, :, +, -, *, ->)
+    (blue-faint "#3284c8")    ; Deep mountain glacial lake blue: builtins (__always_inline, sizeof)
 
-    (magenta "#88aa44")       ; Forest olive foliage: constants (LOTA_PCR_COUNT, NULL)
-    (magenta-warmer "#447caa")
-    (magenta-cooler "#447caa") ; Mountain lake blue: builtins (__always_inline)
+    (magenta "#86b432")       ; Forest olive foliage: constants (LOTA_PCR_COUNT, NULL)
+    (magenta-warmer "#3284c8")
+    (magenta-cooler "#3284c8") ; Mountain lake blue: builtins (__always_inline)
     (magenta-faint "#687c6e")
 
-    (cyan "#389e6c")          ; Deep conifer pine needle green (keywords)
-    (cyan-warmer "#9e6c3e")   ; Weathered dark pine bark brown: preprocessor
-    (cyan-cooler "#689ea4")   ; Cool river slate quartz
+    (cyan "#2aa86c")          ; Deep wet conifer pine needle green (keywords)
+    (cyan-warmer "#ab6426")   ; Rain-soaked dark cedar bark brown: preprocessor
+    (cyan-cooler "#52a8b4")   ; Wet glistening river slate quartz
     (cyan-faint "#cfbcba")    ; Base text: delimiters (, ;)
 
     ;; Panels and Diffs
@@ -103,20 +103,20 @@
     (fg-prompt blue)
 
     ;; Syntax Mappings:
-    (keyword cyan)               ; #389e6c - Deep conifer pine needle green (static, struct, while, return)
-    (builtin blue-faint)         ; #447caa - Tranquil mountain lake blue (__always_inline, sizeof)
-    (type green)                 ; #6ebd46 - Rich wet moss emerald (int, void, size_t, uint32_t)
-    (preprocessor yellow-cooler) ; #9e6c3e - Weathered dark pine bark brown (#define, macro directives)
-    (constant green-warmer)      ; #88aa44 - Forest olive foliage (LOTA_PCR_COUNT, NULL)
-    (number yellow-warmer)       ; #c8a23c - Warm golden amber resin (0, 24, 32 in buf[0])
-    (fnname blue)                ; #3a94d0 - Clear mountain torrent blue (is_write_open_flags)
-    (fnname-call blue-warmer)    ; #5c96c4 - Pure rain water mist blue (bpf_map_lookup_elem, BPF_CORE_READ)
-    (string red-warmer)          ; #b8842e - Warm golden oak wood resin ("strings")
+    (keyword cyan)               ; #2aa86c - Deep wet conifer pine needle green (static, struct, while, return)
+    (builtin blue-faint)         ; #3284c8 - Deep mountain glacial lake blue (__always_inline, sizeof)
+    (type green)                 ; #5ecd38 - Deep wet soaked forest moss emerald (int, void, size_t, uint32_t)
+    (preprocessor yellow-cooler) ; #ab6426 - Rain-soaked dark cedar bark brown (#define, macro directives)
+    (constant green-warmer)      ; #86b432 - Wet forest lichen foliage (LOTA_PCR_COUNT, NULL)
+    (number yellow-warmer)       ; #d2a42e - Wet glowing amber resin (0, 24, 32 in buf[0])
+    (fnname blue)                ; #2aa0e4 - Crystalline mountain torrent cascade (is_write_open_flags)
+    (fnname-call blue-warmer)    ; #4ea2dc - Pure nocturnal rain water stream (bpf_map_lookup_elem, BPF_CORE_READ)
+    (string red-warmer)          ; #c48420 - Glistening wet oak wood resin ("strings")
     (property fg-alt)            ; #a48e38 - Warm forest lichen (->tgid, .field)
     (variable fg-main)           ; #cfbcba - Base text (variables)
     (variable-use fg-main)       ; #cfbcba - Variable usages
-    (operator blue-cooler)       ; #689ea4 - Cool river slate quartz (?, &, :, +, -, *, ->)
-    (bracket red-faint)          ; #5c7a6c - Damp wet twigs (( ) [ ] { })
+    (operator blue-cooler)       ; #52a8b4 - Wet glistening river slate quartz (?, &, :, +, -, *, ->)
+    (bracket red-faint)          ; #54826e - Wet spruce twigs (( ) [ ] { })
     (delimiter fg-main)          ; #cfbcba - Exact same as base text (;, ,)
     (comment green-faint)        ; #687c6e - Quiet forest needles (italic)
     (docstring green-faint)      ; #687c6e - Documentation strings (italic)
@@ -151,23 +151,23 @@
  '(font-lock-comment-face ((t (:foreground "#687c6e" :slant italic))))
  '(font-lock-comment-delimiter-face ((t (:foreground "#687c6e" :slant italic))))
  '(font-lock-doc-face ((t (:foreground "#687c6e" :slant italic))))
- '(font-lock-preprocessor-face ((t (:foreground "#9e6c3e"))))
- '(font-lock-keyword-face ((t (:foreground "#389e6c"))))
- '(font-lock-type-face ((t (:foreground "#6ebd46"))))
- '(font-lock-constant-face ((t (:foreground "#88aa44"))))
- '(font-lock-number-face ((t (:foreground "#c8a23c"))))
- '(font-lock-builtin-face ((t (:foreground "#447caa"))))
- '(font-lock-function-name-face ((t (:foreground "#3a94d0"))))
- '(font-lock-function-call-face ((t (:foreground "#5c96c4"))))
- '(font-lock-string-face ((t (:foreground "#b8842e"))))
+ '(font-lock-preprocessor-face ((t (:foreground "#ab6426"))))
+ '(font-lock-keyword-face ((t (:foreground "#2aa86c"))))
+ '(font-lock-type-face ((t (:foreground "#5ecd38"))))
+ '(font-lock-constant-face ((t (:foreground "#86b432"))))
+ '(font-lock-number-face ((t (:foreground "#d2a42e"))))
+ '(font-lock-builtin-face ((t (:foreground "#3284c8"))))
+ '(font-lock-function-name-face ((t (:foreground "#2aa0e4"))))
+ '(font-lock-function-call-face ((t (:foreground "#4ea2dc"))))
+ '(font-lock-string-face ((t (:foreground "#c48420"))))
  '(font-lock-variable-name-face ((t (:foreground "#cfbcba"))))
  '(font-lock-variable-use-face ((t (:foreground "#cfbcba"))))
  '(font-lock-property-name-face ((t (:foreground "#a48e38"))))
  '(font-lock-property-use-face ((t (:foreground "#a48e38"))))
- '(font-lock-operator-face ((t (:foreground "#689ea4"))))
- '(font-lock-bracket-face ((t (:foreground "#5c7a6c"))))
+ '(font-lock-operator-face ((t (:foreground "#52a8b4"))))
+ '(font-lock-bracket-face ((t (:foreground "#54826e"))))
  '(font-lock-delimiter-face ((t (:foreground "#cfbcba"))))
- '(font-lock-warning-face ((t (:foreground "#c8a23c"))))
+ '(font-lock-warning-face ((t (:foreground "#d2a42e"))))
  '(region ((t (:background "#3f1324" :extend t))))
  '(line-number ((t (:foreground "#887c8a")))))
 
