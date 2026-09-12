@@ -9,35 +9,40 @@
     (bg-alt "#36322f")
     (fg-main "#cfbcba")
     (fg-dim "#887c8a")
-    (fg-alt "#70a89f")
+    (fg-alt "#a0924a")        ; Warm golden lichen: struct fields and parameters
     (bg-active "#56524f")
     (bg-inactive "#25241d")
     (border "#58514f")
 
-    (red "#ef656a")
-    (red-warmer "#f06a3f")
-    (red-cooler "#ff7a7f")
-    (red-faint "#df7f7f")
-    (green "#2fa526")
-    (green-warmer "#64aa0f")
-    (green-cooler "#00b066")
-    (green-faint "#5f9f6f")
-    (yellow "#c48702")
-    (yellow-warmer "#d0730f")
-    (yellow-cooler "#df8f6f")
-    (yellow-faint "#cf9f7f")
-    (blue "#379cf6")
-    (blue-warmer "#6a88ff")
-    (blue-cooler "#029fff")
-    (blue-faint "#6a84af")
-    (magenta "#d570af")
-    (magenta-warmer "#e580ea")
-    (magenta-cooler "#af8aff")
-    (magenta-faint "#c590af")
-    (cyan "#4fb0cf")
-    (cyan-warmer "#6fafff")
-    (cyan-cooler "#3dbbb0")
-    (cyan-faint "#82a0af")
+    (red "#be4a44")           ; Dark yew berry: alerts, negation !
+    (red-warmer "#c8524c")
+    (red-cooler "#b4423c")
+    (red-faint "#607868")     ; Wet twigs: brackets ( ) [ ] { }
+
+    (green "#5ea050")         ; Deep wet forest moss: data types (int, size_t, uint32_t)
+    (green-warmer "#7ab65e")
+    (green-cooler "#5e9846")
+    (green-faint "#4a6250")
+
+    (yellow "#966919")        ; Warm golden oak resin: strings ("strings")
+    (yellow-warmer "#bfa03c") ; Wet amber resin: numbers (0, 24, 32 in buf[0])
+    (yellow-cooler "#aa7234")
+    (yellow-faint "#cf9f7f")  ; ef-autumn comment yellow-faint
+
+    (blue "#327c9e")          ; Deep mountain stream: function definitions (is_write_open_flags)
+    (blue-warmer "#469cd8")   ; Cold rain water pool: function calls (bpf_map_lookup_elem, BPF_CORE_READ)
+    (blue-cooler "#6c8676")   ; Dark wet slate: operators (+, -, *, >>, &)
+    (blue-faint "#2c5672")
+
+    (magenta "#8c72b4")       ; Deep mountain bellflower: constants and macros (LOTA_PCR_COUNT, NULL)
+    (magenta-warmer "#8cd0e4")
+    (magenta-cooler "#1e9c92") ; Cold forest viridian: builtins and attributes (__always_inline, bpf_map_lookup_elem)
+    (magenta-faint "#64aebb")
+
+    (cyan "#c48702")          ; ef-autumn golden yellow: keywords (static, struct, while, return)
+    (cyan-warmer "#9c5424")   ; Deep wet chestnut elm bark: preprocessor and macro directives (__uint, #define)
+    (cyan-cooler "#2a8044")
+    (cyan-faint "#5a7062")    ; Damp pine needles: delimiters (, ;)
 
     (bg-red-intense "#b02930")
     (bg-green-intense "#4a7000")
@@ -83,41 +88,42 @@
     (fg-line-number-inactive "#887c8a")))
 
 (defconst rainforest-night-palette-mappings-partial
-  '((err red-warmer)
-    (warning yellow)
-    (info green-cooler)
+  '((err red)
+    (warning yellow-warmer)
+    (info green)
 
-    (fg-link yellow)
-    (fg-link-visited cyan-cooler)
-    (name green-warmer)
+    (fg-link blue-warmer)
+    (fg-link-visited magenta)
+    (name blue)
     (keybind red-warmer)
-    (identifier magenta-faint)
-    (fg-prompt cyan-cooler)
+    (identifier fg-alt)
+    (fg-prompt blue)
 
-    (builtin red-cooler)
-    (comment yellow-faint)
-    (constant green-warmer)
-    (fnname cyan-cooler)
-    (fnname-call cyan-faint)
-    (keyword yellow)
-    (preprocessor magenta)
-    (docstring green-faint)
-    (string red-warmer)
-    (type green)
-    (variable cyan-warmer)
-    (variable-use cyan-faint)
-    (property variable)
-    (number fg-main)
-    (operator fg-main)
-    (bracket fg-main)
-    (delimiter fg-main)
-    (rx-backslash green-cooler)
-    (rx-construct magenta-cooler)
+    ;; 1:1 Keyface Determinism Mappings:
+    (preprocessor cyan-warmer)   ; #9c5424 - Deep wet chestnut elm bark (__uint, BPF_CORE_READ, #define)
+    (keyword cyan)               ; #c48702 - ef-autumn golden yellow (static, struct, while, return)
+    (type green)                 ; #5ea050 - Deep wet forest moss (int, size_t, uint32_t)
+    (constant magenta)           ; #8c72b4 - Deep mountain bellflower (LOTA_PCR_COUNT, NULL)
+    (number yellow-warmer)       ; #bfa03c - Wet amber resin (0, 24, 32 in buf[0])
+    (builtin magenta-cooler)     ; #1e9c92 - Cold forest viridian (__always_inline, bpf_map_lookup_elem)
+    (fnname blue)                ; #327c9e - Deep mountain stream (is_write_open_flags)
+    (fnname-call blue-warmer)    ; #469cd8 - Cold rain water pool (bpf_map_lookup_elem, BPF_CORE_READ)
+    (string yellow)              ; #966919 - Warm golden oak resin ("strings")
+    (property fg-alt)            ; #a0924a - Warm golden lichen (->tgid, .field)
+    (variable fg-main)           ; #cfbcba - Base text (variables)
+    (variable-use fg-main)       ; #cfbcba - Variable usages
+    (operator blue-cooler)       ; #6c8676 - Dark wet slate (+, -, *, >>, &)
+    (bracket red-faint)          ; #607868 - Wet twigs (( ) [ ] { })
+    (delimiter cyan-faint)       ; #5a7062 - Damp needles (, ;)
+    (comment yellow-faint)       ; #cf9f7f - ef-autumn quiet comment
+    (docstring green-faint)      ; #5f9f6f - ef-autumn docstring
+    (rx-backslash yellow-cooler)
+    (rx-construct red)
 
-    (accent-0 green-cooler)
-    (accent-1 yellow-warmer)
-    (accent-2 cyan-cooler)
-    (accent-3 magenta-cooler)))
+    (accent-0 blue)
+    (accent-1 yellow)
+    (accent-2 green)
+    (accent-3 cyan)))
 
 (defconst rainforest-night-palette
   (modus-themes-generate-palette
@@ -130,35 +136,35 @@
 (modus-themes-theme
  'rainforest-night
  'ef-themes
- "Deep nocturnal rainy forest theme - ef-autumn recalibration baseline."
+ "Deep nocturnal rainy forest theme - ef-autumn baseline with calibrated syntax determinism."
  'dark
  'rainforest-night-palette
  nil
  nil)
 
-;; Universal standard font-lock faces (initialized from ef-autumn baseline):
+;; Universal standard font-lock faces:
 (custom-theme-set-faces
  'rainforest-night
  '(font-lock-comment-face ((t (:foreground "#cf9f7f" :slant italic))))
  '(font-lock-comment-delimiter-face ((t (:foreground "#cf9f7f" :slant italic))))
  '(font-lock-doc-face ((t (:foreground "#5f9f6f" :slant italic))))
- '(font-lock-preprocessor-face ((t (:foreground "#d570af"))))
+ '(font-lock-preprocessor-face ((t (:foreground "#9c5424"))))
  '(font-lock-keyword-face ((t (:foreground "#c48702"))))
- '(font-lock-type-face ((t (:foreground "#2fa526"))))
- '(font-lock-constant-face ((t (:foreground "#64aa0f"))))
- '(font-lock-number-face ((t (:foreground "#cfbcba"))))
- '(font-lock-builtin-face ((t (:foreground "#ff7a7f"))))
- '(font-lock-function-name-face ((t (:foreground "#3dbbb0"))))
- '(font-lock-function-call-face ((t (:foreground "#82a0af"))))
- '(font-lock-string-face ((t (:foreground "#f06a3f"))))
- '(font-lock-variable-name-face ((t (:foreground "#6fafff"))))
- '(font-lock-variable-use-face ((t (:foreground "#82a0af"))))
- '(font-lock-property-name-face ((t (:foreground "#6fafff"))))
- '(font-lock-property-use-face ((t (:foreground "#6fafff"))))
- '(font-lock-operator-face ((t (:foreground "#cfbcba"))))
- '(font-lock-bracket-face ((t (:foreground "#cfbcba"))))
- '(font-lock-delimiter-face ((t (:foreground "#cfbcba"))))
- '(font-lock-warning-face ((t (:foreground "#f06a3f"))))
+ '(font-lock-type-face ((t (:foreground "#5ea050"))))
+ '(font-lock-constant-face ((t (:foreground "#8c72b4"))))
+ '(font-lock-number-face ((t (:foreground "#bfa03c"))))
+ '(font-lock-builtin-face ((t (:foreground "#1e9c92"))))
+ '(font-lock-function-name-face ((t (:foreground "#327c9e"))))
+ '(font-lock-function-call-face ((t (:foreground "#469cd8"))))
+ '(font-lock-string-face ((t (:foreground "#966919"))))
+ '(font-lock-variable-name-face ((t (:foreground "#cfbcba"))))
+ '(font-lock-variable-use-face ((t (:foreground "#cfbcba"))))
+ '(font-lock-property-name-face ((t (:foreground "#a0924a"))))
+ '(font-lock-property-use-face ((t (:foreground "#a0924a"))))
+ '(font-lock-operator-face ((t (:foreground "#6c8676"))))
+ '(font-lock-bracket-face ((t (:foreground "#607868"))))
+ '(font-lock-delimiter-face ((t (:foreground "#5a7062"))))
+ '(font-lock-warning-face ((t (:foreground "#be4a44"))))
  '(region ((t (:background "#3f1324" :extend t))))
  '(line-number ((t (:foreground "#887c8a")))))
 
