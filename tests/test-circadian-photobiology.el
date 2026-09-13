@@ -45,7 +45,8 @@ Ref:
           (princ (format "   [FAIL] Nocturnal luminance Y=%.4f exceeds dark adaptation ceiling 0.020.\n" bg-y))
           (setq fails (1+ fails)))))
 
-     ((memq theme '(au-whispergrove-day whispergrove-day))
+     ((memq theme '(au-whispergrove-day whispergrove-day
+                     au-aurum-day aurum-day))
       ;; Solar Noon regime: elevated solar angle (alpha_s ~ 52 deg, Air Mass m ~ 1.22)
       (let* ((min-y 0.500)
              (max-y 0.750)
@@ -205,7 +206,8 @@ Ref:
           (princ (format "   [FAIL] Missing Dusk Accents in expected spectral envelopes.\n"))
           (setq fails (1+ fails)))))
 
-     ((memq theme '(au-aurum-night aurum-night au-aurum-twilight aurum-twilight))
+     ((memq theme '(au-aurum-night aurum-night au-aurum-twilight aurum-twilight
+                     au-aurum-day aurum-day))
       ;; Check zero melanopsin excitation: all core syntax and chrome tokens outside blue/cyan [180°..260°]
       (let* ((token-list (list (cons "cursor" (plist-get pal :cursor))
                                (cons "fnname" (plist-get pal :fnname))

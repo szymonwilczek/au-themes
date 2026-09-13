@@ -29,8 +29,10 @@
 ;; - `au-whispergrove-night`: Deep nocturnal whisper grove sanctuary (LCD/OLED calibrated)
 ;; - `au-whispergrove-evening`: Soft twilight whisper grove evening (elevated dark)
 ;; - `au-whispergrove-morning`: Dewy dawn mist whisper grove canopy (subdued daylight)
+;; - `au-whispergrove-day`: Misty temperate whisper grove daylight sanctuary
 ;; - `au-aurum-twilight`: Volcanic basalt, ancient gold, olivine, and amethyst sanctuary
 ;; - `au-aurum-night`: Volcanic basalt and ancient gold sanctuary (zero blue light, pure warm gold)
+;; - `au-aurum-day`: Warm sandstone, ancient gold, and basalt daylight sanctuary (zero blue light)
 ;;
 ;; All themes in this suite use the `au-` prefix.
 
@@ -42,6 +44,7 @@
 (require 'au-whispergrove-night-theme)
 (require 'au-aurum-twilight-theme)
 (require 'au-aurum-night-theme)
+(require 'au-aurum-day-theme)
 
 (defgroup au-themes ()
   "Sensory-safe, scientifically gated themes for autism and neurodivergence."
@@ -54,7 +57,8 @@
     au-whispergrove-morning
     au-whispergrove-day
     au-aurum-twilight
-    au-aurum-night)
+    au-aurum-night
+    au-aurum-day)
   "List of themes included in the Au-themes collection."
   :type '(repeat symbol)
   :group 'au-themes)
