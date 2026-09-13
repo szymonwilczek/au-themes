@@ -1,4 +1,4 @@
-;;; au-whispergrove-day-theme.el --- Misty temperate whisper grove daylight theme -*- lexical-binding:t -*-
+;;; au-whispergrove-day-theme.el --- Low-glare daylight theme with green and neutral tones -*- lexical-binding:t -*-
 
 ;; Copyright (C) 2026  Szymon Wilczek
 
@@ -23,9 +23,10 @@
 
 ;;; Commentary:
 ;;
-;; Misty temperate whisper grove daylight sanctuary.
-;; Part of the `au-themes' collection engineered for sensory-safe autistic
-;; and neurodivergent visual perception.
+;; Light theme with muted green and neutral tones.
+;; Calibrated for daylight viewing with strict APCA contrast bounds
+;; and low glare.
+;; Part of the `au-themes' collection.
 
 ;;; Code:
 
@@ -154,7 +155,7 @@
 (modus-themes-theme
  'au-whispergrove-day
  'ef-themes
- "Au Whispergrove Day: daylight theme with clean, single-point palette configuration."
+ "Low-glare daylight theme with muted green and neutral tones."
  'light
  'au-whispergrove-day-palette
  nil
