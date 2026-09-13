@@ -721,9 +721,10 @@ EYES to 2 (binocular; monocular viewing scales the flux by 0.1)."
          (d-sd (- 7.75 (* 5.75 (/ fp (+ fp 2.0))))))
     (+ d-sd (* (- y 28.58) (- 0.021323 (* 0.0095623 d-sd))))))
 
-;; Wavefront aberration ratio scaling W proportional to r^4
+;; 4th-order spherical aberration ratio scaling W_sph proportional to r^4
 (defun rf-wavefront-aberration-factor (pupil-diam-mm)
-  "Wavefront aberration scales with 4th power of pupil radius (Liang & Williams 1997)."
+  "4th-order spherical aberration scales with 4th power of pupil radius (Liang & Williams 1997).
+Note: 2nd-order aberrations (defocus, astigmatism) scale as r^2, 3rd-order (coma) as r^3."
   (let ((r (/ pupil-diam-mm 2.0)))
     (expt (/ r 2.0) 4.0))) ; Normalized to standard 4mm pupil (r=2mm)
 

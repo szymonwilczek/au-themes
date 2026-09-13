@@ -1,9 +1,9 @@
-;;; test-pupil-aberrations.el --- Pupil dynamics and r^4 wavefront aberration scaling -*- lexical-binding: t; -*-
+;;; test-pupil-aberrations.el --- Pupil dynamics and r^4 spherical aberration scaling -*- lexical-binding: t; -*-
 
 (require 'test-palette-extractor)
 
 (defun test-pupil-aberrations-run ()
-  "Evaluate pupil aperture and higher-order wavefront aberrations per Liang & Williams (1997).
+  "Evaluate pupil aperture and 4th-order spherical aberration scaling per Liang & Williams (1997).
 The adapting field is the whole 80x40 viewport at the IEC 61966-2-1
 reference white luminance, not the background colour alone: the pupil
 integrates corneal flux over the field (Stanley & Davies 1995), so using
@@ -20,7 +20,7 @@ only the canvas luminance under-drives the model."
          (fails 0)
          (warnings 0))
     (princ (format "\n======================================================================\n"))
-    (princ (format " Pupil Dynamics & r^4 Wavefront Aberration Suite\n"))
+    (princ (format " Pupil Dynamics & 4th-Order Spherical Wavefront Aberration Suite\n"))
     (princ (format " Ref: Liang & Williams (1997), DOI: 10.1364/JOSAA.14.002873\n"))
     (princ (format " Ref: Watson & Yellott (2012), DOI: 10.1167/12.10.12 (pupil size)\n"))
     (princ (format " Theme: %s | Background: %s\n" theme bg))
@@ -29,7 +29,7 @@ only the canvas luminance under-drives the model."
                    field-deg2 rf-display-white-luminance l-bg))
     (princ (format "Pupil Diameter (Watson-Yellott, age %.0f):  %.2f mm\n"
                    rf-observer-age pupil-diam))
-    (princ (format "Higher-Order Wavefront Aberration Factor: %.2fx (vs 4.0mm pupil)\n" aber-factor))
+    (princ (format "4th-Order Spherical Aberration Factor: %.2fx (vs 4.0mm pupil)\n" aber-factor))
     (princ (format "----------------------------------------------------------------------\n"))
 
     ;; Test 1: Pupil over-dilation threshold
