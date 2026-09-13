@@ -26,7 +26,8 @@
 ;; defocus.
 ;;
 ;; Ref:
-;; Legras et al. (2004) Ophthalmic Physiol Opt; Charman (2005) Clin Exp Optom.
+;; - Legras et al. (2004) Ophthalmic Physiol Opt
+;; - Charman (2005) Clin Exp Optom.
 
 ;;; Code:
 
