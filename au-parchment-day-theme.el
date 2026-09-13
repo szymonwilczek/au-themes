@@ -7,7 +7,7 @@
 
 (defconst au-parchment-day-palette-partial
   '(;; Canvas & Chrome
-    (cursor "#884a30")                 ; Point / cursor indicator
+    (cursor "#62564c")                 ; Point / cursor indicator
     (bg-main "#ded6c4")                ; Primary canvas background
     (bg-dim "#d2cbba")                 ; Inactive windows, dim canvas
     (bg-alt "#c6bfad")                 ; Subtle borders, alternating stripes
@@ -72,12 +72,12 @@
     (bg-popup "#e4dcce")               ; Autocomplete tooltip surface
     (bg-hover "#ccc4b2")               ; Mouse hover overlay
     (bg-hover-secondary "#d2cab8")     ; Secondary hover overlay
-    (bg-hl-line "#d6cebc")             ; Current line indicator
+    (bg-hl-line "#ccc2ae")             ; Current line indicator
     (bg-paren-match "#c8b898")         ; Matching delimiter highlight
     (bg-err "#ebcec8")                 ; Flymake error inline box
     (bg-warning "#ebdab0")             ; Flymake warning inline box
     (bg-info "#dcd0b8")                ; Flymake info inline box
-    (bg-region "#b8a486")              ; Marked region
+    (bg-region "#b0a48e")              ; Marked region
     (fg-line-number-inactive "#8c8272"))) ; Inactive line numbers margin
 
 (defconst au-parchment-day-palette-mappings-partial
@@ -126,10 +126,11 @@
    (append au-parchment-day-palette-mappings-partial ef-themes-palette-common)))
 
 (defconst au-parchment-day-custom-faces
-  '(`(font-lock-keyword-face ((,c :inherit modus-themes-slant :foreground ,keyword)))
-    `(font-lock-builtin-face ((,c :inherit modus-themes-slant :foreground ,builtin)))
-    `(font-lock-comment-face ((,c :inherit modus-themes-slant :foreground ,comment)))
-    `(font-lock-doc-face ((,c :inherit modus-themes-slant :foreground ,docstring)))))
+  '(`(font-lock-keyword-face ((,c :slant italic :foreground ,keyword)))
+    `(font-lock-builtin-face ((,c :slant italic :foreground ,builtin)))
+    `(font-lock-comment-face ((,c :slant italic :foreground ,comment)))
+    `(font-lock-doc-face ((,c :slant italic :foreground ,docstring)))
+    `(font-lock-type-face ((,c :slant italic :foreground ,type)))))
 
 ;;;###theme-autoload
 (modus-themes-theme

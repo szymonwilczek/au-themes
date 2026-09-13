@@ -7,17 +7,17 @@
 
 (defconst au-parchment-night-palette-partial
   '(;; Canvas & Chrome
-    (cursor "#bf782c")                 ; Point / cursor indicator
-    (bg-main "#13110e")                ; Primary canvas background
-    (bg-dim "#1c1915")                 ; Inactive windows, dim canvas
-    (bg-alt "#24201b")                 ; Subtle borders, alternating stripes
+    (cursor "#beaa84")                 ; Point / cursor indicator
+    (bg-main "#18130e")                ; Primary canvas background
+    (bg-dim "#221b14")                 ; Inactive windows, dim canvas
+    (bg-alt "#2c221a")                 ; Subtle borders, alternating stripes
     (fg-main "#a89880")                ; Default buffer text
     (fg-dim "#665c4e")                 ; Comments, metadata
     (fg-alt "#987e72")                 ; Struct properties
     (fg-var "#a89880")                 ; Variable definitions
-    (bg-active "#2c2620")              ; Active modeline frame
-    (bg-inactive "#1c1915")            ; Inactive modeline
-    (border "#3e362e")                 ; Window dividers
+    (bg-active "#34281e")              ; Active modeline frame
+    (bg-inactive "#221b14")            ; Inactive modeline
+    (border "#443426")                 ; Window dividers
 
     ;; Basic Chromatic Scale
     (red "#aa4238")                    ; Errors, critical warnings
@@ -80,19 +80,19 @@
     (bg-removed-refine "#641c14")      ; Diff removed word-level highlight
     (fg-removed "#ffb8b0")             ; Diff removed foreground text
 
-    (bg-mode-line-active "#221c18")    ; Active modeline surface
-    (fg-mode-line-active "#baa88c")    ; Active modeline primary text
-    (bg-completion "#26201a")          ; Minibuffer completion selected row
-    (bg-popup "#181412")               ; Autocomplete tooltip surface
-    (bg-hover "#342a22")               ; Mouse hover overlay
-    (bg-hover-secondary "#3e2e38")     ; Secondary hover overlay
-    (bg-hl-line "#1c1915")             ; Current line indicator
-    (bg-paren-match "#3c3422")         ; Matching delimiter highlight
-    (bg-err "#3a1410")                 ; Flymake error inline box
-    (bg-warning "#34260a")             ; Flymake warning inline box
-    (bg-info "#1e2c14")                ; Flymake info inline box
-    (bg-region "#4e281a")              ; Marked region
-    (fg-line-number-inactive "#62584c"))) ; Inactive line numbers margin
+    (bg-mode-line-active "#261e16")    ; Active modeline surface
+    (fg-mode-line-active "#a89880")    ; Active modeline primary text
+    (bg-completion "#2c2218")          ; Minibuffer completion selected row
+    (bg-popup "#1e1610")               ; Autocomplete tooltip surface
+    (bg-hover "#382c20")               ; Mouse hover overlay
+    (bg-hover-secondary "#423226")     ; Secondary hover overlay
+    (bg-hl-line "#221a14")             ; Current line indicator
+    (bg-paren-match "#443422")         ; Matching delimiter highlight
+    (bg-err "#3e1612")                 ; Flymake error inline box
+    (bg-warning "#38280c")             ; Flymake warning inline box
+    (bg-info "#202e14")                ; Flymake info inline box
+    (bg-region "#343311")              ; Marked region
+    (fg-line-number-inactive "#665c4e"))) ; Inactive line numbers margin
 
 (defconst au-parchment-night-palette-mappings-partial
   '((err red)
@@ -140,10 +140,11 @@
    (append au-parchment-night-palette-mappings-partial ef-themes-palette-common)))
 
 (defconst au-parchment-night-custom-faces
-  '(`(font-lock-keyword-face ((,c :inherit modus-themes-slant :foreground ,keyword)))
-    `(font-lock-builtin-face ((,c :inherit modus-themes-slant :foreground ,builtin)))
-    `(font-lock-comment-face ((,c :inherit modus-themes-slant :foreground ,comment)))
-    `(font-lock-doc-face ((,c :inherit modus-themes-slant :foreground ,docstring)))))
+  '(`(font-lock-keyword-face ((,c :slant italic :foreground ,keyword)))
+    `(font-lock-builtin-face ((,c :slant italic :foreground ,builtin)))
+    `(font-lock-comment-face ((,c :slant italic :foreground ,comment)))
+    `(font-lock-doc-face ((,c :slant italic :foreground ,docstring)))
+    `(font-lock-type-face ((,c :slant italic :foreground ,type)))))
 
 ;;;###theme-autoload
 (modus-themes-theme
