@@ -1,4 +1,4 @@
-;;; au-parchment-day-theme.el --- Manuscript, vellum, and oak gall ink daytime theme -*- lexical-binding:t -*-
+;;; au-parchment-day-theme.el --- Low-chroma daylight theme with typographic emphasis -*- lexical-binding:t -*-
 
 ;; Copyright (C) 2026  Szymon Wilczek
 
@@ -23,10 +23,10 @@
 
 ;;; Commentary:
 ;;
-;; Authentic medieval manuscript and vellum daylight sanctuary with minimal
-;; chroma entropy and typographic hierarchy.
-;; Part of the `au-themes' collection engineered for sensory-safe autistic
-;; and neurodivergent visual perception.
+;; Monochrome-leaning light theme with low chromatic entropy.
+;; Uses typographic italics and luminance steps instead of color contrasts
+;; to suppress visual noise.
+;; Part of the `au-themes' collection.
 
 ;;; Code:
 
@@ -163,7 +163,7 @@
 (modus-themes-theme
  'au-parchment-day
  'ef-themes
- "Au Parchment Day: authentic medieval manuscript and vellum daylight sanctuary with minimal chroma entropy and typographic hierarchy."
+ "Low-chroma daylight theme with typographic italics and minimal color variance."
  'light
  'au-parchment-day-palette
  nil
