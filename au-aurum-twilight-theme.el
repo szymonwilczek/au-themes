@@ -1,4 +1,4 @@
-;;; au-aurum-twilight-theme.el --- Deep volcanic basalt, ancient gold, and amethyst theme -*- lexical-binding:t -*-
+;;; au-aurum-twilight-theme.el --- Intermediate dark theme with gold and purple accents -*- lexical-binding:t -*-
 
 ;; Copyright (C) 2026  Szymon Wilczek
 
@@ -23,9 +23,10 @@
 
 ;;; Commentary:
 ;;
-;; Deep nocturnal basalt, ancient gold, and amethyst sanctuary.
-;; Part of the `au-themes' collection engineered for sensory-safe autistic
-;; and neurodivergent visual perception.
+;; Dark theme with warm gold and subdued purple accents.
+;; Calibrated for transitional ambient lighting and balanced visual pathway
+;; excitation.
+;; Part of the `au-themes' collection.
 
 ;;; Code:
 
@@ -169,7 +170,7 @@
 (modus-themes-theme
  'au-aurum-twilight
  'ef-themes
- "Au Aurum Twilight: deep volcanic basalt, ancient gold, olivine, and amethyst sanctuary calibrated for photophobia and zero blue light."
+ "Intermediate dark theme with gold and purple accents for transitional lighting."
  'dark
  'au-aurum-twilight-palette
  nil
