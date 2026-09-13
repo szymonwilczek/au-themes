@@ -22,7 +22,11 @@
 
 ;;; Commentary:
 ;;
-;; Evaluate mesopic luminance and Purkinje rod shift per CIE 191:2010.
+;; Evaluate mesopic luminance and Purkinje rod shift.
+;;
+;; Ref:
+;; - CIE 191:2010 (MES-2)
+;; - Rea et al. (2004) DOI: 10.1191/1365782804li114oa
 
 ;;; Code:
 
