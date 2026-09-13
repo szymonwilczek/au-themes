@@ -22,12 +22,16 @@
 
 ;;; Commentary:
 ;;
-;; Evaluate pupil aperture and 4th-order spherical aberration scaling per
-;; Liang & Williams (1997).
+;; Evaluate pupil aperture and 4th-order spherical aberration scaling.
 ;; The adapting field is the whole 80x40 viewport at the IEC 61966-2-1 reference
 ;; white luminance, not the background colour alone: the pupil integrates
 ;; corneal flux over the field (Stanley & Davies 1995), so using only the canvas
 ;; luminance under-drives the model.
+;;
+;; Ref:
+;; - Liang & Williams (1997) JOSA A 14:2873-2883
+;; - Watson & Yellott (2012) J. Vis. 12(10):12
+;; - Stanley & Davies (1995)
 
 ;;; Code:
 
