@@ -6,28 +6,33 @@
 (require 'test-palette-extractor)
 
 (defun au-theme-family (theme)
-  "Return the package/family symbol of THEME ('whispergrove or 'aurum)."
+  "Return the package/family symbol of THEME ('whispergrove, 'aurum, or 'parchment)."
   (let ((name (symbol-name theme)))
     (cond
      ((string-match-p "whispergrove" name) 'whispergrove)
      ((string-match-p "aurum" name) 'aurum)
+     ((string-match-p "parchment" name) 'parchment)
      (t (error "Unknown theme family for: %s" theme)))))
 
 (defun au-theme-counterparts (theme)
   "Return the counterpart themes in other families for THEME."
   (cond
    ((memq theme '(au-whispergrove-day whispergrove-day))
-    '(au-aurum-day))
+    '(au-aurum-day au-parchment-day))
    ((memq theme '(au-whispergrove-morning whispergrove-morning))
-    '(au-aurum-day))
+    '(au-aurum-day au-parchment-day))
    ((memq theme '(au-aurum-day aurum-day))
-    '(au-whispergrove-day au-whispergrove-morning))
+    '(au-whispergrove-day au-whispergrove-morning au-parchment-day))
+   ((memq theme '(au-parchment-day parchment-day))
+    '(au-whispergrove-day au-whispergrove-morning au-aurum-day))
    ((memq theme '(au-whispergrove-night whispergrove-night))
-    '(au-aurum-night))
+    '(au-aurum-night au-parchment-night))
    ((memq theme '(au-whispergrove-evening whispergrove-evening))
-    '(au-aurum-night))
+    '(au-aurum-night au-parchment-night))
    ((memq theme '(au-aurum-night aurum-night))
-    '(au-whispergrove-night au-whispergrove-evening))
+    '(au-whispergrove-night au-whispergrove-evening au-parchment-night))
+   ((memq theme '(au-parchment-night parchment-night))
+    '(au-whispergrove-night au-whispergrove-evening au-aurum-night))
    ((memq theme '(au-aurum-twilight aurum-twilight))
     nil)))
 
@@ -183,6 +188,41 @@ au-whispergrove-day) must maintain strict categorical, perceptual, and chromatic
                                    reg-hex reg-h))
                     (setq passes (1+ passes)))
                 (princ (format "   [FAIL] Whispergrove Selection Region (%s, hue %.1f°): Not in forest moss envelope [115°..175°].\n"
+                               reg-hex reg-h))
+                (setq fails (1+ fails)))))
+
+           ((eq family 'parchment)
+            ;; Parchment requirements:
+            ;; 1. Minimal Chroma Entropy: all syntax code tokens must maintain Oklab C < 0.042
+            ;;    to eliminate "rainbow Christmas tree" sensory overload.
+            (let* ((syntax-tokens '(:keyword :type :builtin :constant :number :fnname
+                                    :fnname-call :string :property))
+                   (excess-chroma nil))
+              (dolist (tok syntax-tokens)
+                (let* ((hex (plist-get pal tok))
+                       (c (nth 1 (rf-hex-to-oklch hex))))
+                  (when (> c 0.042)
+                    (push (list tok hex c) excess-chroma))))
+              (if (null excess-chroma)
+                  (progn
+                    (princ "   [PASS] Parchment Minimal Chroma Entropy: All syntax tokens maintain Oklab C < 0.040 (zero sensory noise).\n")
+                    (setq passes (1+ passes)))
+                (princ (format "   [FAIL] Parchment Chroma Violation: Tokens exceed sensory-safe ceiling C=0.040: %S\n"
+                               excess-chroma))
+                (setq fails (1+ fails))))
+
+            ;; 2. Selection region MUST be authentic bound vellum, linen, or antique leather (warm hue in [25°..110°])
+            ;;    and NEVER cool forest green/cyan/blue (h in [120°..280°]).
+            (let* ((reg-hex (plist-get pal :bg-region))
+                   (reg-okl (rf-hex-to-oklch reg-hex))
+                   (reg-h   (nth 2 reg-okl))
+                   (reg-ok  (and (>= reg-h 25.0) (<= reg-h 110.0))))
+              (if reg-ok
+                  (progn
+                    (princ (format "   [PASS] Parchment Selection Region (%s, hue %.1f°): Authentic manuscript vellum / leather binding.\n"
+                                   reg-hex reg-h))
+                    (setq passes (1+ passes)))
+                (princ (format "   [FAIL] Parchment Selection Region (%s, hue %.1f°): Inauthentic binding hue (expected [25°..110°]).\n"
                                reg-hex reg-h))
                 (setq fails (1+ fails))))))))
 

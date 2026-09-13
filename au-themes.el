@@ -33,6 +33,8 @@
 ;; - `au-aurum-twilight`: Volcanic basalt, ancient gold, olivine, and amethyst sanctuary
 ;; - `au-aurum-night`: Volcanic basalt and ancient gold sanctuary (zero blue light, pure warm gold)
 ;; - `au-aurum-day`: Warm sandstone, ancient gold, and basalt daylight sanctuary (zero blue light)
+;; - `au-parchment-night`: Antique leather binding and worn vellum nocturnal sanctuary (minimal chroma entropy)
+;; - `au-parchment-day`: Authentic medieval manuscript and vellum daylight sanctuary (minimal chroma entropy)
 ;;
 ;; All themes in this suite use the `au-` prefix.
 
@@ -45,6 +47,8 @@
 (require 'au-aurum-twilight-theme)
 (require 'au-aurum-night-theme)
 (require 'au-aurum-day-theme)
+(require 'au-parchment-night-theme)
+(require 'au-parchment-day-theme)
 
 (defgroup au-themes ()
   "Sensory-safe, scientifically gated themes for autism and neurodivergence."
@@ -58,7 +62,9 @@
     au-whispergrove-day
     au-aurum-twilight
     au-aurum-night
-    au-aurum-day)
+    au-aurum-day
+    au-parchment-night
+    au-parchment-day)
   "List of themes included in the Au-themes collection."
   :type '(repeat symbol)
   :group 'au-themes)

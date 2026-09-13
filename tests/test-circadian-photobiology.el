@@ -35,7 +35,8 @@ Ref:
     (cond
      ((memq theme '(au-whispergrove-night whispergrove-night
                      au-aurum-twilight aurum-twilight
-                     au-aurum-night aurum-night))
+                     au-aurum-night aurum-night
+                     au-parchment-night parchment-night))
       ;; Night regime: nocturnal starlight/moonlight envelope
       (let ((night-ok (<= bg-y 0.020)))
         (if night-ok
@@ -46,7 +47,8 @@ Ref:
           (setq fails (1+ fails)))))
 
      ((memq theme '(au-whispergrove-day whispergrove-day
-                     au-aurum-day aurum-day))
+                     au-aurum-day aurum-day
+                     au-parchment-day parchment-day))
       ;; Solar Noon regime: elevated solar angle (alpha_s ~ 52 deg, Air Mass m ~ 1.22)
       (let* ((min-y 0.500)
              (max-y 0.750)
@@ -207,7 +209,9 @@ Ref:
           (setq fails (1+ fails)))))
 
      ((memq theme '(au-aurum-night aurum-night au-aurum-twilight aurum-twilight
-                     au-aurum-day aurum-day))
+                     au-aurum-day aurum-day
+                     au-parchment-night parchment-night
+                     au-parchment-day parchment-day))
       ;; Check zero melanopsin excitation: all core syntax and chrome tokens outside blue/cyan [180°..260°]
       (let* ((token-list (list (cons "cursor" (plist-get pal :cursor))
                                (cons "fnname" (plist-get pal :fnname))
