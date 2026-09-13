@@ -1,4 +1,4 @@
-;;; au-aurum-day-theme.el --- Warm sandstone, ancient gold, and basalt daytime theme -*- lexical-binding:t -*-
+;;; au-aurum-day-theme.el --- Warm daylight theme without blue-light hazard -*- lexical-binding:t -*-
 
 ;; Copyright (C) 2026  Szymon Wilczek
 
@@ -23,9 +23,9 @@
 
 ;;; Commentary:
 ;;
-;; Warm sandstone, ancient gold, and basalt daylight sanctuary.
-;; Part of the `au-themes' collection designed for sensory-safe autistic
-;; and neurodivergent visual perception.
+;; Light theme with warm earth tones and no blue-light emission.
+;; Calibrated for severe photophobia, ocular migraine, and daytime readability.
+;; Part of the `au-themes' collection.
 
 ;;; Code:
 
@@ -154,7 +154,7 @@
 (modus-themes-theme
  'au-aurum-day
  'ef-themes
- "Au Aurum Day: warm sandstone, ancient gold, and basalt daylight sanctuary calibrated for photophobia and zero blue light."
+ "Warm daylight theme with zero blue-light hazard, calibrated for photophobia."
  'light
  'au-aurum-day-palette
  nil
