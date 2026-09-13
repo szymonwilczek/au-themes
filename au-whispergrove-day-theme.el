@@ -4,21 +4,21 @@
 
 (defconst au-whispergrove-day-palette-partial
   '(;; Canvas & Chrome
-    (cursor "#005878")                 ; Point / cursor indicator
-    (bg-main "#b6beb4")                ; Primary canvas background
-    (bg-dim "#a8b0a6")                 ; Inactive windows, dim canvas
-    (bg-alt "#9aa298")                 ; Subtle borders, alternating stripes
-    (fg-main "#18201a")                ; Default buffer text
-    (fg-dim "#4a564c")                 ; Comments, metadata
+    (cursor "#006288")                 ; Point / cursor indicator
+    (bg-main "#cedccb")                ; Primary canvas background
+    (bg-dim "#bfcdbc")                 ; Inactive windows, dim canvas
+    (bg-alt "#b0beae")                 ; Subtle borders, alternating stripes
+    (fg-main "#222a24")                ; Default buffer text
+    (fg-dim "#58645a")                 ; Comments, metadata
     (fg-alt "#52425e")                 ; Struct properties
     (fg-var "#104a44")                 ; Variable definitions
-    (bg-active "#949e93")              ; Active modeline, focused bars
-    (bg-inactive "#a8b0a7")            ; Inactive modeline
-    (border "#7e867d")                 ; Window dividers
+    (bg-active "#aebfae")              ; Active modeline, focused bars
+    (bg-inactive "#bfcdbc")            ; Inactive modeline
+    (border "#8e9c8c")                 ; Window dividers
 
 
     ;; Basic Chromatic Scale
-    (red "#82322a")                    ; Errors, critical warnings
+    (red "#a0342c")                    ; Errors, critical warnings
     (red-warmer "#5c1e10")             ; String literals
     (red-cooler "#7a2822")             ; Diff deletions, removal markers
     (red-faint "#3e4c44")              ; Structural brackets ( ) [ ] { }
@@ -26,7 +26,7 @@
     (green "#085a38")                  ; Primitive types (int, size_t, struct)
     (green-warmer "#5c183c")           ; Constant values and macros (NULL, CONST)
     (green-cooler "#502f12")           ; Control keywords (if, while, for, return)
-    (green-faint "#4a564c")            ; Documentation strings, inline comments
+    (green-faint "#58645a")            ; Documentation strings, inline comments
 
     (yellow "#502f12")                 ; Keyword alias
     (yellow-warmer "#5e5000")          ; Numeric literals (0, 24, 32)
@@ -70,12 +70,12 @@
     (bg-popup "#cbcec8")               ; Autocomplete tooltip surface
     (bg-hover "#b0b4ac")               ; Mouse hover overlay
     (bg-hover-secondary "#b6b2bc")     ; Secondary hover overlay
-    (bg-hl-line "#aab2a8")             ; Current line indicator
+    (bg-hl-line "#c2d0c0")             ; Current line indicator
     (bg-paren-match "#a0c0a8")         ; Matching delimiter highlight
     (bg-err "#dfb6b6")                 ; Flymake error inline box
     (bg-warning "#dfd2a6")             ; Flymake warning inline box
     (bg-info "#b0d4b8")                ; Flymake info inline box
-    (bg-region "#88ba9e")))            ; Mouse/keyboard marked region
+    (bg-region "#94c6a6")))            ; Mouse/keyboard marked region
 
 (defconst au-whispergrove-day-palette-mappings-partial
   '((err red)
