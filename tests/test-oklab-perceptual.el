@@ -22,7 +22,10 @@
 
 ;;; Commentary:
 ;;
-;; Evaluate Oklch perceptual parameters [L C h] per Ottosson (2020).
+;; Evaluate Oklch perceptual parameters [L C h].
+;;
+;; Ref:
+;; Ottosson (2020) A Perceptual Color Space for Computer Graphics.
 
 ;;; Code:
 
