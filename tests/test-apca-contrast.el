@@ -25,7 +25,8 @@
 ;; Evaluate APCA 0.0.98G-4g contrast boundaries calibrated for photophobia
 ;; and readability.
 ;;
-;; Note: Standard APCA Bronze guidelines target Lc >= 75 for body text
+;; Note:
+;; Standard APCA Bronze guidelines target Lc >= 75 for body text
 ;; and Lc >= 60 for content.
 ;; In dark-mode photophobia design, body text is calibrated to moderate Lc
 ;; (46-62) to prevent edge irradiation and pupil constriction, while secondary
