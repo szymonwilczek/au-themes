@@ -24,6 +24,7 @@
 (require 'au-whispergrove-evening-theme)
 (require 'au-whispergrove-morning-theme)
 (require 'au-whispergrove-day-theme)
+(require 'au-aurum-twilight-theme)
 (require 'au-aurum-night-theme)
 
 (defvar rf-active-theme
@@ -128,6 +129,8 @@
                         au-whispergrove-morning-palette-partial)
                        ((memq theme '(au-whispergrove-day whispergrove-day))
                         au-whispergrove-day-palette-partial)
+                       ((memq theme '(au-aurum-twilight aurum-twilight))
+                        au-aurum-twilight-palette-partial)
                        ((memq theme '(au-aurum-night aurum-night))
                         au-aurum-night-palette-partial)
                        (t (error "Unknown theme: %s" theme))))

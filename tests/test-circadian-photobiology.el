@@ -34,6 +34,7 @@ Ref:
     (princ "\nPart 1: Solar Elevation & Photometric Adaptation Envelope:\n")
     (cond
      ((memq theme '(au-whispergrove-night whispergrove-night
+                     au-aurum-twilight aurum-twilight
                      au-aurum-night aurum-night))
       ;; Night regime: nocturnal starlight/moonlight envelope
       (let ((night-ok (<= bg-y 0.020)))
@@ -204,7 +205,7 @@ Ref:
           (princ (format "   [FAIL] Missing Dusk Accents in expected spectral envelopes.\n"))
           (setq fails (1+ fails)))))
 
-     ((memq theme '(au-aurum-night aurum-night))
+     ((memq theme '(au-aurum-night aurum-night au-aurum-twilight aurum-twilight))
       ;; Check zero melanopsin excitation: all core syntax and chrome tokens outside blue/cyan [180°..260°]
       (let* ((token-list (list (cons "cursor" (plist-get pal :cursor))
                                (cons "fnname" (plist-get pal :fnname))
