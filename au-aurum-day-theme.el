@@ -13,7 +13,7 @@
     (bg-alt "#c6bfb0")                 ; Subtle borders, alternating stripes
     (fg-main "#2b2720")                ; Default buffer text
     (fg-dim "#625d54")                 ; Comments, metadata
-    (fg-alt "#484f2f")                 ; Struct properties
+    (fg-alt "#605644")                 ; Struct properties
     (fg-var "#2b2720")                 ; Variable definitions
     (bg-active "#c8c0b2")              ; Active modeline, focused bars
     (bg-inactive "#d2cbbe")            ; Inactive modeline
@@ -21,31 +21,31 @@
 
     ;; Basic Chromatic Scale
     (red "#a54b32")                    ; Errors, critical warnings
-    (red-warmer "#532103")             ; String literals
+    (red-warmer "#50240c")             ; String literals
     (red-cooler "#9e422c")             ; Diff deletions, removal markers
     (red-faint "#544e45")              ; Structural brackets
 
-    (green "#396632")                  ; Primitive types
-    (green-warmer "#5f0f12")           ; Constant values and macros
-    (green-cooler "#543500")           ; Control keywords
+    (green "#7c5610")                  ; Primitive types
+    (green-warmer "#761814")           ; Constant values and macros
+    (green-cooler "#4a3400")           ; Control keywords
     (green-faint "#625d54")            ; Documentation strings, inline comments
 
-    (yellow "#543500")                 ; Keyword alias
-    (yellow-warmer "#675b13")          ; Numeric literals
+    (yellow "#4a3400")                 ; Keyword alias
+    (yellow-warmer "#6c6400")          ; Numeric literals
     (yellow-cooler "#674759")          ; Preprocessor directives
     (yellow-faint "#70685a")           ; Informational tooltips, fringe markers
 
-    (blue "#30385e")                   ; Function definitions
-    (blue-warmer "#584a7a")            ; Function calls
+    (blue "#483620")                   ; Function definitions
+    (blue-warmer "#8e402a")            ; Function calls
     (blue-cooler "#585248")            ; Binary and unary operators
-    (blue-faint "#2c6957")             ; Built-in functions
+    (blue-faint "#50543a")             ; Built-in functions
 
-    (magenta "#30385e")                ; Composite types: struct, union, enum
-    (magenta-warmer "#584a7a")         ; Extended library types
-    (magenta-cooler "#48325a")         ; Rare syntax nodes, special escapes
+    (magenta "#7c5610")                ; Composite types: struct, union, enum
+    (magenta-warmer "#8e402a")         ; Extended library types
+    (magenta-cooler "#743a18")         ; Rare syntax nodes, special escapes
     (magenta-faint "#625d54")          ; Inactive conditional blocks
 
-    (cyan "#543500")                   ; Keyword fallback
+    (cyan "#4a3400")                   ; Keyword fallback
     (cyan-warmer "#674759")            ; Preprocessor alias
     (cyan-cooler "#585248")            ; Operator alias
     (cyan-faint "#665f54")             ; Punctuation delimiters (, ;)
@@ -73,11 +73,11 @@
     (bg-hover "#ccc6b8")               ; Mouse hover overlay
     (bg-hover-secondary "#d2ccc0")     ; Secondary hover overlay
     (bg-hl-line "#d5cfc2")             ; Current line indicator
-    (bg-paren-match "#a8ccb0")         ; Matching delimiter highlight
+    (bg-paren-match "#d4ba8a")         ; Matching delimiter highlight
     (bg-err "#ebd0c8")                 ; Flymake error inline box
     (bg-warning "#ebddb0")             ; Flymake warning inline box
-    (bg-info "#d8e2c0")                ; Flymake info inline box
-    (bg-region "#bcc6aa")))            ; Mouse/keyboard marked region
+    (bg-info "#dcd4b8")                ; Flymake info inline box
+    (bg-region "#d8be78")))            ; Mouse/keyboard marked region
 
 (defconst au-aurum-day-palette-mappings-partial
   '((err red)

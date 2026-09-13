@@ -148,9 +148,7 @@ on the hue pair."
                (hue2 (nth 2 okl2))
                (raw-dh (abs (- hue1 hue2)))
                (dh (min raw-dh (- 360.0 raw-dh)))
-               (ok (if (eq polarity 'light)
-                       (>= dh min-dh)
-                     (or (>= dh min-dh) (>= dl 0.08)))))
+               (ok (or (>= dh min-dh) (>= dl 0.08))))
           (if ok
               (setq passes (1+ passes))
             (setq fails (1+ fails)))

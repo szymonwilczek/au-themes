@@ -45,7 +45,8 @@
     test-crowding-effect-foveal
     test-isoluminance-jitter
     test-afterimage-persistence
-    test-circadian-photobiology))
+    test-circadian-photobiology
+    test-cross-family-distinctiveness))
 
 (defvar au-test-themes
   (let ((env (or (getenv "AU_TEST_THEMES") (getenv "RF_TEST_THEMES"))))
