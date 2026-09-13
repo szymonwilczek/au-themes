@@ -32,8 +32,9 @@
 ;; (~10 cd/m2 on 100 cd/m2 displays).
 ;;
 ;; Ref:
-;; Stiles & Crawford (1933) Proc.  R.  Soc.; Fan & Yao (2011) Autism Res.;
-;; Westheimer (1967).
+;; - Stiles & Crawford (1933) Proc. R. Soc.
+;; - Fan & Yao (2011) Autism Res.
+;; - Westheimer (1967)
 
 ;;; Code:
 
