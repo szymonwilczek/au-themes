@@ -83,7 +83,7 @@
     (bg-popup "#181412")               ; Autocomplete tooltip surface
     (bg-hover "#342a22")               ; Mouse hover overlay
     (bg-hover-secondary "#3e2e38")     ; Secondary hover overlay
-    (bg-hl-line "#181410")             ; Current line indicator
+    (bg-hl-line "#1e1915")             ; Current line indicator
     (bg-paren-match "#3c3822")         ; Matching delimiter highlight
     (bg-err "#3a1410")                 ; Flymake error inline box
     (bg-warning "#34260a")             ; Flymake warning inline box
