@@ -10,7 +10,7 @@
     (bg-alt "#28221e")                 ; Subtle borders, alternating stripes
     (fg-main "#b2a47e")                ; Default buffer text
     (fg-dim "#706658")                 ; Comments, metadata
-    (fg-alt "#84967c")                 ; Struct properties
+    (fg-alt "#8d9078")                 ; Struct properties
     (fg-var "#a89876")                 ; Variable definitions
     (bg-active "#3e3228")              ; Active modeline, focused bars
     (bg-inactive "#1c1815")            ; Inactive modeline
@@ -18,48 +18,48 @@
 
     ;; Basic Chromatic Scale
     (red "#b84c3e")                    ; Errors, critical warnings
-    (red-warmer "#885c3c")             ; String literals
+    (red-warmer "#9e5467")             ; String literals
     (red-cooler "#a44638")             ; Diff deletions, removal markers
     (red-faint "#84786a")              ; Structural brackets ( ) [ ] { }
 
-    (green "#54a866")                  ; Primitive types
-    (green-warmer "#9e4c38")           ; Constant values and macros
-    (green-cooler "#b46a36")           ; Control keywords
+    (green "#d2956a")                  ; Primitive types
+    (green-warmer "#9c4628")           ; Constant values and macros
+    (green-cooler "#a97a3a")           ; Control keywords
     (green-faint "#706658")            ; Documentation strings, inline comments
 
-    (yellow "#b46a36")                 ; Keyword alias
-    (yellow-warmer "#c49c3e")          ; Numeric literals
-    (yellow-cooler "#987a30")          ; Preprocessor directives
+    (yellow "#a97a3a")                 ; Keyword alias
+    (yellow-warmer "#caa042")          ; Numeric literals
+    (yellow-cooler "#ad7d64")          ; Preprocessor directives
     (yellow-faint "#7a6e5c")           ; Informational tooltips, fringe markers
 
-    (blue "#8e649a")                   ; Function definitions
-    (blue-warmer "#ba90c8")            ; Function calls
+    (blue "#9a6b3d")                   ; Function definitions
+    (blue-warmer "#b26457")            ; Function calls
     (blue-cooler "#8a7e70")            ; Binary and unary operators
-    (blue-faint "#4a8c72")             ; Built-in functions
+    (blue-faint "#767a66")             ; Built-in functions
 
-    (magenta "#8e649a")                ; Composite types: struct, union, enum
-    (magenta-warmer "#ba90c8")         ; Extended library types
-    (magenta-cooler "#765080")         ; Rare syntax nodes, special escapes
+    (magenta "#d2956a")                ; Composite types: struct, union, enum
+    (magenta-warmer "#b26457")         ; Extended library types
+    (magenta-cooler "#ad7d64")         ; Rare syntax nodes, special escapes
     (magenta-faint "#706658")          ; Inactive conditional blocks
 
-    (cyan "#b46a36")                   ; Keyword fallback
-    (cyan-warmer "#987a30")            ; Preprocessor alias
+    (cyan "#a97a3a")                   ; Keyword fallback
+    (cyan-warmer "#ad7d64")            ; Preprocessor alias
     (cyan-cooler "#8a7e70")            ; Operator alias
     (cyan-faint "#7c7262")             ; Punctuation delimiters (, ;)
 
     ;; Panels, Diffs and Structural Highlights
     (bg-red-intense "#6a1c16")         ; Blocking errors, fatal assertion panel
-    (bg-green-intense "#2e4822")       ; Success banner, terminal olivine state
+    (bg-green-intense "#342e14")       ; Success banner
     (bg-yellow-intense "#583e10")      ; Warning banner, review request
-    (bg-blue-intense "#40264a")        ; Info banner, active selections
-    (bg-magenta-intense "#441e3e")     ; Special prompt background
+    (bg-blue-intense "#483018")        ; Info banner, active selections
+    (bg-magenta-intense "#422018")     ; Special prompt background
     (bg-cyan-intense "#483614")        ; Incsearch current match target
 
     (bg-red-subtle "#341612")          ; Diff context deletion background
-    (bg-green-subtle "#1c2a16")        ; Diff context addition background
+    (bg-green-subtle "#221e10")        ; Diff context addition background
     (bg-yellow-subtle "#2e2210")       ; Diff whitespace/context change
-    (bg-blue-subtle "#281a30")         ; Mode-line subtle indicators
-    (bg-magenta-subtle "#261628")      ; Matching paren context background
+    (bg-blue-subtle "#2e2216")         ; Mode-line subtle indicators
+    (bg-magenta-subtle "#2c1c16")      ; Matching paren context background
     (bg-cyan-subtle "#262012")         ; Structural block highlight
 
     (bg-added "#1e3412")               ; Diff added line baseline
