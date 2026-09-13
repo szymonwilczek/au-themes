@@ -22,8 +22,10 @@
 
 ;;; Commentary:
 ;;
-;; Evaluate ciliary muscle stability and astigmatism tolerance per Charman
-;; & Heron (1988).
+;; Evaluate ciliary muscle stability and astigmatism tolerance.
+;;
+;; Ref:
+;; Charman & Heron (1988), DOI: 10.1111/j.1475-1313.1988.tb01090.x
 
 ;;; Code:
 
