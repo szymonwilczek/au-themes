@@ -44,7 +44,8 @@
     test-tonic-accommodation-dark-focus
     test-crowding-effect-foveal
     test-isoluminance-jitter
-    test-afterimage-persistence))
+    test-afterimage-persistence
+    test-circadian-photobiology))
 
 (defvar au-test-themes
   (let ((env (or (getenv "AU_TEST_THEMES") (getenv "RF_TEST_THEMES"))))
