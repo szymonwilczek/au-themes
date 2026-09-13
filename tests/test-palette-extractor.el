@@ -1085,7 +1085,7 @@ SOLID-ANGLE defaults to 0.00025 sr (typical word at 60cm).
 AMBIENT-LUM defaults to 1.5 cd/m2 ambient field adaptation."
   (let* ((omega (or solid-angle 0.00025))
          (ambient (or ambient-lum 1.5))
-         (peak-cd-m2 100.0)
+         (peak-cd-m2 rf-display-white-luminance)
          (ls (* (rf-luminance-y token-hex) peak-cd-m2))
          (lb (+ (* (rf-luminance-y bg-hex) peak-cd-m2) ambient)))
     (* 0.478 (/ (* (expt (max 0.001 ls) 1.6) (expt omega 0.8))

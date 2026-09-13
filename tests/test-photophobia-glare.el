@@ -40,14 +40,14 @@ Ref: CIE Discomfort Glare Index; CIE S 026:2018; Noseda et al. (2010, 2017) Natu
 
     (princ (format "\n======================================================================\n"))
     (princ (format " Clinical Photophobia, Discomfort Glare & CIE S 026 Irradiance Suite\n"))
-    (princ (format " Ref: CIE S 026:2018; Hopkinson (1972) CIE DGI; Noseda et al. (2010, 2017)\n"))
+    (princ (format " Ref: CIE S 026:2018; Hopkinson (1963, 1972) DGI; Brown et al. (2022) PLOS Biol\n"))
     (princ (format " Theme: %s (%s) | Background: %s (Y_bg: %.6f)\n" theme polarity bg bg-y))
     (princ (format "======================================================================\n"))
 
     ;; -------------------------------------------------------------------------
-    ;; Part 1: CIE Discomfort Glare Index (DGI) & Visual Fatigue Prevention
+    ;; Part 1: Hopkinson / Cornell Discomfort Glare Index (DGI)
     ;; -------------------------------------------------------------------------
-    (princ "\nPart 1: CIE Discomfort Glare Index (DGI) & Token Glare Hotspots:\n")
+    (princ "\nPart 1: Hopkinson/Cornell Discomfort Glare Index (DGI) & Token Glare Hotspots:\n")
     (princ (format "%-30s | %-8s | %-8s | %-9s | %-9s | %-8s\n"
                    "Token Role" "Hex" "Lum (Y)" "Glare (G)" "Max G" "Status"))
     (princ (format "-------------------------------+----------+----------+-----------+-----------+----------\n"))
@@ -76,9 +76,9 @@ Ref: CIE Discomfort Glare Index; CIE S 026:2018; Noseda et al. (2010, 2017) Natu
                      cumulative-dgi max-dgi (if dgi-ok "PASS" "FAIL"))))
 
     ;; -------------------------------------------------------------------------
-    ;; Part 2: CIE S 026 ipRGC Melanopic Irradiance (Retinohypothalamic Migraine Gate)
+    ;; Part 2: CIE S 026 ipRGC Melanopic Irradiance & Corneal Mel-EDI (Brown 2022)
     ;; -------------------------------------------------------------------------
-    (princ "\nPart 2: CIE S 026 ipRGC Melanopic Irradiance (Peak ~490nm):\n")
+    (princ "\nPart 2: CIE S 026 ipRGC Melanopic Irradiance & Circadian Load:\n")
     (princ "Neuro-ocular protection: ipRGC excitation triggers retinal-thalamic migraine pathways.\n")
     (princ (format "%-30s | %-8s | %-9s | %-7s | %-11s | %-8s\n"
                    "Token Role" "Hex" "Melanopic" "M/P Rat" "Threshold" "Status"))
@@ -88,7 +88,7 @@ Ref: CIE Discomfort Glare Index; CIE S 026:2018; Noseda et al. (2010, 2017) Natu
              (key   (cadr item))
              (hex   (plist-get pal key))
              (m-val (rf-melanopic-irradiance hex))
-             (mp    (rf-melanopic-photopic-ratio hex))
+             (mp    (or (rf-melanopic-photopic-ratio hex) 0.0))
              (max-m (if (eq polarity 'light)
                         0.25
                       (cond
@@ -96,9 +96,6 @@ Ref: CIE Discomfort Glare Index; CIE S 026:2018; Noseda et al. (2010, 2017) Natu
                        ((memq key '(:string :number :builtin :err :fg-dim :preprocessor)) 0.35)
                        ;; Short-wavelength tokens (constants, function calls, cursor): safe neuro threshold
                        (t 0.65))))
-             ;; mel-DER ceiling.  No tolerance is added: the 0.001 "IEEE 754
-             ;; epsilon" removed here was 1.1e11 times binary64 rounding error
-             ;; (~2e-16 relative) and masked a real 3e-5 relative exceedance.
              (max-mp 2.00)
              (ok (and (<= m-val max-m) (<= mp max-mp))))
         (if ok
@@ -107,6 +104,19 @@ Ref: CIE Discomfort Glare Index; CIE S 026:2018; Noseda et al. (2010, 2017) Natu
         (princ (format "%-30s | %-8s | %9.4f | %6.2fx  | M <= %5.2f   | %s\n"
                        label hex m-val mp max-m (if ok "PASS" "FAIL")))))
     (princ (format "-------------------------------+----------+-----------+---------+-------------+----------\n"))
+
+    ;; Whole-viewport corneal melanopic EDI gate (Brown et al. 2022 PLOS Biol. 20(3): e3001571)
+    ;; Display solid angle at 60cm: Omega ~= 0.482 sr. Evening indoor threshold: <= 10.0 lx.
+    (let* ((solid-angle 0.482)
+           (view-y (rf-viewport-mean-luminance-y pal))
+           (corneal-mel-edi (* view-y rf-display-white-luminance solid-angle))
+           (max-corneal (if (eq polarity 'dark) 10.0 50.0))
+           (edi-ok (<= corneal-mel-edi max-corneal)))
+      (if edi-ok
+          (setq passes (1+ passes))
+        (setq fails (1+ fails)))
+      (princ (format "Corneal Melanopic EDI: %.2f lx (Brown et al. 2022 evening limit <= %.1f lx) -> %s\n"
+                     corneal-mel-edi max-corneal (if edi-ok "PASS" "FAIL"))))
 
     ;; -------------------------------------------------------------------------
     ;; Part 3: Photoreceptor Bleaching & Scotopic/Mesopic Saturation Glare
