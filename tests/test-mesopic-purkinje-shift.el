@@ -56,10 +56,12 @@ Note:
     (princ (format " Note: Text reading is foveolar (rod-free, Curcio 1991); shifts describe parafoveal salience.\n"))
     (princ (format "======================================================================\n"))
     (let ((bg-lmes (rf-mesopic-luminance (plist-get pal :bg-main) m white-cd)))
-      ;; Gate 1: Field adaptation inside CIE 191 mesopic bounds
-      (let ((field-ok (and (>= la-p 0.005) (<= la-p 5.0) (>= m 0.0) (<= m 1.0))))
+      ;; Gate 1: Field adaptation inside CIE 191 mesopic bounds (dark) or photopic domain (light)
+      (let ((field-ok (if (eq polarity 'dark)
+                          (and (>= la-p 0.005) (<= la-p 5.0) (>= m 0.0) (<= m 1.0))
+                        (>= la-p 5.0))))
         (if field-ok (setq passes (1+ passes)) (setq fails (1+ fails)))
-        (princ (format "Mesopic field adaptation state (L_a=%.3f, m=%.3f): %s\n"
+        (princ (format "Field adaptation state (L_a=%.3f, m=%.3f): %s\n"
                        la-p m (if field-ok "PASS" "FAIL"))))
       ;; Gate 2: Realistic photopic onset ceiling
       (let ((onset-ok (<= photopic-onset-cd 500.0)))
