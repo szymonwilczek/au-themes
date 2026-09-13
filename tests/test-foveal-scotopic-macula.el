@@ -26,7 +26,9 @@
 ;; glyphs.
 ;;
 ;; Ref:
-;; Curcio et al. (1991), Bone et al. (1988), Stockman & Sharpe (2000).
+;; - Curcio et al. (1991)
+;; - Bone et al. (1988)
+;; - Stockman & Sharpe (2000)
 
 ;;; Code:
 
