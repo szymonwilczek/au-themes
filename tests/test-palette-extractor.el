@@ -21,6 +21,7 @@
 (add-to-list 'custom-theme-load-path default-directory)
 
 (require 'au-whispergrove-night-theme)
+(require 'au-whispergrove-morning-theme)
 (require 'au-whispergrove-day-theme)
 
 (defvar rf-active-theme
@@ -119,6 +120,8 @@
       (let* ((partial (cond
                        ((memq theme '(au-whispergrove-night whispergrove-night))
                         au-whispergrove-night-palette-partial)
+                       ((memq theme '(au-whispergrove-morning whispergrove-morning))
+                        au-whispergrove-morning-palette-partial)
                        ((memq theme '(au-whispergrove-day whispergrove-day))
                         au-whispergrove-day-palette-partial)
                        (t (error "Unknown theme: %s" theme))))
