@@ -1,12 +1,15 @@
-;;; test-trigeminal-nerve-excitation.el --- Trigeminal Ophthalmic (V1) Red Nociceptive Excitation -*- lexical-binding: t; -*-
+;;; test-trigeminal-nerve-excitation.el --- Retino-Thalamic Trigeminovascular Photophobia -*- lexical-binding: t; -*-
 
 (require 'test-palette-extractor)
 
 (defun test-trigeminal-nerve-excitation-run ()
-  "Evaluate trigeminal nerve (V1 ophthalmic branch) nociceptive excitation from long-wavelength red.
-Monochromatic deep red (>620 nm) stimulates dural and meningeal nociceptors, triggering retro-orbital
-eye ache, photophobic lancinating pain, and migraine aura.
-Ref: Burstein et al. (2015) Nature Rev. Neurosci.; Noseda et al. (2010); Digre & Brennan (2012)."
+  "Evaluate retino-thalamic trigeminovascular photophobia exacerbation from long-wavelength red.
+Photophobia in migraine is mediated by retinal projections converging onto dura-sensitive
+thalamic trigeminovascular neurons (Noseda et al. 2010, 2016). Narrowband long-wavelength red
+and short-wavelength blue maximally exacerbate headache pain, whereas green (~530 nm) shows
+minimal exacerbation.
+Ref: Noseda et al. (2010) Nat. Neurosci. 13:239-245; Noseda et al. (2016) Brain 139:1971-1986;
+     Burstein et al. (2015) Nature Rev. Neurosci.; Digre & Brennan (2012)."
   (let* ((pal (au-extract-active-palette))
          (theme (plist-get pal :theme))
          (polarity (rf-theme-polarity theme))
@@ -20,14 +23,14 @@ Ref: Burstein et al. (2015) Nature Rev. Neurosci.; Noseda et al. (2010); Digre &
                         ("Preprocessor (#define)"             :preprocessor))))
 
     (princ (format "\n======================================================================\n"))
-    (princ (format " Trigeminal Nerve (V1) Ophthalmic Nociceptive Red Excitation Suite\n"))
-    (princ (format " Ref: Burstein et al. (2015); Noseda et al. (2010); Digre (2012)\n"))
+    (princ (format " Retino-Thalamic Trigeminovascular Red Photophobia Suite\n"))
+    (princ (format " Ref: Noseda et al. (2010, 2016); Burstein (2015); Digre & Brennan (2012)\n"))
     (princ (format " Theme: %s (%s) | Background: %s\n" theme polarity bg))
-    (princ (format " Requirements: Red Purity <= 0.850, Muted Red Lum Y <= 0.250 (Dark mode)\n"))
+    (princ (format " Requirements: Red Channel Frac <= 0.850, Muted Red Lum Y <= 0.250 (Dark mode)\n"))
     (princ (format "======================================================================\n"))
 
     (princ (format "%-32s | %-8s | %-8s | %-10s | %-8s | %-8s\n"
-                   "Warm / Red Token" "Hex" "Lum (Y)" "Red Purity" "R/G Ratio" "Status"))
+                   "Warm / Red Token" "Hex" "Lum (Y)" "Red Frac" "R/G Ratio" "Status"))
     (princ (format "---------------------------------+----------+----------+------------+----------+----------\n"))
     (dolist (tok warm-tokens)
       (let* ((label (car tok))
