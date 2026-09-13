@@ -29,7 +29,12 @@
 ;; per Rushton 1961).
 ;; Short-term visual persistence and negative afterimages stem from neural
 ;; contrast adaptation and receptive-field gain control in retinal ganglion
-;; cells and primary visual cortex (Loomis 1978, Zaidi et al. 2012).
+;; cells and primary visual cortex.
+;;
+;; Ref:
+;; - Loomis (1978)
+;; - Kelly (1979)
+;; - Zaidi et al. (2012)
 
 ;;; Code:
 
