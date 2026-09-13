@@ -16,48 +16,40 @@ Ref: Stiles & Crawford (1933) Proc. R. Soc.; Fan & Yao (2011) Autism Res.; Westh
          (hl-y (rf-luminance-y (plist-get pal :bg-hl-line)))
          (passes 0)
          (fails 0)
-         ;; Standard 80x40 viewport = 3200 character cells
-         (total-cells 3200)
-         (code-cells 1050)
-         (hl-cells 80)
-         (bg-cells (- total-cells code-cells hl-cells))
-         (syntax-keys '(:fg-main :keyword :type :property :fnname-call :number :string :constant))
-         (syntax-lums (mapcar (lambda (k) (rf-luminance-y (plist-get pal k))) syntax-keys))
-         (mean-syntax-y (/ (apply #'+ syntax-lums) (float (length syntax-lums))))
-         (total-energy (+ (* code-cells mean-syntax-y)
-                          (* hl-cells hl-y)
-                          (* bg-cells bg-y)))
-         (mean-viewport-y (/ total-energy total-cells))
-         ;; Peak 100 cd/m2 monitor calibration
-         (mean-viewport-cd (* mean-viewport-y 100.0)))
+         ;; Standard 80x40 viewport with ~20% typographic ink coverage
+         (mean-viewport-y (rf-viewport-mean-luminance-y pal))
+         ;; Reference 80 cd/m2 white display calibration
+         (mean-viewport-cd (* mean-viewport-y rf-display-white-luminance)))
 
     (princ (format "\n======================================================================\n"))
     (princ (format " Stiles-Crawford (SCE-I) & Viewport Scopic Load Ratio Suite\n"))
-    (princ (format " Ref: Stiles & Crawford (1933); Fan & Yao (2011) Pupillary Latency in ASD\n"))
+    (princ (format " Ref: Stiles & Crawford (1933); CIE 191:2010; Fan & Yao (2011)\n"))
     (princ (format " Theme: %s (%s) | Background: %s (Y_bg: %.6f)\n" theme polarity bg bg-y))
-    (princ (format " Model: 80x40 Viewport (3200 cells: 1050 code, 80 hl-line, 2070 bg)\n"))
+    (princ (format " Model: 80x40 Viewport (3200 cells, 20%% glyph ink fill, White: %.0f cd/m2)\n"
+                   rf-display-white-luminance))
     (princ (format "======================================================================\n"))
 
     ;; Part 1: Viewport Total Photonic Emission
     (princ "\nPart 1: 80x40 Viewport Scopic Load & Photopic Threshold Check:\n")
     (if (eq polarity 'dark)
-        (let* ((max-mean-y 0.100) ; 10 cd/m2 scotopic/mesopic boundary
-               (ok (<= mean-viewport-y max-mean-y)))
+        (let* ((max-mesopic-cd 5.0) ; CIE 191:2010 mesopic/photopic transition threshold
+               (max-mean-y (/ max-mesopic-cd rf-display-white-luminance))
+               (ok (<= mean-viewport-cd max-mesopic-cd)))
           (if ok
               (progn
-                (princ (format "   [PASS] Mean Viewport Lum Y = %.4f (%.2f cd/m2) <= %.3f: Stays safely below photopic saturation.\n"
-                               mean-viewport-y mean-viewport-cd max-mean-y))
+                (princ (format "   [PASS] Mean Viewport Lum = %.2f cd/m2 (Y=%.4f) <= %.1f cd/m2: Safely in soothing mesopic range.\n"
+                               mean-viewport-cd mean-viewport-y max-mesopic-cd))
                 (setq passes (1+ passes)))
-            (princ (format "   [FAIL] Mean Viewport Lum Y = %.4f (%.2f cd/m2) > %.3f: Overwhelms dark-adapted retina in ASD.\n"
-                           mean-viewport-y mean-viewport-cd max-mean-y))
+            (princ (format "   [FAIL] Mean Viewport Lum = %.2f cd/m2 (Y=%.4f) > %.1f cd/m2: Enters photopic glare range in dark ambient.\n"
+                           mean-viewport-cd mean-viewport-y max-mesopic-cd))
             (setq fails (1+ fails))))
       ;; Daylight mode
       (let* ((max-mean-y 0.750)
              (ok (<= mean-viewport-y max-mean-y)))
         (if ok
             (progn
-              (princ (format "   [PASS] Daylight Viewport Lum Y = %.4f (%.2f cd/m2) <= %.3f: Soft canopy daylight.\n"
-                             mean-viewport-y mean-viewport-cd max-mean-y))
+              (princ (format "   [PASS] Daylight Viewport Lum = %.2f cd/m2 (Y=%.4f) <= %.3f: Soft canopy daylight.\n"
+                             mean-viewport-cd mean-viewport-y max-mean-y))
               (setq passes (1+ passes)))
           (princ (format "   [FAIL] Daylight Viewport Lum Y = %.4f > %.3f: Blinding daylight glare.\n"
                          mean-viewport-y max-mean-y))

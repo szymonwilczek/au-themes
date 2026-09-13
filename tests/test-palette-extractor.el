@@ -969,20 +969,26 @@ field, not of the individual stimulus."
 ;; Standard 80x40 character viewport composition, shared by every test that
 ;; needs a field/adaptation luminance rather than a single colour.
 (defconst rf-viewport-cells 3200 "Character cells in an 80x40 viewport.")
-(defconst rf-viewport-code-cells 1050 "Cells covered by syntax ink.")
+(defconst rf-viewport-code-cells 1050 "Cells containing code glyphs.")
 (defconst rf-viewport-hl-cells 80 "Cells covered by the hl-line band.")
+(defconst rf-glyph-ink-coverage 0.20
+  "Typical typographic ink coverage inside a character cell (15-25%).")
 
 (defun rf-viewport-mean-luminance-y (pal)
-  "Mean relative luminance of an 80x40 viewport rendered with palette PAL."
+  "Mean relative luminance of an 80x40 viewport rendered with palette PAL.
+Accounts for ~20% typographic stroke coverage within code glyph cells."
   (let* ((keys '(:fg-main :keyword :type :property :fnname-call :number :string :constant))
-         (ink (/ (cl-loop for k in keys sum (rf-luminance-y (plist-get pal k)))
-                 (float (length keys))))
-         (hl (rf-luminance-y (plist-get pal :bg-hl-line)))
-         (bg (rf-luminance-y (plist-get pal :bg-main)))
+         (ink-y (/ (cl-loop for k in keys sum (rf-luminance-y (plist-get pal k)))
+                   (float (length keys))))
+         (hl-y (rf-luminance-y (plist-get pal :bg-hl-line)))
+         (bg-y (rf-luminance-y (plist-get pal :bg-main)))
+         ;; Inside code cells, glyph ink occupies ~20% of area, rest is background:
+         (code-cell-y (+ (* rf-glyph-ink-coverage ink-y)
+                         (* (- 1.0 rf-glyph-ink-coverage) bg-y)))
          (bg-cells (- rf-viewport-cells rf-viewport-code-cells rf-viewport-hl-cells)))
-    (/ (+ (* rf-viewport-code-cells ink)
-          (* rf-viewport-hl-cells hl)
-          (* bg-cells bg))
+    (/ (+ (* rf-viewport-code-cells code-cell-y)
+          (* rf-viewport-hl-cells hl-y)
+          (* bg-cells bg-y))
        (float rf-viewport-cells))))
 
 ;; Toric Blur Astigmatism PSF
