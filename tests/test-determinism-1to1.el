@@ -24,10 +24,13 @@
 ;;
 ;; Evaluate 1:1 keyface uniqueness and pairwise CIEDE2000 separation
 ;; (min 10.0).
-;; Colour separation is measured with CIEDE2000 (CIE 142:2001 / ISO-CIE
-;; 11664-6:2014), not with Emacs' `color-distance', which is an unpublished
-;; sRGB heuristic that is not perceptually uniform: the same numeric gate of
-;; 8000 corresponded to dE00 between 9.7 and 19.7 depending on the hue pair.
+;; Colour separation is measured with CIEDE2000, not with Emacs' `color-distance',
+;; which is an unpublished sRGB heuristic that is not perceptually uniform:
+;; the same numeric gate of 8000 corresponded to dE00 between 9.7 and 19.7
+;; depending on the hue pair.
+;;
+;; Ref:
+;; CIE 142:2001 / ISO-CIE 11664-6:2014 (CIEDE2000).
 
 ;;; Code:
 
