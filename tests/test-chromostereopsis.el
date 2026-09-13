@@ -22,8 +22,12 @@
 
 ;;; Commentary:
 ;;
-;; Evaluate chromostereopsis and binocular chromatic dispersion per
-;; Thibos (1992).
+;; Evaluate chromostereopsis and binocular chromatic dispersion.
+;;
+;; Ref:
+;; - Thibos et al. (1990, 1992)
+;; - Vos (1960)
+;; - Simonet & Campbell (1990)
 
 ;;; Code:
 
