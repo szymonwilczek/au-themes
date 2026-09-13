@@ -149,7 +149,23 @@
              :operator (or (au-get-theme-face-fg theme 'font-lock-operator-face) (funcall get-c 'operator) "#cfbcba")
              :bracket (or (au-get-theme-face-fg theme 'font-lock-bracket-face) (funcall get-c 'bracket) "#cfbcba")
              :delimiter (or (au-get-theme-face-fg theme 'font-lock-delimiter-face) (funcall get-c 'delimiter) "#cfbcba")
-             :err (or (au-get-theme-face-fg theme 'error) (funcall get-c 'err) "#f06a3f"))))
+             :err (or (au-get-theme-face-fg theme 'error) (funcall get-c 'err) "#f06a3f")
+
+             :bg-red-intense (funcall get-c 'bg-red-intense)
+             :bg-green-intense (funcall get-c 'bg-green-intense)
+             :bg-yellow-intense (funcall get-c 'bg-yellow-intense)
+             :bg-blue-intense (funcall get-c 'bg-blue-intense)
+             :bg-magenta-intense (funcall get-c 'bg-magenta-intense)
+             :bg-cyan-intense (funcall get-c 'bg-cyan-intense)
+
+             :bg-red-subtle (funcall get-c 'bg-red-subtle)
+             :bg-green-subtle (funcall get-c 'bg-green-subtle)
+             :bg-yellow-subtle (funcall get-c 'bg-yellow-subtle)
+             :bg-blue-subtle (funcall get-c 'bg-blue-subtle)
+             :bg-magenta-subtle (funcall get-c 'bg-magenta-subtle)
+             :bg-cyan-subtle (funcall get-c 'bg-cyan-subtle)
+
+             :fg-line-number-inactive (funcall get-c 'fg-line-number-inactive))))
       (let* ((partial (cond
                        ((memq theme '(au-whispergrove-night whispergrove-night))
                         au-whispergrove-night-palette-partial)
@@ -172,7 +188,9 @@
                        (t (error "Unknown theme: %s" theme))))
              (get-p (lambda (sym)
                       (or (cadr (assq sym partial))
-                          (error "Theme %s does not define %s" theme sym)))))
+                          (error "Theme %s does not define %s" theme sym))))
+             (get-opt (lambda (sym)
+                        (cadr (assq sym partial)))))
         (list
          :theme theme
          :bg-main (funcall get-p 'bg-main)
@@ -194,7 +212,24 @@
          :operator (funcall get-p 'blue-cooler)
          :bracket (funcall get-p 'red-faint)
          :delimiter (funcall get-p 'cyan-faint)
-         :err (funcall get-p 'red))))))
+         :err (funcall get-p 'red)
+
+         ;; Panels, Diffs and Structural Highlights:
+         :bg-red-intense (funcall get-opt 'bg-red-intense)
+         :bg-green-intense (funcall get-opt 'bg-green-intense)
+         :bg-yellow-intense (funcall get-opt 'bg-yellow-intense)
+         :bg-blue-intense (funcall get-opt 'bg-blue-intense)
+         :bg-magenta-intense (funcall get-opt 'bg-magenta-intense)
+         :bg-cyan-intense (funcall get-opt 'bg-cyan-intense)
+
+         :bg-red-subtle (funcall get-opt 'bg-red-subtle)
+         :bg-green-subtle (funcall get-opt 'bg-green-subtle)
+         :bg-yellow-subtle (funcall get-opt 'bg-yellow-subtle)
+         :bg-blue-subtle (funcall get-opt 'bg-blue-subtle)
+         :bg-magenta-subtle (funcall get-opt 'bg-magenta-subtle)
+         :bg-cyan-subtle (funcall get-opt 'bg-cyan-subtle)
+
+         :fg-line-number-inactive (funcall get-opt 'fg-line-number-inactive))))))
 
 
 ;; =============================================================================

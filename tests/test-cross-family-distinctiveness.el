@@ -100,7 +100,12 @@ au-whispergrove-day) must maintain strict categorical, perceptual, and chromatic
           (princ (format "\nPart 1: Cross-Family Hex Collision Check (%s vs %s):\n" theme c-theme))
           (let ((checked-keys '(:keyword :type :builtin :constant :number :fnname
                                          :fnname-call :string :property :bg-region :cursor
-                                         :bg-main :fg-main))
+                                         :bg-main :fg-main
+                                         :bg-red-intense :bg-green-intense :bg-yellow-intense
+                                         :bg-blue-intense :bg-magenta-intense :bg-cyan-intense
+                                         :bg-red-subtle :bg-green-subtle :bg-yellow-subtle
+                                         :bg-blue-subtle :bg-magenta-subtle :bg-cyan-subtle
+                                         :fg-line-number-inactive))
                 (collisions nil))
             (dolist (k checked-keys)
               (let ((h1 (plist-get pal k))

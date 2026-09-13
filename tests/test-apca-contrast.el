@@ -146,6 +146,75 @@ calibration boundaries rather than unadapted APCA Bronze levels."
             (setq passes (1+ passes)))
         (princ (format "   [FAIL] Body text illegible within selection: APCA |Lc|=%.2f < 40.0\n" fg-reg-lc))
         (setq fails (1+ fails))))
+
+    ;; Part 3: Panels and Structural Highlights APCA Contrast Gate
+    (let ((intense-panels '((:bg-red-intense     "Alert / Fatal assertion panel (bg-red-intense)")
+                            (:bg-green-intense   "Success banner (bg-green-intense)")
+                            (:bg-yellow-intense  "Warning banner (bg-yellow-intense)")
+                            (:bg-blue-intense    "Info banner (bg-blue-intense)")
+                            (:bg-magenta-intense "Special prompt background (bg-magenta-intense)")
+                            (:bg-cyan-intense    "Incsearch match target (bg-cyan-intense)")))
+          (subtle-panels  '((:bg-red-subtle      "Diff deletion wash (bg-red-subtle)")
+                            (:bg-green-subtle    "Diff addition wash (bg-green-subtle)")
+                            (:bg-yellow-subtle   "Diff change wash (bg-yellow-subtle)")
+                            (:bg-blue-subtle     "Mode-line subtle wash (bg-blue-subtle)")
+                            (:bg-magenta-subtle  "Paren match context wash (bg-magenta-subtle)")
+                            (:bg-cyan-subtle     "Block highlight wash (bg-cyan-subtle)")))
+          (fg (plist-get pal :fg-main))
+          (min-intense-lc (if (eq polarity 'light) 55.0 35.0)))
+      (princ "\nPart 3: Panels and Structural Highlights APCA Contrast Gate:\n")
+      (dolist (item intense-panels)
+        (let* ((key (car item))
+               (label (cadr item))
+               (p-hex (plist-get pal key)))
+          (if p-hex
+              (let* ((p-lc (abs (rf-apca-contrast fg p-hex)))
+                     (p-ok (>= p-lc min-intense-lc)))
+                (if p-ok
+                    (progn
+                      (princ (format "   [PASS] %-48s [%s]: APCA |Lc|=%.2f >= %.1f\n"
+                                     label p-hex p-lc min-intense-lc))
+                      (setq passes (1+ passes)))
+                  (princ (format "   [FAIL] %-48s [%s]: Insufficient contrast APCA |Lc|=%.2f < %.1f\n"
+                                 label p-hex p-lc min-intense-lc))
+                  (setq fails (1+ fails))))
+            (princ (format "   [INFO] %-48s: Not defined in theme palette\n" label)))))
+
+      (dolist (item subtle-panels)
+        (let* ((key (car item))
+               (label (cadr item))
+               (p-hex (plist-get pal key)))
+          (if p-hex
+              (let* ((p-de (rf-delta-e-2000 p-hex bg))
+                     (p-dy (abs (- (rf-luminance-y p-hex) (rf-luminance-y bg))))
+                     (min-dy (if (eq polarity 'light) 0.015 0.005))
+                     (max-dy (if (eq polarity 'light) 0.180 0.050))
+                     (p-ok (and (>= p-de 2.0) (>= p-dy min-dy) (<= p-dy max-dy))))
+                (if p-ok
+                    (progn
+                      (princ (format "   [PASS] %-48s [%s]: dE00=%.2f >= 2.0, Delta-Y=%.4f in [%.3f..%.3f]\n"
+                                     label p-hex p-de p-dy min-dy max-dy))
+                      (setq passes (1+ passes)))
+                  (princ (format "   [FAIL] %-48s [%s]: Out of bounds: dE00=%.2f (min 2.0), Delta-Y=%.4f (bounds [%.3f..%.3f])\n"
+                                 label p-hex p-de p-dy min-dy max-dy))
+                  (setq fails (1+ fails))))
+            (princ (format "   [INFO] %-48s: Not defined in theme palette\n" label)))))
+
+      (let* ((ln-hex (plist-get pal :fg-line-number-inactive)))
+        (if ln-hex
+            (let* ((ln-lc (abs (rf-apca-contrast ln-hex bg)))
+                   (min-ln (if (eq polarity 'light) 30.0 15.0))
+                   (max-ln (if (eq polarity 'light) 55.0 30.0))
+                   (ln-ok (and (>= ln-lc min-ln) (<= ln-lc max-ln))))
+              (if ln-ok
+                  (progn
+                    (princ (format "   [PASS] Inactive line number margin [%s]: APCA |Lc|=%.2f in [%.1f..%.1f]\n"
+                                   ln-hex ln-lc min-ln max-ln))
+                    (setq passes (1+ passes)))
+                (princ (format "   [FAIL] Inactive line number margin [%s]: APCA |Lc|=%.2f out of bounds [%.1f..%.1f]\n"
+                               ln-hex ln-lc min-ln max-ln))
+                (setq fails (1+ fails))))
+          (princ "   [INFO] Inactive line number margin: Not defined in theme palette\n"))))
     (princ "----------------------------------------------------------------------\n")
     (princ (format "APCA Summary: %d Passed, %d Failed.\n\n" passes fails))
     (zerop fails)))

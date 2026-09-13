@@ -155,18 +155,18 @@ static const au_palette_token_t AU_MASTER_TOKENS[AU_THEME_TOKEN_COUNT] = {
     { 34, "cyan-faint",              "#665f54", AU_LAYER_CHROMATIC,     AU_SEV_INFO,    {0.43,  0.01,  0.03, 0x665f54} },
 
     /* Panels, Diffs and Structural Highlights */
-    { 35, "bg-red-intense",          "#f0a89e", AU_LAYER_PANELS_DIFFS,  AU_SEV_FATAL,   {0.75,  0.08,  0.05, 0xf0a89e} },
-    { 36, "bg-green-intense",        "#b8ddb2", AU_LAYER_PANELS_DIFFS,  AU_SEV_INFO,    {0.84, -0.06,  0.06, 0xb8ddb2} },
-    { 37, "bg-yellow-intense",       "#edd48e", AU_LAYER_PANELS_DIFFS,  AU_SEV_WARNING, {0.85,  0.00,  0.10, 0xedd48e} },
-    { 38, "bg-blue-intense",         "#b6cee2", AU_LAYER_PANELS_DIFFS,  AU_SEV_INFO,    {0.80, -0.02, -0.05, 0xb6cee2} },
-    { 39, "bg-magenta-intense",      "#ddbee0", AU_LAYER_PANELS_DIFFS,  AU_SEV_INFO,    {0.79,  0.05, -0.04, 0xddbee0} },
-    { 40, "bg-cyan-intense",         "#aedcd4", AU_LAYER_PANELS_DIFFS,  AU_SEV_INFO,    {0.83, -0.05, -0.01, 0xaedcd4} },
-    { 41, "bg-red-subtle",           "#eed4cc", AU_LAYER_PANELS_DIFFS,  AU_SEV_INFO,    {0.86,  0.03,  0.02, 0xeed4cc} },
-    { 42, "bg-green-subtle",         "#dcead8", AU_LAYER_PANELS_DIFFS,  AU_SEV_INFO,    {0.90, -0.03,  0.03, 0xdcead8} },
-    { 43, "bg-yellow-subtle",        "#eee6ca", AU_LAYER_PANELS_DIFFS,  AU_SEV_INFO,    {0.90, -0.01,  0.05, 0xeee6ca} },
-    { 44, "bg-blue-subtle",          "#d8e4ea", AU_LAYER_PANELS_DIFFS,  AU_SEV_INFO,    {0.89, -0.01, -0.02, 0xd8e4ea} },
-    { 45, "bg-magenta-subtle",       "#e6dae4", AU_LAYER_PANELS_DIFFS,  AU_SEV_INFO,    {0.87,  0.02, -0.01, 0xe6dae4} },
-    { 46, "bg-cyan-subtle",          "#d6e6e2", AU_LAYER_PANELS_DIFFS,  AU_SEV_INFO,    {0.89, -0.03,  0.00, 0xd6e6e2} },
+    { 35, "bg-red-intense",          "#e89e8e", AU_LAYER_PANELS_DIFFS,  AU_SEV_FATAL,   {0.77,  0.09,  0.05, 0xe89e8e} },
+    { 36, "bg-green-intense",        "#a2cc94", AU_LAYER_PANELS_DIFFS,  AU_SEV_INFO,    {0.80, -0.07,  0.06, 0xa2cc94} },
+    { 37, "bg-yellow-intense",       "#deb658", AU_LAYER_PANELS_DIFFS,  AU_SEV_WARNING, {0.79,  0.01,  0.12, 0xdeb658} },
+    { 38, "bg-blue-intense",         "#caa4cc", AU_LAYER_PANELS_DIFFS,  AU_SEV_INFO,    {0.77,  0.06, -0.04, 0xcaa4cc} },
+    { 39, "bg-magenta-intense",      "#d0a6bc", AU_LAYER_PANELS_DIFFS,  AU_SEV_INFO,    {0.77,  0.06, -0.01, 0xd0a6bc} },
+    { 40, "bg-cyan-intense",         "#94caa0", AU_LAYER_PANELS_DIFFS,  AU_SEV_INFO,    {0.79, -0.07,  0.04, 0x94caa0} },
+    { 41, "bg-red-subtle",           "#e6c4ba", AU_LAYER_PANELS_DIFFS,  AU_SEV_INFO,    {0.85,  0.04,  0.02, 0xe6c4ba} },
+    { 42, "bg-green-subtle",         "#d2e4ca", AU_LAYER_PANELS_DIFFS,  AU_SEV_INFO,    {0.90, -0.03,  0.03, 0xd2e4ca} },
+    { 43, "bg-yellow-subtle",        "#ece0b8", AU_LAYER_PANELS_DIFFS,  AU_SEV_INFO,    {0.91, -0.01,  0.05, 0xece0b8} },
+    { 44, "bg-blue-subtle",          "#ded2de", AU_LAYER_PANELS_DIFFS,  AU_SEV_INFO,    {0.88,  0.02, -0.01, 0xded2de} },
+    { 45, "bg-magenta-subtle",       "#e2ced8", AU_LAYER_PANELS_DIFFS,  AU_SEV_INFO,    {0.87,  0.03, -0.01, 0xe2ced8} },
+    { 46, "bg-cyan-subtle",          "#c6d8c0", AU_LAYER_PANELS_DIFFS,  AU_SEV_INFO,    {0.86, -0.03,  0.03, 0xc6d8c0} },
     { 47, "bg-added",                "#c8e4c4", AU_LAYER_PANELS_DIFFS,  AU_SEV_INFO,    {0.87, -0.06,  0.05, 0xc8e4c4} },
     { 48, "bg-added-faint",          "#daf0d8", AU_LAYER_PANELS_DIFFS,  AU_SEV_INFO,    {0.92, -0.04,  0.03, 0xdaf0d8} },
     { 49, "bg-added-refine",         "#b6dbb0", AU_LAYER_PANELS_DIFFS,  AU_SEV_INFO,    {0.83, -0.07,  0.06, 0xb6dbb0} },
@@ -191,7 +191,7 @@ static const au_palette_token_t AU_MASTER_TOKENS[AU_THEME_TOKEN_COUNT] = {
     { 68, "bg-warning",              "#ebddb0", AU_LAYER_PANELS_DIFFS,  AU_SEV_WARNING, {0.87, -0.01,  0.08, 0xebddb0} },
     { 69, "bg-info",                 "#dcd4b8", AU_LAYER_PANELS_DIFFS,  AU_SEV_INFO,    {0.84, -0.02,  0.05, 0xdcd4b8} },
     { 70, "bg-region",               "#d8be78", AU_LAYER_PANELS_DIFFS,  AU_SEV_INFO,    {0.79,  0.00,  0.12, 0xd8be78} },
-    { 71, "fg-line-number-inactive", "#888072", AU_LAYER_PANELS_DIFFS,  AU_SEV_INFO,    {0.55,  0.00,  0.03, 0x888072} }
+    { 71, "fg-line-number-inactive", "#867e70", AU_LAYER_PANELS_DIFFS,  AU_SEV_INFO,    {0.60,  0.00,  0.02, 0x867e70} }
 };
 
 /* Syntax Showcase and Logic Verification Functions */

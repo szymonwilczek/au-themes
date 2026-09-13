@@ -247,21 +247,27 @@ Ref:
                                    au-aurum-day aurum-day
                                    au-parchment-night parchment-night
                                    au-parchment-day parchment-day))
-      ;; Check zero melanopsin excitation: all core syntax and chrome tokens outside blue/cyan [180°..260°]
-      (let* ((token-list (list (cons "cursor" (plist-get pal :cursor))
-                               (cons "fnname" (plist-get pal :fnname))
-                               (cons "fnname-call" (plist-get pal :fnname-call))
-                               (cons "builtin" (plist-get pal :builtin))
-                               (cons "type" (plist-get pal :type))
-                               (cons "number" (plist-get pal :number))
-                               (cons "keyword" (plist-get pal :keyword))
-                               (cons "string" (plist-get pal :string))
-                               (cons "constant" (plist-get pal :constant))
-                               (cons "property" (plist-get pal :property))
-                               (cons "operator" (plist-get pal :operator))
-                               (cons "bracket" (plist-get pal :bracket))
-                               (cons "err" (plist-get pal :err))
-                               (cons "base text" (plist-get pal :fg-main))))
+      ;; Check zero melanopsin excitation: all core syntax, chrome, and panel tokens outside blue/cyan [180°..260°]
+      (let* ((token-list (delq nil
+                               (list (cons "cursor" (plist-get pal :cursor))
+                                     (cons "fnname" (plist-get pal :fnname))
+                                     (cons "fnname-call" (plist-get pal :fnname-call))
+                                     (cons "builtin" (plist-get pal :builtin))
+                                     (cons "type" (plist-get pal :type))
+                                     (cons "number" (plist-get pal :number))
+                                     (cons "keyword" (plist-get pal :keyword))
+                                     (cons "string" (plist-get pal :string))
+                                     (cons "constant" (plist-get pal :constant))
+                                     (cons "property" (plist-get pal :property))
+                                     (cons "operator" (plist-get pal :operator))
+                                     (cons "bracket" (plist-get pal :bracket))
+                                     (cons "err" (plist-get pal :err))
+                                     (cons "base text" (plist-get pal :fg-main))
+                                     ;; Panels, Diffs and Structural Highlights:
+                                     (when (plist-get pal :bg-blue-intense) (cons "bg-blue-intense" (plist-get pal :bg-blue-intense)))
+                                     (when (plist-get pal :bg-cyan-intense) (cons "bg-cyan-intense" (plist-get pal :bg-cyan-intense)))
+                                     (when (plist-get pal :bg-blue-subtle) (cons "bg-blue-subtle" (plist-get pal :bg-blue-subtle)))
+                                     (when (plist-get pal :bg-cyan-subtle) (cons "bg-cyan-subtle" (plist-get pal :bg-cyan-subtle))))))
              (blue-tokens (cl-remove-if-not
                            (lambda (tok)
                              (let ((h (nth 2 (rf-hex-to-oklch (cdr tok)))))
@@ -269,7 +275,8 @@ Ref:
                            token-list)))
         (if (null blue-tokens)
             (progn
-              (princ "   [PASS] Zero Melanopsin (ipRGC) Hazard: 0/14 tokens in blue/cyan excitation band [180°..260°].\n")
+              (princ (format "   [PASS] Zero Melanopsin (ipRGC) Hazard: 0/%d tokens in blue/cyan excitation band [180°..260°].\n"
+                             (length token-list)))
               (princ "          Complete spectral shielding for severe photophobia, ocular migraine, and melatonin preservation.\n")
               (setq passes (1+ passes)))
           (princ (format "   [FAIL] Melanopsin hazard: %d tokens in [180°..260°]: %s\n"
