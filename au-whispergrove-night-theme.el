@@ -1,4 +1,4 @@
-;;; au-whispergrove-night-theme.el --- Deep nocturnal whisper grove theme -*- lexical-binding:t -*-
+;;; au-whispergrove-night-theme.el --- Deep dark theme calibrated for OLED and LCD screens -*- lexical-binding:t -*-
 
 ;; Copyright (C) 2026  Szymon Wilczek
 
@@ -23,9 +23,10 @@
 
 ;;; Commentary:
 ;;
-;; Deep nocturnal whisper grove sanctuary (LCD/OLED calibrated).
-;; Part of the `au-themes' collection designed for sensory-safe autistic
-;; and neurodivergent visual perception.
+;; Deep nocturnal theme with organic muted greens and earth tones.
+;; Calibrated for zero-light environments, low photic irradiation,
+;; and anti-glare thresholds.
+;; Part of the `au-themes' collection.
 
 ;;; Code:
 
@@ -169,7 +170,7 @@
 (modus-themes-theme
  'au-whispergrove-night
  'ef-themes
- "Au Whispergrove Night: deep nocturnal rainy forest theme calibrated for autistic sensory-profile and photophobia."
+ "Deep nocturnal theme calibrated for low photic irradiation and OLED/LCD displays."
  'dark
  'au-whispergrove-night-palette
  nil
