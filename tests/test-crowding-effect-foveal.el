@@ -1,13 +1,16 @@
-;;; test-crowding-effect-foveal.el --- Foveal Visual Crowding & Bouma Window in ASD -*- lexical-binding: t; -*-
+;;; test-crowding-effect-foveal.el --- Typographical Visual Crowding & Flanker Contrast Disparity -*- lexical-binding: t; -*-
 
 (require 'test-palette-extractor)
 
 (defun test-crowding-effect-foveal-run ()
-  "Evaluate foveal visual crowding and Bouma's spatial integration window in ASD.
-In autism, the cortical integration field (Bouma's window) is broader and lacks lateral inhibition.
-When punctuation, brackets, and operators have equal luminance to identifiers, Bouma's window
-merges adjacent tokens into a solid clump. Delimiters must maintain subordinate energy.
-Ref: Levi (2008) Vision Res.; Pelli et al. (2004); Bouma (1970) Nature; Baldassi et al. (2009)."
+  "Evaluate typographical visual crowding and delimiter flanker contrast disparity.
+Visual crowding degrades letter and word recognition when flankers interfere with targets.
+Kooi et al. (1994) and Levi (2008) showed that disparity in luminance contrast between
+target and flankers markedly reduces visual crowding. In code reading, punctuation, brackets,
+and operators act as flankers adjacent to identifiers; subordinating delimiter contrast
+mitigates flanker interference and supports local detail processing.
+Ref: Kooi et al. (1994) Vision Res. 34:269-276; Levi (2008) Vision Res. 48:635-654;
+     Pelli et al. (2004); Baldassi et al. (2009) Hum. Brain Mapp."
   (let* ((pal (au-extract-active-palette))
          (theme (plist-get pal :theme))
          (polarity (rf-theme-polarity theme))
@@ -23,8 +26,8 @@ Ref: Levi (2008) Vision Res.; Pelli et al. (2004); Bouma (1970) Nature; Baldassi
          (prop-hex    (plist-get pal :property)))
 
     (princ (format "\n======================================================================\n"))
-    (princ (format " Foveal Visual Crowding & Bouma Window Integration Suite\n"))
-    (princ (format " Ref: Bouma (1970) Nature; Levi (2008); Baldassi et al. (2009) ASD Vision\n"))
+    (princ (format " Typographical Visual Crowding & Flanker Contrast Disparity Suite\n"))
+    (princ (format " Ref: Kooi et al. (1994); Levi (2008); Pelli et al. (2004)\n"))
     (princ (format " Theme: %s (%s) | Background: %s (Y_bg: %.6f)\n" theme polarity bg bg-y))
     (princ (format "======================================================================\n"))
 
