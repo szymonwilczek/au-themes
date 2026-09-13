@@ -1,4 +1,4 @@
-;;; au-aurum-night-theme.el --- Deep nocturnal basalt and warm gold theme for au-themes -*- lexical-binding:t -*-
+;;; au-aurum-night-theme.el --- Warm dark theme without blue-light hazard -*- lexical-binding:t -*-
 
 ;; Copyright (C) 2026  Szymon Wilczek
 
@@ -23,9 +23,10 @@
 
 ;;; Commentary:
 ;;
-;; Deep nocturnal basalt and native gold sanctuary.
-;; Part of the `au-themes' collection designed for sensory-safe autistic
-;; and neurodivergent visual perception.
+;; Dark theme with amber and gold tones on deep background.
+;; Calibrated for nocturnal light sensitivity, melatonin preservation,
+;; and zero melanopic excitation.
+;; Part of the `au-themes' collection.
 
 ;;; Code:
 
@@ -169,7 +170,7 @@
 (modus-themes-theme
  'au-aurum-night
  'ef-themes
- "Au Aurum Night: deep nocturnal volcanic basalt and ancient gold sanctuary calibrated for severe photophobia, trigeminal protection, and zero blue light."
+ "Warm dark theme without blue-light hazard, calibrated for nocturnal photophobia."
  'dark
  'au-aurum-night-palette
  nil
