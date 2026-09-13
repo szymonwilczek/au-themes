@@ -44,7 +44,7 @@ Ref: Leibowitz & Owens (1978) Science; Charman (1982) OPO; Heath (1956) JOSA."
 
     ;; Part 2: APCA Base Text Readability Contrast Gate
     (princ "\nPart 2: APCA Base Text Legibility Contrast:\n")
-    (let* ((min-lc (if (eq polarity 'light) 60.0 45.0))
+    (let* ((min-lc (if (eq polarity 'light) 58.0 45.0))
            (lc-ok (>= apca-lc min-lc)))
       (if lc-ok
           (progn

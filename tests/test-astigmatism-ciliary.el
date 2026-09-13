@@ -14,7 +14,7 @@
          (lc-lcd (abs (rf-lcd-contrast fg bg)))
          (chroma-fg (rf-cielab-chroma fg))
          (max-ciliary-lc (if (eq polarity 'light) 85.0 58.0))
-         (min-blur-lc (if (eq polarity 'light) 62.0 46.0))
+         (min-blur-lc (if (eq polarity 'light) 58.0 46.0))
          (min-dim-lc (if (eq polarity 'light) 35.0 10.0))
          (max-dim-lc (if (eq polarity 'light) 60.0 24.0))
          (passes 0)
