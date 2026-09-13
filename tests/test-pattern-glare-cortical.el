@@ -1,4 +1,37 @@
-;;; test-pattern-glare-cortical.el --- V1 Cortical Visual Stress & Meares-Irlen Pattern Glare -*- lexical-binding: t; -*-
+;;; test-pattern-glare-cortical.el --- V1 Cortical Visual Stress and Meares-Irlen Pattern Glare -*- lexical-binding: t -*-
+
+;; Copyright (C) 2026  Szymon Wilczek
+
+;; Author: Szymon Wilczek <swilczek.lx@gmail.com>
+;; URL: https://github.com/szymonwilczek/au-themes
+
+;; This file is not part of GNU Emacs.
+
+;; This file is free software: you can redistribute it and/or modify
+;; it under the terms of the GNU General Public License as published by
+;; the Free Software Foundation, either version 3 of the License, or
+;; (at your option) any later version.
+;;
+;; This file is distributed in the hope that it will be useful,
+;; but WITHOUT ANY WARRANTY; without even the implied warranty of
+;; MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+;; GNU General Public License for more details.
+;;
+;; You should have received a copy of the GNU General Public License
+;; along with this file.  If not, see <https://www.gnu.org/licenses/>.
+
+;;; Commentary:
+;;
+;; Evaluate visual stress in primary visual cortex (V1) and Meares-Irlen
+;; pattern glare.
+;; At ~3 cycles/degree (typical editor line frequency), alternating high-contrast
+;; stripes trigger cortical hyperexcitation, optical shimmer illusions, nausea,
+;; and migraine aura.
+;;
+;; Ref:
+;; Wilkins et al. (1984, 2016) Brain; Evans & Stevenson (2008); Allen et al. (2008).
+
+;;; Code:
 
 (require 'test-palette-extractor)
 

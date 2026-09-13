@@ -1,4 +1,31 @@
-;;; run-all-tests.el --- Master test suite runner -*- lexical-binding: t; -*-
+;;; run-all-tests.el --- Master test suite runner -*- lexical-binding: t -*-
+
+;; Copyright (C) 2026  Szymon Wilczek
+
+;; Author: Szymon Wilczek <swilczek.lx@gmail.com>
+;; URL: https://github.com/szymonwilczek/au-themes
+
+;; This file is not part of GNU Emacs.
+
+;; This file is free software: you can redistribute it and/or modify
+;; it under the terms of the GNU General Public License as published by
+;; the Free Software Foundation, either version 3 of the License, or
+;; (at your option) any later version.
+;;
+;; This file is distributed in the hope that it will be useful,
+;; but WITHOUT ANY WARRANTY; without even the implied warranty of
+;; MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+;; GNU General Public License for more details.
+;;
+;; You should have received a copy of the GNU General Public License
+;; along with this file.  If not, see <https://www.gnu.org/licenses/>.
+
+;;; Commentary:
+;;
+;; Master test suite runner executing all biophysical, optical,
+;; and ergonomic validation modules across configured au-themes.
+
+;;; Code:
 
 (let ((dir (file-name-directory (or load-file-name buffer-file-name default-directory))))
   (when dir
@@ -53,8 +80,8 @@
     (if (and env (not (string-empty-p env)))
         (mapcar #'intern (split-string env "[, ]+" t))
       '(au-whispergrove-night au-whispergrove-evening au-whispergrove-morning au-whispergrove-day
-        au-aurum-twilight au-aurum-night au-aurum-day
-        au-parchment-night au-parchment-day)))
+                              au-aurum-twilight au-aurum-night au-aurum-day
+                              au-parchment-night au-parchment-day)))
   "Themes evaluated by `run-all-au-tests'.
 Override with the AU_TEST_THEMES or RF_TEST_THEMES environment variable, e.g.
 AU_TEST_THEMES=au-whispergrove-night to gate a single variant.")

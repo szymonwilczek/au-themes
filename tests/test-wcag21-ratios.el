@@ -1,4 +1,38 @@
-;;; test-wcag21-ratios.el --- WCAG 2.1 relative luminance & photophobia trade-off evaluation -*- lexical-binding: t; -*-
+;;; test-wcag21-ratios.el --- WCAG 2.1 relative luminance and photophobia trade-off evaluation -*- lexical-binding: t -*-
+
+;; Copyright (C) 2026  Szymon Wilczek
+
+;; Author: Szymon Wilczek <swilczek.lx@gmail.com>
+;; URL: https://github.com/szymonwilczek/au-themes
+
+;; This file is not part of GNU Emacs.
+
+;; This file is free software: you can redistribute it and/or modify
+;; it under the terms of the GNU General Public License as published by
+;; the Free Software Foundation, either version 3 of the License, or
+;; (at your option) any later version.
+;;
+;; This file is distributed in the hope that it will be useful,
+;; but WITHOUT ANY WARRANTY; without even the implied warranty of
+;; MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+;; GNU General Public License for more details.
+;;
+;; You should have received a copy of the GNU General Public License
+;; along with this file.  If not, see <https://www.gnu.org/licenses/>.
+
+;;; Commentary:
+;;
+;; Evaluate WCAG 2.1 relative luminance contrast ratios.
+;;
+;; Note:
+;; Full ISO/IEC 40500 / WCAG 2.1 SC 1.4.3 requires >= 4.5:1 across all body
+;; text.
+;; In photophobic nocturnal themes, primary body text meets the 4.5:1 threshold,
+;; while secondary syntactic roles (comments, delimiters, brackets)
+;; are intentionally subordinated to 1.5:1 - 3.0:1 to reduce sensory overload
+;; and cortical stress.
+
+;;; Code:
 
 (require 'test-palette-extractor)
 

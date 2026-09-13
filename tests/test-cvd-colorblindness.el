@@ -1,4 +1,36 @@
-;;; test-cvd-colorblindness.el --- Congenital Color Vision Deficiency (CVD) Simulation -*- lexical-binding: t; -*-
+;;; test-cvd-colorblindness.el --- Congenital Color Vision Deficiency (CVD) Simulation -*- lexical-binding: t -*-
+
+;; Copyright (C) 2026  Szymon Wilczek
+
+;; Author: Szymon Wilczek <swilczek.lx@gmail.com>
+;; URL: https://github.com/szymonwilczek/au-themes
+
+;; This file is not part of GNU Emacs.
+
+;; This file is free software: you can redistribute it and/or modify
+;; it under the terms of the GNU General Public License as published by
+;; the Free Software Foundation, either version 3 of the License, or
+;; (at your option) any later version.
+;;
+;; This file is distributed in the hope that it will be useful,
+;; but WITHOUT ANY WARRANTY; without even the implied warranty of
+;; MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+;; GNU General Public License for more details.
+;;
+;; You should have received a copy of the GNU General Public License
+;; along with this file.  If not, see <https://www.gnu.org/licenses/>.
+
+;;; Commentary:
+;;
+;; Evaluate syntax token discriminability under Protanopia, Deuteranopia,
+;; and Tritanopia.
+;; Dichromat appearance is simulated with the two half-plane LMS projection of
+;; Brettel, Viénot & Mollon (1997) J.  Opt.  Soc. Am.  A 14(10):2647-2655,
+;; DOI: 10.1364/JOSAA.14.002647, using the Smith & Pokorny (1975) cone
+;; fundamentals over Judd-Vos corrected XYZ, as in Viénot, Brettel & Mollon
+;; (1999) Color Res.  Appl. 24(4):243-252.
+
+;;; Code:
 
 (require 'test-palette-extractor)
 

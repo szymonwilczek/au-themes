@@ -1,4 +1,39 @@
-;;; test-tonic-accommodation-dark-focus.el --- Tonic Accommodation & Dark Focus Anchoring -*- lexical-binding: t; -*-
+;;; test-tonic-accommodation-dark-focus.el --- Tonic Accommodation and Dark Focus Anchoring -*- lexical-binding: t -*-
+
+;; Copyright (C) 2026  Szymon Wilczek
+
+;; Author: Szymon Wilczek <swilczek.lx@gmail.com>
+;; URL: https://github.com/szymonwilczek/au-themes
+
+;; This file is not part of GNU Emacs.
+
+;; This file is free software: you can redistribute it and/or modify
+;; it under the terms of the GNU General Public License as published by
+;; the Free Software Foundation, either version 3 of the License, or
+;; (at your option) any later version.
+;;
+;; This file is distributed in the hope that it will be useful,
+;; but WITHOUT ANY WARRANTY; without even the implied warranty of
+;; MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+;; GNU General Public License for more details.
+;;
+;; You should have received a copy of the GNU General Public License
+;; along with this file.  If not, see <https://www.gnu.org/licenses/>.
+
+;;; Commentary:
+;;
+;; Evaluate ciliary muscle tonic accommodation anchoring and dark focus
+;; prevention.
+;; In dark rooms with astigmatism/photophobia, lack of crisp edge contrast
+;; causes the ciliary muscle to relax into tonic dark focus (resting point
+;; ~80-100cm instead of screen 50-60cm).
+;; High-frequency edge contrast on fg-main must provide an unambiguous
+;; accommodation lock.
+;;
+;; Ref:
+;; Leibowitz & Owens (1978) Science; Charman (1982) OPO; Heath (1956) JOSA.
+
+;;; Code:
 
 (require 'test-palette-extractor)
 
@@ -54,7 +89,7 @@ Ref: Leibowitz & Owens (1978) Science; Charman (1982) OPO; Heath (1956) JOSA."
                            apca-lc min-lc))
             (setq passes (1+ passes)))
         (princ (format "   [FAIL] Base Text APCA |Lc| = %.1f < %.1f: Fuzzy, indistinct letter edges in darkness.\n"
-                           apca-lc min-lc))
+                       apca-lc min-lc))
         (setq fails (1+ fails))))
 
     ;; Part 3: Ciliary Rest State Prevention (Michelson >= 0.85)

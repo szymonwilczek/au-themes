@@ -1,4 +1,39 @@
-;;; test-circadian-photobiology.el --- Circadian solar elevation & dawn crossover biometrics -*- lexical-binding: t; -*-
+;;; test-circadian-photobiology.el --- Circadian solar elevation and dawn crossover biometrics -*- lexical-binding: t -*-
+
+;; Copyright (C) 2026  Szymon Wilczek
+
+;; Author: Szymon Wilczek <swilczek.lx@gmail.com>
+;; URL: https://github.com/szymonwilczek/au-themes
+
+;; This file is not part of GNU Emacs.
+
+;; This file is free software: you can redistribute it and/or modify
+;; it under the terms of the GNU General Public License as published by
+;; the Free Software Foundation, either version 3 of the License, or
+;; (at your option) any later version.
+;;
+;; This file is distributed in the hope that it will be useful,
+;; but WITHOUT ANY WARRANTY; without even the implied warranty of
+;; MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+;; GNU General Public License for more details.
+;;
+;; You should have received a copy of the GNU General Public License
+;; along with this file.  If not, see <https://www.gnu.org/licenses/>.
+
+;;; Commentary:
+;;
+;; Evaluate circadian photometric solar distance and dawn crossover
+;; hybridization.
+;;
+;; Ref:
+;; - Kasten & Young (1989) Applied Optics 28(22):4735-4738 (Air Mass model)
+;; - Perez et al. (1990, 1993) Solar Energy 50(3):235-245 (All-Weather Sky Luminance)
+;; - Endler (1993) Ecological Monographs 63(1):1-27 ('The color of light in forests')
+;; - Stevens (1961) Science 133:80-86 (Power-law luminance adaptation S ~ L^0.33)
+;; - Lucas et al. (2014) Trends Neurosci. 37(1):1-9 (Measuring and using light
+;;   for circadian biology)
+
+;;; Code:
 
 (require 'test-palette-extractor)
 
@@ -34,9 +69,9 @@ Ref:
     (princ "\nPart 1: Solar Elevation & Photometric Adaptation Envelope:\n")
     (cond
      ((memq theme '(au-whispergrove-night whispergrove-night
-                     au-aurum-twilight aurum-twilight
-                     au-aurum-night aurum-night
-                     au-parchment-night parchment-night))
+                                          au-aurum-twilight aurum-twilight
+                                          au-aurum-night aurum-night
+                                          au-parchment-night parchment-night))
       ;; Night regime: nocturnal starlight/moonlight envelope
       (let ((night-ok (<= bg-y 0.020)))
         (if night-ok
@@ -47,8 +82,8 @@ Ref:
           (setq fails (1+ fails)))))
 
      ((memq theme '(au-whispergrove-day whispergrove-day
-                     au-aurum-day aurum-day
-                     au-parchment-day parchment-day))
+                                        au-aurum-day aurum-day
+                                        au-parchment-day parchment-day))
       ;; Solar Noon regime: elevated solar angle (alpha_s ~ 52 deg, Air Mass m ~ 1.22)
       (let* ((min-y 0.500)
              (max-y 0.750)
@@ -209,9 +244,9 @@ Ref:
           (setq fails (1+ fails)))))
 
      ((memq theme '(au-aurum-night aurum-night au-aurum-twilight aurum-twilight
-                     au-aurum-day aurum-day
-                     au-parchment-night parchment-night
-                     au-parchment-day parchment-day))
+                                   au-aurum-day aurum-day
+                                   au-parchment-night parchment-night
+                                   au-parchment-day parchment-day))
       ;; Check zero melanopsin excitation: all core syntax and chrome tokens outside blue/cyan [180°..260°]
       (let* ((token-list (list (cons "cursor" (plist-get pal :cursor))
                                (cons "fnname" (plist-get pal :fnname))

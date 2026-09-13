@@ -1,4 +1,41 @@
-;;; test-scotopic-pupillary-aperture.el --- Stiles-Crawford Effect & Scopic Load Ratio -*- lexical-binding: t; -*-
+;;; test-scotopic-pupillary-aperture.el --- Stiles-Crawford Effect and Scopic Load Ratio -*- lexical-binding: t -*-
+
+;; Copyright (C) 2026  Szymon Wilczek
+
+;; Author: Szymon Wilczek <swilczek.lx@gmail.com>
+;; Maintainer: Szymon Wilczek <swilczek.lx@gmail.com>
+;; URL: https://github.com/szymonwilczek/au-themes
+
+;; This file is not part of GNU Emacs.
+
+;; This file is free software: you can redistribute it and/or modify
+;; it under the terms of the GNU General Public License as published by
+;; the Free Software Foundation, either version 3 of the License, or
+;; (at your option) any later version.
+;;
+;; This file is distributed in the hope that it will be useful,
+;; but WITHOUT ANY WARRANTY; without even the implied warranty of
+;; MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+;; GNU General Public License for more details.
+;;
+;; You should have received a copy of the GNU General Public License
+;; along with this file.  If not, see <https://www.gnu.org/licenses/>.
+
+;;; Commentary:
+;;
+;; Evaluate Stiles-Crawford effect (SCE-I) and 80x40 viewport Scopic Load
+;; Ratio.
+;; In dark rooms with wide pupils (6.5-7.5mm), peripheral rays cause spherical
+;; aberrations.
+;; In ASD, prolonged pupillary latency impairs light constriction.
+;; Viewport total energy must not cross the photopic activation threshold
+;; (~10 cd/m2 on 100 cd/m2 displays).
+;;
+;; Ref:
+;; Stiles & Crawford (1933) Proc.  R.  Soc.; Fan & Yao (2011) Autism Res.;
+;; Westheimer (1967).
+
+;;; Code:
 
 (require 'test-palette-extractor)
 

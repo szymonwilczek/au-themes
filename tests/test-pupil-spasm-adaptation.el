@@ -1,4 +1,42 @@
-;;; test-pupil-spasm-adaptation.el --- Saccadic Foveal Adaptation & Palette Energy Variance -*- lexical-binding: t; -*-
+;;; test-pupil-spasm-adaptation.el --- Saccadic Foveal Adaptation and Palette Energy Variance -*- lexical-binding: t -*-
+
+;; Copyright (C) 2026  Szymon Wilczek
+
+;; Author: Szymon Wilczek <swilczek.lx@gmail.com>
+;; URL: https://github.com/szymonwilczek/au-themes
+
+;; This file is not part of GNU Emacs.
+
+;; This file is free software: you can redistribute it and/or modify
+;; it under the terms of the GNU General Public License as published by
+;; the Free Software Foundation, either version 3 of the License, or
+;; (at your option) any later version.
+;;
+;; This file is distributed in the hope that it will be useful,
+;; but WITHOUT ANY WARRANTY; without even the implied warranty of
+;; MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+;; GNU General Public License for more details.
+;;
+;; You should have received a copy of the GNU General Public License
+;; along with this file.  If not, see <https://www.gnu.org/licenses/>.
+
+;;; Commentary:
+;;
+;; Evaluate saccadic foveal adaptation steps and palette luminance
+;; homogeneity.
+;;
+;; Note:
+;; Pupillary hippus (~0.2 Hz) is a spontaneous autonomic oscillation.
+;; During reading, saccadic eye movements between syntax tokens produce
+;; transient foveal luminance steps.
+;; Bounding local adaptation deltas and overall palette luminance variance
+;; (sigma^2) prevents excessive post-saccadic retinal adaptation transients
+;; and asthenopia.
+;;
+;; Ref:
+;; Loewenfeld (1993) The Pupil; Binda & Murray (2015) PNAS; Mathôt (2018) JoV.
+
+;;; Code:
 
 (require 'test-palette-extractor)
 
@@ -17,7 +55,7 @@ Ref: Loewenfeld (1993) The Pupil; Binda & Murray (2015) PNAS; Mathôt (2018) JoV
          (passes 0)
          (fails 0)
          (keys '(:fg-main :fg-dim :preprocessor :keyword :type :constant :number
-                 :builtin :fnname :fnname-call :string :property :operator :bracket :err))
+                          :builtin :fnname :fnname-call :string :property :operator :bracket :err))
          (lums (mapcar (lambda (k) (rf-luminance-y (plist-get pal k))) keys))
          (n (length lums))
          (mean-y (/ (apply #'+ lums) (float n)))

@@ -1,4 +1,38 @@
-;;; test-photophobia-triplet-contrast.el --- Triplet Contrast Shock & Micro-Saccadic Flicker -*- lexical-binding: t; -*-
+;;; test-photophobia-triplet-contrast.el --- Triplet Contrast Shock and Micro-Saccadic Flicker -*- lexical-binding: t -*-
+
+;; Copyright (C) 2026  Szymon Wilczek
+
+;; Author: Szymon Wilczek <swilczek.lx@gmail.com>
+;; URL: https://github.com/szymonwilczek/au-themes
+
+;; This file is not part of GNU Emacs.
+
+;; This file is free software: you can redistribute it and/or modify
+;; it under the terms of the GNU General Public License as published by
+;; the Free Software Foundation, either version 3 of the License, or
+;; (at your option) any later version.
+;;
+;; This file is distributed in the hope that it will be useful,
+;; but WITHOUT ANY WARRANTY; without even the implied warranty of
+;; MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+;; GNU General Public License for more details.
+;;
+;; You should have received a copy of the GNU General Public License
+;; along with this file.  If not, see <https://www.gnu.org/licenses/>.
+
+;;; Commentary:
+;;
+;; Evaluate local luminance shock and micro-saccadic flicker in triplet
+;; syntax sequences.
+;; In photophobia, high contrast jumps between adjacent syntax tokens
+;; (e.g. keyword -> bracket -> literal) cause retinal micro-flicker during
+;; fixational eye movements and micro-saccades.
+;;
+;; Ref:
+;; Martinez-Conde et al. (2004) Nature Rev.  Neurosci.; APCA Guidelines
+;; (Somers 2022).
+
+;;; Code:
 
 (require 'test-palette-extractor)
 

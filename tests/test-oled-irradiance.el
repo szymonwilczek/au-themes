@@ -1,4 +1,33 @@
-;;; test-oled-irradiance.el --- OLED true black & optical point irradiation simulation -*- lexical-binding: t; -*-
+;;; test-oled-irradiance.el --- OLED true black and optical point irradiation simulation -*- lexical-binding: t -*-
+
+;; Copyright (C) 2026  Szymon Wilczek
+
+;; Author: Szymon Wilczek <swilczek.lx@gmail.com>
+;; URL: https://github.com/szymonwilczek/au-themes
+
+;; This file is not part of GNU Emacs.
+
+;; This file is free software: you can redistribute it and/or modify
+;; it under the terms of the GNU General Public License as published by
+;; the Free Software Foundation, either version 3 of the License, or
+;; (at your option) any later version.
+;;
+;; This file is distributed in the hope that it will be useful,
+;; but WITHOUT ANY WARRANTY; without even the implied warranty of
+;; MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+;; GNU General Public License for more details.
+;;
+;; You should have received a copy of the GNU General Public License
+;; along with this file.  If not, see <https://www.gnu.org/licenses/>.
+
+;;; Commentary:
+;;
+;; Evaluate legibility on an emissive OLED panel.
+;; OLED black is emissive-off, so the only floor is the ambient light reflected
+;; by the front surface, L_reflected = R_d E/pi = 0.102 cd/m^2 (R_d = 0.5 %,
+;; IEC 61966-2-1 reference ambient 64 lx).
+
+;;; Code:
 
 (require 'test-palette-extractor)
 

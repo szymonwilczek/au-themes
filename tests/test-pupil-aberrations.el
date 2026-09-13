@@ -1,4 +1,35 @@
-;;; test-pupil-aberrations.el --- Pupil dynamics and r^4 spherical aberration scaling -*- lexical-binding: t; -*-
+;;; test-pupil-aberrations.el --- Pupil dynamics and r^4 spherical aberration scaling -*- lexical-binding: t -*-
+
+;; Copyright (C) 2026  Szymon Wilczek
+
+;; Author: Szymon Wilczek <swilczek.lx@gmail.com>
+;; URL: https://github.com/szymonwilczek/au-themes
+
+;; This file is not part of GNU Emacs.
+
+;; This file is free software: you can redistribute it and/or modify
+;; it under the terms of the GNU General Public License as published by
+;; the Free Software Foundation, either version 3 of the License, or
+;; (at your option) any later version.
+;;
+;; This file is distributed in the hope that it will be useful,
+;; but WITHOUT ANY WARRANTY; without even the implied warranty of
+;; MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+;; GNU General Public License for more details.
+;;
+;; You should have received a copy of the GNU General Public License
+;; along with this file.  If not, see <https://www.gnu.org/licenses/>.
+
+;;; Commentary:
+;;
+;; Evaluate pupil aperture and 4th-order spherical aberration scaling per
+;; Liang & Williams (1997).
+;; The adapting field is the whole 80x40 viewport at the IEC 61966-2-1 reference
+;; white luminance, not the background colour alone: the pupil integrates
+;; corneal flux over the field (Stanley & Davies 1995), so using only the canvas
+;; luminance under-drives the model.
+
+;;; Code:
 
 (require 'test-palette-extractor)
 

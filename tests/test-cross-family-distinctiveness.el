@@ -1,7 +1,31 @@
-;;; test-cross-family-distinctiveness.el --- Cross-package theme divergence and anti-cloning gate -*- lexical-binding: t; -*-
+;;; test-cross-family-distinctiveness.el --- Cross-package theme divergence and anti-cloning gate -*- lexical-binding: t -*-
+
+;; Copyright (C) 2026  Szymon Wilczek
 
 ;; Author: Szymon Wilczek <swilczek.lx@gmail.com>
-;; Keywords: faces, themes, accessibility, autism, neurodivergence
+;; URL: https://github.com/szymonwilczek/au-themes
+
+;; This file is not part of GNU Emacs.
+
+;; This file is free software: you can redistribute it and/or modify
+;; it under the terms of the GNU General Public License as published by
+;; the Free Software Foundation, either version 3 of the License, or
+;; (at your option) any later version.
+;;
+;; This file is distributed in the hope that it will be useful,
+;; but WITHOUT ANY WARRANTY; without even the implied warranty of
+;; MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+;; GNU General Public License for more details.
+;;
+;; You should have received a copy of the GNU General Public License
+;; along with this file.  If not, see <https://www.gnu.org/licenses/>.
+
+;;; Commentary:
+;;
+;; Verification of chromatic divergence and anti-cloning separation
+;; between theme families (whispergrove, aurum, parchment).
+
+;;; Code:
 
 (require 'test-palette-extractor)
 
@@ -75,8 +99,8 @@ au-whispergrove-day) must maintain strict categorical, perceptual, and chromatic
           ;; -------------------------------------------------------------------
           (princ (format "\nPart 1: Cross-Family Hex Collision Check (%s vs %s):\n" theme c-theme))
           (let ((checked-keys '(:keyword :type :builtin :constant :number :fnname
-                                :fnname-call :string :property :bg-region :cursor
-                                :bg-main :fg-main))
+                                         :fnname-call :string :property :bg-region :cursor
+                                         :bg-main :fg-main))
                 (collisions nil))
             (dolist (k checked-keys)
               (let ((h1 (plist-get pal k))
@@ -123,7 +147,7 @@ au-whispergrove-day) must maintain strict categorical, perceptual, and chromatic
           ;; -------------------------------------------------------------------
           (princ (format "\nPart 3: Global Palette Profile Divergence (%s vs %s):\n" theme c-theme))
           (let* ((syntax-keys '(:keyword :type :builtin :constant :number :fnname
-                                :fnname-call :string :property :bg-region))
+                                         :fnname-call :string :property :bg-region))
                  (distances (mapcar (lambda (k)
                                       (rf-delta-e-2000 (plist-get pal k) (plist-get c-pal k)))
                                     syntax-keys))
@@ -137,94 +161,94 @@ au-whispergrove-day) must maintain strict categorical, perceptual, and chromatic
               (princ (format "   [FAIL] Palette clone alert: Mean separation = %.2f < 18.0\n" mean-dist))
               (setq fails (1+ fails)))))
 
-          ;; -------------------------------------------------------------------
-          ;; Part 4: Family-Specific Chromatic Identity Purity Gate
-          ;; -------------------------------------------------------------------
-          (princ (format "\nPart 4: Chromatic Identity Purity Gate (%s family signature):\n" family))
-          (cond
-           ((eq family 'aurum)
-            ;; Aurum requirements:
-            ;; 1. Selection region MUST be warm gold / amber / quartz sand (h in [40°..110°])
-            ;;    and NEVER cool forest green / moss (h in [115°..175°]).
-            (let* ((reg-hex (plist-get pal :bg-region))
-                   (reg-okl (rf-hex-to-oklch reg-hex))
-                   (reg-h   (nth 2 reg-okl))
-                   (reg-ok  (and (>= reg-h 40.0) (<= reg-h 110.0))))
-              (if reg-ok
-                  (progn
-                    (princ (format "   [PASS] Aurum Selection Region (%s, hue %.1f°): Genuine warm golden amber / quartz sand.\n"
-                                   reg-hex reg-h))
-                    (setq passes (1+ passes)))
-                (princ (format "   [FAIL] Aurum Selection Region (%s, hue %.1f°): Inauthentic chromatic identity (expected [40°..110°], got forest/cool hue).\n"
-                               reg-hex reg-h))
-                (setq fails (1+ fails))))
+        ;; -------------------------------------------------------------------
+        ;; Part 4: Family-Specific Chromatic Identity Purity Gate
+        ;; -------------------------------------------------------------------
+        (princ (format "\nPart 4: Chromatic Identity Purity Gate (%s family signature):\n" family))
+        (cond
+         ((eq family 'aurum)
+          ;; Aurum requirements:
+          ;; 1. Selection region MUST be warm gold / amber / quartz sand (h in [40°..110°])
+          ;;    and NEVER cool forest green / moss (h in [115°..175°]).
+          (let* ((reg-hex (plist-get pal :bg-region))
+                 (reg-okl (rf-hex-to-oklch reg-hex))
+                 (reg-h   (nth 2 reg-okl))
+                 (reg-ok  (and (>= reg-h 40.0) (<= reg-h 110.0))))
+            (if reg-ok
+                (progn
+                  (princ (format "   [PASS] Aurum Selection Region (%s, hue %.1f°): Genuine warm golden amber / quartz sand.\n"
+                                 reg-hex reg-h))
+                  (setq passes (1+ passes)))
+              (princ (format "   [FAIL] Aurum Selection Region (%s, hue %.1f°): Inauthentic chromatic identity (expected [40°..110°], got forest/cool hue).\n"
+                             reg-hex reg-h))
+              (setq fails (1+ fails))))
 
-            ;; 2. For aurum-day, Data Type must NOT be cool green (h not in [120°..175°])
-            ;;    Aurum uses warm bronze, terracotta, amber, or peach sandstone for types.
-            (when (eq polarity 'light)
-              (let* ((type-hex (plist-get pal :type))
-                     (type-okl (rf-hex-to-oklch type-hex))
-                     (type-h   (nth 2 type-okl))
-                     (type-not-green (not (and (>= type-h 120.0) (<= type-h 175.0)))))
-                (if type-not-green
-                    (progn
-                      (princ (format "   [PASS] Aurum Daylight Data Type (%s, hue %.1f°): Warm bronze / sandstone / amber (non-green).\n"
-                                     type-hex type-h))
-                      (setq passes (1+ passes)))
-                  (princ (format "   [FAIL] Aurum Daylight Data Type (%s, hue %.1f°): Green hue stolen from forest palette.\n"
-                                 type-hex type-h))
-                  (setq fails (1+ fails))))))
-
-           ((eq family 'whispergrove)
-            ;; Whispergrove requirements:
-            ;; Selection region MUST be temperate forest moss/conifer (h in [115°..175°])
-            (let* ((reg-hex (plist-get pal :bg-region))
-                   (reg-okl (rf-hex-to-oklch reg-hex))
-                   (reg-h   (nth 2 reg-okl))
-                   (reg-ok  (and (>= reg-h 115.0) (<= reg-h 175.0))))
-              (if reg-ok
+          ;; 2. For aurum-day, Data Type must NOT be cool green (h not in [120°..175°])
+          ;;    Aurum uses warm bronze, terracotta, amber, or peach sandstone for types.
+          (when (eq polarity 'light)
+            (let* ((type-hex (plist-get pal :type))
+                   (type-okl (rf-hex-to-oklch type-hex))
+                   (type-h   (nth 2 type-okl))
+                   (type-not-green (not (and (>= type-h 120.0) (<= type-h 175.0)))))
+              (if type-not-green
                   (progn
-                    (princ (format "   [PASS] Whispergrove Selection Region (%s, hue %.1f°): Temperate forest moss.\n"
-                                   reg-hex reg-h))
+                    (princ (format "   [PASS] Aurum Daylight Data Type (%s, hue %.1f°): Warm bronze / sandstone / amber (non-green).\n"
+                                   type-hex type-h))
                     (setq passes (1+ passes)))
-                (princ (format "   [FAIL] Whispergrove Selection Region (%s, hue %.1f°): Not in forest moss envelope [115°..175°].\n"
-                               reg-hex reg-h))
-                (setq fails (1+ fails)))))
+                (princ (format "   [FAIL] Aurum Daylight Data Type (%s, hue %.1f°): Green hue stolen from forest palette.\n"
+                               type-hex type-h))
+                (setq fails (1+ fails))))))
 
-           ((eq family 'parchment)
-            ;; Parchment requirements:
-            ;; 1. Minimal Chroma Entropy: all syntax code tokens must maintain Oklab C < 0.042
-            ;;    to eliminate "rainbow Christmas tree" sensory overload.
-            (let* ((syntax-tokens '(:keyword :type :builtin :constant :number :fnname
-                                    :fnname-call :string :property))
-                   (excess-chroma nil))
-              (dolist (tok syntax-tokens)
-                (let* ((hex (plist-get pal tok))
-                       (c (nth 1 (rf-hex-to-oklch hex))))
-                  (when (> c 0.042)
-                    (push (list tok hex c) excess-chroma))))
-              (if (null excess-chroma)
-                  (progn
-                    (princ "   [PASS] Parchment Minimal Chroma Entropy: All syntax tokens maintain Oklab C < 0.040 (zero sensory noise).\n")
-                    (setq passes (1+ passes)))
-                (princ (format "   [FAIL] Parchment Chroma Violation: Tokens exceed sensory-safe ceiling C=0.040: %S\n"
-                               excess-chroma))
-                (setq fails (1+ fails))))
+         ((eq family 'whispergrove)
+          ;; Whispergrove requirements:
+          ;; Selection region MUST be temperate forest moss/conifer (h in [115°..175°])
+          (let* ((reg-hex (plist-get pal :bg-region))
+                 (reg-okl (rf-hex-to-oklch reg-hex))
+                 (reg-h   (nth 2 reg-okl))
+                 (reg-ok  (and (>= reg-h 115.0) (<= reg-h 175.0))))
+            (if reg-ok
+                (progn
+                  (princ (format "   [PASS] Whispergrove Selection Region (%s, hue %.1f°): Temperate forest moss.\n"
+                                 reg-hex reg-h))
+                  (setq passes (1+ passes)))
+              (princ (format "   [FAIL] Whispergrove Selection Region (%s, hue %.1f°): Not in forest moss envelope [115°..175°].\n"
+                             reg-hex reg-h))
+              (setq fails (1+ fails)))))
 
-            ;; 2. Selection region MUST be authentic bound vellum, linen, or antique leather (warm hue in [25°..110°])
-            ;;    and NEVER cool forest green/cyan/blue (h in [120°..280°]).
-            (let* ((reg-hex (plist-get pal :bg-region))
-                   (reg-okl (rf-hex-to-oklch reg-hex))
-                   (reg-h   (nth 2 reg-okl))
-                   (reg-ok  (and (>= reg-h 25.0) (<= reg-h 110.0))))
-              (if reg-ok
-                  (progn
-                    (princ (format "   [PASS] Parchment Selection Region (%s, hue %.1f°): Authentic manuscript vellum / leather binding.\n"
-                                   reg-hex reg-h))
-                    (setq passes (1+ passes)))
-                (princ (format "   [FAIL] Parchment Selection Region (%s, hue %.1f°): Inauthentic binding hue (expected [25°..110°]).\n"
-                               reg-hex reg-h))
-                (setq fails (1+ fails))))))))
+         ((eq family 'parchment)
+          ;; Parchment requirements:
+          ;; 1. Minimal Chroma Entropy: all syntax code tokens must maintain Oklab C < 0.042
+          ;;    to eliminate "rainbow Christmas tree" sensory overload.
+          (let* ((syntax-tokens '(:keyword :type :builtin :constant :number :fnname
+                                           :fnname-call :string :property))
+                 (excess-chroma nil))
+            (dolist (tok syntax-tokens)
+              (let* ((hex (plist-get pal tok))
+                     (c (nth 1 (rf-hex-to-oklch hex))))
+                (when (> c 0.042)
+                  (push (list tok hex c) excess-chroma))))
+            (if (null excess-chroma)
+                (progn
+                  (princ "   [PASS] Parchment Minimal Chroma Entropy: All syntax tokens maintain Oklab C < 0.040 (zero sensory noise).\n")
+                  (setq passes (1+ passes)))
+              (princ (format "   [FAIL] Parchment Chroma Violation: Tokens exceed sensory-safe ceiling C=0.040: %S\n"
+                             excess-chroma))
+              (setq fails (1+ fails))))
+
+          ;; 2. Selection region MUST be authentic bound vellum, linen, or antique leather (warm hue in [25°..110°])
+          ;;    and NEVER cool forest green/cyan/blue (h in [120°..280°]).
+          (let* ((reg-hex (plist-get pal :bg-region))
+                 (reg-okl (rf-hex-to-oklch reg-hex))
+                 (reg-h   (nth 2 reg-okl))
+                 (reg-ok  (and (>= reg-h 25.0) (<= reg-h 110.0))))
+            (if reg-ok
+                (progn
+                  (princ (format "   [PASS] Parchment Selection Region (%s, hue %.1f°): Authentic manuscript vellum / leather binding.\n"
+                                 reg-hex reg-h))
+                  (setq passes (1+ passes)))
+              (princ (format "   [FAIL] Parchment Selection Region (%s, hue %.1f°): Inauthentic binding hue (expected [25°..110°]).\n"
+                             reg-hex reg-h))
+              (setq fails (1+ fails))))))))
 
     (princ (format "\n----------------------------------------------------------------------\n"))
     (princ (format "Cross-Family Distinctiveness Summary: %d Passed, %d Failed.\n\n" passes fails))

@@ -1,4 +1,35 @@
-;;; test-determinism-1to1.el --- 1:1 Keyface determinism and pairwise perceptual distance -*- lexical-binding: t; -*-
+;;; test-determinism-1to1.el --- 1:1 Keyface determinism and pairwise perceptual distance -*- lexical-binding: t -*-
+
+;; Copyright (C) 2026  Szymon Wilczek
+
+;; Author: Szymon Wilczek <swilczek.lx@gmail.com>
+;; URL: https://github.com/szymonwilczek/au-themes
+
+;; This file is not part of GNU Emacs.
+
+;; This file is free software: you can redistribute it and/or modify
+;; it under the terms of the GNU General Public License as published by
+;; the Free Software Foundation, either version 3 of the License, or
+;; (at your option) any later version.
+;;
+;; This file is distributed in the hope that it will be useful,
+;; but WITHOUT ANY WARRANTY; without even the implied warranty of
+;; MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+;; GNU General Public License for more details.
+;;
+;; You should have received a copy of the GNU General Public License
+;; along with this file.  If not, see <https://www.gnu.org/licenses/>.
+
+;;; Commentary:
+;;
+;; Evaluate 1:1 keyface uniqueness and pairwise CIEDE2000 separation
+;; (min 10.0).
+;; Colour separation is measured with CIEDE2000 (CIE 142:2001 / ISO-CIE
+;; 11664-6:2014), not with Emacs' `color-distance', which is an unpublished
+;; sRGB heuristic that is not perceptually uniform: the same numeric gate of
+;; 8000 corresponded to dE00 between 9.7 and 19.7 depending on the hue pair.
+
+;;; Code:
 
 (require 'test-palette-extractor)
 
@@ -14,8 +45,8 @@ on the hue pair."
          (passes 0)
          (fails 0)
          (tokens-to-check '(:preprocessor :keyword :type :constant :number
-                            :builtin :fnname :fnname-call :string :property
-                            :operator :bracket :delimiter :err :fg-dim :fg-main))
+                                          :builtin :fnname :fnname-call :string :property
+                                          :operator :bracket :delimiter :err :fg-dim :fg-main))
          (critical-pairs
           '(("define (#define) vs struct (keyword)"     :preprocessor :keyword)
             ("define vs LOTA_PCR_COUNT (constant)"      :preprocessor :constant)

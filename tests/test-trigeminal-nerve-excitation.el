@@ -1,4 +1,40 @@
-;;; test-trigeminal-nerve-excitation.el --- Retino-Thalamic Trigeminovascular Photophobia -*- lexical-binding: t; -*-
+;;; test-trigeminal-nerve-excitation.el --- Retino-Thalamic Trigeminovascular Photophobia -*- lexical-binding: t -*-
+
+;; Copyright (C) 2026  Szymon Wilczek
+
+;; Author: Szymon Wilczek <swilczek.lx@gmail.com>
+;; URL: https://github.com/szymonwilczek/au-themes
+
+;; This file is not part of GNU Emacs.
+
+;; This file is free software: you can redistribute it and/or modify
+;; it under the terms of the GNU General Public License as published by
+;; the Free Software Foundation, either version 3 of the License, or
+;; (at your option) any later version.
+;;
+;; This file is distributed in the hope that it will be useful,
+;; but WITHOUT ANY WARRANTY; without even the implied warranty of
+;; MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+;; GNU General Public License for more details.
+;;
+;; You should have received a copy of the GNU General Public License
+;; along with this file.  If not, see <https://www.gnu.org/licenses/>.
+
+;;; Commentary:
+;;
+;; Evaluate retino-thalamic trigeminovascular photophobia exacerbation from
+;; long-wavelength red.
+;; Photophobia in migraine is mediated by retinal projections converging onto
+;; dura-sensitive thalamic trigeminovascular neurons (Noseda et al. 2010, 2016).
+;; Narrowband long-wavelength red and short-wavelength blue maximally exacerbate
+;; headache pain, whereas green (~530 nm) shows minimal exacerbation.
+;;
+;; Ref:
+;; Noseda et al. (2010) Nat. Neurosci. 13:239-245; Noseda et al. (2016) Brain
+;; 139:1971-1986; Burstein et al. (2015) Nature Rev.  Neurosci.; Digre & Brennan
+;; (2012).
+
+;;; Code:
 
 (require 'test-palette-extractor)
 

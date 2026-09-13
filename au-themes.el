@@ -1,60 +1,46 @@
-;;; au-themes.el --- Sensory-safe, scientifically gated themes for autism and neurodivergence -*- lexical-binding: t -*-
+;;; au-themes.el --- Sensory-safe themes for autism and neurodivergence -*- lexical-binding: t -*-
 
 ;; Copyright (C) 2026  Szymon Wilczek
 
 ;; Author: Szymon Wilczek <swilczek.lx@gmail.com>
-;; Maintainer: Szymon Wilczek <swilczek.lx@gmail.com>
 ;; URL: https://github.com/szymonwilczek/au-themes
-;; Version: 0.2.0
+;; Version: 0.1.0
 ;; Package-Requires: ((emacs "28.1") (ef-themes "1.0.0"))
 ;; Keywords: faces, themes, accessibility, autism, neurodivergence
 
-;; This file is NOT part of GNU Emacs.
+;; This file is not part of GNU Emacs.
 
-;; GNU Emacs is free software: you can redistribute it and/or modify
+;; This file is free software: you can redistribute it and/or modify
 ;; it under the terms of the GNU General Public License as published by
 ;; the Free Software Foundation, either version 3 of the License, or
 ;; (at your option) any later version.
 ;;
-;; GNU Emacs is distributed in the hope that it will be useful,
+;; This file is distributed in the hope that it will be useful,
 ;; but WITHOUT ANY WARRANTY; without even the implied warranty of
 ;; MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 ;; GNU General Public License for more details.
 ;;
 ;; You should have received a copy of the GNU General Public License
-;; along with GNU Emacs.  If not, see <https://www.gnu.org/licenses/>.
+;; along with this file.  If not, see <https://www.gnu.org/licenses/>.
 
 ;;; Commentary:
 ;;
-;; Au-themes (named after Au — the chemical symbol for Gold, representing
-;; autism pride and acceptance over the pathologizing blue puzzle piece) is a
-;; collection of sensory-safe, psycho-optically calibrated Emacs themes
-;; engineered specifically for autistic individuals and neurodivergent sensory profiles.
+;; au-themes (named after Au - the chemical symbol for Gold, representing
+;; autism pride and acceptance) is a collection of sensory-safe,
+;; psycho-optically calibrated Emacs themes designed specifically for autistic
+;; individuals and neurodivergent sensory profiles.
 ;;
 ;; Autistic visual perception frequently involves hyper-reactivity to visual stimuli,
 ;; including photophobia, pattern glare, foveal visual crowding, and rapid visual fatigue.
-;; Each theme in this collection is subjected to a 34-module automated diagnostic gate:
+;; Each theme in this collection is subjected to automated diagnostic gate:
 ;;
-;; - APCA (Advanced Perceptual Contrast Algorithm) & ISO-compliant contrast tuning
+;; - APCA (Advanced Perceptual Contrast Algorithm) and ISO-compliant contrast tuning
 ;; - Parvocellular vs Magnocellular (M/P) visual pathway balancing
-;; - Tonic accommodation lock (ciliary muscle dark focus anchoring at 50-60cm)
-;; - Bouma window visual crowding suppression (delimiter/bracket hierarchy)
+;; - Tonic accommodation lock
+;; - Bouma window visual crowding suppression
 ;; - Isoluminance jitter elimination across adjacent syntax tokens
 ;; - Zero color collisions with strict 1:1 semantic syntax determinism
 ;; - Reduced blue light and macular hazard mitigation
-;;
-;; Available themes in the Au collection:
-;; - `au-whispergrove-night`: Deep nocturnal whisper grove sanctuary (LCD/OLED calibrated)
-;; - `au-whispergrove-evening`: Soft twilight whisper grove evening (elevated dark)
-;; - `au-whispergrove-morning`: Dewy dawn mist whisper grove canopy (subdued daylight)
-;; - `au-whispergrove-day`: Misty temperate whisper grove daylight sanctuary
-;; - `au-aurum-twilight`: Volcanic basalt, ancient gold, olivine, and amethyst sanctuary
-;; - `au-aurum-night`: Volcanic basalt and ancient gold sanctuary (zero blue light, pure warm gold)
-;; - `au-aurum-day`: Warm sandstone, ancient gold, and basalt daylight sanctuary (zero blue light)
-;; - `au-parchment-night`: Antique leather binding and worn vellum nocturnal sanctuary (minimal chroma entropy)
-;; - `au-parchment-day`: Authentic medieval manuscript and vellum daylight sanctuary (minimal chroma entropy)
-;;
-;; All themes in this suite use the `au-` prefix.
 
 ;;; Code:
 
@@ -83,7 +69,7 @@
     au-aurum-day
     au-parchment-night
     au-parchment-day)
-  "List of themes included in the Au-themes collection."
+  "List of themes included in the au-themes collection."
   :type '(repeat symbol)
   :group 'au-themes)
 

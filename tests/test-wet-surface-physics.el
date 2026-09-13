@@ -1,4 +1,34 @@
-;;; test-wet-surface-physics.el --- Organic gamut chroma ceiling & Lekner-Dorf (1988) wet optics -*- lexical-binding: t; -*-
+;;; test-wet-surface-physics.el --- Organic gamut chroma ceiling and Lekner-Dorf (1988) wet optics -*- lexical-binding: t -*-
+
+;; Copyright (C) 2026  Szymon Wilczek
+
+;; Author: Szymon Wilczek <swilczek.lx@gmail.com>
+;; URL: https://github.com/szymonwilczek/au-themes
+
+;; This file is not part of GNU Emacs.
+
+;; This file is free software: you can redistribute it and/or modify
+;; it under the terms of the GNU General Public License as published by
+;; the Free Software Foundation, either version 3 of the License, or
+;; (at your option) any later version.
+;;
+;; This file is distributed in the hope that it will be useful,
+;; but WITHOUT ANY WARRANTY; without even the implied warranty of
+;; MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+;; GNU General Public License for more details.
+;;
+;; You should have received a copy of the GNU General Public License
+;; along with this file.  If not, see <https://www.gnu.org/licenses/>.
+
+;;; Commentary:
+;;
+;; Evaluate organic gamut chroma boundaries and Lekner & Dorf (1988)
+;; wetting optics.
+;;
+;; Ref:
+;; Lekner & Dorf (1988) Applied Optics 27(7), 1278-1280.
+
+;;; Code:
 
 (require 'test-palette-extractor)
 

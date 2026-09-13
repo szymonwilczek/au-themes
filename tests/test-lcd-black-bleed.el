@@ -1,4 +1,37 @@
-;;; test-lcd-black-bleed.el --- LCD matrix backlight leakage and bleed simulation -*- lexical-binding: t; -*-
+;;; test-lcd-black-bleed.el --- LCD matrix backlight leakage and bleed simulation -*- lexical-binding: t -*-
+
+;; Copyright (C) 2026  Szymon Wilczek
+
+;; Author: Szymon Wilczek <swilczek.lx@gmail.com>
+;; URL: https://github.com/szymonwilczek/au-themes
+
+;; This file is not part of GNU Emacs.
+
+;; This file is free software: you can redistribute it and/or modify
+;; it under the terms of the GNU General Public License as published by
+;; the Free Software Foundation, either version 3 of the License, or
+;; (at your option) any later version.
+;;
+;; This file is distributed in the hope that it will be useful,
+;; but WITHOUT ANY WARRANTY; without even the implied warranty of
+;; MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+;; GNU General Public License for more details.
+;;
+;; You should have received a copy of the GNU General Public License
+;; along with this file.  If not, see <https://www.gnu.org/licenses/>.
+
+;;; Commentary:
+;;
+;; Evaluate legibility on an IPS LCD with native black level and ambient
+;; reflection.
+;; The panel model is L(Y) = L_black + (L_white - L_black) Y + L_reflected
+;; with L_black = L_white/1000 (typical IPS native contrast)
+;; and L_reflected = R_d E/pi = 0.102 cd/m^2 for R_d = 0.5 % under the IEC
+;; 61966-2-1 reference ambient of 64 lx.
+;; The previous additive constant of 0.008 (a contrast ratio of 125:1)
+;; corresponded to no measurable panel property.
+
+;;; Code:
 
 (require 'test-palette-extractor)
 

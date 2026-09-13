@@ -1,4 +1,41 @@
-;;; test-magnocellular-parvocellular-balance.el --- Magnocellular vs Parvocellular Pathway Balance -*- lexical-binding: t; -*-
+;;; test-magnocellular-parvocellular-balance.el --- Magnocellular vs Parvocellular Pathway Balance -*- lexical-binding: t -*-
+
+;; Copyright (C) 2026  Szymon Wilczek
+
+;; Author: Szymon Wilczek <swilczek.lx@gmail.com>
+;; URL: https://github.com/szymonwilczek/au-themes
+
+;; This file is not part of GNU Emacs.
+
+;; This file is free software: you can redistribute it and/or modify
+;; it under the terms of the GNU General Public License as published by
+;; the Free Software Foundation, either version 3 of the License, or
+;; (at your option) any later version.
+;;
+;; This file is distributed in the hope that it will be useful,
+;; but WITHOUT ANY WARRANTY; without even the implied warranty of
+;; MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+;; GNU General Public License for more details.
+;;
+;; You should have received a copy of the GNU General Public License
+;; along with this file.  If not, see <https://www.gnu.org/licenses/>.
+
+;;; Commentary:
+;;
+;; Evaluate visual pathway balance between Magnocellular (M) and
+;; Parvocellular (P) systems.
+;; In ASD, the M-pathway (sensitive to rapid motion, flicker, low spatial
+;; frequency luminance jumps) is fragile and triggers involuntary saccadic
+;; micro-jitters when background surfaces pop.
+;; Backgrounds (hl-line, region) must have minimal luminance contrast
+;; (Lc < 12.0), leaving all semantic differentiation to the slow, detailed,
+;; color-sensitive P-pathway.
+;;
+;; Ref:
+;; Livingstone & Hubel (1988) Science; Milne et al. (2002) NeuroReport;
+;; Merigan & Maunsell (1993).
+
+;;; Code:
 
 (require 'test-palette-extractor)
 

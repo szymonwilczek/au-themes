@@ -1,4 +1,44 @@
-;;; test-crowding-effect-foveal.el --- Typographical Visual Crowding & Flanker Contrast Disparity -*- lexical-binding: t; -*-
+;;; test-crowding-effect-foveal.el --- Typographical Visual Crowding and Flanker Contrast Disparity -*- lexical-binding: t -*-
+
+;; Copyright (C) 2026  Szymon Wilczek
+
+;; Author: Szymon Wilczek <swilczek.lx@gmail.com>
+;; URL: https://github.com/szymonwilczek/au-themes
+
+;; This file is not part of GNU Emacs.
+
+;; This file is free software: you can redistribute it and/or modify
+;; it under the terms of the GNU General Public License as published by
+;; the Free Software Foundation, either version 3 of the License, or
+;; (at your option) any later version.
+;;
+;; This file is distributed in the hope that it will be useful,
+;; but WITHOUT ANY WARRANTY; without even the implied warranty of
+;; MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+;; GNU General Public License for more details.
+;;
+;; You should have received a copy of the GNU General Public License
+;; along with this file.  If not, see <https://www.gnu.org/licenses/>.
+
+;;; Commentary:
+;;
+;; Evaluate typographical visual crowding and delimiter flanker contrast
+;; disparity.
+;; Visual crowding degrades letter and word recognition when flankers interfere
+;; with targets.
+;; Kooi et al. (1994) and Levi (2008) showed that disparity in luminance contrast
+;; between target and flankers markedly reduces visual crowding.
+;; In code reading, punctuation, brackets, and operators act as flankers adjacent
+;; to identifiers;
+;; subordinating delimiter contrast mitigates flanker interference and supports
+;; local detail processing.
+;;
+;; Ref:
+;; Kooi et al. (1994) Vision Res.
+;; 34:269-276; Levi (2008) Vision Res. 48:635-654; Pelli et al. (2004);
+;; Baldassi et al. (2009) Hum.  Brain Mapp.
+
+;;; Code:
 
 (require 'test-palette-extractor)
 

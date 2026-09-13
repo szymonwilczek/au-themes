@@ -1,4 +1,30 @@
-;;; test-macular-hazard-blue-light.el --- ICNIRP/IEC 62471 Retinal Blue Light Hazard -*- lexical-binding: t; -*-
+;;; test-macular-hazard-blue-light.el --- ICNIRP/IEC 62471 Retinal Blue Light Hazard -*- lexical-binding: t -*-
+
+;; Copyright (C) 2026  Szymon Wilczek
+
+;; Author: Szymon Wilczek <swilczek.lx@gmail.com>
+;; URL: https://github.com/szymonwilczek/au-themes
+
+;; This file is not part of GNU Emacs.
+
+;; This file is free software: you can redistribute it and/or modify
+;; it under the terms of the GNU General Public License as published by
+;; the Free Software Foundation, either version 3 of the License, or
+;; (at your option) any later version.
+;;
+;; This file is distributed in the hope that it will be useful,
+;; but WITHOUT ANY WARRANTY; without even the implied warranty of
+;; MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+;; GNU General Public License for more details.
+;;
+;; You should have received a copy of the GNU General Public License
+;; along with this file.  If not, see <https://www.gnu.org/licenses/>.
+
+;;; Commentary:
+;;
+;; Evaluate the retinal blue-light photochemical hazard of the palette.
+
+;;; Code:
 
 (require 'test-palette-extractor)
 
@@ -37,7 +63,7 @@ Acta Ophthalmol. Scand. 84(1):4-15, DOI 10.1111/j.1600-0420.2005.00627.x."
          ;; deliberately short-wavelength (cursor, constants, call names) are
          ;; allowed twice that, being sparse and non-continuous in the field.
          (warm-roles '(:string :number :builtin :err :fg-dim :type :keyword
-                       :preprocessor :operator :bracket :fg-main))
+                               :preprocessor :operator :bracket :fg-main))
          (tokens '(("Base text (Mineral quartz)"       :fg-main)
                    ("Comments (Damp needles)"          :fg-dim)
                    ("Cursor (Raindrop glint)"          :cursor)

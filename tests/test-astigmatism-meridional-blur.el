@@ -1,4 +1,39 @@
-;;; test-astigmatism-meridional-blur.el --- Anisotropic Astigmatic Cylinder Defocus & Sturm Interval -*- lexical-binding: t; -*-
+;;; test-astigmatism-meridional-blur.el --- Anisotropic Astigmatic Cylinder Defocus and Sturm Interval -*- lexical-binding: t -*-
+
+;; Copyright (C) 2026  Szymon Wilczek
+
+;; Author: Szymon Wilczek <swilczek.lx@gmail.com>
+;; URL: https://github.com/szymonwilczek/au-themes
+
+;; This file is not part of GNU Emacs.
+
+;; This file is free software: you can redistribute it and/or modify
+;; it under the terms of the GNU General Public License as published by
+;; the Free Software Foundation, either version 3 of the License, or
+;; (at your option) any later version.
+;;
+;; This file is distributed in the hope that it will be useful,
+;; but WITHOUT ANY WARRANTY; without even the implied warranty of
+;; MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+;; GNU General Public License for more details.
+;;
+;; You should have received a copy of the GNU General Public License
+;; along with this file.  If not, see <https://www.gnu.org/licenses/>.
+
+;;; Commentary:
+;;
+;; Evaluate directional edge acutance and inter-character modulation under
+;; -1.50D astigmatism
+;; Astigmatic corneas focus orthogonal meridians at different focal planes
+;; (Interval of Sturm).
+;; In dark themes, directional horizontal blur smears stroke light across
+;; inter-glyph spaces.
+;;
+;; Ref:
+;; Thibos et al. (2004) JOSA A; Legras et al. (2004) OPO; Charman (2005)
+;; Clin Exp Optom.
+
+;;; Code:
 
 (require 'test-palette-extractor)
 

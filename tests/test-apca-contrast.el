@@ -1,4 +1,39 @@
-;;; test-apca-contrast.el --- APCA 0.0.98G-4g lightness contrast & photophobia calibration -*- lexical-binding: t; -*-
+;;; test-apca-contrast.el --- APCA 0.0.98G-4g lightness contrast and photophobia calibration -*- lexical-binding: t -*-
+
+;; Copyright (C) 2026  Szymon Wilczek
+
+;; Author: Szymon Wilczek <swilczek.lx@gmail.com>
+;; URL: https://github.com/szymonwilczek/au-themes
+
+;; This file is not part of GNU Emacs.
+
+;; This file is free software: you can redistribute it and/or modify
+;; it under the terms of the GNU General Public License as published by
+;; the Free Software Foundation, either version 3 of the License, or
+;; (at your option) any later version.
+;;
+;; This file is distributed in the hope that it will be useful,
+;; but WITHOUT ANY WARRANTY; without even the implied warranty of
+;; MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+;; GNU General Public License for more details.
+;;
+;; You should have received a copy of the GNU General Public License
+;; along with this file.  If not, see <https://www.gnu.org/licenses/>.
+
+;;; Commentary:
+;;
+;; Evaluate APCA 0.0.98G-4g contrast boundaries calibrated for photophobia
+;; and readability.
+;;
+;; Note: Standard APCA Bronze guidelines target Lc >= 75 for body text
+;; and Lc >= 60 for content.
+;; In dark-mode photophobia design, body text is calibrated to moderate Lc
+;; (46-62) to prevent edge irradiation and pupil constriction, while secondary
+;; syntactic tokens deliberately sit below Lc 30 to suppress distraction.
+;; Targets represent intentional photophobia-adapted calibration boundaries
+;; rather than unadapted APCA Bronze levels.
+
+;;; Code:
 
 (require 'test-palette-extractor)
 

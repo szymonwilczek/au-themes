@@ -1,4 +1,36 @@
-;;; test-photophobia-glare.el --- Photophobia, Discomfort Glare & CIE S 026 Melanopic Irradiance -*- lexical-binding: t; -*-
+;;; test-photophobia-glare.el --- Photophobia, Discomfort Glare and CIE S 026 Melanopic Irradiance -*- lexical-binding: t -*-
+
+;; Copyright (C) 2026  Szymon Wilczek
+
+;; Author: Szymon Wilczek <swilczek.lx@gmail.com>
+;; URL: https://github.com/szymonwilczek/au-themes
+
+;; This file is not part of GNU Emacs.
+
+;; This file is free software: you can redistribute it and/or modify
+;; it under the terms of the GNU General Public License as published by
+;; the Free Software Foundation, either version 3 of the License, or
+;; (at your option) any later version.
+;;
+;; This file is distributed in the hope that it will be useful,
+;; but WITHOUT ANY WARRANTY; without even the implied warranty of
+;; MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+;; GNU General Public License for more details.
+;;
+;; You should have received a copy of the GNU General Public License
+;; along with this file.  If not, see <https://www.gnu.org/licenses/>.
+
+;;; Commentary:
+;;
+;; Evaluate clinical photophobia risk, CIE Discomfort Glare Index (DGI),
+;; CIE S 026 melanopic irradiance, and photoreceptor saturation/bleaching
+;; glare.
+;;
+;; Ref:
+;; CIE Discomfort Glare Index; CIE S 026:2018; Noseda et al. (2010, 2017)
+;; Nature Neurosci / Brain.
+
+;;; Code:
 
 (require 'test-palette-extractor)
 
