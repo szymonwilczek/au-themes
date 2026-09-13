@@ -23,6 +23,10 @@
 ;;; Commentary:
 ;;
 ;; Evaluate the retinal blue-light photochemical hazard of the palette.
+;;
+;; Ref:
+;; - ICNIRP (2013) Health Phys. 105(1):74-96, DOI: 10.1097/HP.0b013e318289a611
+;; - IEC 62471:2006 / CIE S 009:2002
 
 ;;; Code:
 
