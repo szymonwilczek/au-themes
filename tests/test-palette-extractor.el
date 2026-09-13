@@ -991,17 +991,20 @@ Accounts for ~20% typographic stroke coverage within code glyph cells."
           (* bg-cells bg-y))
        (float rf-viewport-cells))))
 
-;; Toric Blur Astigmatism PSF
+;;;; Toric Blur Astigmatism PSF (Geometric Optics: Charman 2005)
 (defun rf-toric-blur-michelson (hex bg-hex &optional blur-attenuation)
   "Calculate post-blur Michelson contrast for thin stroke under astigmatic blur.
-BLUR-ATTENUATION defaults to 0.60 representing a 1.25D cylinder defocus on a 1.2px stroke."
-  (let* ((eta (or blur-attenuation 0.60))
+BLUR-ATTENUATION eta represents geometric optics blur circle attenuation:
+beta = d * C / 2. For pupil d=4.3mm and cylinder C=1.25D, beta ~= 9.2 arcmin.
+For a typographic stroke of width w ~= 1.6 arcmin, eta ~= 4w / (pi * beta) ~= 0.22."
+  (let* ((eta (or blur-attenuation 0.22))
          (y-bg (rf-luminance-y bg-hex))
          (y-tok (rf-luminance-y hex))
-         (y-peak-blur (+ y-bg (* (- y-tok y-bg) eta))))
-    (if (< (+ y-peak-blur y-bg) 1e-6)
+         (y-peak-blur (+ y-bg (* (- y-tok y-bg) eta)))
+         (denom (+ y-peak-blur y-bg)))
+    (if (< denom 1e-9)
         0.0
-      (/ (abs (- y-peak-blur y-bg)) (+ y-peak-blur y-bg)))))
+      (/ (abs (- y-peak-blur y-bg)) denom))))
 
 ;; Intraocular straylight: CIE 146:2002 General Disability Glare Equation
 ;; (Vos & van den Berg; see also Vos (2003) Clin. Exp. Optom. 86(6):363-370,

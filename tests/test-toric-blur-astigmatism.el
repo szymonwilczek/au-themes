@@ -9,7 +9,8 @@ Ref: Legras et al. (2004) Ophthalmic Physiol Opt; Charman (2005) Clin Exp Optom.
          (theme (plist-get pal :theme))
          (bg (plist-get pal :bg-main))
          (polarity (rf-theme-polarity theme))
-         (blur-factor 0.60) ; cylinder 1.25D stroke peak attenuation
+         ;; Geometric optics: beta = d*C/2; for d=4.3mm, C=1.25D, w=1.6', eta = 4w/(pi*beta) ~= 0.22
+         (blur-factor 0.22)
          (passes 0)
          (fails 0)
          (tokens '(("Base text"                 :fg-main)
