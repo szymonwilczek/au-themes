@@ -78,6 +78,20 @@
     (cyan-faint "#625c52")             ; Punctuation delimiters
 
     ;; Panels, Diffs and Structural Highlights
+    (bg-red-intense "#e6a79c")         ; Blocking errors, fatal assertion panel
+    (bg-green-intense "#9cc090")       ; Success banner
+    (bg-yellow-intense "#cdb37d")      ; Warning banner, review request
+    (bg-blue-intense "#d5a7d7")        ; Info banner, active selections
+    (bg-magenta-intense "#dfa5c5")     ; Special prompt background
+    (bg-cyan-intense "#88c39c")        ; Incsearch current match target
+
+    (bg-red-subtle "#e4ceca")          ; Diff context deletion background
+    (bg-green-subtle "#d0dfcb")        ; Diff context addition background
+    (bg-yellow-subtle "#e3cc9a")       ; Diff whitespace/context change
+    (bg-blue-subtle "#e1d8e1")         ; Mode-line subtle indicators
+    (bg-magenta-subtle "#e4d8de")      ; Matching paren context background
+    (bg-cyan-subtle "#c1cfc5")         ; Structural block highlight
+
     (bg-added "#c8e4c4")               ; Diff added line baseline
     (bg-added-faint "#daf0d8")         ; Diff added unchanged context
     (bg-added-refine "#b6dbb0")        ; Diff added word-level highlight
