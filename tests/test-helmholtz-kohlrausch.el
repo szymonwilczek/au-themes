@@ -22,8 +22,10 @@
 
 ;;; Commentary:
 ;;
-;; Evaluate Helmholtz-Kohlrausch perceived brightness.
-;; Uses the published model of Fairchild & Pirrotta (1991).
+;; Evaluate Helmholtz-Kohlrausch perceived brightness boost.
+;;
+;; Ref:
+;; Fairchild & Pirrotta (1991) Color Res. Appl. 16(6):385-393.
 
 ;;; Code:
 
