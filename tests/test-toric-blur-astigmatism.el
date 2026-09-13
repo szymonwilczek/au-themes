@@ -34,7 +34,9 @@ Ref: Legras et al. (2004) Ophthalmic Physiol Opt; Charman (2005) Clin Exp Optom.
       (let* ((label   (nth 0 tok))
              (key     (nth 1 tok))
              (min-cm  (if (eq polarity 'light)
-                          (if (eq key :fg-main) 0.35 0.25)
+                          ;; For dark strokes on light background, maximum theoretical Cm is eta/(2-eta) ~= 0.1236.
+                          ;; Detection threshold at 6 cpd is mt = 0.015; Cm >= 0.08 is >5x suprathreshold.
+                          (if (eq key :fg-main) 0.10 0.08)
                         (if (eq key :fg-main) 0.70 0.45)))
              (hex     (plist-get pal key))
              (y-tok   (rf-luminance-y hex))
