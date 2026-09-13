@@ -1,12 +1,13 @@
-;;; test-pupil-spasm-adaptation.el --- Pupillary Hippus & Saccadic Local Adaptation Spasm -*- lexical-binding: t; -*-
+;;; test-pupil-spasm-adaptation.el --- Saccadic Foveal Adaptation & Palette Energy Variance -*- lexical-binding: t; -*-
 
 (require 'test-palette-extractor)
 
 (defun test-pupil-spasm-adaptation-run ()
-  "Evaluate pupillary hippus, ciliary micro-spasms, and saccadic energy fluctuations.
-In nocturnal coding with dark-dilated pupils (5-7mm), sharp luminance transitions between
-adjacent syntax tokens trigger rapid iris oscillations (pupillary hippus) and ciliary spasm,
-causing ocular ache, photophobia flare-up, and asthenopic exhaustion.
+  "Evaluate saccadic foveal adaptation steps and palette luminance homogeneity.
+Note: Pupillary hippus (~0.2 Hz) is a spontaneous autonomic oscillation. During reading,
+saccadic eye movements between syntax tokens produce transient foveal luminance steps.
+Bounding local adaptation deltas and overall palette luminance variance (sigma^2) prevents
+excessive post-saccadic retinal adaptation transients and asthenopia.
 Ref: Loewenfeld (1993) The Pupil; Binda & Murray (2015) PNAS; Mathôt (2018) JoV."
   (let* ((pal (au-extract-active-palette))
          (theme (plist-get pal :theme))
@@ -37,8 +38,8 @@ Ref: Loewenfeld (1993) The Pupil; Binda & Murray (2015) PNAS; Mathôt (2018) JoV
             ("base text vs bracket ([ { } ])"              :fg-main     :bracket))))
 
     (princ (format "\n======================================================================\n"))
-    (princ (format " Pupillary Hippus & Saccadic Local Adaptation Spasm Suite\n"))
-    (princ (format " Ref: Loewenfeld (1993); Binda & Murray (2015); Mathot (2018)\n"))
+    (princ (format " Saccadic Foveal Adaptation & Palette Energy Variance Suite\n"))
+    (princ (format " Ref: Binda & Murray (2015) PNAS; Mathot (2018) JoV; Loewenfeld (1993)\n"))
     (princ (format " Theme: %s (%s) | Background: %s (Y_bg: %.6f)\n" theme polarity bg bg-y))
     (princ (format " Requirement: Saccadic delta Delta-L < 0.0400, Variance sigma^2 <= 0.0250\n"))
     (princ (format "======================================================================\n"))
