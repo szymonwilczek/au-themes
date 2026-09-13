@@ -29,8 +29,8 @@
 ;; fixational eye movements and micro-saccades.
 ;;
 ;; Ref:
-;; Martinez-Conde et al. (2004) Nature Rev.  Neurosci.; APCA Guidelines
-;; (Somers 2022).
+;; - Martinez-Conde et al. (2004) Nature Rev. Neurosci.
+;; - APCA Guidelines (Somers 2022)
 
 ;;; Code:
 
