@@ -61,14 +61,18 @@ Ref: Stiles & Crawford (1933) Proc. R. Soc.; Fan & Yao (2011) Autism Res.; Westh
                         (+ (* mean-viewport-y rf-display-white-luminance)
                            rf-reference-veiling-glare)))
            (pupil-radius (/ pupil-diam 2.0))
-           ;; Stiles-Crawford directional sensitivity formula: eta(r) = 10^(-rho * r^2) with rho ~ 0.05
+           ;; Stiles-Crawford directional sensitivity formula: eta(r) = 10^(-rho * r_max^2)
+           ;; with rho ~ 0.05 mm^-2 and peak decentration x0 ~ 0.5 mm nasal (Rynders et al. 1995).
            (rho 0.05)
-           (eta-margin (expt 10.0 (* (- rho) pupil-radius pupil-radius)))
+           (x0 0.50)
+           (r-max (+ pupil-radius x0))
+           (eta-margin (expt 10.0 (* (- rho) r-max r-max)))
            (ok (>= eta-margin 0.30)))
       (if ok
           (progn
-            (princ (format "   [PASS] Pupil r = %.2f mm, Marginal SCE-I eta = %.3f >= 0.300: Controlled peripheral aberration.\n"
-                           pupil-radius eta-margin))
+            (princ (format "   [PASS] Pupil r = %.2f mm (r_max = %.2f mm with nasal offset), Marginal SCE-I eta = %.3f >= 0.300.\n"
+                           pupil-radius r-max eta-margin))
+            (princ "          Peripheral rays attenuated by photoreceptor directional tuning, containing aberrations.\n")
             (setq passes (1+ passes)))
         (princ (format "   [FAIL] Marginal SCE-I eta = %.3f < 0.300: High peripheral ray degradation.\n"
                        eta-margin))
