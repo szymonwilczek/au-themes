@@ -11,10 +11,13 @@
          (polarity (rf-theme-polarity theme))
          (y-bg (rf-luminance-y bg))
          (y-fg (rf-luminance-y fg))
-         ;; Weber contrast magnitude
-         (weber-contrast (if (eq polarity 'light)
-                             (/ (- y-bg y-fg) (max 0.0001 y-bg))
-                           (/ (- y-fg y-bg) (max 0.0001 y-bg))))
+         ;; Physical display floor (black level + diffuse reflection)
+         (floor-y (rf-display-physical-floor-y))
+         ;; Retinal forward straylight veiling background (Vos 2003 / CIE 146:2002)
+         (stray-y (* (rf-viewport-mean-luminance-y pal) (rf-straylight-integral)))
+         (retinal-bg (+ y-bg floor-y stray-y))
+         ;; Retinal Weber contrast: |Delta Y| / Y_retinal_bg
+         (weber-contrast (/ (abs (- y-fg y-bg)) (max 1e-6 retinal-bg)))
          ;; Clinical ocular straylight parameter s at 10 deg per Vos (2003) / CIE 146:2002
          (s-10 (* 100.0 (rf-glare-spread-function 10.0)))
          (log-s (log s-10 10))
@@ -26,9 +29,11 @@
     (princ (format " Ref: Vos (2003), CIE Report on Disability Glare (CIE 146:2002)\n"))
     (princ (format " Theme: %s (%s) | Background: %s\n" theme polarity bg))
     (princ (format "======================================================================\n"))
-    (princ (format "Background Luminance (rel Y):  %.6f\n" y-bg))
+    (princ (format "Background Luminance (rel Y):  %.6f (Retinal Y_bg: %.6f)\n" y-bg retinal-bg))
     (princ (format "Foreground Luminance (rel Y):  %.6f\n" y-fg))
-    (princ (format "Weber Contrast Ratio (|C_W|):  %.2f\n" weber-contrast))
+    (princ (format "Panel Physical Floor:          %.6f\n" floor-y))
+    (princ (format "Retinal Straylight Veiling:    %.6f\n" stray-y))
+    (princ (format "Retinal Weber Ratio (|C_W|):   %.2f\n" weber-contrast))
     (princ (format "Ocular Straylight s(10 deg):   %.2f deg^2/sr [log(s) = %.2f]\n" s-10 log-s))
     (princ (format "----------------------------------------------------------------------\n"))
 
