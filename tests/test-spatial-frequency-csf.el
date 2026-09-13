@@ -26,8 +26,8 @@
 ;; visibility thresholds (~6 cpd).
 ;;
 ;; Ref:
-;; Campbell & Robson (1968) J. Physiol.; Legge et al. (1985)
-;; Psychophysics of Reading.
+;; - Campbell & Robson (1968) J. Physiol.
+;; - Legge et al. (1985) Psychophysics of Reading
 
 ;;; Code:
 
