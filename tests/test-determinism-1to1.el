@@ -50,7 +50,7 @@ on the hue pair."
             ("define (#define) vs sizeof (builtin)"     :preprocessor :builtin)
             ("__always_inline (builtin) vs LOTA_PCR_COUNT (constant)" :builtin :constant)
             ("struct (keyword) vs \"string\""           :keyword      :string)
-            ("int (type) vs \"string\""                 :type         :string 9.5)
+            ("int (type) vs \"string\""                 :type         :string)
             ("tgid (property) vs \"string\""            :property     :string)
             ("define (#define) vs is_write_open_flags (def)" :preprocessor :fnname)
             ("define (#define) vs bpf_ (call)"          :preprocessor :fnname-call))))
