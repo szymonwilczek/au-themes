@@ -1,18 +1,19 @@
-;;; test-spatial-frequency-csf.el --- Barten (1999) Contrast Sensitivity Function (CSF) for typography -*- lexical-binding: t; -*-
+;;; test-spatial-frequency-csf.el --- Typographic spatial frequency contrast sensitivity thresholds (~6 cpd) -*- lexical-binding: t; -*-
 
 (require 'test-palette-extractor)
 
 (defun test-spatial-frequency-csf-run ()
-  "Evaluate typographical stroke contrast against Barten (1999) CSF threshold under astigmatic defocus."
+  "Evaluate typographical stroke contrast against spatial frequency visibility thresholds (~6 cpd).
+Ref: Campbell & Robson (1968) J. Physiol.; Legge et al. (1985) Psychophysics of Reading."
   (let* ((pal (au-extract-active-palette))
          (bg (plist-get pal :bg-main))
          (theme (plist-get pal :theme))
          (passes 0)
          (fails 0)
-         ;; At 60cm viewing distance and 13pt font, character stroke spatial frequency is ~6 cpd (cycles per degree).
-         ;; Under 1.0D astigmatic cylinder, the optical transfer function attenuates contrast by ~40%.
-         ;; Barten CSF threshold at 6 cpd is approximately m_t = 0.015 (Michelson contrast).
-         ;; With astigmatic safety factor x4, required Michelson contrast is m >= 0.060.
+         ;; At 60cm viewing distance and 13pt font, character stroke spatial frequency is ~6 cpd.
+         ;; To maintain high reading speed and combat astigmatic optical degradation,
+         ;; typography requires Michelson contrast substantially above threshold:
+         ;; m >= 0.12 for subordinate comments, m >= 0.35 for primary code text.
          (tokens '(("Base text (Mineral quartz)"       :fg-main      0.35)
                    ("Comments (Damp needles)"          :fg-dim       0.12)
                    ("Cursor (Raindrop glint)"          :cursor       0.25)
@@ -30,8 +31,8 @@
                    ("Brackets (( ) [ ] { })"           :bracket      0.12)
                    ("Alerts / Errors (!)"              :err          0.15))))
     (princ (format "\n======================================================================\n"))
-    (princ (format " Barten (1999) Contrast Sensitivity Function (CSF) & MTF Suite\n"))
-    (princ (format " Typography: 6 cycles/degree (13pt at 60cm) with Astigmatic Cylinder Defocus\n"))
+    (princ (format " Typographic Spatial Frequency Contrast Sensitivity Suite (~6 cpd)\n"))
+    (princ (format " Ref: Campbell & Robson (1968); Legge et al. (1985) Psychophysics of Reading\n"))
     (princ (format " Theme: %s | Background: %s\n" theme bg))
     (princ (format "======================================================================\n"))
     (princ (format "%-32s | %-8s | %-12s | %-12s | %-8s\n"
@@ -55,7 +56,7 @@
                        name hex m min-m
                        (if ok "PASS" "FAIL")))))
     (princ (format "---------------------------------+----------+--------------+--------------+----------\n"))
-    (princ (format "Barten CSF Typography Summary: %d Passed, %d Failed.\n\n" passes fails))
+    (princ (format "Spatial Frequency Typography Summary: %d Passed, %d Failed.\n\n" passes fails))
     (zerop fails)))
 
 (when (and noninteractive (not (bound-and-true-p rf-running-all-tests)))
