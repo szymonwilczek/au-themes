@@ -1,12 +1,14 @@
-;;; test-isoluminance-jitter.el --- Isoluminance Edge Jitter & Rod Boundary Loss -*- lexical-binding: t; -*-
+;;; test-isoluminance-jitter.el --- Isoluminance Boundary Jitter in Contiguous Syntax -*- lexical-binding: t; -*-
 
 (require 'test-palette-extractor)
 
 (defun test-isoluminance-jitter-run ()
-  "Evaluate isoluminance jitter and chromatic edge blurring between adjacent syntax elements.
-When two distinct syntax colors share identical luminance (Delta-Y ~ 0), the magnocellular/rod
-system fails to detect an achromatic boundary edge, producing perceptual edge jitter,
-wobbling letter contours, and visual confusion.
+  "Evaluate isoluminance boundary jitter between contiguous or adjacent syntax tokens.
+While words in code are separated by whitespace, adjacent operators, brackets, pointers,
+and identifiers (e.g. `*ptr`, `->field`, `fn(`) form direct or closely packed boundaries.
+When adjacent syntax colors share identical luminance (Delta-Y ~ 0), the achromatic
+magnocellular edge detection system fails, producing chromatic contour jitter and blur.
+A non-zero separation deadband (Delta-Y >= 0.0050) maintains distinct contour sharpness.
 Ref: Livingstone & Hubel (1987) J. Neurosci.; Mullen (1985) J. Physiol.; Gegenfurtner (2003)."
   (let* ((pal (au-extract-active-palette))
          (theme (plist-get pal :theme))
@@ -35,10 +37,10 @@ Ref: Livingstone & Hubel (1987) J. Neurosci.; Mullen (1985) J. Physiol.; Gegenfu
             ("bracket vs keyword"                         :bracket     :keyword))))
 
     (princ (format "\n======================================================================\n"))
-    (princ (format " Isoluminance Edge Jitter & Achromatic Boundary Acuity Suite\n"))
+    (princ (format " Isoluminance Boundary Jitter & Contiguous Syntax Suite\n"))
     (princ (format " Ref: Livingstone & Hubel (1987); Mullen (1985); Gegenfurtner (2003)\n"))
     (princ (format " Theme: %s (%s) | Background: %s (Y_bg: %.6f)\n" theme polarity bg bg-y))
-    (princ (format " Requirement: Adjacent syntax pairs must maintain Delta-Y >= 0.0050\n"))
+    (princ (format " Requirement: Contiguous syntax pairs maintain Delta-Y >= 0.0050\n"))
     (princ (format "======================================================================\n"))
 
     (princ (format "%-42s | %-8s | %-8s | %-8s | %-8s | %-8s | %-8s\n"
