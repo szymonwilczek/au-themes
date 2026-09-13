@@ -25,17 +25,19 @@ Ref: Livingstone & Hubel (1988) Science; Milne et al. (2002) NeuroReport; Meriga
     (princ (format " Theme: %s (%s) | Background: %s (Y_bg: %.6f)\n" theme polarity bg bg-y))
     (princ (format "======================================================================\n"))
 
-    ;; Part 1: M-Pathway Background Luminance Contrast Gate (Lc < 12.0)
-    (princ "\nPart 1: Background UI Surfaces vs Canvas Luminance Shock (Lc < 12.0):\n")
+    ;; Part 1: M-Pathway Background Luminance Contrast Gate (Lc < 12.0 & Michelson <= 0.35)
+    ;; In APCA, |Lc| < 7.3 clamps to 0.0 (loClip); check photometric Michelson jump to ensure non-trivial gate.
+    (princ "\nPart 1: Background UI Surfaces vs Canvas Luminance Shock (Michelson <= 0.35, Lc < 12.0):\n")
     (let* ((lc-hl (abs (rf-apca-contrast hl bg)))
-           (hl-ok (< lc-hl 12.0)))
+           (m-hl (/ (abs (- hl-y bg-y)) (max 1e-6 (+ hl-y bg-y))))
+           (hl-ok (and (< lc-hl 12.0) (<= m-hl 0.35))))
       (if hl-ok
           (progn
-            (princ (format "   [PASS] bg-hl-line (%s) vs bg-main (%s): APCA |Lc| = %.2f < 12.0: Suppresses M-pathway jerk.\n"
-                           hl bg lc-hl))
+            (princ (format "   [PASS] bg-hl-line (%s) vs bg-main (%s): Michelson=%.4f <= 0.35, |Lc|=%.2f: Suppresses M-pathway jerk.\n"
+                           hl bg m-hl lc-hl))
             (setq passes (1+ passes)))
-        (princ (format "   [FAIL] bg-hl-line (%s) vs bg-main (%s): APCA |Lc| = %.2f >= 12.0: Triggers M-pathway saccadic distractibility.\n"
-                       hl bg lc-hl))
+        (princ (format "   [FAIL] bg-hl-line (%s) vs bg-main (%s): Michelson=%.4f, |Lc|=%.2f: Triggers M-pathway saccadic distractibility.\n"
+                       hl bg m-hl lc-hl))
         (setq fails (1+ fails))))
 
     ;; Part 2: P-Pathway Semantic Chromatic Information Gate
