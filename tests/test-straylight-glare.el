@@ -22,8 +22,10 @@
 
 ;;; Commentary:
 ;;
-;; Evaluate intraocular forward straylight and disability glare per Vos
-;; (2003).
+;; Evaluate intraocular forward straylight and disability glare.
+;;
+;; Ref:
+;; Vos (2003) CIE Report on Disability Glare (CIE 146:2002).
 
 ;;; Code:
 
