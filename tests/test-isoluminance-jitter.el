@@ -34,8 +34,9 @@
 ;; sharpness.
 ;;
 ;; Ref:
-;; Livingstone & Hubel (1987) J.  Neurosci.; Mullen (1985) J.  Physiol.;
-;; Gegenfurtner (2003).
+;; - Livingstone & Hubel (1987) J. Neurosci.
+;; - Mullen (1985) J. Physiol.
+;; - Gegenfurtner (2003)
 
 ;;; Code:
 
