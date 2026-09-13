@@ -1,4 +1,4 @@
-;;; au-whispergrove-evening-theme.el --- Soft twilight whisper grove evening theme -*- lexical-binding:t -*-
+;;; au-whispergrove-evening-theme.el --- Elevated dark theme for intermediate ambient lighting -*- lexical-binding:t -*-
 
 ;; Copyright (C) 2026  Szymon Wilczek
 
@@ -23,9 +23,10 @@
 
 ;;; Commentary:
 ;;
-;; Soft twilight whisper grove evening sanctuary (elevated dark).
-;; Part of the `au-themes' collection engineered for sensory-safe autistic
-;; and neurodivergent visual perception.
+;; Dark theme with elevated background luminance.
+;; Calibrated for moderate evening ambient light to prevent pupil dilation
+;; strain.
+;; Part of the `au-themes' collection.
 
 ;;; Code:
 
@@ -169,7 +170,7 @@
 (modus-themes-theme
  'au-whispergrove-evening
  'ef-themes
- "Au Whispergrove Evening: soft twilight rainy forest theme with elevated dark canvas for evening comfort."
+ "Elevated dark theme for intermediate ambient lighting and reduced pupil strain."
  'dark
  'au-whispergrove-evening-palette
  nil
