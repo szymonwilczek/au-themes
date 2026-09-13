@@ -28,15 +28,15 @@
 ;; with targets.
 ;; Kooi et al. (1994) and Levi (2008) showed that disparity in luminance contrast
 ;; between target and flankers markedly reduces visual crowding.
-;; In code reading, punctuation, brackets, and operators act as flankers adjacent
-;; to identifiers;
-;; subordinating delimiter contrast mitigates flanker interference and supports
-;; local detail processing.
+;; In code reading, punctuation, brackets, and operators act as flankers
+;; adjacent to identifiers; subordinating delimiter contrast mitigates flanker
+;; interference and supports local detail processing.
 ;;
 ;; Ref:
-;; Kooi et al. (1994) Vision Res.
-;; 34:269-276; Levi (2008) Vision Res. 48:635-654; Pelli et al. (2004);
-;; Baldassi et al. (2009) Hum.  Brain Mapp.
+;; - Kooi et al. (1994) Vision Res. 34:269-276
+;; - Levi (2008) Vision Res. 48:635-654
+;; - Pelli et al. (2004)
+;; - Baldassi et al. (2009) Hum. Brain Mapp.
 
 ;;; Code:
 
