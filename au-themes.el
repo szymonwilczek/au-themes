@@ -27,6 +27,7 @@
 ;;
 ;; Available themes in the Au collection:
 ;; - `au-whispergrove-night`: Deep nocturnal whisper grove sanctuary (LCD/OLED calibrated)
+;; - `au-whispergrove-evening`: Soft twilight whisper grove evening (elevated dark)
 ;; - `au-whispergrove-morning`: Dewy dawn mist whisper grove canopy (subdued daylight)
 ;; - `au-whispergrove-day`: Misty temperate whisper grove canopy daylight
 ;;
@@ -36,6 +37,7 @@
 
 (require 'au-whispergrove-day-theme)
 (require 'au-whispergrove-morning-theme)
+(require 'au-whispergrove-evening-theme)
 (require 'au-whispergrove-night-theme)
 
 (defgroup au-themes ()
@@ -45,6 +47,7 @@
 
 (defcustom au-themes-collection
   '(au-whispergrove-night
+    au-whispergrove-evening
     au-whispergrove-morning
     au-whispergrove-day)
   "List of themes included in the Au-themes collection."
