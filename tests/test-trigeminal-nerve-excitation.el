@@ -30,9 +30,10 @@
 ;; headache pain, whereas green (~530 nm) shows minimal exacerbation.
 ;;
 ;; Ref:
-;; Noseda et al. (2010) Nat. Neurosci. 13:239-245; Noseda et al. (2016) Brain
-;; 139:1971-1986; Burstein et al. (2015) Nature Rev.  Neurosci.; Digre & Brennan
-;; (2012).
+;; - Noseda et al. (2010) Nat. Neurosci. 13:239-245
+;; - Noseda et al. (2016) Brain 139:1971-1986
+;; - Burstein et al. (2015) Nature Rev. Neurosci.
+;; - Digre & Brennan (2012)
 
 ;;; Code:
 
