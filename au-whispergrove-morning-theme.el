@@ -1,4 +1,4 @@
-;;; au-whispergrove-morning-theme.el --- Misty temperate whisper grove morning dawn theme -*- lexical-binding:t -*-
+;;; au-whispergrove-morning-theme.el --- Subdued daylight theme with reduced canvas luminance -*- lexical-binding:t -*-
 
 ;; Copyright (C) 2026  Szymon Wilczek
 
@@ -23,9 +23,9 @@
 
 ;;; Commentary:
 ;;
-;; Dewy dawn mist whisper grove canopy (subdued daylight).
-;; Part of the `au-themes' collection designed for sensory-safe autistic
-;; and neurodivergent visual perception.
+;; Light theme with subdued canvas luminance.
+;; Designed for sensitive eyes in early daylight or low ambient illumination.
+;; Part of the `au-themes' collection.
 
 ;;; Code:
 
@@ -155,7 +155,7 @@
 (modus-themes-theme
  'au-whispergrove-morning
  'ef-themes
- "Au Whispergrove Morning: dewy dawn mist daylight theme with clean, single-point palette configuration."
+ "Subdued daylight theme with reduced canvas luminance for sensitive eyes."
  'light
  'au-whispergrove-morning-palette
  nil
