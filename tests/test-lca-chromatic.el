@@ -22,7 +22,10 @@
 
 ;;; Commentary:
 ;;
-;; Evaluate LCA chromatic dispersion per Thibos et al. (1992).
+;; Evaluate Longitudinal Chromatic Aberration (LCA) chromatic dispersion.
+;;
+;; Ref:
+;; Thibos et al. (1992) Applied Optics 31(19), DOI: 10.1364/AO.31.003594.
 
 ;;; Code:
 
