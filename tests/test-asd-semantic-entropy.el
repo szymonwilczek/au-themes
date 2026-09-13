@@ -98,14 +98,15 @@ Ref: Happé & Frith (2006) J. Autism Dev. Disord.; Shannon (1948); Ottosson (202
 
       ;; Part 3: Shannon Information Entropy
       (princ "\nPart 3: Shannon Semantic Chrominance Entropy H:\n")
-      (let* ((max-entropy 2.25)
+      (let* ((h-max (log num-bins 2))
+             (max-entropy 2.10) ; structured clustering: avoids scattered uniform noise (H_max = 2.322 bits)
              (entropy-ok (<= shannon-h max-entropy)))
         (if entropy-ok
             (progn
-              (princ (format "   [PASS] Shannon Entropy H = %.3f bits <= %.2f bits: Low cognitive sensory noise.\n"
-                             shannon-h max-entropy))
+              (princ (format "   [PASS] Shannon Entropy H = %.3f bits <= %.2f bits (H_max = %.3f, relative = %.1f%%): Structured chroma clustering.\n"
+                             shannon-h max-entropy h-max (* 100.0 (/ shannon-h h-max))))
               (setq passes (1+ passes)))
-          (princ (format "   [FAIL] Shannon Entropy H = %.3f bits > %.2f bits: High cognitive distraction.\n"
+          (princ (format "   [FAIL] Shannon Entropy H = %.3f bits > %.2f bits: Unstructured uniform chroma scatter.\n"
                          shannon-h max-entropy))
           (setq fails (1+ fails))))
 
