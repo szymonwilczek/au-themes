@@ -33,7 +33,8 @@ Ref:
     ;; Part 1: Circadian Solar Photometric Envelope
     (princ "\nPart 1: Solar Elevation & Photometric Adaptation Envelope:\n")
     (cond
-     ((memq theme '(au-whispergrove-night whispergrove-night))
+     ((memq theme '(au-whispergrove-night whispergrove-night
+                     au-aurum-night aurum-night))
       ;; Night regime: nocturnal starlight/moonlight envelope
       (let ((night-ok (<= bg-y 0.020)))
         (if night-ok
@@ -201,6 +202,36 @@ Ref:
                              cur-h num-h kw-h))
               (setq passes (1+ passes)))
           (princ (format "   [FAIL] Missing Dusk Accents in expected spectral envelopes.\n"))
+          (setq fails (1+ fails)))))
+
+     ((memq theme '(au-aurum-night aurum-night))
+      ;; Check zero melanopsin excitation: all core syntax and chrome tokens outside blue/cyan [180°..260°]
+      (let* ((token-list (list (cons "cursor" (plist-get pal :cursor))
+                               (cons "fnname" (plist-get pal :fnname))
+                               (cons "fnname-call" (plist-get pal :fnname-call))
+                               (cons "builtin" (plist-get pal :builtin))
+                               (cons "type" (plist-get pal :type))
+                               (cons "number" (plist-get pal :number))
+                               (cons "keyword" (plist-get pal :keyword))
+                               (cons "string" (plist-get pal :string))
+                               (cons "constant" (plist-get pal :constant))
+                               (cons "property" (plist-get pal :property))
+                               (cons "operator" (plist-get pal :operator))
+                               (cons "bracket" (plist-get pal :bracket))
+                               (cons "err" (plist-get pal :err))
+                               (cons "base text" (plist-get pal :fg-main))))
+             (blue-tokens (cl-remove-if-not
+                           (lambda (tok)
+                             (let ((h (nth 2 (rf-hex-to-oklch (cdr tok)))))
+                               (and (>= h 180.0) (<= h 260.0))))
+                           token-list)))
+        (if (null blue-tokens)
+            (progn
+              (princ "   [PASS] Zero Melanopsin (ipRGC) Hazard: 0/14 tokens in blue/cyan excitation band [180°..260°].\n")
+              (princ "          Complete spectral shielding for severe photophobia, ocular migraine, and melatonin preservation.\n")
+              (setq passes (1+ passes)))
+          (princ (format "   [FAIL] Melanopsin hazard: %d tokens in [180°..260°]: %s\n"
+                         (length blue-tokens) blue-tokens))
           (setq fails (1+ fails)))))
 
      (t

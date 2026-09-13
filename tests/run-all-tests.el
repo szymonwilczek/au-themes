@@ -51,7 +51,8 @@
   (let ((env (or (getenv "AU_TEST_THEMES") (getenv "RF_TEST_THEMES"))))
     (if (and env (not (string-empty-p env)))
         (mapcar #'intern (split-string env "[, ]+" t))
-      '(au-whispergrove-night au-whispergrove-evening au-whispergrove-morning au-whispergrove-day)))
+      '(au-whispergrove-night au-whispergrove-evening au-whispergrove-morning au-whispergrove-day
+        au-aurum-night)))
   "Themes evaluated by `run-all-au-tests'.
 Override with the AU_TEST_THEMES or RF_TEST_THEMES environment variable, e.g.
 AU_TEST_THEMES=au-whispergrove-night to gate a single variant.")
