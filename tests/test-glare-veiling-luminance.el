@@ -26,7 +26,9 @@
 ;; retention.
 ;;
 ;; Ref:
-;; CIE 112-1994; Vos & van den Berg (1999); IESNA TM-12-12.
+;; - CIE 112-1994
+;; - Vos & van den Berg (1999)
+;; - IESNA TM-12-12
 
 ;;; Code:
 
