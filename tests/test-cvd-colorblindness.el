@@ -24,11 +24,13 @@
 ;;
 ;; Evaluate syntax token discriminability under Protanopia, Deuteranopia,
 ;; and Tritanopia.
-;; Dichromat appearance is simulated with the two half-plane LMS projection of
-;; Brettel, Viénot & Mollon (1997) J.  Opt.  Soc. Am.  A 14(10):2647-2655,
-;; DOI: 10.1364/JOSAA.14.002647, using the Smith & Pokorny (1975) cone
-;; fundamentals over Judd-Vos corrected XYZ, as in Viénot, Brettel & Mollon
-;; (1999) Color Res.  Appl. 24(4):243-252.
+;; Dichromat appearance is simulated with the two half-plane LMS projection
+;; using the Smith & Pokorny (1975) cone fundamentals over Judd-Vos corrected XYZ.
+;;
+;; Ref:
+;; - Brettel, Viénot & Mollon (1997) J. Opt. Soc. Am. A 14(10):2647-2655
+;; - Viénot, Brettel & Mollon (1999) Color Res. Appl. 24(4):243-252
+;; - Smith & Pokorny (1975)
 
 ;;; Code:
 
