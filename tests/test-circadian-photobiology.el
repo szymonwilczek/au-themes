@@ -56,6 +56,33 @@ Ref:
           (princ (format "   [FAIL] Solar Noon luminance Y=%.4f out of bounds [%.3f..%.3f].\n" bg-y min-y max-y))
           (setq fails (1+ fails)))))
 
+     ((memq theme '(au-whispergrove-evening whispergrove-evening))
+      ;; Evening / Twilight regime: elevated dark envelope (softer than deep night)
+      (let* ((pal-night (au-extract-active-palette 'au-whispergrove-night))
+             (bg-night (plist-get pal-night :bg-main))
+             (y-night (rf-luminance-y bg-night))
+             (l-night (nth 0 (rf-hex-to-oklch bg-night)))
+             (delta-y-night (- bg-y y-night))
+             (delta-l-night (- bg-l l-night))
+             (ratio-night (/ (max 1e-4 bg-y) (max 1e-4 y-night)))
+             (dusk-range-ok (and (>= bg-y 0.010) (<= bg-y 0.025)))
+             (night-sep-ok (and (>= ratio-night 2.5) (>= delta-y-night 0.008) (>= delta-l-night 0.050))))
+        (if dusk-range-ok
+            (progn
+              (princ (format "   [PASS] Evening twilight canopy luminance Y=%.4f in [0.010..0.025] (Elevated soft dark).\n" bg-y))
+              (setq passes (1+ passes)))
+          (princ (format "   [FAIL] Evening canvas luminance Y=%.4f out of bounds [0.010..0.025].\n" bg-y))
+          (setq fails (1+ fails)))
+        (if night-sep-ok
+            (progn
+              (princ (format "   [PASS] Night Softening Distance: Delta-Y=%.4f (ratio %.2fx >= 2.5x), Delta-L=%.4f >= 0.050.\n"
+                             delta-y-night ratio-night delta-l-night))
+              (princ "          Noticeable, gentle lifting of dark background avoiding deep nocturnal black.\n")
+              (setq passes (1+ passes)))
+          (princ (format "   [FAIL] Insufficient distance to deep Night: Delta-Y=%.4f, Ratio=%.2fx, Delta-L=%.4f.\n"
+                         delta-y-night ratio-night delta-l-night))
+          (setq fails (1+ fails)))))
+
      ((memq theme '(au-whispergrove-morning whispergrove-morning))
       ;; Dawn / Early Morning regime: low solar angle (alpha_s ~ 12 deg, Air Mass m ~ 4.6)
       ;; Under temperate conifer canopy, morning light is noticeably attenuated vs solar noon.
@@ -154,8 +181,30 @@ Ref:
           (princ (format "   [FAIL] Missing Diurnal Accents: Expected warm sunbeams in [20°..105°].\n"))
           (setq fails (1+ fails)))))
 
+     ((memq theme '(au-whispergrove-evening whispergrove-evening))
+      ;; Check evening twilight accents: blue-hour cursor (h in [180°..250°]) and sunset warm accents
+      (let* ((cur (plist-get pal :cursor))
+             (kw (plist-get pal :keyword))
+             (num (plist-get pal :number))
+             (str (plist-get pal :string))
+             (cur-h (nth 2 (rf-hex-to-oklch cur)))
+             (kw-h (nth 2 (rf-hex-to-oklch kw)))
+             (num-h (nth 2 (rf-hex-to-oklch num)))
+             (str-h (nth 2 (rf-hex-to-oklch str)))
+             (dusk-accents-ok (and (and (>= cur-h 180.0) (<= cur-h 250.0))
+                                   (and (>= kw-h 40.0) (<= kw-h 75.0))
+                                   (and (>= num-h 70.0) (<= num-h 105.0))
+                                   (and (>= str-h 20.0) (<= str-h 45.0)))))
+        (if dusk-accents-ok
+            (progn
+              (princ (format "   [PASS] Evening Twilight Accents: Blue Hour Cursor (%.1f°), Sunset Amber (%.1f°), Oak Bark (%.1f°).\n"
+                             cur-h num-h kw-h))
+              (setq passes (1+ passes)))
+          (princ (format "   [FAIL] Missing Dusk Accents in expected spectral envelopes.\n"))
+          (setq fails (1+ fails)))))
+
      (t
-      (princ "   [SKIP] Chromatic hybridization check applies to morning crossover phase.\n")
+      (princ "   [SKIP] Chromatic hybridization check applies to crossover phases.\n")
       (setq passes (1+ passes))))
 
     (princ (format "\n----------------------------------------------------------------------\n"))

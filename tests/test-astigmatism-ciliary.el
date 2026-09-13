@@ -20,7 +20,9 @@
          (min-dim-lc (if (eq polarity 'light)
                          (if (< (rf-luminance-y bg) 0.420) 30.0 35.0)
                        10.0))
-         (max-dim-lc (if (eq polarity 'light) 60.0 24.0))
+         (max-dim-lc (if (eq polarity 'light)
+                         60.0
+                       (if (> (rf-luminance-y bg) 0.010) 28.0 24.0)))
          (passes 0)
          (fails 0)
          (warnings 0))
