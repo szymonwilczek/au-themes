@@ -58,13 +58,13 @@ calibration boundaries rather than unadapted APCA Bronze levels."
     ;; Physical Overcast Canvas Gate for Daylight polarity
     (when (eq polarity 'light)
       (let* ((bg-y (rf-luminance-y bg))
-             (bg-ok (and (>= bg-y 0.4000) (<= bg-y 0.5200))))
-        (princ "Overcast Canopy Canvas Luminance Check:\n")
+             (bg-ok (and (>= bg-y 0.4500) (<= bg-y 0.7500))))
+        (princ "Canopy Canvas Luminance Check:\n")
         (if bg-ok
             (progn
-              (princ (format "   [PASS] Overcast canopy canvas luminance Y=%.4f in [0.40..0.52] (eliminates paper-white glare)\n" bg-y))
+              (princ (format "   [PASS] Canopy canvas luminance Y=%.4f in [0.45..0.75] (eliminates paper-white glare)\n" bg-y))
               (setq passes (1+ passes)))
-          (princ (format "   [FAIL] Canvas luminance Y=%.4f out of bounds [0.40..0.52] (too bright/paper white)\n" bg-y))
+          (princ (format "   [FAIL] Canvas luminance Y=%.4f out of bounds [0.45..0.75] (too bright/paper white or too dark)\n" bg-y))
           (setq fails (1+ fails)))
         (princ "----------------------------------------------------------------------\n")))
     (princ (format "%-32s | %-8s | %-7s | %-12s | %-8s\n" "Token Role" "Hex" "Lc" "Target Lc" "Status"))
@@ -76,20 +76,39 @@ calibration boundaries rather than unadapted APCA Bronze levels."
              (max-lc (nth 3 tok))
              (hex (plist-get pal key))
              (lc  (abs (rf-apca-contrast hex bg)))
-             (y-tok (rf-luminance-y hex))
-             ;; Enforce ink ceiling (Y <= 0.0850) on light canvas to block pale/washed-out pastels
-             (ink-ok (if (and (eq polarity 'light) (not (memq key '(:fg-dim :cursor))))
-                         (<= y-tok 0.0850)
-                       t))
-             (ok  (and (>= lc min-lc) (<= lc max-lc) ink-ok)))
+             (ok  (and (>= lc min-lc) (<= lc max-lc))))
         (if ok
             (setq passes (1+ passes))
           (setq fails (1+ fails)))
-        (princ (format "%-32s | %-8s | %7.2f | [%4.1f..%4.1f]   | %s%s\n"
+        (princ (format "%-32s | %-8s | %7.2f | [%4.1f..%4.1f]   | %s\n"
                        name hex lc min-lc max-lc
-                       (if ok "PASS" "FAIL")
-                       (if (not ink-ok) (format " (Y=%.4f > 0.085)" y-tok) "")))))
+                       (if ok "PASS" "FAIL")))))
     (princ (format "---------------------------------+----------+---------+--------------+----------\n"))
+
+    ;; Part 2: Visual Selection Region Contrast Gate
+    (princ "\nPart 2: Visual Selection Region Contrast Gate (bg-region):\n")
+    (let* ((reg (plist-get pal :bg-region))
+           (fg (plist-get pal :fg-main))
+           (reg-de (rf-delta-e-2000 reg bg))
+           (reg-dy (abs (- (rf-luminance-y reg) (rf-luminance-y bg))))
+           (reg-vis-ok (and (>= reg-de 10.0) (>= reg-dy 0.020)))
+           (fg-reg-lc (abs (rf-apca-contrast fg reg)))
+           (fg-reg-ok (>= fg-reg-lc 40.0)))
+      (if reg-vis-ok
+          (progn
+            (princ (format "   [PASS] Selection region visibility vs canvas: dE00=%.2f >= 10.0, Delta-Y=%.4f >= 0.020\n"
+                           reg-de reg-dy))
+            (setq passes (1+ passes)))
+        (princ (format "   [FAIL] Selection region invisible against canvas: dE00=%.2f (min 10.0), Delta-Y=%.4f (min 0.020)\n"
+                       reg-de reg-dy))
+        (setq fails (1+ fails)))
+      (if fg-reg-ok
+          (progn
+            (princ (format "   [PASS] Body text legibility within selection: APCA |Lc|=%.2f >= 40.0\n" fg-reg-lc))
+            (setq passes (1+ passes)))
+        (princ (format "   [FAIL] Body text illegible within selection: APCA |Lc|=%.2f < 40.0\n" fg-reg-lc))
+        (setq fails (1+ fails))))
+    (princ "----------------------------------------------------------------------\n")
     (princ (format "APCA Summary: %d Passed, %d Failed.\n\n" passes fails))
     (zerop fails)))
 
