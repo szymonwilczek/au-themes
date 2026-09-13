@@ -1,4 +1,4 @@
-;;; au-parchment-night-theme.el --- Deep antique leather binding, aged vellum, and oak gall ink nocturnal theme -*- lexical-binding:t -*-
+;;; au-parchment-night-theme.el --- Low-chroma nocturnal theme with typographic emphasis -*- lexical-binding:t -*-
 
 ;; Copyright (C) 2026  Szymon Wilczek
 
@@ -23,10 +23,10 @@
 
 ;;; Commentary:
 ;;
-;; Deep antique leather binding, aged vellum, and oak gall ink nocturnal
-;; sanctuary with minimal chroma entropy and typographic hierarchy.
-;; Part of the `au-themes' collection engineered for sensory-safe autistic
-;; and neurodivergent visual perception.
+;; Monochrome-leaning dark theme with low chromatic entropy.
+;; Uses typographic italics and luminance steps instead of color contrasts
+;; to suppress visual noise.
+;; Part of the `au-themes' collection.
 
 ;;; Code:
 
@@ -177,7 +177,7 @@
 (modus-themes-theme
  'au-parchment-night
  'ef-themes
- "Au Parchment Night: antique tanned leather binding and aged vellum nocturnal sanctuary with minimal chroma entropy and typographic hierarchy."
+ "Low-chroma nocturnal theme with typographic italics and minimal color variance."
  'dark
  'au-parchment-night-palette
  nil
