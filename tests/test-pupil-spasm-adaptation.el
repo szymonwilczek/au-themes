@@ -34,7 +34,9 @@
 ;; and asthenopia.
 ;;
 ;; Ref:
-;; Loewenfeld (1993) The Pupil; Binda & Murray (2015) PNAS; Mathôt (2018) JoV.
+;; - Loewenfeld (1993) The Pupil
+;; - Binda & Murray (2015) PNAS
+;; - Mathôt (2018) JoV
 
 ;;; Code:
 
