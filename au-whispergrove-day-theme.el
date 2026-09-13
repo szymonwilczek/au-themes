@@ -78,6 +78,20 @@
     (cyan-faint "#434d47")             ; Punctuation delimiters
 
     ;; Panels, Diffs and Structural Highlights
+    (bg-red-intense "#eba9a6")         ; Blocking errors, fatal assertion panel
+    (bg-green-intense "#9bc492")       ; Success banner
+    (bg-yellow-intense "#d4b677")      ; Warning banner, review request
+    (bg-blue-intense "#7fc3de")        ; Info banner, active selections
+    (bg-magenta-intense "#dcaad0")     ; Special prompt background
+    (bg-cyan-intense "#7cc7b8")        ; Incsearch current match target
+
+    (bg-red-subtle "#dec4c2")          ; Diff context deletion background
+    (bg-green-subtle "#c5dac0")        ; Diff context addition background
+    (bg-yellow-subtle "#e2d3b4")       ; Diff whitespace/context change
+    (bg-blue-subtle "#b3c6ce")         ; Mode-line subtle indicators
+    (bg-magenta-subtle "#d8c4d2")      ; Matching paren context background
+    (bg-cyan-subtle "#bddbd4")         ; Structural block highlight
+
     (bg-added "#c3e8c3")               ; Diff added line baseline
     (bg-added-faint "#d7f2d7")         ; Diff added unchanged context
     (bg-added-refine "#b1deb0")        ; Diff added word-level highlight
@@ -104,7 +118,8 @@
     (bg-err "#ebc1c1")                 ; Flymake error inline box
     (bg-warning "#ebddb0")             ; Flymake warning inline box
     (bg-info "#bbe0c3")                ; Flymake info inline box
-    (bg-region "#9cc5af")))            ; Marked region
+    (bg-region "#9cc5af")              ; Marked region
+    (fg-line-number-inactive "#707a6e"))) ; Inactive line numbers margin
 
 (defconst au-whispergrove-day-palette-mappings-partial
   '((err red)
