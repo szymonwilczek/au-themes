@@ -27,7 +27,7 @@
                    ("Alerts / Errors (!)"              :err))))
     (princ (format "\n======================================================================\n"))
     (princ (format " Longitudinal Chromatic Aberration (LCA) & Common Focal Plane Suite\n"))
-    (princ (format " Ref: Thibos et al. (1992), DOI: 10.1016/0042-6989(92)90099-B\n"))
+    (princ (format " Ref: Thibos et al. (1992) Applied Optics 31(19), DOI: 10.1364/AO.31.003594\n"))
     (princ (format " Theme: %s | Base Text: %s (Eff Wave: %.1fnm, Refraction: %.3fD)\n"
                    theme base base-wave base-d))
     (princ (format "======================================================================\n"))
