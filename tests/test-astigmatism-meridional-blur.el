@@ -23,15 +23,16 @@
 ;;; Commentary:
 ;;
 ;; Evaluate directional edge acutance and inter-character modulation under
-;; -1.50D astigmatism
+;; -1.50D astigmatism.
 ;; Astigmatic corneas focus orthogonal meridians at different focal planes
 ;; (Interval of Sturm).
 ;; In dark themes, directional horizontal blur smears stroke light across
 ;; inter-glyph spaces.
 ;;
 ;; Ref:
-;; Thibos et al. (2004) JOSA A; Legras et al. (2004) OPO; Charman (2005)
-;; Clin Exp Optom.
+;; - Thibos et al. (2004) JOSA A
+;; - Legras et al. (2004) OPO
+;; - Charman (2005) Clin Exp Optom.
 
 ;;; Code:
 
