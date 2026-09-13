@@ -31,7 +31,9 @@
 ;; accommodation lock.
 ;;
 ;; Ref:
-;; Leibowitz & Owens (1978) Science; Charman (1982) OPO; Heath (1956) JOSA.
+;; - Leibowitz & Owens (1978) Science
+;; - Charman (1982) OPO
+;; - Heath (1956) JOSA
 
 ;;; Code:
 
