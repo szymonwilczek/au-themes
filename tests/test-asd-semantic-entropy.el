@@ -30,8 +30,9 @@
 ;; and cognitive overwhelm.
 ;;
 ;; Ref:
-;; Happé & Frith (2006) J.  Autism Dev.  Disord.; Shannon (1948);
-;; Ottosson (2020).
+;; - Happé & Frith (2006) J. Autism Dev. Disord.
+;; - Shannon (1948)
+;; - Ottosson (2020)
 
 ;;; Code:
 
