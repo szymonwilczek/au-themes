@@ -42,7 +42,7 @@
     (fg-dim "#706658")                 ; Comments, metadata
     (fg-alt "#8d9078")                 ; Struct properties
     (fg-var "#a89876")                 ; Variable definitions
-    (bg-active "#3e3228")              ; Active modeline, focused bars
+    (bg-active "#3e3228")              ; Active modeline frame, focused bars
     (bg-inactive "#1c1815")            ; Inactive modeline
     (border "#44382e")                 ; Window dividers
 
@@ -50,7 +50,7 @@
     (red "#b84c3e")                    ; Errors, critical warnings
     (red-warmer "#9e5467")             ; String literals
     (red-cooler "#a44638")             ; Diff deletions, removal markers
-    (red-faint "#84786a")              ; Structural brackets ( ) [ ] { }
+    (red-faint "#84786a")              ; Structural brackets
 
     (green "#d2956a")                  ; Primitive types
     (green-warmer "#9c4628")           ; Constant values and macros
@@ -75,7 +75,7 @@
     (cyan "#a97a3a")                   ; Keyword fallback
     (cyan-warmer "#ad7d64")            ; Preprocessor alias
     (cyan-cooler "#8a7e70")            ; Operator alias
-    (cyan-faint "#7c7262")             ; Punctuation delimiters (, ;)
+    (cyan-faint "#7c7262")             ; Punctuation delimiters
 
     ;; Panels, Diffs and Structural Highlights
     (bg-red-intense "#6a1c16")         ; Blocking errors, fatal assertion panel

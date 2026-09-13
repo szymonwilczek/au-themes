@@ -41,7 +41,7 @@
     (fg-dim "#625d54")                 ; Comments, metadata
     (fg-alt "#605644")                 ; Struct properties
     (fg-var "#2b2720")                 ; Variable definitions
-    (bg-active "#c8c0b2")              ; Active modeline, focused bars
+    (bg-active "#c8c0b2")              ; Active modeline frame, focused bars
     (bg-inactive "#d2cbbe")            ; Inactive modeline
     (border "#a49c8c")                 ; Window dividers
 
@@ -74,7 +74,7 @@
     (cyan "#4a3400")                   ; Keyword fallback
     (cyan-warmer "#674759")            ; Preprocessor alias
     (cyan-cooler "#585248")            ; Operator alias
-    (cyan-faint "#665f54")             ; Punctuation delimiters (, ;)
+    (cyan-faint "#665f54")             ; Punctuation delimiters
 
     ;; Panels, Diffs and Structural Highlights
     (bg-added "#c8e4c4")               ; Diff added line baseline
@@ -103,7 +103,7 @@
     (bg-err "#ebd0c8")                 ; Flymake error inline box
     (bg-warning "#ebddb0")             ; Flymake warning inline box
     (bg-info "#dcd4b8")                ; Flymake info inline box
-    (bg-region "#d8be78")))            ; Mouse/keyboard marked region
+    (bg-region "#d8be78")))            ; Marked region
 
 (defconst au-aurum-day-palette-mappings-partial
   '((err red)

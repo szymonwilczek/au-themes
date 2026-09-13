@@ -50,16 +50,16 @@
     (red "#c24e46")                    ; Errors, critical warnings
     (red-warmer "#aa6a58")             ; String literals
     (red-cooler "#b2564e")             ; Diff deletions, removal markers
-    (red-faint "#6a806d")              ; Structural brackets ( ) [ ] { }
+    (red-faint "#6a806d")              ; Structural brackets
 
-    (green "#66b06a")                  ; Primitive types (int, size_t, struct)
+    (green "#66b06a")                  ; Primitive types
     (green-warmer "#bc6478")           ; Constant values and macros
-    (green-cooler "#ae7a32")           ; Control keywords (if, while, for, return)
+    (green-cooler "#ae7a32")           ; Control keywords
     (green-faint "#627666")            ; Documentation strings, inline comments
 
     (yellow "#ae7a32")                 ; Keyword alias
     (yellow-warmer "#c2a640")          ; Numeric literals
-    (yellow-cooler "#887028")          ; Preprocessor directives (#define, #include)
+    (yellow-cooler "#887028")          ; Preprocessor directives
     (yellow-faint "#707c6e")           ; Informational tooltips, fringe markers
 
     (blue "#308096")                   ; Function definitions
@@ -75,11 +75,11 @@
     (cyan "#ae7a32")                   ; Keyword fallback
     (cyan-warmer "#887028")            ; Preprocessor alias
     (cyan-cooler "#688c7e")            ; Operator alias
-    (cyan-faint "#748276")             ; Punctuation delimiters (, ;)
+    (cyan-faint "#748276")             ; Punctuation delimiters
 
     ;; Panels, Diffs and Structural Highlights
     (bg-red-intense "#7e221e")         ; Blocking errors, fatal assertion panel
-    (bg-green-intense "#245c2a")       ; Success banner, terminal green state
+    (bg-green-intense "#245c2a")       ; Success banner
     (bg-yellow-intense "#6a4a16")      ; Warning banner, review request
     (bg-blue-intense "#204e62")        ; Info banner, active selections
     (bg-magenta-intense "#5a2e4c")     ; Special prompt background
@@ -118,7 +118,7 @@
     (bg-err "#481a18")                 ; Flymake error inline box
     (bg-warning "#3c3010")             ; Flymake warning inline box
     (bg-info "#183220")                ; Flymake info inline box
-    (bg-region "#284436")              ; Mouse/keyboard marked region
+    (bg-region "#284436")              ; Marked region
     (fg-line-number-inactive "#5e7062"))) ; Inactive line numbers margin
 
 (defconst au-whispergrove-evening-palette-mappings-partial

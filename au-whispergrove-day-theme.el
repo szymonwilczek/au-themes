@@ -42,7 +42,7 @@
     (fg-dim "#59665b")                 ; Comments, metadata
     (fg-alt "#5c4b69")                 ; Struct properties
     (fg-var "#19544e")                 ; Variable definitions
-    (bg-active "#b1b3ab")              ; Active modeline, focused bars
+    (bg-active "#b1b3ab")              ; Active modeline frame, focused bars
     (bg-inactive "#c1c3bb")            ; Inactive modeline
     (border "#90938a")                 ; Window dividers
 
@@ -50,22 +50,22 @@
     (red "#a13b32")                    ; Errors, critical warnings
     (red-warmer "#682617")             ; String literals
     (red-cooler "#87312a")             ; Diff deletions, removal markers
-    (red-faint "#47564d")              ; Structural brackets ( ) [ ] { }
+    (red-faint "#47564d")              ; Structural brackets
 
-    (green "#146441")                  ; Primitive types (int, size_t, struct)
-    (green-warmer "#682045")           ; Constant values and macros (NULL, CONST)
-    (green-cooler "#5b381a")           ; Control keywords (if, while, for, return)
+    (green "#146441")                  ; Primitive types
+    (green-warmer "#682045")           ; Constant values and macros
+    (green-cooler "#5b381a")           ; Control keywords
     (green-faint "#59665b")            ; Documentation strings, inline comments
 
     (yellow "#5b381a")                 ; Keyword alias
-    (yellow-warmer "#685a0b")          ; Numeric literals (0, 24, 32)
-    (yellow-cooler "#3f3d19")          ; Preprocessor directives (#define, #include)
+    (yellow-warmer "#685a0b")          ; Numeric literals
+    (yellow-cooler "#3f3d19")          ; Preprocessor directives
     (yellow-faint "#60584b")           ; Informational tooltips, fringe markers
 
     (blue "#39405e")                   ; Function definitions
     (blue-warmer "#155c82")            ; Function calls
-    (blue-cooler "#435056")            ; Operators (=, +, -, *, ->, ==, <, >)
-    (blue-faint "#185a52")             ; Built-in functions (sizeof, typeof, alignof)
+    (blue-cooler "#435056")            ; Binary and unary operators
+    (blue-faint "#185a52")             ; Built-in functions
 
     (magenta "#5f321d")                ; Composite types: struct, union, enum
     (magenta-warmer "#185c56")         ; Extended library types
@@ -75,7 +75,7 @@
     (cyan "#5b381a")                   ; Keyword fallback
     (cyan-warmer "#3f3d19")            ; Preprocessor alias
     (cyan-cooler "#435056")            ; Operator alias
-    (cyan-faint "#434d47")             ; Punctuation delimiters (, ;)
+    (cyan-faint "#434d47")             ; Punctuation delimiters
 
     ;; Panels, Diffs and Structural Highlights
     (bg-added "#c3e8c3")               ; Diff added line baseline
@@ -104,7 +104,7 @@
     (bg-err "#ebc1c1")                 ; Flymake error inline box
     (bg-warning "#ebddb0")             ; Flymake warning inline box
     (bg-info "#bbe0c3")                ; Flymake info inline box
-    (bg-region "#9cc5af")))            ; Mouse/keyboard marked region
+    (bg-region "#9cc5af")))            ; Marked region
 
 (defconst au-whispergrove-day-palette-mappings-partial
   '((err red)

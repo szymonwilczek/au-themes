@@ -53,7 +53,7 @@
     (red-faint "#687e6b")              ; Structural brackets
 
     (green "#5ca660")                  ; Primitive types
-    (green-warmer "#b05c70")           ; Constant values
+    (green-warmer "#b05c70")           ; Constant values and macros
     (green-cooler "#a47028")           ; Control keywords
     (green-faint "#586c5a")            ; Documentation strings, inline comments
 
@@ -72,14 +72,14 @@
     (magenta-cooler "#72627e")         ; Rare syntax nodes, special escapes
     (magenta-faint "#586c5a")          ; Inactive conditional blocks
 
-    (cyan "#a47028")                   ; Keyword fallback w extractorze
+    (cyan "#a47028")                   ; Keyword fallback
     (cyan-warmer "#7e5a28")            ; Preprocessor alias
     (cyan-cooler "#5e8274")            ; Operator alias
-    (cyan-faint "#6c786e")             ; Punctuation delimiters (:delimiter)
+    (cyan-faint "#6c786e")             ; Punctuation delimiters
 
     ;; Panels, Diffs and Structural Highlights
     (bg-red-intense "#741d1a")         ; Blocking errors, fatal assertion panel
-    (bg-green-intense "#1e5224")       ; Success banner, terminal green state
+    (bg-green-intense "#1e5224")       ; Success banner
     (bg-yellow-intense "#604210")      ; Warning banner, review request
     (bg-blue-intense "#1a4658")        ; Info banner, active selections
     (bg-magenta-intense "#502842")     ; Special prompt background
@@ -118,7 +118,7 @@
     (bg-err "#3a1210")                 ; Flymake error inline box
     (bg-warning "#30260a")             ; Flymake warning inline box
     (bg-info "#102816")                ; Flymake info inline box
-    (bg-region "#1a3226")              ; Mouse/keyboard marked region
+    (bg-region "#1a3226")              ; Marked region
     (fg-line-number-inactive "#546458"))) ; Inactive line numbers margin
 
 (defconst au-whispergrove-night-palette-mappings-partial

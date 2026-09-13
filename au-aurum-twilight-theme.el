@@ -42,7 +42,7 @@
     (fg-dim "#706658")                 ; Comments, metadata
     (fg-alt "#84967c")                 ; Struct properties
     (fg-var "#a89876")                 ; Variable definitions
-    (bg-active "#3e3228")              ; Active modeline, focused bars
+    (bg-active "#3e3228")              ; Active modeline frame, focused bars
     (bg-inactive "#1c1815")            ; Inactive modeline
     (border "#44382e")                 ; Window dividers
 
@@ -75,11 +75,11 @@
     (cyan "#b46a36")                   ; Keyword fallback
     (cyan-warmer "#987a30")            ; Preprocessor alias
     (cyan-cooler "#8a7e70")            ; Operator alias
-    (cyan-faint "#7c7262")             ; Punctuation delimiters (, ;)
+    (cyan-faint "#7c7262")             ; Punctuation delimiters
 
     ;; Panels, Diffs and Structural Highlights
     (bg-red-intense "#6a1c16")         ; Blocking errors, fatal assertion panel
-    (bg-green-intense "#2e4822")       ; Success banner, terminal olivine state
+    (bg-green-intense "#2e4822")       ; Success banner
     (bg-yellow-intense "#583e10")      ; Warning banner, review request
     (bg-blue-intense "#40264a")        ; Info banner, active selections
     (bg-magenta-intense "#441e3e")     ; Special prompt background
