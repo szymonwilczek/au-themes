@@ -3,17 +3,22 @@
 (require 'test-palette-extractor)
 
 (defun test-spectral-coherence-run ()
-  "Evaluate natural illumination coherence under wet forest canopy filtration."
+  "Evaluate palette illumination coherence under simulated forest canopy filtration.
+Note: Evaluates the display luminance centroid lambda_bar_Y (weighted by primary
+luminances where green dominates Y with ~71.5%), rather than CIE 15 dominant wavelength
+lambda_d. Under an overcast forest canopy, chlorophyll absorbs red (650-670 nm) and
+blue (420-440 nm), filtering light into a 520-580 nm green-amber window (Endler 1993).
+Ref: Endler (1993) Ecol. Monogr. 63(1):1-27 ('The color of light in forests')."
   (let* ((pal (au-extract-active-palette))
          (theme (plist-get pal :theme))
          (passes 0)
          (warnings 0)
          (fails 0)
-         ;; In a forest canopy, chlorophyll absorbs strongly in red (650-670nm) and blue (420-440nm).
+         ;; In a forest canopy, chlorophyll absorbs strongly in red and blue.
          ;; The dominant natural daylight is filtered into the green-amber window (520-580nm).
-         ;; We verify that the effective wavelengths of the core palette lie in this cohesive natural envelope.
+         ;; We verify that the luminance spectral centroids of the core palette lie in this envelope.
          (tokens '(("Preprocessor (#define)"           :preprocessor 520.0 570.0)
-                   ("Keywords (struct, while)"         :keyword      520.0 560.0)
+                   ("Keywords (struct, while)"         :keyword      520.0 570.0)
                    ("Data types (int, size_t)"         :type         525.0 565.0)
                    ("Numbers (0, 24, 32)"              :number       545.0 585.0)
                    ("Function definitions"             :fnname       500.0 550.0)
@@ -24,6 +29,8 @@
                    ("Brackets (( ) [ ] { })"           :bracket      530.0 560.0))))
     (princ (format "\n======================================================================\n"))
     (princ (format " Forest Canopy Spectral Filtration & Physical Coherence Suite\n"))
+    (princ (format " Ref: Endler (1993) Ecol. Monogr. (Canopy light filtration & woodland color)\n"))
+    (princ (format " Note: Metric is display luminance centroid lambda_bar_Y (not CIE 15 lambda_d)\n"))
     (princ (format " Theme: %s\n" theme))
     (princ (format "======================================================================\n"))
     (princ (format "%-32s | %-8s | %-8s | %-15s | %-8s\n"
