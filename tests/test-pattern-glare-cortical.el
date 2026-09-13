@@ -29,7 +29,9 @@
 ;; and migraine aura.
 ;;
 ;; Ref:
-;; Wilkins et al. (1984, 2016) Brain; Evans & Stevenson (2008); Allen et al. (2008).
+;; - Wilkins et al. (1984, 2016) Brain
+;; - Evans & Stevenson (2008)
+;; - Allen et al. (2008)
 
 ;;; Code:
 
