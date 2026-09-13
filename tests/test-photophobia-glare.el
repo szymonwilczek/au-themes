@@ -27,8 +27,9 @@
 ;; glare.
 ;;
 ;; Ref:
-;; CIE Discomfort Glare Index; CIE S 026:2018; Noseda et al. (2010, 2017)
-;; Nature Neurosci / Brain.
+;; - CIE Discomfort Glare Index
+;; - CIE S 026:2018
+;; - Noseda et al. (2010, 2017) Nature Neurosci / Brain
 
 ;;; Code:
 
