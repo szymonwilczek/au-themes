@@ -32,8 +32,9 @@
 ;; color-sensitive P-pathway.
 ;;
 ;; Ref:
-;; Livingstone & Hubel (1988) Science; Milne et al. (2002) NeuroReport;
-;; Merigan & Maunsell (1993).
+;; - Livingstone & Hubel (1988) Science
+;; - Milne et al. (2002) NeuroReport
+;; - Merigan & Maunsell (1993)
 
 ;;; Code:
 
