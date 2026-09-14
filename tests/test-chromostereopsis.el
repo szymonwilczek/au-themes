@@ -34,16 +34,19 @@
 (require 'test-palette-extractor)
 
 (defun test-chromostereopsis-run ()
-  "Evaluate chromostereopsis and binocular chromatic dispersion per Thibos (1992)."
+  "Evaluate chromostereopsis and binocular chromatic dispersion."
   (let* ((pal (au-extract-active-palette))
          (theme (plist-get pal :theme))
          (passes 0)
          (fails 0)
-         ;; Pupil entrance decentration relative to visual axis h = 0.5 mm = 0.0005 m (Thibos 1990, Vos 1960)
+         ;; Pupil entrance decentration relative to visual axis h = 0.5 mm
+         ;; = 0.0005 m (Thibos 1990, Vos 1960)
          (pupil-decentration-h 0.0005)
-         ;; Conversion factor: radians to arcmin = (180 / pi) * 60 ~= 3437.7468 arcmin/rad
+         ;; Conversion factor:
+         ;; radians to arcmin = (180 / pi) * 60 ~= 3437.7468 arcmin/rad
          (rad-to-arcmin (* (/ 180.0 float-pi) 60.0))
-         ;; Max allowable binocular retinal disparity: 0.60 arcmin (limits disturbing pseudo-depth illusions)
+         ;; Max allowable binocular retinal disparity:
+         ;; 0.60 arcmin (limits disturbing pseudo-depth illusions)
          (max-allowed-tca 0.600)
          (pairs '(("Alert / Error vs Function Def"      :err          :fnname)
                   ("Alert / Error vs Function Call"     :err          :fnname-call)
@@ -56,16 +59,16 @@
                   ("Alert / Error vs Keyword"           :err          :keyword)
                   ("Alert / Error vs Base Text"         :err          :fg-main)
                   ("Preprocessor vs Keyword"            :preprocessor :keyword))))
-    (princ (format "\n======================================================================\n"))
-    (princ (format " Chromostereopsis & Transverse Chromatic Aberration (TCA) Suite\n"))
-    (princ (format " Ref: Thibos et al. (1990, 1992); Vos (1960); Simonet & Campbell (1990)\n"))
-    (princ (format " Model: Retinal disparity TCA = h * Delta-D (pupil decentration h = 0.5 mm)\n"))
-    (princ (format " Gate: TCA Disparity <= %.2f' arcmin (Threshold for disturbing depth illusion)\n" max-allowed-tca))
-    (princ (format " Theme: %s\n" theme))
-    (princ (format "======================================================================\n"))
-    (princ (format "%-33s | %-19s | %-19s | %-8s | %-9s | %-8s\n"
+    (princ (format "\n.~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~.\n"))
+    (princ (format "| Chromostereopsis and Transverse Chromatic Aberration (TCA) Suite\n"))
+    (princ (format "| Model: Retinal disparity TCA = h * Delta-D (pupil decentration h = 0.5 mm)\n"))
+    (princ (format "| Gate: TCA Disparity <= %.2f' arcmin (Threshold for disturbing depth illusion)\n" max-allowed-tca))
+    (princ (format "| Theme: %s\n" theme))
+    (princ (format "'~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~'\n\n"))
+    (princ (format "+---------------------------------+---------------------+---------------------+----------+-----------+---------+\n"))
+    (princ (format "| %-31s | %-19s | %-19s | %-8s | %-9s | %-7s |\n"
                    "Interacting Syntax Pair" "Role 1 (Hex, Wave)" "Role 2 (Hex, Wave)" "Delta-D" "TCA Disp" "Status"))
-    (princ (format "----------------------------------+---------------------+---------------------+----------+-----------+----------\n"))
+    (princ (format "+---------------------------------+---------------------+---------------------+----------+-----------+---------+\n"))
     (dolist (p pairs)
       (let* ((label (nth 0 p))
              (k1 (nth 1 p))
@@ -83,10 +86,11 @@
         (if ok
             (setq passes (1+ passes))
           (setq fails (1+ fails)))
-        (princ (format "%-33s | %-7s (%5.1fnm) | %-7s (%5.1fnm) | %6.3fD  | %6.3f'   | %s\n"
+        (princ (format "| %-31s | %-9s (%5.1fnm) | %-9s (%5.1fnm) | %6.3fD  | %6.3f'   | %s    |\n"
                        label c1 w1 c2 w2 delta-d tca-arcmin
                        (if ok "PASS" "FAIL")))))
-    (princ (format "----------------------------------+---------------------+---------------------+----------+-----------+----------\n"))
+    (princ (format "+---------------------------------+---------------------+---------------------+----------+-----------+---------+\n"))
+    (princ (format "\n================================================================================================================\n"))
     (princ (format "Chromostereopsis Summary: %d Passed, %d Failed.\n\n" passes fails))
     (zerop fails)))
 
