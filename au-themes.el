@@ -197,7 +197,7 @@ POLARITY should be `light' or `dark'."
         (setq au-themes--last-light-theme theme)
       (setq au-themes--last-dark-theme theme)))
   (run-hooks 'au-themes-post-load-hook)
-  (message "Załadowano motyw: %s [%s]"
+  (message "Loaded theme: `%s' [%s]"
            theme (upcase (symbol-name (or (au-themes--theme-polarity theme) 'unknown)))))
 
 ;;;###autoload
@@ -222,7 +222,7 @@ to `au-themes-toggle-themes'."
                        (car (au-themes-get-themes 'dark)))))))
     (if target
         (au-themes-load-theme target)
-      (user-error "Brak dostępnych motywów do przełączenia"))))
+      (user-error "No valid au-theme available to toggle"))))
 
 ;;;###autoload
 (defalias 'au-toggle #'au-themes-toggle)
@@ -237,8 +237,8 @@ If TRANSFORM is non-nil, return CAND unchanged."
       cand
     (let ((symbol (intern-soft cand)))
       (if (eq (au-themes--theme-polarity symbol) 'light)
-          "Motywy jasne (Light)"
-        "Motywy ciemne (Dark)"))))
+          "Light themes"
+        "Dark themes"))))
 
 (defun au-themes--annotate-theme (cand)
   "Annotate CAND with its polarity, relative luminance Y, and active status."
@@ -253,7 +253,7 @@ If TRANSFORM is non-nil, return CAND unchanged."
        (if pol
            (format "  [%s]" (upcase (symbol-name pol)))
          ""))
-     (if active " (aktywny)" ""))))
+     (if active " (active)" ""))))
 
 (defun au-themes--display-sort (candidates)
   "Preserve stable candidate order for minibuffer completion."
@@ -325,7 +325,7 @@ Restores previous theme if aborted."
                          (au-themes--apply-theme cand-sym))))
                    nil t))
               (let* ((choice (completing-read
-                              (format "%s (domyślnie %s): " prompt default-theme)
+                              (format "%s (default %s): " prompt default-theme)
                               (au-themes--completion-table themes)
                               nil t nil
                               'au-themes--select-history
@@ -346,7 +346,7 @@ With optional THEME symbol, load it directly without prompting."
   (interactive)
   (let* ((themes (au-themes-get-themes))
          (chosen (or theme
-                     (au-themes--prompt-with-preview themes "Wybierz motyw au-theme: "))))
+                     (au-themes--prompt-with-preview themes "Select au-theme: "))))
     (when chosen
       (au-themes-load-theme chosen))))
 
@@ -357,7 +357,7 @@ With optional THEME symbol, load it directly without prompting."
   (interactive)
   (let* ((themes (au-themes-get-themes 'light))
          (chosen (or theme
-                     (au-themes--prompt-with-preview themes "Wybierz jasny motyw au-theme: "))))
+                     (au-themes--prompt-with-preview themes "Select light au-theme: "))))
     (when chosen
       (au-themes-load-theme chosen))))
 
@@ -368,7 +368,7 @@ With optional THEME symbol, load it directly without prompting."
   (interactive)
   (let* ((themes (au-themes-get-themes 'dark))
          (chosen (or theme
-                     (au-themes--prompt-with-preview themes "Wybierz ciemny motyw au-theme: "))))
+                     (au-themes--prompt-with-preview themes "Select dark au-theme: "))))
     (when chosen
       (au-themes-load-theme chosen))))
 
