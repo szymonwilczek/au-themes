@@ -38,13 +38,7 @@
 (require 'test-palette-extractor)
 
 (defun test-circadian-photobiology-run ()
-  "Evaluate circadian photometric solar distance and dawn crossover hybridization.
-Ref:
-  - Kasten & Young (1989) Applied Optics 28(22):4735-4738 (Air Mass model)
-  - Perez et al. (1990, 1993) Solar Energy 50(3):235-245 (All-Weather Sky Luminance)
-  - Endler (1993) Ecological Monographs 63(1):1-27 ('The color of light in forests')
-  - Stevens (1961) Science 133:80-86 (Power-law luminance adaptation S ~ L^0.33)
-  - Lucas et al. (2014) Trends Neurosci. 37(1):1-9 (Measuring and using light for circadian biology)"
+  "Evaluate circadian photometric solar distance and dawn crossover hybridization."
   (let* ((pal (au-extract-active-palette))
          (theme (plist-get pal :theme))
          (polarity (rf-theme-polarity theme))
@@ -57,47 +51,43 @@ Ref:
          (passes 0)
          (fails 0))
 
-    (princ (format "\n======================================================================\n"))
-    (princ (format " Circadian Solar Elevation & Temperate Dawn Crossover Suite\n"))
-    (princ (format " Ref: Perez et al. (1993); Kasten-Young (1989); Endler (1993); Stevens (1961)\n"))
-    (princ (format " Theme: %s (%s) | Canvas: %s (Y: %.4f, Oklab L: %.4f, Hue: %.1f°)\n"
+    (princ "\n.~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~.\n")
+    (princ (format "| Circadian Solar Elevation & Temperate Dawn Crossover Suite\n"))
+    (princ (format "| Theme: %s (%s) | Canvas: %s\n|\t (y: %.4f, Oklab L: %.4f, Hue: %.1f°)\n"
                    theme polarity bg bg-y bg-l bg-h))
-    (princ (format " Temperate zone reference: Lat 52°N (Central Europe woodland)\n"))
-    (princ (format "======================================================================\n"))
+    (princ (format "| Temperate zone reference: Lat 52 deg N (Central Europe woodland)\n"))
+    (princ "'~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~'\n")
 
-    ;; Part 1: Circadian Solar Photometric Envelope
-    (princ "\nPart 1: Solar Elevation & Photometric Adaptation Envelope:\n")
+    (princ "\nSolar Elevation and Photometric Adaptation Envelope:\n")
+    (princ "-------------------------------------------------------------------------\n")
     (cond
      ((memq theme '(au-whispergrove-night whispergrove-night
                                           au-aurum-twilight aurum-twilight
                                           au-aurum-night aurum-night
                                           au-parchment-night parchment-night))
-      ;; Night regime: nocturnal starlight/moonlight envelope
       (let ((night-ok (<= bg-y 0.020)))
         (if night-ok
             (progn
-              (princ (format "   [PASS] Nocturnal canopy luminance Y=%.4f <= 0.020 (Mesopic/Scotopic rest state).\n" bg-y))
+              (princ (format "[PASS]  Nocturnal canopy luminance Y=%.4f <= 0.020\n\t(Mesopic/Scotopic rest state).\n" bg-y))
               (setq passes (1+ passes)))
-          (princ (format "   [FAIL] Nocturnal luminance Y=%.4f exceeds dark adaptation ceiling 0.020.\n" bg-y))
+          (princ (format "[FAIL] Nocturnal luminance Y=%.4f exceeds dark adaptation ceiling 0.020.\n" bg-y))
           (setq fails (1+ fails)))))
 
      ((memq theme '(au-whispergrove-day whispergrove-day
                                         au-aurum-day aurum-day
                                         au-parchment-day parchment-day))
-      ;; Solar Noon regime: elevated solar angle (alpha_s ~ 52 deg, Air Mass m ~ 1.22)
       (let* ((min-y 0.500)
              (max-y 0.750)
              (day-ok (and (>= bg-y min-y) (<= bg-y max-y))))
         (if day-ok
             (progn
-              (princ (format "   [PASS] Solar Noon canopy luminance Y=%.4f in [%.3f..%.3f] (Full daylight canopy).\n"
+              (princ (format "[PASS]  Solar Noon canopy luminance Y=%.4f in [%.3f..%.3f]\n\t(Full daylight canopy).\n"
                              bg-y min-y max-y))
               (setq passes (1+ passes)))
-          (princ (format "   [FAIL] Solar Noon luminance Y=%.4f out of bounds [%.3f..%.3f].\n" bg-y min-y max-y))
+          (princ (format "[FAIL]  Solar Noon luminance Y=%.4f out of bounds [%.3f..%.3f].\n" bg-y min-y max-y))
           (setq fails (1+ fails)))))
 
      ((memq theme '(au-whispergrove-evening whispergrove-evening))
-      ;; Evening / Twilight regime: elevated dark envelope (softer than deep night)
       (let* ((pal-night (au-extract-active-palette 'au-whispergrove-night))
              (bg-night (plist-get pal-night :bg-main))
              (y-night (rf-luminance-y bg-night))
@@ -109,23 +99,21 @@ Ref:
              (night-sep-ok (and (>= ratio-night 2.5) (>= delta-y-night 0.008) (>= delta-l-night 0.050))))
         (if dusk-range-ok
             (progn
-              (princ (format "   [PASS] Evening twilight canopy luminance Y=%.4f in [0.010..0.025] (Elevated soft dark).\n" bg-y))
+              (princ (format "[PASS]  Evening twilight canopy luminance Y=%.4f in [0.010..0.025].\n" bg-y))
               (setq passes (1+ passes)))
-          (princ (format "   [FAIL] Evening canvas luminance Y=%.4f out of bounds [0.010..0.025].\n" bg-y))
+          (princ (format "[FAIL]  Evening canvas luminance Y=%.4f out of bounds [0.010..0.025].\n" bg-y))
           (setq fails (1+ fails)))
         (if night-sep-ok
             (progn
-              (princ (format "   [PASS] Night Softening Distance: Delta-Y=%.4f (ratio %.2fx >= 2.5x), Delta-L=%.4f >= 0.050.\n"
+              (princ (format "[PASS]  Night Softening Distance: Delta-Y=%.4f (ratio %.2fx >= 2.5x),\n\tDelta-L=%.4f >= 0.050.\n"
                              delta-y-night ratio-night delta-l-night))
-              (princ "          Noticeable, gentle lifting of dark background avoiding deep nocturnal black.\n")
               (setq passes (1+ passes)))
-          (princ (format "   [FAIL] Insufficient distance to deep Night: Delta-Y=%.4f, Ratio=%.2fx, Delta-L=%.4f.\n"
-                         delta-y-night ratio-night delta-l-night))
+          (princ (format "[FAIL]  Insufficient distance to deep Night: Delta-Y=%.4f, Ratio=%.2fx,\n\tDelta-L=%.4f.\n"))
           (setq fails (1+ fails)))))
 
      ((memq theme '(au-whispergrove-morning whispergrove-morning))
-      ;; Dawn / Early Morning regime: low solar angle (alpha_s ~ 12 deg, Air Mass m ~ 4.6)
-      ;; Under temperate conifer canopy, morning light is noticeably attenuated vs solar noon.
+      ;; Low solar angle (alpha_s ~ 12 deg, Air Mass m ~ 4.6)
+      ;; Under temperate conifer canopy, morning light is noticeably attenuated
       (let* ((pal-day (au-extract-active-palette 'au-whispergrove-day))
              (pal-night (au-extract-active-palette 'au-whispergrove-night))
              (bg-day (plist-get pal-day :bg-main))
@@ -142,50 +130,47 @@ Ref:
              (range-ok (and (>= bg-y 0.300) (<= bg-y 0.400)))
              ;; 2. Distinct photometric distance to solar noon: Delta-Y >= 0.160 and ratio >= 1.45x
              (dist-day-ok (and (>= delta-y 0.160) (>= solar-ratio 1.45)))
-             ;; 3. Perceptual Oklab Lightness shift: Delta-L >= 0.080 (noticeable circadian step)
+             ;; 3. Perceptual Oklab Lightness shift: Delta-L >= 0.080
              (oklab-step-ok (>= delta-l 0.080))
              ;; 4. Separation from nocturnal darkness: Delta-Y_night >= 0.250
              (dist-night-ok (>= dist-night 0.250)))
 
         (if range-ok
             (progn
-              (princ (format "   [PASS] Morning dawn canvas luminance Y=%.4f in [0.300..0.400] (Subdued dawn envelope).\n" bg-y))
+              (princ (format "[PASS]  Morning dawn canvas luminance Y=%.4f in [0.300..0.400].\n" bg-y))
               (setq passes (1+ passes)))
-          (princ (format "   [FAIL] Morning canvas luminance Y=%.4f not in subdued dawn range [0.300..0.400].\n" bg-y))
+          (princ (format "[FAIL]  Morning canvas luminance Y=%.4f not in subdued dawn range [0.300..0.400].\n" bg-y))
           (setq fails (1+ fails)))
 
         (if (and dist-day-ok oklab-step-ok)
             (progn
-              (princ (format "   [PASS] Solar Noon Distance: Delta-Y=%.4f (ratio %.2fx >= 1.45x), Delta-L=%.4f >= 0.080.\n"
+              (princ (format "[PASS]  Solar Noon Distance: Delta-Y=%.4f (ratio %.2fx >= 1.45x),\n\tDelta-L=%.4f >= 0.080.\n"
                              delta-y solar-ratio delta-l))
-              (princ "          Clear, physically distinct perceptual jump between morning dawn and noon.\n")
               (setq passes (1+ passes)))
-          (princ (format "   [FAIL] Insufficient distance to Solar Noon: Delta-Y=%.4f, Ratio=%.2fx, Delta-L=%.4f.\n"
+          (princ (format "[FAIL]  Insufficient distance to Solar Noon: Delta-Y=%.4f, Ratio=%.2fx, Delta-L=%.4f.\n"
                          delta-y solar-ratio delta-l))
           (setq fails (1+ fails)))
 
         (if dist-night-ok
             (progn
-              (princ (format "   [PASS] Night Emergence Distance: Delta-Y_night=%.4f >= 0.250 (Clear awakening from nocturnal dark).\n"
+              (princ (format "[PASS]  Night Emergence Distance: Delta-Y_night=%.4f >= 0.250.\n"
                              dist-night))
               (setq passes (1+ passes)))
-          (princ (format "   [FAIL] Morning canvas too close to night: Delta-Y_night=%.4f < 0.250.\n" dist-night))
+          (princ (format "[FAIL]  Morning canvas too close to night: Delta-Y_night=%.4f < 0.250.\n" dist-night))
           (setq fails (1+ fails))))))
 
-    ;; Part 2: Circadian Dawn Crossover & Chromatic Hybridization
-    (princ "\nPart 2: Dawn Crossover & Chromatic Hybridization (Night Echoes + Day Sunbeams):\n")
+    (princ "\nDawn Crossover and Chromatic Hybridization:\n")
+    (princ "-------------------------------------------------------------------------\n")
     (cond
      ((memq theme '(au-whispergrove-morning whispergrove-morning))
-      ;; Check that morning canvas carries nocturnal canopy coolness (h in [135°..175°])
       (let ((bg-cool-ok (and (>= bg-h 135.0) (<= bg-h 175.0))))
         (if bg-cool-ok
             (progn
-              (princ (format "   [PASS] Morning Canvas Hue: %.1f° in [135°..175°]: Carries cool nocturnal conifer/sage mist.\n" bg-h))
+              (princ (format "[PASS]  Morning Canvas Hue: %.1fdeg in [135deg..175deg].\n" bg-h))
               (setq passes (1+ passes)))
-          (princ (format "   [FAIL] Morning Canvas Hue: %.1f° outside [135°..175°]: Lacks nocturnal cool mist character.\n" bg-h))
+          (princ (format "[FAIL]  Morning Canvas Hue: %.1fdeg outside [135deg..175deg].\n" bg-h))
           (setq fails (1+ fails))))
 
-      ;; Check Night Accents presence: cursor and cool functional elements (h in [170°..250°])
       (let* ((cur (plist-get pal :cursor))
              (call (plist-get pal :fnname-call))
              (builtin (plist-get pal :builtin))
@@ -197,13 +182,12 @@ Ref:
                                     (and (>= builtin-h 170.0) (<= builtin-h 250.0)))))
         (if night-accents-ok
             (progn
-              (princ (format "   [PASS] Nocturnal Accents: Cursor (%.1f°), Call (%.1f°), Builtin (%.1f°) in cool night zone [170°..250°].\n"
+              (princ (format "[PASS]  Nocturnal Accents: Cursor (%.1fdeg), Call (%.1fdeg),\n\tBuiltin (%.1fdeg) in cool night zone [170deg..250deg].\n"
                              cur-h call-h builtin-h))
               (setq passes (1+ passes)))
-          (princ (format "   [FAIL] Missing Nocturnal Accents: Expected cool cyan/turquoise/viridian in [170°..250°].\n"))
+          (princ (format "[FAIL]  Missing Nocturnal Accents: Expected cool cyan/turquoise/viridian in [170deg..250deg].\n"))
           (setq fails (1+ fails))))
 
-      ;; Check Day Sunbeam Accents: numbers, keywords, strings (h in [25°..105°])
       (let* ((num (plist-get pal :number))
              (kw (plist-get pal :keyword))
              (str (plist-get pal :string))
@@ -215,14 +199,13 @@ Ref:
                                   (and (>= str-h 20.0) (<= str-h 45.0)))))
         (if day-accents-ok
             (progn
-              (princ (format "   [PASS] Diurnal Sunbeam Accents: Sunbeam Number (%.1f°), Oak Keyword (%.1f°), Bark String (%.1f°) in [20°..105°].\n"
+              (princ (format "[PASS]  Diurnal Sunbeam Accents: Sunbeam Number (%.1fdeg),\n\tOak Keyword (%.1fdeg), Bark String (%.1fdeg) in [20deg..105deg].\n"
                              num-h kw-h str-h))
               (setq passes (1+ passes)))
-          (princ (format "   [FAIL] Missing Diurnal Accents: Expected warm sunbeams in [20°..105°].\n"))
+          (princ (format "[FAIL]  Missing Diurnal Accents: Expected warm sunbeams in [20deg..105deg].\n"))
           (setq fails (1+ fails)))))
 
      ((memq theme '(au-whispergrove-evening whispergrove-evening))
-      ;; Check evening twilight accents: blue-hour cursor (h in [180°..250°]) and sunset warm accents
       (let* ((cur (plist-get pal :cursor))
              (kw (plist-get pal :keyword))
              (num (plist-get pal :number))
@@ -237,17 +220,16 @@ Ref:
                                    (and (>= str-h 20.0) (<= str-h 45.0)))))
         (if dusk-accents-ok
             (progn
-              (princ (format "   [PASS] Evening Twilight Accents: Blue Hour Cursor (%.1f°), Sunset Amber (%.1f°), Oak Bark (%.1f°).\n"
+              (princ (format "[PASS]  Evening Twilight Accents: Blue Hour Cursor (%.1fdeg),\n\tSunset Amber (%.1fdeg), Oak Bark (%.1fdeg).\n"
                              cur-h num-h kw-h))
               (setq passes (1+ passes)))
-          (princ (format "   [FAIL] Missing Dusk Accents in expected spectral envelopes.\n"))
+          (princ (format "[FAIL]  Missing Dusk Accents in expected spectral envelopes.\n"))
           (setq fails (1+ fails)))))
 
      ((memq theme '(au-aurum-night aurum-night au-aurum-twilight aurum-twilight
                                    au-aurum-day aurum-day
                                    au-parchment-night parchment-night
                                    au-parchment-day parchment-day))
-      ;; Check zero melanopsin excitation: all core syntax, chrome, and panel tokens outside blue/cyan [180°..260°]
       (let* ((token-list (delq nil
                                (list (cons "cursor" (plist-get pal :cursor))
                                      (cons "fnname" (plist-get pal :fnname))
@@ -263,7 +245,6 @@ Ref:
                                      (cons "bracket" (plist-get pal :bracket))
                                      (cons "err" (plist-get pal :err))
                                      (cons "base text" (plist-get pal :fg-main))
-                                     ;; Panels, Diffs and Structural Highlights:
                                      (when (plist-get pal :bg-blue-intense) (cons "bg-blue-intense" (plist-get pal :bg-blue-intense)))
                                      (when (plist-get pal :bg-cyan-intense) (cons "bg-cyan-intense" (plist-get pal :bg-cyan-intense)))
                                      (when (plist-get pal :bg-blue-subtle) (cons "bg-blue-subtle" (plist-get pal :bg-blue-subtle)))
@@ -275,19 +256,18 @@ Ref:
                            token-list)))
         (if (null blue-tokens)
             (progn
-              (princ (format "   [PASS] Zero Melanopsin (ipRGC) Hazard: 0/%d tokens in blue/cyan excitation band [180°..260°].\n"
+              (princ (format "[PASS]  Zero Melanopsin (ipRGC) Hazard:\n\t0/%d tokens in blue/cyan band [180deg..260deg].\n"
                              (length token-list)))
-              (princ "          Complete spectral shielding for severe photophobia, ocular migraine, and melatonin preservation.\n")
               (setq passes (1+ passes)))
-          (princ (format "   [FAIL] Melanopsin hazard: %d tokens in [180°..260°]: %s\n"
+          (princ (format "[FAIL]  Melanopsin hazard: %d tokens in [180deg..260deg]: %s\n"
                          (length blue-tokens) blue-tokens))
           (setq fails (1+ fails)))))
 
      (t
-      (princ "   [SKIP] Chromatic hybridization check applies to crossover phases.\n")
+      (princ "[SKIP]  Chromatic hybridization check applies to crossover phases.\n")
       (setq passes (1+ passes))))
 
-    (princ (format "\n----------------------------------------------------------------------\n"))
+    (princ "\n=========================================================================\n")
     (princ (format "Circadian Photobiology Summary: %d Passed, %d Failed.\n\n" passes fails))
     (zerop fails)))
 
