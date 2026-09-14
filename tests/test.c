@@ -185,7 +185,7 @@ static const au_palette_token_t AU_MASTER_TOKENS[AU_THEME_TOKEN_COUNT] = {
     { 62, "bg-popup",                "#e6e0d4", AU_LAYER_PANELS_DIFFS,  AU_SEV_INFO,    {0.89, -0.01,  0.02, 0xe6e0d4} },
     { 63, "bg-hover",                "#ccc6b8", AU_LAYER_PANELS_DIFFS,  AU_SEV_INFO,    {0.80, -0.01,  0.02, 0xccc6b8} },
     { 64, "bg-hover-secondary",      "#d2ccc0", AU_LAYER_PANELS_DIFFS,  AU_SEV_INFO,    {0.82, -0.01,  0.02, 0xd2ccc0} },
-    { 65, "bg-hl-line",              "#d5cfc2", AU_LAYER_PANELS_DIFFS,  AU_SEV_INFO,    {0.83, -0.01,  0.02, 0xd5cfc2} },
+    { 65, "bg-hl-line",              "#cdc4b0", AU_LAYER_PANELS_DIFFS,  AU_SEV_INFO,    {0.82,  0.00,  0.03, 0xcdc4b0} },
     { 66, "bg-paren-match",          "#d4ba8a", AU_LAYER_PANELS_DIFFS,  AU_SEV_INFO,    {0.78,  0.01,  0.09, 0xd4ba8a} },
     { 67, "bg-err",                  "#ebd0c8", AU_LAYER_PANELS_DIFFS,  AU_SEV_ERROR,   {0.85,  0.04,  0.03, 0xebd0c8} },
     { 68, "bg-warning",              "#ebddb0", AU_LAYER_PANELS_DIFFS,  AU_SEV_WARNING, {0.87, -0.01,  0.08, 0xebddb0} },
