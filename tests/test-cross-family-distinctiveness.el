@@ -24,13 +24,15 @@
 ;;
 ;; Verification of chromatic divergence and anti-cloning separation
 ;; between theme families (whispergrove, aurum, parchment).
+;; This test is tailored speficially for au-themes, it will not serve
+;; any good purpose in any other package/themes.
 
 ;;; Code:
 
 (require 'test-palette-extractor)
 
 (defun au-theme-family (theme)
-  "Return the package/family symbol of THEME ('whispergrove, 'aurum, or 'parchment)."
+  "Return the package/family symbol of THEME."
   (let ((name (symbol-name theme)))
     (cond
      ((string-match-p "whispergrove" name) 'whispergrove)
@@ -61,16 +63,7 @@
     nil)))
 
 (defun test-cross-family-distinctiveness-run ()
-  "Evaluate that themes from different families do not duplicate colors or aesthetic identities.
-Themes within the same package share a mineral or botanical lineage (e.g. all whispergrove
-variants share misty forest tones; all aurum variants share gold and volcanic basalt).
-However, themes across different families of the same polarity (e.g. au-aurum-day vs
-au-whispergrove-day) must maintain strict categorical, perceptual, and chromatic divergence:
-  - Part 1: Zero shared hex codes between cross-family counterpart roles.
-  - Part 2: Per-token minimum CIEDE2000 distance dE00 >= 10.0 for key expressive roles.
-  - Part 3: Global palette divergence: mean pairwise dE00 >= 18.0 across core syntax.
-  - Part 4: Family-specific chromatic identity purity (e.g. aurum must use golden/amber
-    region and non-green types, preserving the gold/basalt heritage)."
+  "Evaluate that themes from different families do not duplicate colors or aesthetic identities."
   (let* ((theme (or rf-active-theme 'au-whispergrove-night))
          (pal (au-extract-active-palette theme))
          (family (au-theme-family theme))
@@ -79,25 +72,27 @@ au-whispergrove-day) must maintain strict categorical, perceptual, and chromatic
          (fails 0)
          (counterparts (au-theme-counterparts theme)))
 
-    (princ (format "\n======================================================================\n"))
-    (princ (format " Cross-Family Distinctiveness & Palette Anti-Cloning Suite\n"))
-    (princ (format " Theme: %s (Family: %s, Polarity: %s)\n" theme family polarity))
-    (princ (format " Cross-Family Counterparts Evaluated: %S\n" counterparts))
-    (princ (format "======================================================================\n"))
+    (princ (format "\n.~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~.\n"))
+    (princ (format "| Cross-Family Distinctiveness and Palette Anti-Cloning Suite\n"))
+    (princ (format "| Theme: %s (Family: %s, Polarity: %s)\n" theme family polarity))
+    (princ (format "| Cross-Family Counterparts Evaluated:\n"))
+    (if counterparts
+        (dolist (c counterparts)
+          (princ (format "|\t* %s\n" c)))
+      (princ "|\t* (none)\n"))
+    (princ (format "'~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~'\n"))
 
     (if (null counterparts)
         (progn
-          (princ "   [SKIP] No cross-family counterpart of the same polarity found for comparison.\n")
+          (princ "[SKIP]  No cross-family counterpart of the same polarity found for comparison.\n")
           (setq passes (1+ passes)))
 
       (dolist (c-theme counterparts)
         (let* ((c-pal (au-extract-active-palette c-theme))
                (c-family (au-theme-family c-theme)))
 
-          ;; -------------------------------------------------------------------
-          ;; Part 1: Strict Hex Uniqueness Across Families
-          ;; -------------------------------------------------------------------
-          (princ (format "\nPart 1: Cross-Family Hex Collision Check (%s vs %s):\n" theme c-theme))
+          (princ (format "\nCross-Family Hex Collision Check (%s vs %s):\n" theme c-theme))
+          (princ (format "---------------------------------------------------------------------------------------------------------\n"))
           (let ((checked-keys '(:keyword :type :builtin :constant :number :fnname
                                          :fnname-call :string :property :bg-region :cursor
                                          :bg-main :fg-main
@@ -114,19 +109,18 @@ au-whispergrove-day) must maintain strict categorical, perceptual, and chromatic
                   (push (list k h1) collisions))))
             (if (null collisions)
                 (progn
-                  (princ (format "   [PASS] 0 shared hex codes between %s and %s.\n" theme c-theme))
+                  (princ (format "[PASS]  0 shared hex codes between %s and %s.\n" theme c-theme))
                   (setq passes (1+ passes)))
-              (princ (format "   [FAIL] Cross-family color collision detected: %S\n" collisions))
+              (princ (format "[FAIL]  Cross-family color collision detected: %S\n" collisions))
               (setq fails (1+ fails))))
 
-          ;; -------------------------------------------------------------------
-          ;; Part 2: Per-Token Minimum Separation Gate (dE00 >= 10.0)
-          ;; -------------------------------------------------------------------
-          (princ (format "\nPart 2: Expressive Roles Minimum Separation (%s vs %s, min dE00 10.0):\n"
+          (princ (format "\nExpressive Roles Minimum Separation (%s vs %s, min dE00 10.0):\n"
                          theme c-theme))
-          (princ (format "%-24s | %-8s | %-8s | %-8s | %-8s\n"
+          (princ (format "---------------------------------------------------------------------------------------------------------\n"))
+          (princ (format "+------------------------------+-------------------------+-------------------------+----------+---------+\n"))
+          (princ (format "| %-28s | %-23s | %-23s | %-8s | %-7s |\n"
                          "Role" (symbol-name theme) (symbol-name c-theme) "dE00" "Status"))
-          (princ (format "-------------------------+----------+----------+----------+----------\n"))
+          (princ (format "+------------------------------+-------------------------+-------------------------+----------+---------+\n"))
           (let ((key-roles '((:type         "Data Type (type)")
                              (:builtin      "Builtin functions (builtin)")
                              (:fnname       "Function name (fnname)")
@@ -143,14 +137,12 @@ au-whispergrove-day) must maintain strict categorical, perceptual, and chromatic
                 (if ok
                     (setq passes (1+ passes))
                   (setq fails (1+ fails)))
-                (princ (format "%-24s | %-8s | %-8s | %8.2f | %s\n"
+                (princ (format "| %-28s | %-23s | %-23s | %8.2f | %s    |\n"
                                label h1 h2 dist (if ok "PASS" "FAIL (< 10.0)"))))))
-          (princ (format "-------------------------+----------+----------+----------+----------\n"))
+          (princ (format "+------------------------------+-------------------------+-------------------------+----------+---------+\n"))
 
-          ;; -------------------------------------------------------------------
-          ;; Part 3: Global Palette Profile Divergence (Mean dE00 >= 18.0)
-          ;; -------------------------------------------------------------------
-          (princ (format "\nPart 3: Global Palette Profile Divergence (%s vs %s):\n" theme c-theme))
+          (princ (format "\nGlobal Palette Profile Divergence (%s vs %s):\n" theme c-theme))
+          (princ (format "---------------------------------------------------------------------------------------------------------\n"))
           (let* ((syntax-keys '(:keyword :type :builtin :constant :number :fnname
                                          :fnname-call :string :property :bg-region))
                  (distances (mapcar (lambda (k)
@@ -160,36 +152,32 @@ au-whispergrove-day) must maintain strict categorical, perceptual, and chromatic
                  (mean-ok (>= mean-dist 18.0)))
             (if mean-ok
                 (progn
-                  (princ (format "   [PASS] Mean cross-family syntax separation = %.2f >= 18.0\n" mean-dist))
-                  (princ "          Clean global stylistic independence across theme packages.\n")
+                  (princ (format "[PASS]  Mean cross-family syntax separation = %.2f >= 18.0\n" mean-dist))
                   (setq passes (1+ passes)))
-              (princ (format "   [FAIL] Palette clone alert: Mean separation = %.2f < 18.0\n" mean-dist))
+              (princ (format "[FAIL]  Palette clone alert: Mean separation = %.2f < 18.0\n" mean-dist))
               (setq fails (1+ fails)))))
 
-        ;; -------------------------------------------------------------------
-        ;; Part 4: Family-Specific Chromatic Identity Purity Gate
-        ;; -------------------------------------------------------------------
-        (princ (format "\nPart 4: Chromatic Identity Purity Gate (%s family signature):\n" family))
+        (princ (format "\nChromatic Identity Purity Gate (%s family signature):\n" family))
+        (princ (format "---------------------------------------------------------------------------------------------------------\n"))
         (cond
          ((eq family 'aurum)
           ;; Aurum requirements:
-          ;; 1. Selection region MUST be warm gold / amber / quartz sand (h in [40°..110°])
-          ;;    and NEVER cool forest green / moss (h in [115°..175°]).
+          ;; Selection region: h in [40deg..110deg]
+          ;; and NEVER h in [115deg..175deg])
           (let* ((reg-hex (plist-get pal :bg-region))
                  (reg-okl (rf-hex-to-oklch reg-hex))
                  (reg-h   (nth 2 reg-okl))
                  (reg-ok  (and (>= reg-h 40.0) (<= reg-h 110.0))))
             (if reg-ok
                 (progn
-                  (princ (format "   [PASS] Aurum Selection Region (%s, hue %.1f°): Genuine warm golden amber / quartz sand.\n"
+                  (princ (format "[PASS]  Aurum Selection Region (%s, hue %.1fdeg).\n"
                                  reg-hex reg-h))
                   (setq passes (1+ passes)))
-              (princ (format "   [FAIL] Aurum Selection Region (%s, hue %.1f°): Inauthentic chromatic identity (expected [40°..110°], got forest/cool hue).\n"
+              (princ (format "[FAIL]  Aurum Selection Region (%s, hue %.1fdeg): expected [40deg..110deg].\n"
                              reg-hex reg-h))
               (setq fails (1+ fails))))
 
-          ;; 2. For aurum-day, Data Type must NOT be cool green (h not in [120°..175°])
-          ;;    Aurum uses warm bronze, terracotta, amber, or peach sandstone for types.
+          ;; For aurum-day, Data Type: h not in [120deg..175deg]
           (when (eq polarity 'light)
             (let* ((type-hex (plist-get pal :type))
                    (type-okl (rf-hex-to-oklch type-hex))
@@ -197,33 +185,32 @@ au-whispergrove-day) must maintain strict categorical, perceptual, and chromatic
                    (type-not-green (not (and (>= type-h 120.0) (<= type-h 175.0)))))
               (if type-not-green
                   (progn
-                    (princ (format "   [PASS] Aurum Daylight Data Type (%s, hue %.1f°): Warm bronze / sandstone / amber (non-green).\n"
+                    (princ (format "[PASS]  Aurum Daylight Data Type (%s, hue %.1fdeg).\n"
                                    type-hex type-h))
                     (setq passes (1+ passes)))
-                (princ (format "   [FAIL] Aurum Daylight Data Type (%s, hue %.1f°): Green hue stolen from forest palette.\n"
+                (princ (format "[FAIL]  Aurum Daylight Data Type (%s, hue %.1fdeg): Green hue stolen.\n"
                                type-hex type-h))
                 (setq fails (1+ fails))))))
 
          ((eq family 'whispergrove)
           ;; Whispergrove requirements:
-          ;; Selection region MUST be temperate forest moss/conifer (h in [115°..175°])
+          ;; Selection region: h in [115deg..175deg]
           (let* ((reg-hex (plist-get pal :bg-region))
                  (reg-okl (rf-hex-to-oklch reg-hex))
                  (reg-h   (nth 2 reg-okl))
                  (reg-ok  (and (>= reg-h 115.0) (<= reg-h 175.0))))
             (if reg-ok
                 (progn
-                  (princ (format "   [PASS] Whispergrove Selection Region (%s, hue %.1f°): Temperate forest moss.\n"
+                  (princ (format "[PASS]  Whispergrove Selection Region (%s, hue %.1fdeg).\n"
                                  reg-hex reg-h))
                   (setq passes (1+ passes)))
-              (princ (format "   [FAIL] Whispergrove Selection Region (%s, hue %.1f°): Not in forest moss envelope [115°..175°].\n"
+              (princ (format "[FAIL]  Whispergrove Selection Region (%s, hue %.1fdeg): Not in forest moss envelope.\n"
                              reg-hex reg-h))
               (setq fails (1+ fails)))))
 
          ((eq family 'parchment)
           ;; Parchment requirements:
-          ;; 1. Minimal Chroma Entropy: all syntax code tokens must maintain Oklab C < 0.042
-          ;;    to eliminate "rainbow Christmas tree" sensory overload.
+          ;; All syntax code tokens must maintain Oklab C < 0.042
           (let* ((syntax-tokens '(:keyword :type :builtin :constant :number :fnname
                                            :fnname-call :string :property))
                  (excess-chroma nil))
@@ -234,28 +221,28 @@ au-whispergrove-day) must maintain strict categorical, perceptual, and chromatic
                   (push (list tok hex c) excess-chroma))))
             (if (null excess-chroma)
                 (progn
-                  (princ "   [PASS] Parchment Minimal Chroma Entropy: All syntax tokens maintain Oklab C < 0.040 (zero sensory noise).\n")
+                  (princ "[PASS]  All syntax tokens maintain Oklab C < 0.040\n")
                   (setq passes (1+ passes)))
-              (princ (format "   [FAIL] Parchment Chroma Violation: Tokens exceed sensory-safe ceiling C=0.040: %S\n"
+              (princ (format "[FAIL]  Tokens exceed sensory-safe ceiling C=0.040: %S\n"
                              excess-chroma))
               (setq fails (1+ fails))))
 
-          ;; 2. Selection region MUST be authentic bound vellum, linen, or antique leather (warm hue in [25°..110°])
-          ;;    and NEVER cool forest green/cyan/blue (h in [120°..280°]).
+          ;; Selection region: h in [25deg..110deg]
+          ;; and NEVER in [120deg..280deg]
           (let* ((reg-hex (plist-get pal :bg-region))
                  (reg-okl (rf-hex-to-oklch reg-hex))
                  (reg-h   (nth 2 reg-okl))
                  (reg-ok  (and (>= reg-h 25.0) (<= reg-h 110.0))))
             (if reg-ok
                 (progn
-                  (princ (format "   [PASS] Parchment Selection Region (%s, hue %.1f°): Authentic manuscript vellum / leather binding.\n"
+                  (princ (format "[PASS]  Parchment Selection Region (%s, hue %.1fdeg).\n"
                                  reg-hex reg-h))
                   (setq passes (1+ passes)))
-              (princ (format "   [FAIL] Parchment Selection Region (%s, hue %.1f°): Inauthentic binding hue (expected [25°..110°]).\n"
+              (princ (format "[FAIL]  Parchment Selection Region (%s, hue %.1fdeg): Expected [25deg..110deg].\n"
                              reg-hex reg-h))
               (setq fails (1+ fails))))))))
 
-    (princ (format "\n----------------------------------------------------------------------\n"))
+    (princ (format "\n=========================================================================================================\n"))
     (princ (format "Cross-Family Distinctiveness Summary: %d Passed, %d Failed.\n\n" passes fails))
     (zerop fails)))
 
