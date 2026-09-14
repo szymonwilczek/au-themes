@@ -34,91 +34,91 @@
 
 (defconst au-whispergrove-night-palette-partial
   '(;; Canvas & Chrome
-    (cursor "#4a9cb2")                 ; Point / cursor indicator
-    (bg-main "#0a0d08")                ; Primary canvas background
-    (bg-dim "#1a1e17")                 ; Inactive windows, dim canvas
-    (bg-alt "#282e24")                 ; Subtle borders, alternating stripes
-    (fg-main "#9ca69e")                ; Default buffer text
-    (fg-dim "#586c5a")                 ; Comments, metadata
-    (fg-alt "#6ea288")                 ; Struct properties
-    (fg-var "#98aba0")                 ; Variable definitions
-    (bg-active "#3e463a")              ; Active modeline frame, focused bars
-    (bg-inactive "#1a1e17")            ; Inactive modeline
-    (border "#424a3e")                 ; Window dividers
+    (cursor "#4a9cb2")                    ; Point / cursor indicator
+    (bg-main "#0a0d08")                   ; Primary canvas background
+    (bg-dim "#1a1e17")                    ; Inactive windows, dim canvas
+    (bg-alt "#282e24")                    ; Subtle borders, alternating stripes
+    (fg-main "#9ca69e")                   ; Default buffer text
+    (fg-dim "#586c5a")                    ; Comments, metadata
+    (fg-alt "#6ea288")                    ; Struct properties
+    (fg-var "#98aba0")                    ; Variable definitions
+    (bg-active "#3e463a")                 ; Active modeline frame, focused bars
+    (bg-inactive "#1a1e17")               ; Inactive modeline
+    (border "#424a3e")                    ; Window dividers
 
     ;; Basic Chromatic Scale
-    (red "#b6463e")                    ; Errors, critical warnings
-    (red-warmer "#9e604e")             ; String literals
-    (red-cooler "#a44a42")             ; Diff deletions, removal markers
-    (red-faint "#687e6b")              ; Structural brackets
+    (red "#b6463e")                       ; Errors, critical warnings
+    (red-warmer "#9e604e")                ; String literals
+    (red-cooler "#a44a42")                ; Diff deletions, removal markers
+    (red-faint "#687e6b")                 ; Structural brackets
 
-    (green "#5ca660")                  ; Primitive types
-    (green-warmer "#b05c70")           ; Constant values and macros
-    (green-cooler "#a47028")           ; Control keywords
-    (green-faint "#586c5a")            ; Documentation strings, inline comments
+    (green "#5ca660")                     ; Primitive types
+    (green-warmer "#b05c70")              ; Constant values and macros
+    (green-cooler "#a47028")              ; Control keywords
+    (green-faint "#586c5a")               ; Documentation strings, inline comments
 
-    (yellow "#a47028")                 ; Keyword alias
-    (yellow-warmer "#bca03c")          ; Numeric literals
-    (yellow-cooler "#7e5a28")          ; Preprocessor directives
-    (yellow-faint "#647062")           ; Informational tooltips, fringe markers
+    (yellow "#a47028")                    ; Keyword alias
+    (yellow-warmer "#bca03c")             ; Numeric literals
+    (yellow-cooler "#7e5a28")             ; Preprocessor directives
+    (yellow-faint "#647062")              ; Informational tooltips, fringe markers
 
-    (blue "#227086")                   ; Function definitions
-    (blue-warmer "#4e92a4")            ; Function calls
-    (blue-cooler "#5e8274")            ; Binary and unary operators
-    (blue-faint "#398a80")             ; Built-in functions
+    (blue "#227086")                      ; Function definitions
+    (blue-warmer "#4e92a4")               ; Function calls
+    (blue-cooler "#5e8274")               ; Binary and unary operators
+    (blue-faint "#398a80")                ; Built-in functions
 
-    (magenta "#8c6238")                ; Composite types: struct, union, enum
-    (magenta-warmer "#62a28c")         ; Extended library types
-    (magenta-cooler "#72627e")         ; Rare syntax nodes, special escapes
-    (magenta-faint "#586c5a")          ; Inactive conditional blocks
+    (magenta "#8c6238")                   ; Composite types: struct, union, enum
+    (magenta-warmer "#62a28c")            ; Extended library types
+    (magenta-cooler "#72627e")            ; Rare syntax nodes, special escapes
+    (magenta-faint "#586c5a")             ; Inactive conditional blocks
 
-    (cyan "#a47028")                   ; Keyword fallback
-    (cyan-warmer "#7e5a28")            ; Preprocessor alias
-    (cyan-cooler "#5e8274")            ; Operator alias
-    (cyan-faint "#6c786e")             ; Punctuation delimiters
+    (cyan "#a47028")                      ; Keyword fallback
+    (cyan-warmer "#7e5a28")               ; Preprocessor alias
+    (cyan-cooler "#5e8274")               ; Operator alias
+    (cyan-faint "#6c786e")                ; Punctuation delimiters
 
     ;; Panels, Diffs and Structural Highlights
-    (bg-red-intense "#741d1a")         ; Blocking errors, fatal assertion panel
-    (bg-green-intense "#1e5224")       ; Success banner
-    (bg-yellow-intense "#604210")      ; Warning banner, review request
-    (bg-blue-intense "#1a4658")        ; Info banner, active selections
-    (bg-magenta-intense "#502842")     ; Special prompt background
-    (bg-cyan-intense "#14484c")        ; Incsearch current match target
+    (bg-red-intense "#741d1a")            ; Blocking errors, fatal assertion panel
+    (bg-green-intense "#1e5224")          ; Success banner
+    (bg-yellow-intense "#604210")         ; Warning banner, review request
+    (bg-blue-intense "#1a4658")           ; Info banner, active selections
+    (bg-magenta-intense "#502842")        ; Special prompt background
+    (bg-cyan-intense "#14484c")           ; Incsearch current match target
 
-    (bg-red-subtle "#381614")          ; Diff context deletion background
-    (bg-green-subtle "#122a18")        ; Diff context addition background
-    (bg-yellow-subtle "#34200e")       ; Diff whitespace/context change
-    (bg-blue-subtle "#102832")         ; Mode-line subtle indicators
-    (bg-magenta-subtle "#2c1626")      ; Matching paren context background
-    (bg-cyan-subtle "#102c2e")         ; Structural block highlight
+    (bg-red-subtle "#381614")             ; Diff context deletion background
+    (bg-green-subtle "#122a18")           ; Diff context addition background
+    (bg-yellow-subtle "#34200e")          ; Diff whitespace/context change
+    (bg-blue-subtle "#102832")            ; Mode-line subtle indicators
+    (bg-magenta-subtle "#2c1626")         ; Matching paren context background
+    (bg-cyan-subtle "#102c2e")            ; Structural block highlight
 
-    (bg-added "#17360f")               ; Diff added line baseline
-    (bg-added-faint "#0a2900")         ; Diff added unchanged context
-    (bg-added-refine "#204810")        ; Diff added word-level highlight
-    (fg-added "#9ed4a2")               ; Diff added foreground text
+    (bg-added "#17360f")                  ; Diff added line baseline
+    (bg-added-faint "#0a2900")            ; Diff added unchanged context
+    (bg-added-refine "#204810")           ; Diff added word-level highlight
+    (fg-added "#9ed4a2")                  ; Diff added foreground text
 
-    (bg-changed "#363300")             ; Diff changed line baseline
-    (bg-changed-faint "#2a1f00")       ; Diff changed unchanged context
-    (bg-changed-refine "#4a4a00")      ; Diff changed word-level highlight
-    (fg-changed "#dcd478")             ; Diff changed foreground text
+    (bg-changed "#363300")                ; Diff changed line baseline
+    (bg-changed-faint "#2a1f00")          ; Diff changed unchanged context
+    (bg-changed-refine "#4a4a00")         ; Diff changed word-level highlight
+    (fg-changed "#dcd478")                ; Diff changed foreground text
 
-    (bg-removed "#4b120a")             ; Diff removed line baseline
-    (bg-removed-faint "#3a0a00")       ; Diff removed unchanged context
-    (bg-removed-refine "#6f1a16")      ; Diff removed word-level highlight
-    (fg-removed "#ffbfbf")             ; Diff removed foreground text
+    (bg-removed "#4b120a")                ; Diff removed line baseline
+    (bg-removed-faint "#3a0a00")          ; Diff removed unchanged context
+    (bg-removed-refine "#6f1a16")         ; Diff removed word-level highlight
+    (fg-removed "#ffbfbf")                ; Diff removed foreground text
 
-    (bg-mode-line-active "#1e2420")    ; Active modeline surface
-    (fg-mode-line-active "#9ca69e")    ; Active modeline primary text
-    (bg-completion "#202622")          ; Minibuffer completion selected row
-    (bg-popup "#151912")               ; Autocomplete tooltip surface
-    (bg-hover "#24382e")               ; Mouse hover overlay
-    (bg-hover-secondary "#362a3c")     ; Secondary hover overlay
-    (bg-hl-line "#12160f")             ; Current line indicator
-    (bg-paren-match "#284c38")         ; Matching delimiter highlight
-    (bg-err "#3a1210")                 ; Flymake error inline box
-    (bg-warning "#30260a")             ; Flymake warning inline box
-    (bg-info "#102816")                ; Flymake info inline box
-    (bg-region "#1a3226")              ; Marked region
+    (bg-mode-line-active "#1e2420")       ; Active modeline surface
+    (fg-mode-line-active "#9ca69e")       ; Active modeline primary text
+    (bg-completion "#202622")             ; Minibuffer completion selected row
+    (bg-popup "#151912")                  ; Autocomplete tooltip surface
+    (bg-hover "#24382e")                  ; Mouse hover overlay
+    (bg-hover-secondary "#362a3c")        ; Secondary hover overlay
+    (bg-hl-line "#12160f")                ; Current line indicator
+    (bg-paren-match "#284c38")            ; Matching delimiter highlight
+    (bg-err "#3a1210")                    ; Flymake error inline box
+    (bg-warning "#30260a")                ; Flymake warning inline box
+    (bg-info "#102816")                   ; Flymake info inline box
+    (bg-region "#1a3226")                 ; Marked region
     (fg-line-number-inactive "#546458"))) ; Inactive line numbers margin
 
 (defconst au-whispergrove-night-palette-mappings-partial
