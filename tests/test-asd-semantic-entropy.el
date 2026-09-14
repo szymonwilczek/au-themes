@@ -23,11 +23,9 @@
 ;;; Commentary:
 ;;
 ;; Evaluate Shannon entropy H and Oklab chroma C* dispersion for ASD sensory
-;; processing.
-;; Autism spectrum processing exhibits detail-focused processing (weak central
-;; coherence).
-;; Excessive chroma variance ('code christmas tree') causes sensory noise
-;; and cognitive overwhelm.
+;; processing. Autism spectrum processing exhibits detail-focused processing
+;; (weak central coherence). Excessive chroma variance ('code christmas tree')
+;; causes sensory noise and cognitive overwhelm.
 ;;
 ;; Ref:
 ;; - Happé & Frith (2006) J. Autism Dev. Disord.
@@ -39,10 +37,7 @@
 (require 'test-palette-extractor)
 
 (defun test-asd-semantic-entropy-run ()
-  "Evaluate Shannon entropy H and Oklab chroma C* dispersion for ASD sensory processing.
-Autism spectrum processing exhibits detail-focused processing (weak central coherence).
-Excessive chroma variance ('code christmas tree') causes sensory noise and cognitive overwhelm.
-Ref: Happé & Frith (2006) J. Autism Dev. Disord.; Shannon (1948); Ottosson (2020)."
+  "Evaluate Shannon entropy H and Oklab chroma C* dispersion for ASD sensory processing."
   (let* ((pal (au-extract-active-palette))
          (theme (plist-get pal :theme))
          (polarity (rf-theme-polarity theme))
@@ -67,7 +62,7 @@ Ref: Happé & Frith (2006) J. Autism Dev. Disord.; Shannon (1948); Ottosson (202
          (mean-c (/ (apply #'+ chromas) (float n)))
          (var-c (/ (apply #'+ (mapcar (lambda (c) (expt (- c mean-c) 2)) chromas)) (float n)))
          (std-c (sqrt var-c))
-         ;; Discretize chromas into 5 equal bins in range [0.0..0.20] for Shannon Entropy
+         ;; 5 equal bins in range [0.0..0.20] for Shannon Entropy
          (num-bins 5)
          (bin-width 0.04)
          (bin-counts (make-vector num-bins 0)))
@@ -83,17 +78,17 @@ Ref: Happé & Frith (2006) J. Autism Dev. Disord.; Shannon (1948); Ottosson (202
             (let ((p (/ (float count) n)))
               (setq shannon-h (- shannon-h (* p (log p 2))))))))
 
-      (princ (format "\n======================================================================\n"))
-      (princ (format " ASD Semantic Entropy & Sensory Chroma Dispersion Suite\n"))
-      (princ (format " Ref: Happe & Frith (2006); Shannon (1948) Bell Syst. Tech. J.\n"))
-      (princ (format " Theme: %s (%s) | Background: %s\n" theme polarity bg))
-      (princ (format "======================================================================\n"))
+      (princ (format "\n.~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~.\n"))
+      (princ (format "| ASD Semantic Entropy & Sensory Chroma Dispersion Suite\n"))
+      (princ (format "| Theme: %s (%s) | Background: %s\n" theme polarity bg))
+      (princ (format "'~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~'\n"))
 
-      ;; Part 1: Oklab Chroma Vector per Role
-      (princ "\nPart 1: Oklab Syntactic Chroma C* Vector Distribution:\n")
-      (princ (format "%-28s | %-8s | %-8s | %-8s | %-8s\n"
+      (princ "\nOklab Syntactic Chroma C* Vector Distribution:\n")
+      (princ (format "--------------------------------------------------------------------------\n\n"))
+      (princ (format "+----------------------------+----------+-----------+-----------+--------+\n"))
+      (princ (format "| %-26s | %-8s | %-9s | %-9s | %-7s|\n"
                      "Syntax Role" "Hex" "Chroma C*" "Max C*" "Status"))
-      (princ (format "-----------------------------+----------+----------+----------+----------\n"))
+      (princ (format "+----------------------------+----------+-----------+-----------+--------+\n"))
       (dolist (tok tokens)
         (let* ((label (car tok))
                (key   (cadr tok))
@@ -104,49 +99,49 @@ Ref: Happé & Frith (2006) J. Autism Dev. Disord.; Shannon (1948); Ottosson (202
           (if ok
               (setq passes (1+ passes))
             (setq fails (1+ fails)))
-          (princ (format "%-28s | %-8s | %8.4f | <= %5.3f | %s\n"
+          (princ (format "| %-26s | %-8s | %9.4f | <= %6.3f | %s   |\n"
                          label hex c-val max-c (if ok "PASS" "FAIL")))))
-      (princ (format "-----------------------------+----------+----------+----------+----------\n"))
+      (princ (format "+----------------------------+----------+-----------+-----------+--------+\n"))
 
-      ;; Part 2: Mean Chroma and Dispersion (Narrow Cohesive Envelope)
-      (princ "\nPart 2: Mean Chroma and Standard Deviation Envelope:\n")
+      (princ "\nMean Chroma and Standard Deviation Envelope:\n")
+      (princ (format "--------------------------------------------------------------------------\n\n"))
       (let* ((max-mean-c (if (eq polarity 'light) 0.100 0.115))
              (max-std-c  0.055)
              (mean-ok (<= mean-c max-mean-c))
              (std-ok  (<= std-c max-std-c)))
         (if mean-ok
             (progn
-              (princ (format "   [PASS] Mean Chroma C* = %.4f <= %.3f: Muted, non-overstimulating palette.\n"
+              (princ (format "[PASS]  Mean Chroma C* = %.4f <= %.3f:\n\tMuted, non-overstimulating palette.\n"
                              mean-c max-mean-c))
               (setq passes (1+ passes)))
-          (princ (format "   [FAIL] Mean Chroma C* = %.4f > %.3f: Saturated sensory overload.\n"
+          (princ (format "[FAIL]  Mean Chroma C* = %.4f > %.3f: Saturated sensory overload.\n"
                          mean-c max-mean-c))
           (setq fails (1+ fails)))
 
         (if std-ok
             (progn
-              (princ (format "   [PASS] Chroma Std Dev sigma = %.4f <= %.3f: Cohesive, non-fragmented syntax.\n"
+              (princ (format "[PASS]  Chroma Std Dev sigma = %.4f <= %.3f:\n\tCohesive, non-fragmented syntax.\n"
                              std-c max-std-c))
               (setq passes (1+ passes)))
-          (princ (format "   [FAIL] Chroma Std Dev sigma = %.4f > %.3f: Disjointed chroma spikes.\n"
+          (princ (format "[FAIL]  Chroma Std Dev sigma = %.4f > %.3f:\n\tDisjointed chroma spikes.\n"
                          std-c max-std-c))
           (setq fails (1+ fails))))
 
-      ;; Part 3: Shannon Information Entropy
-      (princ "\nPart 3: Shannon Semantic Chrominance Entropy H:\n")
+      (princ "\nShannon Semantic Chrominance Entropy H:\n")
+      (princ (format "--------------------------------------------------------------------------\n\n"))
       (let* ((h-max (log num-bins 2))
              (max-entropy 2.10) ; structured clustering: avoids scattered uniform noise (H_max = 2.322 bits)
              (entropy-ok (<= shannon-h max-entropy)))
         (if entropy-ok
             (progn
-              (princ (format "   [PASS] Shannon Entropy H = %.3f bits <= %.2f bits (H_max = %.3f, relative = %.1f%%): Structured chroma clustering.\n"
+              (princ (format "[PASS] Shannon Entropy H = %.3f bits <= %.2f bits\n(H_max = %.3f, relative = %.1f%%): Structured chroma clustering.\n"
                              shannon-h max-entropy h-max (* 100.0 (/ shannon-h h-max))))
               (setq passes (1+ passes)))
-          (princ (format "   [FAIL] Shannon Entropy H = %.3f bits > %.2f bits: Unstructured uniform chroma scatter.\n"
+          (princ (format "[FAIL] Shannon Entropy H = %.3f bits > %.2f bits:\nUnstructured uniform chroma scatter.\n"
                          shannon-h max-entropy))
           (setq fails (1+ fails))))
 
-      (princ (format "\n----------------------------------------------------------------------\n"))
+      (princ (format "\n==========================================================================\n"))
       (princ (format "ASD Semantic Entropy Summary: %d Passed, %d Failed.\n\n" passes fails))
       (zerop fails))))
 
