@@ -50,36 +50,36 @@ Ref: Thibos et al. (2004) JOSA A; Legras et al. (2004) OPO; Charman (2005) Clin 
          (bg-y (rf-luminance-y bg))
          (passes 0)
          (fails 0)
-         (tokens '(("Base text (Mineral quartz)"       :fg-main)
-                   ("Comments (Damp needles)"          :fg-dim)
-                   ("Keywords (struct, while)"         :keyword)
-                   ("Data types (int, size_t)"         :type)
-                   ("Preprocessor (#define)"           :preprocessor)
-                   ("Constants (LOTA_PCR_COUNT)"       :constant)
-                   ("Numbers (0, 24, 32)"              :number)
-                   ("Builtins (__always_inline)"       :builtin)
+         (tokens '(("Base text"       :fg-main)
+                   ("Comments"          :fg-dim)
+                   ("Keywords"         :keyword)
+                   ("Data types"         :type)
+                   ("Preprocessor"           :preprocessor)
+                   ("Constants"       :constant)
+                   ("Numbers"              :number)
+                   ("Builtins"       :builtin)
                    ("Function definitions"             :fnname)
-                   ("Function calls (bpf_...)"         :fnname-call)
-                   ("Strings (\"string literals\")"    :string)
-                   ("Struct fields (->tgid)"           :property)
-                   ("Operators (+, -, *, >>)"          :operator)
-                   ("Brackets (( ) [ ] { })"           :bracket)
+                   ("Function calls"         :fnname-call)
+                   ("Strings"    :string)
+                   ("Struct fields"           :property)
+                   ("Operators"          :operator)
+                   ("Brackets"           :bracket)
                    ("Alerts / Errors (!)"              :err))))
 
-    (princ (format "\n======================================================================\n"))
-    (princ (format " Anisotropic Astigmatism (-1.50D Cylinder) Meridional Blur Suite\n"))
-    (princ (format " Ref: Thibos et al. (2004); Interval of Sturm Elliptical PSF\n"))
-    (princ (format " Theme: %s (%s) | Background: %s (Y_bg: %.6f)\n" theme polarity bg bg-y))
-    (princ (format " Requirement: Edge Acutance >= %.2f, Valley Modulation Depth >= %.2f\n"
+    (princ (format ".~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~.\n"))
+    (princ (format "| Anisotropic Astigmatism (-1.50D Cylinder) Meridional Blur Suite\n"))
+    (princ (format "| Theme: %s (%s) | Background: %s (Y_bg: %.6f)\n" theme polarity bg bg-y))
+    (princ (format "| Requirement: Edge Acutance >= %.2f, Valley Modulation Depth >= %.2f\n"
                    (if (eq polarity 'light) 0.12 0.40)
                    (if (eq polarity 'light) 0.12 0.25)))
-    (princ (format "======================================================================\n"))
+    (princ (format "'~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~'\n"))
 
-    ;; Part 1: Directional Edge Acutance & Inter-Character Valley Modulation
-    (princ "\nPart 1: Meridional Edge Acutance and Inter-Glyph Modulation Depth:\n")
-    (princ (format "%-30s | %-8s | %-8s | %-8s | %-10s | %-8s\n"
+    (princ "\nMeridional Edge Acutance and Inter-Glyph Modulation Depth:\n")
+    (princ (format "----------------------------------------------------------------------------------------\n"))
+    (princ (format "+------------------------------+----------+----------+----------+------------+---------+\n"))
+    (princ (format "| %-28s | %-8s | %-8s | %-8s | %-10s | %-7s |\n"
                    "Glyph Role" "Hex" "Peak Lum" "Acutance" "Mod Depth" "Status"))
-    (princ (format "-------------------------------+----------+----------+----------+------------+----------\n"))
+    (princ (format "+------------------------------+----------+----------+----------+------------+---------+\n"))
     (dolist (tok tokens)
       (let* ((label    (nth 0 tok))
              (key      (nth 1 tok))
@@ -94,21 +94,21 @@ Ref: Thibos et al. (2004) JOSA A; Legras et al. (2004) OPO; Charman (2005) Clin 
         (if ok
             (setq passes (1+ passes))
           (setq fails (1+ fails)))
-        (princ (format "%-30s | %-8s | %8.4f | %8.4f | %10.4f | %s\n"
+        (princ (format "| %-28s | %-8s | %8.4f | %8.4f | %10.4f | %s    |\n"
                        label hex peak-y acutance mod-d (if ok "PASS" "FAIL")))))
-    (princ (format "-------------------------------+----------+----------+----------+------------+----------\n"))
+    (princ (format "+------------------------------+----------+----------+----------+------------+---------+\n"))
 
-    ;; Part 2: Conoid of Sturm Smear Resistance
-    (princ "\nPart 2: Conoid of Sturm Horizontal Smear Resistance:\n")
+    (princ "\nConoid of Sturm Horizontal Smear Resistance:\n")
+    (princ (format "----------------------------------------------------------------------------------------\n"))
     (if (eq polarity 'dark)
         (progn
-          (princ "   [PASS] Dark background absorbs horizontal Gaussian PSF skirts; letters do not melt.\n")
+          (princ "[PASS] Dark background absorbs horizontal Gaussian PSF skirts; letters do not melt.\n")
           (setq passes (1+ passes)))
       (progn
-        (princ "   [PASS] Daylight contrast ratio maintains positive edge acutance under cylinder defocus.\n")
+        (princ "[PASS] Daylight contrast ratio maintains positive edge acutance under cylinder defocus.\n")
         (setq passes (1+ passes))))
 
-    (princ (format "\n----------------------------------------------------------------------\n"))
+    (princ (format "\n========================================================================================\n"))
     (princ (format "Astigmatism Meridional Blur Summary: %d Passed, %d Failed.\n\n" passes fails))
     (zerop fails)))
 
