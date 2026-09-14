@@ -42,8 +42,6 @@
 
 (defun test-afterimage-persistence-run ()
   "Evaluate neural contrast adaptation, post-saccadic inertia, and negative afterimages.
-At display luminances (< 80 cd/m^2, ~300 td), photochemical cone pigment bleaching
-is negligible (~4e-5; true bleaching requires I_0 ~ 10^4.3 td per Rushton 1961).
 Short-term visual persistence and negative afterimages stem from neural contrast
 adaptation and receptive-field gain control in retinal ganglion cells and primary
 visual cortex (Loomis 1978, Zaidi et al. 2012).
@@ -58,36 +56,32 @@ Residual adaptation contrast at t = 1.0s must remain <= 5.5% (anchors <= 5.0%)."
          (bg-y (rf-luminance-y bg))
          (passes 0)
          (fails 0)
-         ;; Neural adaptation decay time constant tau ~ 0.45s (Loomis 1978, Kelly 1979)
          (tau 0.45)
-         (tokens-to-test '(("Cursor (Raindrop glint)"          :cursor)
-                           ("Alerts / Errors (Yew berry)"      :err)
-                           ("Base text (Mineral quartz)"       :fg-main)
-                           ("Constants (LOTA_PCR_COUNT)"       :constant)
-                           ("Numbers (Golden amber honey)"     :number)
-                           ("Builtins (Forest viridian)"       :builtin))))
+         (tokens-to-test '(("Cursor"          :cursor)
+                           ("Alerts / Errors"      :err)
+                           ("Base text"       :fg-main)
+                           ("Constants"       :constant)
+                           ("Numbers"     :number)
+                           ("Builtins"       :builtin))))
 
-    (princ (format "\n======================================================================\n"))
-    (princ (format " Neural Adaptation, Post-Saccadic Inertia & Afterimage Decay Suite\n"))
-    (princ (format " Ref: Loomis (1978); Kelly (1979); Zaidi et al. (2012)\n"))
-    (princ (format " Theme: %s (%s) | Background: %s (Y_bg: %.6f)\n" theme polarity bg bg-y))
-    (princ (format " Requirement: Residual Neural Contrast A(t=1.0s) <= %.1f%% (Tau_neural = %.2fs)\n"
+    (princ (format "\n.~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~.\n"))
+    (princ (format "| Neural Adaptation, Post-Saccadic Inertia and Afterimage Decay Suite\n"))
+    (princ (format "| Theme: %s (%s) | Background: %s (Y_bg: %.6f)\n" theme polarity bg bg-y))
+    (princ (format "| Requirement: Residual Neural Contrast A(t=1.0s) <= %.1f%% (Tau_neural = %.2fs)\n"
                    (if (eq polarity 'light) 6.0 5.5) tau))
-    (princ (format " Note: True cone bleaching is negligible at display luminances (~4e-5);\n"))
-    (princ (format "       afterimages are governed by neural gain control adaptation.\n"))
-    (princ (format "======================================================================\n"))
-
-    (princ (format "%-30s | %-8s | %-8s | %-8s | %-10s | %-8s\n"
+    (princ (format "| Note: True cone bleaching is negligible at display luminances (~4e-5);\n"))
+    (princ (format "|      afterimages are governed by neural gain control adaptation.\n"))
+    (princ (format "'~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~'\n"))
+    (princ (format "+------------------------------+----------+----------+------------+------------+--------+\n"))
+    (princ (format "| %-28s | %-8s | %-8s | %-8s | %-10s | %-7s|\n"
                    "Visual Element" "Hex" "Lum (Y)" "Initial A0" "A(t=1.0s)" "Status"))
-    (princ (format "-------------------------------+----------+----------+----------+------------+----------\n"))
+    (princ (format "+------------------------------+----------+----------+------------+------------+--------+\n"))
     (dolist (tok tokens-to-test)
       (let* ((label (nth 0 tok))
              (key   (nth 1 tok))
              (hex   (plist-get pal key))
              (y-val (rf-luminance-y hex))
-             ;; Neural contrast adaptation amplitude A0:
              (a0 (/ (abs (- y-val bg-y)) (+ y-val bg-y 0.50)))
-             ;; Residual neural adaptation trace after 1.0 second (Loomis 1978)
              (a1 (* a0 (exp (- (/ 1.0 tau)))))
              (pct (* a1 100.0))
              (max-pct (if (eq polarity 'light) 6.0 5.5))
@@ -95,12 +89,12 @@ Residual adaptation contrast at t = 1.0s must remain <= 5.5% (anchors <= 5.0%)."
         (if ok
             (setq passes (1+ passes))
           (setq fails (1+ fails)))
-        (princ (format "%-30s | %-8s | %8.4f | %8.4f | %7.2f%%   | %s\n"
+        (princ (format "| %-28s | %-8s | %8.4f | %8.4f   | %7.2f%%   | %s   |\n"
                        label hex y-val a0 pct (if ok "PASS" "FAIL")))))
-    (princ (format "-------------------------------+----------+----------+----------+------------+----------\n"))
+    (princ (format "+------------------------------+----------+----------+------------+------------+--------+\n"))
 
-    ;; Part 2: Primary Cursor & Alert Palinopsia Gate
-    (princ "\nPart 2: High-Focus Anchor Elements (Cursor & Alert Palinopsia Lock):\n")
+    (princ "\nHigh-Focus Anchor Elements (Cursor and Alert Palinopsia Lock):\n")
+    (princ (format "-----------------------------------------------------------------------------------------\n"))
     (let* ((cur-y (rf-luminance-y (plist-get pal :cursor)))
            (err-y (rf-luminance-y (plist-get pal :err)))
            (cur-a1 (* (/ (abs (- cur-y bg-y)) (+ cur-y bg-y 0.50)) (exp (- (/ 1.0 tau)))))
@@ -108,13 +102,13 @@ Residual adaptation contrast at t = 1.0s must remain <= 5.5% (anchors <= 5.0%)."
            (anchors-ok (and (< (* cur-a1 100.0) 5.0) (< (* err-a1 100.0) 5.0))))
       (if anchors-ok
           (progn
-            (princ (format "   [PASS] Cursor A(1s)=%.2f%%, Alert A(1s)=%.2f%% < 5.0%%: Zero persistent ghosting.\n"
+            (princ (format "[PASS] Cursor A(1s)=%.2f%%, Alert A(1s)=%.2f%% < 5.0%%: Zero persistent ghosting.\n\n"
                            (* cur-a1 100.0) (* err-a1 100.0)))
             (setq passes (1+ passes)))
-        (princ (format "   [FAIL] Residual afterimage >= 5.0%%: High risk of palinopsia and visual interference.\n"))
+        (princ (format "[FAIL] Residual afterimage >= 5.0%%: High risk of palinopsia and visual interference.\n\n"))
         (setq fails (1+ fails))))
 
-    (princ (format "\n----------------------------------------------------------------------\n"))
+    (princ (format "=========================================================================================\n"))
     (princ (format "Afterimage Persistence Summary: %d Passed, %d Failed.\n\n" passes fails))
     (zerop fails)))
 
