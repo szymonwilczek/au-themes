@@ -227,39 +227,37 @@ to `au-themes-toggle-themes'."
 ;;;###autoload
 (defalias 'au-toggle #'au-themes-toggle)
 
+(defvar au-themes--picker-initial-theme nil
+  "Theme that was active when the picker was initiated.")
+
 (defun au-themes--group-themes (cand transform)
-  "Group CAND for minibuffer completion.
+  "Group CAND for minibuffer completion into Light and Dark.
 If TRANSFORM is non-nil, return CAND unchanged."
   (if transform
       cand
     (let ((symbol (intern-soft cand)))
-      (cond
-       ((eq symbol (au-themes-get-current-theme))
-        "Bieżący motyw")
-       ((eq (au-themes--theme-polarity symbol) 'light)
-        "Motywy jasne (Light)")
-       (t
-        "Motywy ciemne (Dark)")))))
+      (if (eq (au-themes--theme-polarity symbol) 'light)
+          "Motywy jasne (Light)"
+        "Motywy ciemne (Dark)"))))
 
 (defun au-themes--annotate-theme (cand)
-  "Annotate CAND with its polarity and relative luminance Y."
+  "Annotate CAND with its polarity, relative luminance Y, and active status."
   (let* ((symbol (intern-soft cand))
          (pol (au-themes--theme-polarity symbol))
-         (y (get symbol 'au-themes-luminance-y)))
-    (if (and pol y)
-        (format "  [%s, Y=%.2f]" (upcase (symbol-name pol)) y)
-      (if pol
-          (format "  [%s]" (upcase (symbol-name pol)))
-        ""))))
+         (y (get symbol 'au-themes-luminance-y))
+         (active (and au-themes--picker-initial-theme
+                      (eq symbol au-themes--picker-initial-theme))))
+    (concat
+     (if (and pol y)
+         (format "  [%s, Y=%.2f]" (upcase (symbol-name pol)) y)
+       (if pol
+           (format "  [%s]" (upcase (symbol-name pol)))
+         ""))
+     (if active " (aktywny)" ""))))
 
 (defun au-themes--display-sort (candidates)
-  "Sort CANDIDATES placing current theme first, followed by others."
-  (let* ((current (au-themes-get-current-theme))
-         (curr-name (and current (symbol-name current)))
-         (cands (delete curr-name (copy-sequence candidates))))
-    (if (and curr-name (member curr-name candidates))
-        (cons curr-name cands)
-      cands)))
+  "Preserve stable candidate order for minibuffer completion."
+  candidates)
 
 (defun au-themes--completion-table (themes)
   "Return completion table with rich metadata for THEMES."
@@ -276,6 +274,7 @@ If TRANSFORM is non-nil, return CAND unchanged."
   "Prompt user to select a theme from THEMES with live buffer preview.
 Restores previous theme if aborted."
   (let* ((saved-theme (au-themes-get-current-theme))
+         (au-themes--picker-initial-theme saved-theme)
          (default-theme (or saved-theme (car themes)))
          (cand-names (mapcar #'symbol-name themes)))
     (if (fboundp 'consult--read)
