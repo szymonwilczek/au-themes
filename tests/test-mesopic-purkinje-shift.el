@@ -66,42 +66,41 @@ Note:
          (la-s (* sp-ratio la-p))
          (m (rf-mesopic-adaptation-coefficient la-p la-s))
          (photopic-onset-cd (/ 5.0 (max 1e-9 view-y)))
-         (tokens '(("Alerts / Errors (!)"              :err)
-                   ("Keywords (struct, while)"         :keyword)
-                   ("Data types (int, size_t)"         :type)
-                   ("Preprocessor (#define)"           :preprocessor)
-                   ("Function definitions"             :fnname)
-                   ("Constants (LOTA_PCR_COUNT)"       :constant)
-                   ("Base text (Mineral quartz)"       :fg-main))))
-    (princ (format "\n======================================================================\n"))
-    (princ (format " CIE 191:2010 Mesopic Photometry & Purkinje Rod Shift Gate Suite\n"))
-    (princ (format " Ref: CIE 191:2010 (MES-2); Rea et al. (2004) DOI 10.1191/1365782804li114oa\n"))
-    (princ (format " Theme: %s (%s)\n" theme polarity))
-    (princ (format " Nocturnal display white: %.1f cd/m2 | Viewport mean Y: %.4f\n" white-cd view-y))
-    (princ (format " Adaptation field: L_p = %.4f cd/m2, L_s = %.4f scotopic cd/m2\n" la-p la-s))
-    (princ (format " CIE 191 adaptation coefficient m = %.4f (m=1 photopic, m=0 scotopic)\n" m))
-    (princ (format " Viewport leaves the mesopic domain above a display white of %.0f cd/m2\n"
+         (tokens '(("Alerts / Errors (!)"  :err)
+                   ("Keywords"             :keyword)
+                   ("Data types"           :type)
+                   ("Preprocessor"         :preprocessor)
+                   ("Function definitions" :fnname)
+                   ("Constants"            :constant)
+                   ("Base text"            :fg-main))))
+    (princ (format "\n.~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~.\n"))
+    (princ (format "| CIE 191:2010 Mesopic Photometry & Purkinje Rod Shift Gate Suite\n"))
+    (princ (format "| Theme: %s (%s)\n" theme polarity))
+    (princ (format "| Nocturnal display white: %.1f cd/m2 | Viewport mean Y: %.4f\n" white-cd view-y))
+    (princ (format "| Adaptation field: L_p = %.4f cd/m2, L_s = %.4f scotopic cd/m2\n" la-p la-s))
+    (princ (format "| CIE 191 adaptation coefficient m = %.4f (m=1 photopic, m=0 scotopic)\n" m))
+    (princ (format "| Viewport leaves the mesopic domain above a display white of %.0f cd/m2\n"
                    photopic-onset-cd))
-    (princ (format " Gates: Adaptation field in [0.005, 5] cd/m2 | Parafoveal contrast polarity preserved\n"))
-    (princ (format " Note: Text reading is foveolar (rod-free, Curcio 1991); shifts describe parafoveal salience.\n"))
-    (princ (format "======================================================================\n"))
+    (princ (format "| Gates: Adaptation field in [0.005, 5] cd/m2\n\t Parafoveal contrast polarity preserved\n"))
+    (princ (format "> Note: Text reading is foveolar (rod-free, Curcio 1991);\n>\tshifts describe parafoveal salience.\n"))
+    (princ (format "'~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~'\n"))
     (let ((bg-lmes (rf-mesopic-luminance (plist-get pal :bg-main) m white-cd)))
-      ;; Gate 1: Field adaptation inside CIE 191 mesopic bounds (dark) or photopic domain (light)
+      ;; Field adaptation inside CIE 191 mesopic bounds (dark) or photopic domain (light)
       (let ((field-ok (if (eq polarity 'dark)
                           (and (>= la-p 0.005) (<= la-p 5.0) (>= m 0.0) (<= m 1.0))
                         (>= la-p 5.0))))
         (if field-ok (setq passes (1+ passes)) (setq fails (1+ fails)))
-        (princ (format "Field adaptation state (L_a=%.3f, m=%.3f): %s\n"
+        (princ (format "\nField adaptation state (L_a=%.3f, m=%.3f): %s\n"
                        la-p m (if field-ok "PASS" "FAIL"))))
-      ;; Gate 2: Realistic photopic onset ceiling
+      ;; Realistic photopic onset ceiling
       (let ((onset-ok (<= photopic-onset-cd 500.0)))
         (if onset-ok (setq passes (1+ passes)) (setq fails (1+ fails)))
         (princ (format "Photopic onset ceiling (%.0f cd/m2 <= 500 cd/m2): %s\n"
                        photopic-onset-cd (if onset-ok "PASS" "FAIL"))))
-      (princ (format "----------------------------------------------------------------------\n"))
-      (princ (format "%-28s | %-8s | %-8s | %-8s | %-7s | %-8s | %-6s\n"
+      (princ (format "\n+----------------------+---------+--------+--------+---------+----------+--------+\n"))
+      (princ (format "| %-20s | %-7s |  %-5s | %-6s | %-7s | %-8s | %-6s |\n"
                      "Token Role" "Hex" "L_p" "L_mes" "Shift" "CR_mes" "Status"))
-      (princ (format "-----------------------------+----------+----------+----------+---------+----------+-------\n"))
+      (princ (format "+----------------------+---------+--------+--------+---------+----------+--------+\n"))
       (dolist (tok tokens)
         (let* ((label    (nth 0 tok))
                (key      (nth 1 tok))
@@ -116,13 +115,15 @@ Note:
           (if ok
               (setq passes (1+ passes))
             (setq fails (1+ fails)))
-          (princ (format "%-28s | %-8s | %8.4f | %8.4f | %+6.1f%% | %7.2f:1 | %s\n"
+          (princ (format "| %-20s | %-7s | %6.4f | %6.4f | %+6.1f%% | %6.2f:1 |  %s  |\n"
                          label hex lp lmes (* 100.0 shift) crmes
                          (if ok "PASS" "FAIL"))))))
-    (princ (format "-----------------------------+----------+----------+----------+---------+----------+-------\n"))
-    (princ "Interpretation: shifts describe parafoveal luminance variation under rod\n")
-    (princ "contribution. Contrast polarity retention ensures tokens remain distinct from\n")
-    (princ "background during saccadic exploration without reverse-contrast distortion.\n")
+    (princ (format "+----------------------+---------+--------+--------+---------+----------+--------+\n"))
+    ;; Interpretation:
+    ;; Shifts describe parafoveal luminance variation under rod contribution.
+    ;; Contrast polarity retention ensures tokens remain distinct from background
+    ;; during saccadic exploration without reverse-contrast distortion.
+    (princ (format "\n==================================================================================\n"))
     (princ (format "Mesopic Purkinje Shift Summary: %d Passed, %d Failed.\n\n" passes fails))
     (zerop fails)))
 
