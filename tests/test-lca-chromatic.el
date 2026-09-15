@@ -32,7 +32,7 @@
 (require 'test-palette-extractor)
 
 (defun test-lca-chromatic-run ()
-  "Evaluate LCA chromatic dispersion per Thibos et al. (1992)."
+  "Evaluate LCA chromatic dispersion."
   (let* ((pal (au-extract-active-palette))
          (theme (plist-get pal :theme))
          (base (plist-get pal :fg-main))
@@ -40,29 +40,29 @@
          (base-wave (rf-effective-wavelength base))
          (passes 0)
          (fails 0)
-         (tokens '(("Preprocessor (#define)"           :preprocessor)
-                   ("Keywords (struct, while)"         :keyword)
-                   ("Data types (int, size_t)"         :type)
-                   ("Constants (LOTA_PCR_COUNT)"       :constant)
-                   ("Numbers (0, 24, 32)"              :number)
-                   ("Builtins (__always_inline)"       :builtin)
-                   ("Function definitions"             :fnname)
-                   ("Function calls (bpf_...)"         :fnname-call)
-                   ("Strings (\"string literals\")"    :string)
-                   ("Struct fields (->tgid)"           :property)
-                   ("Operators (+, -, *, >>)"          :operator)
-                   ("Brackets (( ) [ ] { })"           :bracket)
-                   ("Comments (Damp needles)"          :fg-dim)
-                   ("Alerts / Errors (!)"              :err))))
-    (princ (format "\n======================================================================\n"))
-    (princ (format " Longitudinal Chromatic Aberration (LCA) & Common Focal Plane Suite\n"))
-    (princ (format " Ref: Thibos et al. (1992) Applied Optics 31(19), DOI: 10.1364/AO.31.003594\n"))
-    (princ (format " Theme: %s | Base Text: %s (Eff Wave: %.1fnm, Refraction: %.3fD)\n"
+         (tokens '(("Preprocessor"         :preprocessor)
+                   ("Keywords"             :keyword)
+                   ("Data types"           :type)
+                   ("Constants"            :constant)
+                   ("Numbers"              :number)
+                   ("Builtins"             :builtin)
+                   ("Function definitions" :fnname)
+                   ("Function calls"       :fnname-call)
+                   ("Strings"              :string)
+                   ("Struct fields"        :property)
+                   ("Operators"            :operator)
+                   ("Brackets"             :bracket)
+                   ("Comments"             :fg-dim)
+                   ("Alerts / Errors (!)"  :err))))
+    (princ (format "\n.~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~.\n"))
+    (princ (format "| Longitudinal Chromatic Aberration (LCA) and Common Focal Plane Suite\n"))
+    (princ (format "| Theme: %s | Base Text: %s\n|\t (Eff Wave: %.1fnm, Refraction: %.3fD)\n"
                    theme base base-wave base-d))
-    (princ (format "======================================================================\n"))
-    (princ (format "%-32s | %-8s | %-8s | %-8s | %-7s | %-8s\n"
+    (princ (format "'~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~'\n"))
+    (princ (format "+----------------------+---------+----------+-----------+----------+--------+\n"))
+    (princ (format "| %-20s | %-7s | %-7s | %-8s |  %-7s | %-7s|\n"
                    "Token Role" "Hex" "Eff Wave" "D(lambda)" "Delta-D" "Status"))
-    (princ (format "---------------------------------+----------+----------+----------+---------+----------\n"))
+    (princ (format "+----------------------+---------+----------+-----------+----------+--------+\n"))
     (dolist (tok tokens)
       (let* ((name (nth 0 tok))
              (key  (nth 1 tok))
@@ -74,10 +74,11 @@
         (if ok
             (setq passes (1+ passes))
           (setq fails (1+ fails)))
-        (princ (format "%-32s | %-8s | %6.1fnm | %+7.3fD | %6.3fD  | %s\n"
+        (princ (format "| %-20s | %-7s | %6.1fnm | %+7.3fD  | %6.3fD  |  %s  |\n"
                        name hex wave d delta-d
                        (if ok "PASS" "FAIL (>0.25D)")))))
-    (princ (format "---------------------------------+----------+----------+----------+---------+----------\n"))
+    (princ (format "+----------------------+---------+----------+-----------+----------+--------+\n"))
+    (princ (format "\n=============================================================================\n"))
     (princ (format "LCA Common Focal Plane Summary: %d Passed, %d Failed.\n\n" passes fails))
     (zerop fails)))
 
