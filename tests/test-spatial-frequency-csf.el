@@ -34,41 +34,42 @@
 (require 'test-palette-extractor)
 
 (defun test-spatial-frequency-csf-run ()
-  "Evaluate typographical stroke contrast against spatial frequency visibility thresholds (~6 cpd).
-Ref: Campbell & Robson (1968) J. Physiol.; Legge et al. (1985) Psychophysics of Reading."
+  "Evaluate typographical stroke contrast against spatial frequency visibility thresholds (~6 cpd)."
   (let* ((pal (au-extract-active-palette))
          (bg (plist-get pal :bg-main))
          (theme (plist-get pal :theme))
          (passes 0)
          (fails 0)
-         ;; At 60cm viewing distance and 13pt font, character stroke spatial frequency is ~6 cpd.
-         ;; To maintain high reading speed and combat astigmatic optical degradation,
-         ;; typography requires Michelson contrast substantially above threshold:
-         ;; m >= 0.12 for subordinate comments, m >= 0.35 for primary code text.
-         (tokens '(("Base text (Mineral quartz)"       :fg-main      0.35)
-                   ("Comments (Damp needles)"          :fg-dim       0.12)
-                   ("Cursor (Raindrop glint)"          :cursor       0.25)
-                   ("Preprocessor (#define)"           :preprocessor 0.25)
-                   ("Keywords (struct, while)"         :keyword      0.15)
-                   ("Data types (int, size_t)"         :type         0.25)
-                   ("Constants (LOTA_PCR_COUNT)"       :constant     0.15)
-                   ("Numbers (0, 24, 32)"              :number       0.25)
-                   ("Builtins (__always_inline)"       :builtin      0.15)
-                   ("Function definitions"             :fnname       0.15)
-                   ("Function calls (bpf_...)"         :fnname-call  0.25)
-                   ("Strings (\"string literals\")"    :string       0.20)
-                   ("Struct fields (->tgid)"           :property     0.20)
-                   ("Operators (+, -, *, >>)"          :operator     0.15)
-                   ("Brackets (( ) [ ] { })"           :bracket      0.12)
-                   ("Alerts / Errors (!)"              :err          0.15))))
-    (princ (format "\n======================================================================\n"))
-    (princ (format " Typographic Spatial Frequency Contrast Sensitivity Suite (~6 cpd)\n"))
-    (princ (format " Ref: Campbell & Robson (1968); Legge et al. (1985) Psychophysics of Reading\n"))
-    (princ (format " Theme: %s | Background: %s\n" theme bg))
-    (princ (format "======================================================================\n"))
-    (princ (format "%-32s | %-8s | %-12s | %-12s | %-8s\n"
+         ;; At 60cm viewing distance and 13pt font, character stroke spatial
+         ;; frequency is ~6 cpd.
+         ;; To maintain high reading speed and combat astigmatic optical
+         ;; degradation, typography requires Michelson contrast substantially
+         ;; above threshold:
+         ;; m >= 0.12 for subordinate comments, m >= 0.35 for primary code text
+         (tokens '(("Base text"            :fg-main      0.35)
+                   ("Comments"             :fg-dim       0.12)
+                   ("Cursor"               :cursor       0.25)
+                   ("Preprocessor"         :preprocessor 0.25)
+                   ("Keywords"             :keyword      0.15)
+                   ("Data types"           :type         0.25)
+                   ("Constants"            :constant     0.15)
+                   ("Numbers"              :number       0.25)
+                   ("Builtins"             :builtin      0.15)
+                   ("Function definitions" :fnname       0.15)
+                   ("Function calls"       :fnname-call  0.25)
+                   ("Strings"              :string       0.20)
+                   ("Struct fields"        :property     0.20)
+                   ("Operators"            :operator     0.15)
+                   ("Brackets"             :bracket      0.12)
+                   ("Alerts / Errors (!)"  :err          0.15))))
+    (princ (format "\n.~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~.\n"))
+    (princ (format "| Typographic Spatial Frequency Contrast Sensitivity Suite (~6 cpd)\n"))
+    (princ (format "| Theme: %s | Background: %s\n" theme bg))
+    (princ (format "'~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~'\n\n"))
+    (princ (format "+----------------------+---------+-------------+---------------+--------+\n"))
+    (princ (format "| %-20s | %-7s | %-11s | %-12s | %-7s|\n"
                    "Token Role" "Hex" "Michelson m" "Min Michelson" "Status"))
-    (princ (format "---------------------------------+----------+--------------+--------------+----------\n"))
+    (princ (format "+----------------------+---------+-------------+---------------+--------+\n"))
     (dolist (tok tokens)
       (let* ((name (nth 0 tok))
              (key  (nth 1 tok))
@@ -83,10 +84,11 @@ Ref: Campbell & Robson (1968) J. Physiol.; Legge et al. (1985) Psychophysics of 
         (if ok
             (setq passes (1+ passes))
           (setq fails (1+ fails)))
-        (princ (format "%-32s | %-8s | %10.4f   | >= %6.4f    | %s\n"
+        (princ (format "| %-20s | %-7s |%10.4f   |   >= %6.4f   |  %s  |\n"
                        name hex m min-m
                        (if ok "PASS" "FAIL")))))
-    (princ (format "---------------------------------+----------+--------------+--------------+----------\n"))
+    (princ (format "+----------------------+---------+-------------+---------------+--------+\n"))
+    (princ (format "\n=========================================================================\n"))
     (princ (format "Spatial Frequency Typography Summary: %d Passed, %d Failed.\n\n" passes fails))
     (zerop fails)))
 
