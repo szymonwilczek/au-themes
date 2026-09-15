@@ -31,12 +31,11 @@
 (require 'color)
 (require 'subr-x)
 
-;; Ensure paths to dependencies
 (let ((possible-dirs (list (getenv "EMACS_ELPA_DIR")
                            (getenv "ELPA_DIR")
                            "~/.config/emacs/elpa"
                            "~/.emacs.d/elpa"
-                           "/home/wolfie/Dokumenty/GitHub/dotfiles/emacs/.config/emacs/elpa")))
+                           "/home/wolfie/Dokumenty/GitHub/dotfiles/emacs/.config/emacs/elpa"))) ;; TODO: Change that!
   (dolist (dir possible-dirs)
     (when (and dir (file-directory-p dir))
       (dolist (pkg '("modus-themes" "ef-themes"))
@@ -62,7 +61,7 @@
     (if (and env (not (string-empty-p env)))
         (intern (car (split-string env "[, ]+" t)))
       'au-whispergrove-night))
-  "Theme currently being evaluated by tests (\='au-whispergrove-night or \='au-whispergrove-day).")
+  "Theme currently being evaluated by tests.")
 
 (defvaralias 'au-active-theme 'rf-active-theme)
 
@@ -131,42 +130,41 @@
           (let ((get-c (lambda (sym) (ignore-errors (ef-themes-get-color-value sym nil theme)))))
             (list
              :theme theme
-             :bg-main (or (au-get-theme-face-bg theme 'default) (funcall get-c 'bg-main) "#0f0e06")
-             :bg-hl-line (or (au-get-theme-face-bg theme 'hl-line) (funcall get-c 'bg-hl-line) "#302a3a")
-             :fg-main (or (au-get-theme-face-fg theme 'default) (funcall get-c 'fg-main) "#cfbcba")
-             :fg-dim (or (au-get-theme-face-fg theme 'line-number) (funcall get-c 'fg-dim) "#887c8a")
-             :cursor (or (au-get-theme-face-bg theme 'cursor) (funcall get-c 'cursor) "#ffaa33")
-             :preprocessor (or (au-get-theme-face-fg theme 'font-lock-preprocessor-face) (funcall get-c 'preprocessor) "#d570af")
-             :keyword (or (au-get-theme-face-fg theme 'font-lock-keyword-face) (funcall get-c 'keyword) "#c48702")
-             :type (or (au-get-theme-face-fg theme 'font-lock-type-face) (funcall get-c 'type) "#2fa526")
-             :constant (or (au-get-theme-face-fg theme 'font-lock-constant-face) (funcall get-c 'constant) "#64aa0f")
-             :number (or (au-get-theme-face-fg theme 'font-lock-number-face) (funcall get-c 'number) "#cfbcba")
-             :builtin (or (au-get-theme-face-fg theme 'font-lock-builtin-face) (funcall get-c 'builtin) "#ff7a7f")
-             :fnname (or (au-get-theme-face-fg theme 'font-lock-function-name-face) (funcall get-c 'fnname) "#3dbbb0")
-             :fnname-call (or (au-get-theme-face-fg theme 'font-lock-function-call-face) (funcall get-c 'fnname-call) "#82a0af")
-             :string (or (au-get-theme-face-fg theme 'font-lock-string-face) (funcall get-c 'string) "#f06a3f")
-             :property (or (au-get-theme-face-fg theme 'font-lock-property-name-face) (funcall get-c 'property) "#6fafff")
-             :operator (or (au-get-theme-face-fg theme 'font-lock-operator-face) (funcall get-c 'operator) "#cfbcba")
-             :bracket (or (au-get-theme-face-fg theme 'font-lock-bracket-face) (funcall get-c 'bracket) "#cfbcba")
-             :delimiter (or (au-get-theme-face-fg theme 'font-lock-delimiter-face) (funcall get-c 'delimiter) "#cfbcba")
-             :err (or (au-get-theme-face-fg theme 'error) (funcall get-c 'err) "#f06a3f")
+             :bg-main      (or (au-get-theme-face-bg theme 'default)                      (funcall get-c 'bg-main)      "#0f0e06")
+             :bg-hl-line   (or (au-get-theme-face-bg theme 'hl-line)                      (funcall get-c 'bg-hl-line)   "#302a3a")
+             :fg-main      (or (au-get-theme-face-fg theme 'default)                      (funcall get-c 'fg-main)      "#cfbcba")
+             :fg-dim       (or (au-get-theme-face-fg theme 'line-number)                  (funcall get-c 'fg-dim)       "#887c8a")
+             :cursor       (or (au-get-theme-face-bg theme 'cursor)                       (funcall get-c 'cursor)       "#ffaa33")
+             :preprocessor (or (au-get-theme-face-fg theme 'font-lock-preprocessor-face)  (funcall get-c 'preprocessor) "#d570af")
+             :keyword      (or (au-get-theme-face-fg theme 'font-lock-keyword-face)       (funcall get-c 'keyword)      "#c48702")
+             :type         (or (au-get-theme-face-fg theme 'font-lock-type-face)          (funcall get-c 'type)         "#2fa526")
+             :constant     (or (au-get-theme-face-fg theme 'font-lock-constant-face)      (funcall get-c 'constant)     "#64aa0f")
+             :number       (or (au-get-theme-face-fg theme 'font-lock-number-face)        (funcall get-c 'number)       "#cfbcba")
+             :builtin      (or (au-get-theme-face-fg theme 'font-lock-builtin-face)       (funcall get-c 'builtin)      "#ff7a7f")
+             :fnname       (or (au-get-theme-face-fg theme 'font-lock-function-name-face) (funcall get-c 'fnname)       "#3dbbb0")
+             :fnname-call  (or (au-get-theme-face-fg theme 'font-lock-function-call-face) (funcall get-c 'fnname-call)  "#82a0af")
+             :string       (or (au-get-theme-face-fg theme 'font-lock-string-face)        (funcall get-c 'string)       "#f06a3f")
+             :property     (or (au-get-theme-face-fg theme 'font-lock-property-name-face) (funcall get-c 'property)     "#6fafff")
+             :operator     (or (au-get-theme-face-fg theme 'font-lock-operator-face)      (funcall get-c 'operator)     "#cfbcba")
+             :bracket      (or (au-get-theme-face-fg theme 'font-lock-bracket-face)       (funcall get-c 'bracket)      "#cfbcba")
+             :delimiter    (or (au-get-theme-face-fg theme 'font-lock-delimiter-face)     (funcall get-c 'delimiter)    "#cfbcba")
+             :err          (or (au-get-theme-face-fg theme 'error)                        (funcall get-c 'err)          "#f06a3f")
 
-             :bg-red-intense (funcall get-c 'bg-red-intense)
-             :bg-green-intense (funcall get-c 'bg-green-intense)
-             :bg-yellow-intense (funcall get-c 'bg-yellow-intense)
-             :bg-blue-intense (funcall get-c 'bg-blue-intense)
-             :bg-magenta-intense (funcall get-c 'bg-magenta-intense)
-             :bg-cyan-intense (funcall get-c 'bg-cyan-intense)
-
-             :bg-red-subtle (funcall get-c 'bg-red-subtle)
-             :bg-green-subtle (funcall get-c 'bg-green-subtle)
-             :bg-yellow-subtle (funcall get-c 'bg-yellow-subtle)
-             :bg-blue-subtle (funcall get-c 'bg-blue-subtle)
-             :bg-magenta-subtle (funcall get-c 'bg-magenta-subtle)
-             :bg-cyan-subtle (funcall get-c 'bg-cyan-subtle)
-
+             :bg-red-intense          (funcall get-c 'bg-red-intense)
+             :bg-green-intense        (funcall get-c 'bg-green-intense)
+             :bg-yellow-intense       (funcall get-c 'bg-yellow-intense)
+             :bg-blue-intense         (funcall get-c 'bg-blue-intense)
+             :bg-magenta-intense      (funcall get-c 'bg-magenta-intense)
+             :bg-cyan-intense         (funcall get-c 'bg-cyan-intense)
+             :bg-red-subtle           (funcall get-c 'bg-red-subtle)
+             :bg-green-subtle         (funcall get-c 'bg-green-subtle)
+             :bg-yellow-subtle        (funcall get-c 'bg-yellow-subtle)
+             :bg-blue-subtle          (funcall get-c 'bg-blue-subtle)
+             :bg-magenta-subtle       (funcall get-c 'bg-magenta-subtle)
+             :bg-cyan-subtle          (funcall get-c 'bg-cyan-subtle)
              :fg-line-number-inactive (funcall get-c 'fg-line-number-inactive))))
       (let* ((partial (cond
+                       ;; TODO: Get rid of that switch
                        ((memq theme '(au-whispergrove-night whispergrove-night))
                         au-whispergrove-night-palette-partial)
                        ((memq theme '(au-whispergrove-evening whispergrove-evening))
@@ -193,53 +191,45 @@
                         (cadr (assq sym partial)))))
         (list
          :theme theme
-         :bg-main (funcall get-p 'bg-main)
-         :bg-hl-line (funcall get-p 'bg-hl-line)
-         :bg-region (funcall get-p 'bg-region)
-         :fg-main (funcall get-p 'fg-main)
-         :fg-dim (funcall get-p 'fg-dim)
-         :cursor (funcall get-p 'cursor)
+         :bg-main      (funcall get-p 'bg-main)
+         :bg-hl-line   (funcall get-p 'bg-hl-line)
+         :bg-region    (funcall get-p 'bg-region)
+         :fg-main      (funcall get-p 'fg-main)
+         :fg-dim       (funcall get-p 'fg-dim)
+         :cursor       (funcall get-p 'cursor)
          :preprocessor (funcall get-p 'yellow-cooler)
-         :keyword (funcall get-p 'green-cooler)
-         :type (funcall get-p 'green)
-         :constant (funcall get-p 'green-warmer)
-         :number (funcall get-p 'yellow-warmer)
-         :builtin (funcall get-p 'blue-faint)
-         :fnname (funcall get-p 'blue)
-         :fnname-call (funcall get-p 'blue-warmer)
-         :string (funcall get-p 'red-warmer)
-         :property (funcall get-p 'fg-alt)
-         :operator (funcall get-p 'blue-cooler)
-         :bracket (funcall get-p 'red-faint)
-         :delimiter (funcall get-p 'cyan-faint)
-         :err (funcall get-p 'red)
+         :keyword      (funcall get-p 'green-cooler)
+         :type         (funcall get-p 'green)
+         :constant     (funcall get-p 'green-warmer)
+         :number       (funcall get-p 'yellow-warmer)
+         :builtin      (funcall get-p 'blue-faint)
+         :fnname       (funcall get-p 'blue)
+         :fnname-call  (funcall get-p 'blue-warmer)
+         :string       (funcall get-p 'red-warmer)
+         :property     (funcall get-p 'fg-alt)
+         :operator     (funcall get-p 'blue-cooler)
+         :bracket      (funcall get-p 'red-faint)
+         :delimiter    (funcall get-p 'cyan-faint)
+         :err          (funcall get-p 'red)
 
          ;; Panels, Diffs and Structural Highlights:
-         :bg-red-intense (funcall get-opt 'bg-red-intense)
-         :bg-green-intense (funcall get-opt 'bg-green-intense)
-         :bg-yellow-intense (funcall get-opt 'bg-yellow-intense)
-         :bg-blue-intense (funcall get-opt 'bg-blue-intense)
-         :bg-magenta-intense (funcall get-opt 'bg-magenta-intense)
-         :bg-cyan-intense (funcall get-opt 'bg-cyan-intense)
-
-         :bg-red-subtle (funcall get-opt 'bg-red-subtle)
-         :bg-green-subtle (funcall get-opt 'bg-green-subtle)
-         :bg-yellow-subtle (funcall get-opt 'bg-yellow-subtle)
-         :bg-blue-subtle (funcall get-opt 'bg-blue-subtle)
-         :bg-magenta-subtle (funcall get-opt 'bg-magenta-subtle)
-         :bg-cyan-subtle (funcall get-opt 'bg-cyan-subtle)
-
+         :bg-red-intense          (funcall get-opt 'bg-red-intense)
+         :bg-green-intense        (funcall get-opt 'bg-green-intense)
+         :bg-yellow-intense       (funcall get-opt 'bg-yellow-intense)
+         :bg-blue-intense         (funcall get-opt 'bg-blue-intense)
+         :bg-magenta-intense      (funcall get-opt 'bg-magenta-intense)
+         :bg-cyan-intense         (funcall get-opt 'bg-cyan-intense)
+         :bg-red-subtle           (funcall get-opt 'bg-red-subtle)
+         :bg-green-subtle         (funcall get-opt 'bg-green-subtle)
+         :bg-yellow-subtle        (funcall get-opt 'bg-yellow-subtle)
+         :bg-blue-subtle          (funcall get-opt 'bg-blue-subtle)
+         :bg-magenta-subtle       (funcall get-opt 'bg-magenta-subtle)
+         :bg-cyan-subtle          (funcall get-opt 'bg-cyan-subtle)
          :fg-line-number-inactive (funcall get-opt 'fg-line-number-inactive))))))
 
 
-;; =============================================================================
-;; Color Conversion & Photometric Mathematics
-;; =============================================================================
-
 (defun rf-clean-hex (hex)
-  "Normalise HEX to lowercase #rrggbb, signalling an error if it is not one.
-A missing palette entry (nil) must never be silently evaluated as #000000:
-every photometric gate would then measure pure black instead of the face."
+  "Normalise HEX to lowercase #rrggbb, signalling an error if it is not one."
   (let ((s (format "%s" hex)))
     (if (string-match "\\`#\\([0-9a-fA-F]\\{6\\}\\)\\'" s)
         (concat "#" (downcase (match-string 1 s)))
@@ -275,10 +265,11 @@ every photometric gate would then measure pure black instead of the face."
          (b (rf-srgb-to-linear (nth 2 rgb))))
     (+ (* r 0.2126729) (* g 0.7151522) (* b 0.0721750))))
 
-;; APCA / SAPC 0.0.98G-4g (Somers, A. "Accessible Perceptual Contrast
-;; Algorithm", W3C Silver / WCAG 3 candidate).  Constants and control flow
-;; follow the reference implementation apca-w3 0.1.9 (src/apca-w3.js,
-;; functions `sRGBtoY' and `APCAcontrast'), https://github.com/Myndex/apca-w3.
+;; APCA / SAPC 0.0.98G-4g (Somers, A. "Accessible Perceptual Contrast Algorithm",
+;; W3C Silver / WCAG 3 candidate).
+;; Constants and control flow follow the reference implementation apca-w3 0.1.9
+;; (src/apca-w3.js, functions `sRGBtoY' and `APCAcontrast'),
+;; https://github.com/Myndex/apca-w3.
 ;; Two properties of the reference are easy to get wrong and are load-bearing:
 ;;  1. Input is the APCA *estimated screen luminance* Ys, obtained with a pure
 ;;     2.4 power ("simpleExp", mainTRC) and NO IEC 61966-2-1 linear toe.
@@ -298,8 +289,8 @@ Ys = 0.2126729 R^2.4 + 0.7151522 G^2.4 + 0.0721750 B^2.4 (apca-w3 `sRGBtoY')."
 
 (defun rf-apca-from-luminance (txt-y bg-y)
   "Return signed APCA 0.0.98G-4g Lc for screen luminances TXT-Y and BG-Y.
-Positive for BoW (BG-Y > TXT-Y), negative for WoB.  Inputs outside
-[0.0, 1.1] return 0.0 exactly as the reference implementation does."
+Positive for BoW (BG-Y > TXT-Y), negative for WoB.
+Inputs outside [0.0, 1.1] return 0.0."
   (if (or (< (min txt-y bg-y) 0.0) (> (max txt-y bg-y) 1.1))
       0.0
     (let* ((blk-thrs 0.022)
@@ -321,12 +312,13 @@ Positive for BoW (BG-Y > TXT-Y), negative for WoB.  Inputs outside
   "Return signed APCA 0.0.98G-4g Lc of TXT-HEX against BG-HEX."
   (rf-apca-from-luminance (rf-apca-screen-y txt-hex) (rf-apca-screen-y bg-hex)))
 
-;; Real panel behaviour: the luminance actually leaving a pixel is
+;; Real panel behaviour:
+;; the luminance actually leaving a pixel is
 ;;   L(Y) = L_black + (L_white - L_black) Y + L_reflected,
 ;; with L_black = L_white / CR (native panel contrast ratio) and
 ;;   L_reflected = R_d E_ambient / pi
-;; for a diffusely reflecting (anti-glare) front surface.  Under the
-;; IEC 61966-2-1 reference ambient of 64 lx and a typical R_d of 0.5 %,
+;; for a diffusely reflecting (anti-glare) front surface.
+;; Under the IEC 61966-2-1 reference ambient of 64 lx and a typical R_d of 0.5%,
 ;; L_reflected = 0.102 cd/m^2, i.e. 0.13 % of display white.
 (defconst rf-panel-diffuse-reflectance 0.005
   "Diffuse reflectance of a typical anti-glare display front surface.")
@@ -403,12 +395,13 @@ If OLED-P is non-nil, assume emissive zero black floor."
     (list L C h)))
 
 ;; CIE 1931 XYZ and CIE 1976 L*a*b* (CIE 15:2018, Colorimetry, 4th ed.,
-;; DOI: 10.25039/TR.015.2018).  Emacs' own `color-srgb-to-lab' is NOT used:
+;; DOI: 10.25039/TR.015.2018).
+;; Emacs' own `color-srgb-to-lab' is NOT used:
 ;; as of Emacs 31.1 `color-srgb-to-xyz' divides the linear segment by 12.95
 ;; instead of the IEC 61966-2-1 value 12.92 (C0 discontinuity at 0.04045),
 ;; carries the typo 0.21266729 in the Y row, and normalises by a D65 white
-;; (0.950455 1 1.088753) that is not the white of its own matrix, so sRGB
-;; neutrals acquire non-zero a*, b*.
+;; (0.950455 1 1.088753) that is not the white of its own matrix,
+;; so sRGB neutrals acquire non-zero a*, b*.
 (defconst rf-srgb-to-xyz-matrix
   '((0.4124564 0.3575761 0.1804375)
     (0.2126729 0.7151522 0.0721750)
@@ -449,32 +442,31 @@ and D65 (x=0.3127, y=0.3290); Y row equals `rf-luminance-y' weights.")
          (b (nth 2 lab)))
     (sqrt (+ (* a a) (* b b)))))
 
-;; =============================================================================
-;; Reference Display Spectral Model
-;; =============================================================================
-;;
 ;; IEC 61966-2-1 defines sRGB primaries by chromaticity only; their spectral
-;; power distributions (SPDs) are unspecified.  Any quantity weighted by an
-;; action spectrum that is NOT a linear combination of the CIE 1931 CMFs -
-;; scotopic V'(lambda), melanopic s_mel(lambda) (CIE S 026), blue-light hazard
-;; B(lambda) (ICNIRP/IEC 62471), or the LCA defocus D(lambda) (Thibos 1992) -
-;; is therefore undefined for an "sRGB colour" without a spectral model.
+;; power distributions (SPDs) are unspecified.
+;; Any quantity weighted by an action spectrum that is NOT a linear combination
+;; of the CIE 1931 CMFs - scotopic V'(lambda), melanopic s_mel(lambda)
+;; (CIE S 026), blue-light hazard B(lambda) (ICNIRP/IEC 62471), or the LCA
+;; defocus D(lambda) (Thibos 1992) - is therefore undefined for an "sRGB colour"
+;; without a spectral model.
 ;; A least-squares projection of those spectra onto span{xbar,ybar,zbar}
 ;; (Cohen's fundamental metamer) leaves residuals of 21-55 % (L2), so an
 ;; explicit emitter model is unavoidable.
 ;;
-;; Physical model: an RGB display emits through three emitter bands j (e.g.
-;; OLED sub-pixel emitters, or LED/QD bands filtered by an LCD colour filter
-;; array).  Every primary is a non-negative mixture of those bands:
+;; Physical model:
+;; An RGB display emits through three emitter bands j (e.g. OLED sub-pixel
+;; emitters, or LED/QD bands filtered by an LCD colour filter array).
+;; Every primary is a non-negative mixture of those bands:
 ;;   P_i(lambda) = sum_j C_ji G_j(lambda),   C = T^-1 M,
 ;; where T_kj = integral of CMF_k * G_j and M = `rf-srgb-to-xyz-matrix'.
 ;; This is the unique mixture that reproduces the IEC 61966-2-1 primaries and
-;; D65 white *exactly*; the only free choice is the emitter bands.  C >= 0
-;; (physically realisable, no negative light) is asserted.
+;; D65 white *exactly*; the only free choice is the emitter bands.
+;; C >= 0 (physically realisable, no negative light) is asserted.
 ;;
-;; Default bands (Gaussian, peak/FWHM in nm): 460/25, 530/35, 620/35, a
-;; representative RGB-OLED emitter set.  Sensitivity (per linear-RGB unit,
-;; sweeping QD-LCD 450/530/630, OLED 455/525/615 and RGB-LED 465/525/625):
+;; Default bands (Gaussian, peak/FWHM in nm): 460/25, 530/35, 620/35,
+;; a representative RGB-OLED emitter set.
+;; Sensitivity (per linear-RGB unit, sweeping QD-LCD 450/530/630,
+;; OLED 455/525/615 and RGB-LED 465/525/625):
 ;; melanopic R 0.005-0.041, G 0.47-0.58, B 0.38-0.58; white S/P 2.40-2.94;
 ;; white BLH efficacy 0.80-0.85 mW/lm; blue-primary LCA -0.54..-0.62 D.
 ;; Gates that depend on the band choice must be read with this band in mind.
@@ -599,10 +591,10 @@ more than 0.5 %."
 
 (rf-spectral-model-self-check)
 
-;; Longitudinal chromatic aberration of the human eye: chromatic reduced-eye
-;; model of Thibos, Ye, Zhang & Bradley (1992) "The chromatic eye: a new
-;; reduced-eye model of ocular chromatic aberration in humans", Appl. Opt.
-;; 31(19):3594-3600, DOI: 10.1364/AO.31.003594.
+;; Longitudinal chromatic aberration of the human eye:
+;; Chromatic reduced-eye model of Thibos, Ye, Zhang & Bradley (1992)
+;; "The chromatic eye: a new reduced-eye model of ocular chromatic aberration
+;; in humans", Appl. Opt. 31(19):3594-3600, DOI: 10.1364/AO.31.003594.
 ;;   D(lambda) = p - q / (lambda_um - c),  p = 1.68524, q = 0.63346,
 ;;   c = 0.21410, zero at 589.3 nm (sodium D line).
 (defconst rf-thibos-p 1.68524 "Thibos et al. (1992) chromatic eye constant p.")
@@ -610,7 +602,7 @@ more than 0.5 %."
 (defconst rf-thibos-c 0.21410 "Thibos et al. (1992) chromatic eye constant c (um).")
 
 (defun rf-thibos-defocus-at (lambda-nm)
-  "Chromatic defocus D(lambda) in dioptres at LAMBDA-NM (Thibos et al. 1992)."
+  "Chromatic defocus D(lambda) in dioptres at LAMBDA-NM."
   (- rf-thibos-p (/ rf-thibos-q (- (/ lambda-nm 1000.0) rf-thibos-c))))
 
 (defun rf--primary-luminance-moment (action-fn)
@@ -749,17 +741,11 @@ underestimates the defocus of broadband or mixed-primary colours (up to
   "Solid-angle area of the display in square degrees."
   (* (rf-degrees rf-display-width-mm) (rf-degrees rf-display-height-mm)))
 
-;; Pupil diameter: unified formula of Watson & Yellott (2012) "A unified
-;; formula for light-adapted pupil size", J. Vis. 12(10):12,
-;; DOI: 10.1167/12.10.12, which wraps Stanley & Davies (1995) corneal flux
-;; density with the age term of Winn et al. (1994).  The formula previously
-;; used here, d = 4.9 - 3 tanh[0.4 (log10 L + 1)], was attributed to
-;; de Groot & Gebhard (1952) but is a shifted Moon & Spencer (1944)
-;; expression: de Groot & Gebhard is d = 7.175 exp[-0.00092 (7.597 +
-;; log10 L)^3], and Moon & Spencer carries no +1 decade offset for
-;; luminance in cd/m^2 (cf. Watson & Yellott 2012, Table 1).  Neither
-;; accounts for adapting field size, which for a screen is the dominant
-;; term.
+;; Pupil diameter:
+;; Unified formula of Watson & Yellott (2012) "A unified formula for
+;; light-adapted pupil size", J. Vis. 12(10):12, DOI: 10.1167/12.10.12, which
+;; wraps Stanley & Davies (1995) corneal flux density with the age term of
+;; Winn et al. (1994).
 (defun rf-pupil-diameter (luminance-cd-m2 &optional field-deg2 age eyes)
   "Pupil diameter in mm for adapting LUMINANCE-CD-M2 (Watson & Yellott 2012).
 FIELD-DEG2 defaults to the display field area, AGE to `rf-observer-age',
@@ -826,10 +812,6 @@ from the equivalent achromatic lightness L**."
             1.0
           (/ y-match y-orig))))))
 
-;; =============================================================================
-;; Advanced Biophysical & Physiological Models
-;; =============================================================================
-
 ;; Foveal Macular Tritanopia / Non-S-Cone (R+G) Luminance Fraction
 (defun rf-foveal-lm-fraction (hex)
   "Calculate the fraction of photopic luminance derived from R+G (L+M cone) channels.
@@ -845,22 +827,18 @@ strongly attenuates short wavelengths. High blue content degrades optical sharpn
         1.0
       (/ (+ (* rl 0.2126729) (* gl 0.7151522)) y-total))))
 
-;; Dichromat simulation: Brettel, Viénot & Mollon (1997) "Computerized
-;; simulation of color appearance for dichromats", J. Opt. Soc. Am. A
-;; 14(10):2647-2655, DOI: 10.1364/JOSAA.14.002647.  The stimulus is mapped to
-;; LMS, then projected along the missing cone axis onto one of two half-planes
-;; that share the neutral (white) axis and contain the anchor stimuli
-;; 475/575 nm (protan, deutan) or 485/660 nm (tritan).
-;;
-;; The matrices previously stored here (0.56667/0.43333 ...) are the
-;; "ColorMatrix" set that circulates in web tooling.  They are neither
-;; Brettel nor Machado et al. (2009): they are single matrices with no
-;; half-plane split, they are not derived from any cone fundamentals, and
-;; applying them cannot reproduce the confusion lines of a dichromat.
+;; Dichromat simulation:
+;; Brettel, Viénot & Mollon (1997) "Computerized simulation of color appearance
+;; for dichromats", J. Opt. Soc. Am. A 14(10):2647-2655,
+;; DOI: 10.1364/JOSAA.14.002647.
+;; The stimulus is mapped to LMS, then projected along the missing cone axis
+;; onto one of two half-planes that share the neutral (white) axis and contain
+;; the anchor stimuli 475/575 nm (protan, deutan) or 485/660 nm (tritan).
 ;;
 ;; LMS model as in Viénot, Brettel & Mollon (1999) and the public-domain
-;; libDaltonLens: Judd-Vos corrected XYZ from linear sRGB, then the Smith &
-;; Pokorny (1975) cone fundamentals.
+;; libDaltonLens:
+;; Judd-Vos corrected XYZ from linear sRGB, then the Smith & Pokorny (1975)
+;; cone fundamentals.
 (defconst rf-xyz-juddvos-from-linear-rgb
   '((0.409568 0.355041 0.179167)
     (0.213389 0.706743 0.0798680)
@@ -932,8 +910,8 @@ plane N-SEP, H2 otherwise (Brettel et al. 1997)."
              (n-sep-lms (rf--vec3-cross neutral axis))
              (w1 (nth 0 wings))
              (w2 (nth 1 wings)))
-        ;; Order the wings so that wing 1 lies on the positive side of the
-        ;; separation plane.
+        ;; order the wings so that wing 1 lies on the positive side of
+        ;; the separation plane
         (when (< (rf--vec3-dot n-sep-lms w1) 0)
           (setq w1 (nth 1 wings) w2 (nth 0 wings)))
         (let* ((h1 (rf--cvd-projection-matrix (rf--vec3-cross neutral w1) cvd-type))
@@ -964,8 +942,9 @@ Brettel, Viénot & Mollon (1997) two half-plane projection in LMS."
 
 ;; Reference viewing conditions of IEC 61966-2-1:1999 (sRGB), clause 2:
 ;; display white luminance 80 cd/m^2, ambient illuminance 64 lx, veiling
-;; glare 0.2 cd/m^2.  Every absolute photometric quantity in this suite is
-;; anchored to these values instead of ad-hoc per-test constants.
+;; glare 0.2 cd/m^2.
+;; Every absolute photometric quantity in this suite is anchored to these values
+;; instead of ad-hoc per-test constants.
 (defconst rf-display-white-luminance 80.0
   "Luminance of display white in cd/m^2 (IEC 61966-2-1:1999 reference).")
 
@@ -984,8 +963,7 @@ Brettel, Viénot & Mollon (1997) two half-plane projection in LMS."
   "Scotopic luminance of HEX in scotopic cd/m^2, display white = WHITE-CD.
 L' = K'_m Int V'(lambda) L_e(lambda) dlambda over the reference display
 model, so display white yields L'/L = S/P = 2.54 for the default emitter
-bands (2.46 for a true D65 spectrum), instead of the value 1.0 implied by
-the previous normalised RGB weights."
+bands (2.46 for a true D65 spectrum)."
   (* (or white-cd rf-display-white-luminance)
      (/ (* rf-km-scotopic (rf-hex-spectral-response hex rf-cie1951-vprime))
         rf-km)))
@@ -1020,7 +998,7 @@ field, not of the individual stimulus."
        (+ m (* (- 1.0 m) vp)))))
 
 ;; Standard 80x40 character viewport composition, shared by every test that
-;; needs a field/adaptation luminance rather than a single colour.
+;; needs a field/adaptation luminance.
 (defconst rf-viewport-cells 3200 "Character cells in an 80x40 viewport.")
 (defconst rf-viewport-code-cells 1050 "Cells containing code glyphs.")
 (defconst rf-viewport-hl-cells 80 "Cells covered by the hl-line band.")
@@ -1059,9 +1037,11 @@ For a typographic stroke of width w ~= 1.6 arcmin, eta ~= 4w / (pi * beta) ~= 0.
         0.0
       (/ (abs (- y-peak-blur y-bg)) denom))))
 
-;; Intraocular straylight: CIE 146:2002 General Disability Glare Equation
-;; (Vos & van den Berg; see also Vos (2003) Clin. Exp. Optom. 86(6):363-370,
-;; DOI: 10.1111/j.1444-0938.2003.tb03080.x), valid for 0.1 deg < theta < 100 deg:
+;; Intraocular straylight:
+;; CIE 146:2002 General Disability Glare Equation (Vos & van den Berg; see also
+;; Vos (2003) Clin. Exp. Optom. 86(6):363-370,
+;; DOI: 10.1111/j.1444-0938.2003.tb03080.x),
+;; valid for 0.1 deg < theta < 100 deg:
 ;;
 ;;   L_eq/E_gl = 10/theta^3 + [5/theta^2 + 0.1 p/theta] [1 + (A/62.5)^4]
 ;;               + 0.0025 p          (theta in degrees, result in sr^-1)
@@ -1111,7 +1091,6 @@ display veiling glare of the IEC 61966-2-1 reference viewing conditions."
                   (or white-cd rf-display-white-luminance))))
     (+ (* field (rf-straylight-integral)) rf-reference-veiling-glare)))
 
-;; Photophobia & Neuro-Ophthalmic Models: CIE S 026 & Hopkinson DGI
 (defun rf-melanopic-irradiance (hex)
   "Return melanopic equivalent daylight luminance of HEX per unit display white.
 Computed per CIE S 026:2018 as L_mel,EDI = L_mel / K_mel,v^D65 from the
@@ -1152,7 +1131,6 @@ DGI = 10 * log10(sum(G_i)). Returns a large negative floor for negligible glare.
       (setq sum-g (+ sum-g (rf-hopkinson-glare-constant tok bg-hex solid-angle ambient-lum))))
     (* 10.0 (log (max 1e-6 sum-g) 10))))
 
-;; Wilkins Pattern Glare & Cortical Visual Stress (Wilkins 1995, 2016)
 (defun rf-wilkins-line-michelson (token-hex bg-hex &optional duty-cycle ambient-lum)
   "Calculate local Michelson contrast C_M of a text line against background.
 DUTY-CYCLE defaults to 0.35 (35% stroke fill on a line).
@@ -1167,10 +1145,6 @@ AMBIENT-LUM defaults to the physical panel floor (`rf-display-physical-floor-y')
         0.0
       (/ (abs (- line-y eff-bg)) denom))))
 
-;; Retinal blue-light hazard, ICNIRP (2013) Table 2 / IEC 62471:2006 B(lambda).
-;; A display is a large source, so the applicable quantity is the B-weighted
-;; RADIANCE L_B (W m^-2 sr^-1) compared with L_B^EL = 100 W m^-2 sr^-1 for
-;; t > 10^4 s (ICNIRP 2013, eq. 14) - not an irradiance in arbitrary units.
 (defun rf-blue-light-hazard-radiance (hex &optional white-cd)
   "Blue-light-hazard weighted radiance L_B of HEX in W m^-2 sr^-1.
 WHITE-CD defaults to `rf-display-white-luminance'."
@@ -1190,7 +1164,6 @@ Independent of display brightness; 0 for a black (zero luminance) colour."
         0.0
       (/ (rf-blue-light-hazard-radiance hex) y))))
 
-;; Pupillary Hippus & Saccadic Local Adaptation (PLR micro-spasm model)
 (defun rf-saccadic-adaptation-delta (hex1 hex2 &optional duty-cycle)
   "Calculate local foveal adaptation jump Delta-L during saccades between HEX1 and HEX2.
 DUTY-CYCLE defaults to 0.25 (foveal ink coverage fraction)."
@@ -1199,7 +1172,6 @@ DUTY-CYCLE defaults to 0.25 (foveal ink coverage fraction)."
          (y2 (rf-luminance-y hex2)))
     (* eta (abs (- y1 y2)))))
 
-;; Astigmatic Anisotropic Cylinder (-1.50D) Meridional Blur & Edge Acutance
 (defun rf-meridional-blur-metrics (token-hex bg-hex &optional peak-eta valley-beta)
   "Compute blurred peak luminance, valley fill, modulation depth, and Edge Acutance
 under an uncorrected -1.50D astigmatic cylinder defocus.
