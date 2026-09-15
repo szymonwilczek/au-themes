@@ -36,33 +36,28 @@
 (require 'test-palette-extractor)
 
 (defun test-lcd-black-bleed-run ()
-  "Evaluate legibility on an IPS LCD with native black level and ambient reflection.
-The panel model is L(Y) = L_black + (L_white - L_black) Y + L_reflected with
-L_black = L_white/1000 (typical IPS native contrast) and L_reflected =
-R_d E/pi = 0.102 cd/m^2 for R_d = 0.5 % under the IEC 61966-2-1 reference
-ambient of 64 lx.  The previous additive constant of 0.008 (a contrast ratio
-of 125:1) corresponded to no measurable panel property."
+  "Evaluate legibility on an IPS LCD with native black level and ambient reflection."
   (let* ((pal (au-extract-active-palette))
          (bg (plist-get pal :bg-main))
          (theme (plist-get pal :theme))
          (passes 0)
          (fails 0)
-         (tokens '(("Base text (Mineral quartz)"       :fg-main      46.0)
-                   ("Comments (Damp needles)"          :fg-dim       10.0)
-                   ("Cursor (Raindrop glint)"          :cursor       28.0)
-                   ("Preprocessor (#define)"           :preprocessor 15.0)
-                   ("Keywords (struct, while)"         :keyword      15.0)
-                   ("Data types (int, size_t)"         :type         15.0)
-                   ("Constants (LOTA_PCR_COUNT)"       :constant     15.0)
-                   ("Numbers (0, 24, 32)"              :number       15.0)
-                   ("Builtins (__always_inline)"       :builtin      15.0)
-                   ("Function definitions"             :fnname       15.0)
-                   ("Function calls (bpf_...)"         :fnname-call  15.0)
-                   ("Strings (\"string literals\")"    :string       15.0)
-                   ("Struct fields (->tgid)"           :property     15.0)
-                   ("Operators (+, -, *, >>)"          :operator     14.0)
-                   ("Brackets (( ) [ ] { })"           :bracket      13.0)
-                   ("Alerts / Errors (!)"              :err          15.0))))
+         (tokens '(("Base text"            :fg-main      46.0)
+                   ("Comments"             :fg-dim       10.0)
+                   ("Cursor"               :cursor       28.0)
+                   ("Preprocessor"         :preprocessor 15.0)
+                   ("Keywords"             :keyword      15.0)
+                   ("Data types"           :type         15.0)
+                   ("Constants"            :constant     15.0)
+                   ("Numbers"              :number       15.0)
+                   ("Builtins"             :builtin      15.0)
+                   ("Function definitions" :fnname       15.0)
+                   ("Function calls"       :fnname-call  15.0)
+                   ("Strings"              :string       15.0)
+                   ("Struct fields"        :property     15.0)
+                   ("Operators"            :operator     14.0)
+                   ("Brackets"             :bracket      13.0)
+                   ("Alerts / Errors (!)"  :err          15.0))))
     (princ (format "\n======================================================================\n"))
     (princ (format " IPS LCD Black Level + Ambient Reflection Legibility Suite\n"))
     (princ (format " Theme: %s (%s) | Background: %s\n" theme (rf-theme-polarity theme) bg))
@@ -70,9 +65,10 @@ of 125:1) corresponded to no measurable panel property."
                    rf-lcd-contrast-ratio (rf-reflected-luminance-y)
                    (* 100.0 rf-panel-diffuse-reflectance)))
     (princ (format "======================================================================\n"))
-    (princ (format "%-32s | %-8s | %-8s | %-8s | %-8s | %-8s\n"
+    (princ (format "+----------------------+----------+-----------+----------+----------+--------+\n"))
+    (princ (format "| %-20s | %-8s | %-8s | %-8s | %-8s | %-7s|\n"
                    "Token Role" "Hex" "Pure |Lc|" "LCD |Lc|" "Min |Lc|" "Status"))
-    (princ (format "---------------------------------+----------+----------+----------+----------+----------\n"))
+    (princ (format "+----------------------+----------+-----------+----------+----------+--------+\n"))
     (dolist (tok tokens)
       (let* ((name (nth 0 tok))
              (key  (nth 1 tok))
@@ -95,10 +91,11 @@ of 125:1) corresponded to no measurable panel property."
         (if ok
             (setq passes (1+ passes))
           (setq fails (1+ fails)))
-        (princ (format "%-32s | %-8s | %8.2f | %8.2f | >= %4.1f  | %s\n"
+        (princ (format "| %-20s | %-8s |%8.2f   | %8.2f | >= %4.1f  |  %s  |\n"
                        name hex pure-lc lcd-lc min-lc
                        (if ok "PASS" "FAIL")))))
-    (princ (format "---------------------------------+----------+----------+----------+----------+----------\n"))
+    (princ (format "+----------------------+----------+-----------+----------+----------+--------+\n"))
+    (princ (format "\n==============================================================================\n"))
     (princ (format "LCD Bleed Summary: %d Passed, %d Failed.\n\n" passes fails))
     (zerop fails)))
 
