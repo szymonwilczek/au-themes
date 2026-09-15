@@ -38,11 +38,7 @@
 (require 'test-palette-extractor)
 
 (defun test-pupil-aberrations-run ()
-  "Evaluate pupil aperture and 4th-order spherical aberration scaling per Liang & Williams (1997).
-The adapting field is the whole 80x40 viewport at the IEC 61966-2-1
-reference white luminance, not the background colour alone: the pupil
-integrates corneal flux over the field (Stanley & Davies 1995), so using
-only the canvas luminance under-drives the model."
+  "Evaluate pupil aperture and 4th-order spherical aberration scaling."
   (let* ((pal (au-extract-active-palette))
          (bg (plist-get pal :bg-main))
          (theme (plist-get pal :theme))
@@ -54,41 +50,39 @@ only the canvas luminance under-drives the model."
          (passes 0)
          (fails 0)
          (warnings 0))
-    (princ (format "\n======================================================================\n"))
-    (princ (format " Pupil Dynamics & 4th-Order Spherical Wavefront Aberration Suite\n"))
-    (princ (format " Ref: Liang & Williams (1997), DOI: 10.1364/JOSAA.14.002873\n"))
-    (princ (format " Ref: Watson & Yellott (2012), DOI: 10.1167/12.10.12 (pupil size)\n"))
-    (princ (format " Theme: %s | Background: %s\n" theme bg))
-    (princ (format "======================================================================\n"))
-    (princ (format "Adapting field: %.0f deg2 at %.0f cd/m2 white -> %.4f cd/m2\n"
+    (princ (format "\n.~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~.\n"))
+    (princ (format "| Pupil Dynamics & 4th-Order Spherical Wavefront Aberration Suite\n"))
+    (princ (format "| Theme: %s | Background: %s\n" theme bg))
+    (princ (format "'~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~'\n"))
+    (princ (format "\nAdapting field: %.0f deg2 at %.0f cd/m2 white -> %.4f cd/m2\n"
                    field-deg2 rf-display-white-luminance l-bg))
     (princ (format "Pupil Diameter (Watson-Yellott, age %.0f):  %.2f mm\n"
                    rf-observer-age pupil-diam))
     (princ (format "4th-Order Spherical Aberration Factor: %.2fx (vs 4.0mm pupil)\n" aber-factor))
-    (princ (format "----------------------------------------------------------------------\n"))
+    (princ (format "--------------------------------------------------------------------\n"))
 
-    ;; Test 1: Pupil over-dilation threshold
+    ;; Pupil over-dilation threshold
     (let ((max-d (if (eq (rf-theme-polarity theme) 'light) 4.50 5.50))
           (min-d (if (eq (rf-theme-polarity theme) 'light) 2.00 2.50)))
-      (princ (format "1. Safe Pupil Dilation Threshold (d <= %.2f mm):\n" max-d))
+      (princ (format "\nSafe Pupil Dilation Threshold (d <= %.2f mm):\n" max-d))
       (if (<= pupil-diam max-d)
           (progn
-            (princ (format "   [PASS] Pupil (%.2f mm) remains in optimal optical zone (< %.2f mm).\n" pupil-diam max-d))
-            (princ "          Astigmatic cylinder defocus and spherical aberration remain contained.\n")
+            (princ (format "[PASS]  Pupil (%.2f mm) remains in optimal optical zone (< %.2f mm).\n" pupil-diam max-d))
+            (princ "\tAstigmatic cylinder defocus and spherical aberration remain\n\tcontained.\n")
             (setq passes (1+ passes)))
-        (princ "   [WARN] Pupil exceeds limit: r^4 scaling increases blur halo.\n")
+        (princ "[WARN]  Pupil exceeds limit: r^4 scaling increases blur halo.\n")
         (setq warnings (1+ warnings)))
 
-      ;; Test 2: Pupil diffraction limit lower bound
-      (princ (format "2. Diffraction Blur Avoidance (d >= %.2f mm):\n" min-d))
+      ;; Pupil diffraction limit lower bound
+      (princ (format "\nDiffraction Blur Avoidance (d >= %.2f mm):\n" min-d))
       (if (>= pupil-diam min-d)
           (progn
-            (princ (format "   [PASS] Above Airy disk diffraction limit (d >= %.2f mm).\n" min-d))
+            (princ (format "[PASS]  Above Airy disk diffraction limit (d >= %.2f mm).\n" min-d))
             (setq passes (1+ passes)))
-        (princ "   [FAIL] Pupil constricted below diffraction limit.\n")
+        (princ "[FAIL]  Pupil constricted below diffraction limit.\n")
         (setq fails (1+ fails))))
 
-    (princ (format "----------------------------------------------------------------------\n"))
+    (princ (format "\n====================================================================\n"))
     (princ (format "Pupil Aberrations Summary: %d Passed, %d Failed, %d Warnings.\n\n"
                    passes fails warnings))
     (zerop fails)))
