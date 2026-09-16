@@ -5,7 +5,7 @@
 ;; Author: Szymon Wilczek <swilczek.lx@gmail.com>
 ;; URL: https://github.com/szymonwilczek/au-themes
 ;; Version: 0.1.0
-;; Package-Requires: ((emacs "28.1") (ef-themes "1.0.0"))
+;; Package-Requires: ((emacs "28.1") (ef-themes "2.0.0") (modus-themes "5.2.0"))
 ;; Keywords: faces, themes, accessibility, autism, neurodivergence
 
 ;; This file is not part of GNU Emacs.
