@@ -1,0 +1,87 @@
+#+TITLE: au-themes
+#+SUBTITLE: Themes designed for autistic individuals and visual comfort
+#+AUTHOR: Szymon Wilczek
+#+LANGUAGE: en
+#+OPTIONS: toc:nil num:nil
+
+* About the project
+
+=au-themes= is a collection of themes designed with care for autistic people, neurodivergent individuals, and anyone who struggles with visual fatigue.
+
+The prefix *au-* refers to the chemical symbol for gold, recognized internationally as a symbol of autism acceptance.
+
+* Why we made this
+
+This project was created by me and my girlfriend. I spend long hours reading and writing code while living with progressive vision impairment, severe astigmatism, and photophobia. I know firsthand how exhausting and painful a poorly balanced screen can be: aggressive contrasts trigger sensory overload, overly saturated colors cause afterimages and headaches, and faint text forces the eyes to constantly strain to stay in focus.
+My girlfriend has trained eye for color harmony, spatial balance, and natural tones. She stepped in to help me design palettes that feel organic, balanced, and visually restful.
+
+* Who this is for
+
+We made these themes for:
+
+- *Autistic and neurodivergent individuals*: People who experience sensory overload, visual stress, or physical discomfort from flickering luminance boundaries and aggressive color palettes.
+- *People with astigmatism and refractive issues*: The text is calibrated to avoid color fringing and chromatic blur, so your eye muscles do not tire themselves out hunting for sharp edges.
+- *People sensitive to light (photophobia)*: Avoiding harsh pure whites and overly saturated tones that cause glare, visual afterimages, and headaches.
+- *Engineers, writers, and night owls*: Anyone who spends long hours in front of a display and simply wants their eyes to feel relaxed at the end of the day.
+
+* The Themes
+
+There are currently 9 themes grouped into three visual families:
+
+- *Whispergrove*:
+  - =au-whispergrove-night= 
+  - =au-whispergrove-evening=
+  - =au-whispergrove-morning=
+  - =au-whispergrove-day=
+
+- *Aurum*:
+  - =au-aurum-night=
+  - =au-aurum-twilight=
+  - =au-aurum-day=
+
+- *Parchment*:
+  - =au-parchment-night=
+  - =au-parchment-day=
+
+* How they are designed
+
+To make sure these themes are truly comfortable, we verified our choices with automated tests:
+
+1. *Clear distinction*: Every syntax element has its own distinct color so you never have to guess what a token is, but neighboring tokens never clash or blur together.
+2. *Readability without glare*: Text contrast is calculated using the APCA algorithm.
+3. *Gentle on astigmatism*: The main reading text stays within low chroma bounds, which eliminates the annoying subpixel color halos seen on LCD panels.
+4. *No glyph clumping*: Brackets and punctuation are slightly dialed back in contrast so words and identifiers stay clearly readable.
+5. *Stable boundaries*: Adjacent syntax colors maintain a slight luminance difference to stop lines of code from appearing to jitter or vibrate when your eyes move across the screen.
+
+* How to use
+
+Load your preferred theme directly or via =use-package=:
+
+#+begin_src elisp
+  (use-package au-themes
+    :ensure t
+    :config
+    (load-theme 'au-whispergrove-night t))
+#+end_src
+
+To quickly try out and switch between the themes:
+
+#+begin_src text
+  M-x au-themes-select
+#+end_src
+
+* Citations & References
+
+Our design decisions and test constraints are based on the work of vision scientists and international color standards:
+
+- *APCA contrast algorithm*: Somers, A. (2022). Advanced Perceptual Contrast Algorithm (APCA), W3C Accessible Platform Architectures Working Group.
+- *Astigmatism and accommodative micro-fluctuations*: Charman, W. N., & Heron, G. (1988). Fluctuations in accommodation: a review. /Ophthalmic and Physiological Optics/, 8(2), 153-164.
+- *Eye chromatic aberration & wavelength focus*: Thibos, L. N., Ye, M., Zhang, X., & Bradley, A. (1992). The chromatic eye: a new reduced-eye model of ocular chromatic aberration in humans. /Applied Optics/, 31(19), 3594-3600.
+- *Color distance metric*: CIE 142:2001 / ISO/CIE 11664-6:2014. /CIEDE2000 Colour-Difference Formula/.
+- *Color vision deficiency*: Brettel, H., Viénot, F., & Mollon, J. D. (1997). Computerized simulation of color appearance for dichromats. /Journal of the Optical Society of America A/, 14(10), 2647-2655.
+- *Visual discomfort and pattern glare*: Wilkins, A. J., Nimmo-Smith, I., Tait, A., et al. (1984). A neurological basis for visual discomfort. /Brain/, 107(4), 989-1017.
+- *Disability glare*: Vos, J. J. (2003). /CIE Report on Disability Glare/, CIE 146:2002.
+- *Non-visual photoreception & circadian light*: CIE S 026:2018. /System for Metrology of Optical Radiation for ipRGC-Influenced Responses to Light/.
+- *Perceptual color space*: Ottosson, B. (2020). /A perceptual color space for computer graphics/.
+- *Foveal visual crowding*: Pelli, D. G., & Tillman, K. A. (2008). The uncrowded window of object recognition. /Nature Neuroscience/, 11(10), 1129-1135.
+- *Subdued surface reflectance*: Lekner, J., & Dorf, M. C. (1988). Why some things are darker when wet. /Applied Optics/, 27(7), 1278-1280.
