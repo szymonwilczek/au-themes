@@ -179,9 +179,10 @@ POLARITY should be `light' or `dark'."
   (seq-find (lambda (theme) (memq theme (au-themes-get-themes)))
             custom-enabled-themes))
 
-(defun au-themes--apply-theme (theme)
-  "Switch to THEME by disabling other themes and loading THEME."
-  (unless (eq theme (car custom-enabled-themes))
+(defun au-themes--apply-theme (theme &optional force)
+  "Switch to THEME by disabling other themes and loading THEME.
+If FORCE is non-nil, reload THEME even if it is already active."
+  (when (or force (not (eq theme (car custom-enabled-themes))))
     (dolist (enabled custom-enabled-themes)
       (disable-theme enabled))
     (when theme
@@ -191,7 +192,7 @@ POLARITY should be `light' or `dark'."
   "Disable current themes and enable au-theme THEME."
   (unless (memq theme (au-themes-get-themes))
     (user-error "`%s' is not a recognized au-theme" theme))
-  (au-themes--apply-theme theme)
+  (au-themes--apply-theme theme t)
   (let ((polarity (au-themes--theme-polarity theme)))
     (if (eq polarity 'light)
         (setq au-themes--last-light-theme theme)
