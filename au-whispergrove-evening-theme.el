@@ -89,7 +89,7 @@
     (bg-green-subtle "#183220")           ; Diff context addition background
     (bg-yellow-subtle "#3a2614")          ; Diff whitespace/context change
     (bg-blue-subtle "#16303c")            ; Mode-line subtle indicators
-    (bg-magenta-subtle "#321c2e")         ; Matching paren context background
+    (bg-magenta-subtle "#3e243a")         ; Matching paren context background
     (bg-cyan-subtle "#163438")            ; Structural block highlight
 
     (bg-added "#204218")                  ; Diff added line baseline
