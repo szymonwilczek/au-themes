@@ -38,7 +38,7 @@
     (bg-main "#18130e")                   ; Primary canvas background
     (bg-dim "#221b14")                    ; Inactive windows, dim canvas
     (bg-alt "#2c221a")                    ; Subtle borders, alternating stripes
-    (fg-main "#a89880")                   ; Default buffer text
+    (fg-main "#a29a88")                   ; Default buffer text
     (fg-dim "#665c4e")                    ; Comments, metadata
     (fg-alt "#987e72")                    ; Struct properties
     (fg-var "#a89880")                    ; Variable definitions
@@ -52,8 +52,8 @@
     (red-cooler "#9e3e34")                ; Diff deletions, removal markers
     (red-faint "#736b5d")                 ; Structural brackets
 
-    (green "#8e9984")                     ; Primitive types
-    (green-warmer "#a0a39a")              ; Constant values and macros
+    (green "#88967e")                     ; Primitive types
+    (green-warmer "#b4bea6")              ; Constant values and macros
     (green-cooler "#6c7158")              ; Control keywords
     (green-faint "#665c4e")               ; Documentation strings, inline comments
 
@@ -67,7 +67,7 @@
     (blue-cooler "#787062")               ; Binary and unary operators
     (blue-faint "#9e8184")                ; Built-in functions
 
-    (magenta "#8e9984")                   ; Composite types: struct, union, enum
+    (magenta "#88967e")                   ; Composite types: struct, union, enum
     (magenta-warmer "#80646f")            ; Extended library types
     (magenta-cooler "#706556")            ; Rare syntax nodes, special escapes
     (magenta-faint "#665c4e")             ; Inactive conditional blocks
@@ -78,19 +78,19 @@
     (cyan-faint "#686054")                ; Punctuation delimiters
 
     ;; Panels, Diffs and Structural Highlights
-    (bg-red-intense "#6a1c16")            ; Blocking errors, fatal assertion panel
-    (bg-green-intense "#342e14")          ; Success banner
-    (bg-yellow-intense "#583e10")         ; Warning banner, review request
-    (bg-blue-intense "#483018")           ; Info banner, active selections
-    (bg-magenta-intense "#422018")        ; Special prompt background
-    (bg-cyan-intense "#483614")           ; Incsearch current match target
+    (bg-red-intense "#5a1e18")            ; Blocking errors, fatal assertion panel
+    (bg-green-intense "#26361e")          ; Success banner
+    (bg-yellow-intense "#463414")         ; Warning banner, review request
+    (bg-blue-intense "#28323c")           ; Info banner, active selections
+    (bg-magenta-intense "#3c2438")        ; Special prompt background
+    (bg-cyan-intense "#203834")           ; Incsearch current match target
 
-    (bg-red-subtle "#341612")             ; Diff context deletion background
-    (bg-green-subtle "#221e10")           ; Diff context addition background
-    (bg-yellow-subtle "#2e2210")          ; Diff whitespace/context change
-    (bg-blue-subtle "#2e2216")            ; Mode-line subtle indicators
-    (bg-magenta-subtle "#2c1c16")         ; Matching paren context background
-    (bg-cyan-subtle "#262012")            ; Structural block highlight
+    (bg-red-subtle "#321a16")             ; Diff context deletion background
+    (bg-green-subtle "#1c241a")           ; Diff context addition background
+    (bg-yellow-subtle "#2a2414")          ; Diff whitespace/context change
+    (bg-blue-subtle "#1e2024")            ; Mode-line subtle indicators
+    (bg-magenta-subtle "#281e26")         ; Matching paren context background
+    (bg-cyan-subtle "#1a2422")            ; Structural block highlight
 
     (bg-added "#1e3412")                  ; Diff added line baseline
     (bg-added-faint "#12260a")            ; Diff added unchanged context
