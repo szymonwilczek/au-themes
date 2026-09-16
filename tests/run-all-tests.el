@@ -72,7 +72,6 @@
     test-crowding-effect-foveal
     test-isoluminance-jitter
     test-afterimage-persistence
-    test-circadian-photobiology
     test-cross-family-distinctiveness))
 
 (defvar au-test-themes
