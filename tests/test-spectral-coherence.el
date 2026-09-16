@@ -25,6 +25,11 @@
 ;; Evaluate palette illumination coherence under simulated forest canopy
 ;; filtration.
 ;;
+;; Scope:
+;; Applies exclusively to woodland theme families (currently `whispergrove`).
+;; Non-woodland themes are skipped as forest canopy filtration is not their
+;; target illuminant.
+;;
 ;; Note:
 ;; Evaluates the display luminance centroid lambda_bar_Y (weighted by primary
 ;; luminances where green dominates Y with ~71.5%), rather than CIE 15 dominant
@@ -41,7 +46,8 @@
 (require 'test-palette-extractor)
 
 (defun test-spectral-coherence-run ()
-  "Evaluate palette illumination coherence under simulated forest canopy filtration."
+  "Evaluate palette illumination coherence under simulated forest canopy filtration.
+Applies exclusively to forest/woodland theme families (currently `whispergrove`)."
   (let* ((pal (au-extract-active-palette))
          (theme (plist-get pal :theme))
          (passes 0)
@@ -60,30 +66,37 @@
     (princ (format "\n.~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~.\n"))
     (princ (format "| Forest Canopy Spectral Filtration and Physical Coherence Suite\n"))
     (princ (format "| Theme: %s\n" theme))
+    (princ (format "| Scope: Woodland themes only (currently whispergrove family)\n"))
     (princ (format "> Note:  Metric is display luminance centroid lambda_bar_Y\n\t (not CIE 15 lambda_d)\n"))
     (princ (format "'~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~'\n"))
-    (princ (format "\n+----------------------+---------+----------+------------------+-------------+\n"))
-    (princ (format "| %-20s | %-7s | %-8s | %-16s | %-11s |\n"
-                   "Token Role" "Hex" "Eff Wave" "Canopy Window" "Coherence"))
-    (princ (format "+----------------------+---------+----------+------------------+-------------+\n"))
-    (dolist (tok tokens)
-      (let* ((name (nth 0 tok))
-             (key  (nth 1 tok))
-             (min-w (nth 2 tok))
-             (max-w (nth 3 tok))
-             (hex (plist-get pal key))
-             (wave (rf-effective-wavelength hex))
-             (ok (and (>= wave min-w) (<= wave max-w))))
-        (if ok
-            (setq passes (1+ passes))
-          (setq warnings (1+ warnings)))
-        (princ (format "| %-20s | %-7s | %6.1fnm | [%5.1f..%5.1fnm] |  %-9s  |\n"
-                       name hex wave min-w max-w
-                       (if ok "COHERENT" "DIVERGENT")))))
-    (princ (format "+----------------------+---------+----------+------------------+-------------+\n"))
-    (princ (format "\n==============================================================================\n"))
-    (princ (format "Spectral Coherence Summary: %d Coherent, %d Divergent.\n\n" passes warnings))
-    (zerop fails)))
+    (if (not (string-match-p "whispergrove" (symbol-name theme)))
+        (progn
+          (princ "\n[SKIP]  Spectral canopy filtration applies exclusively to woodland\n\tthemes (whispergrove family).\n")
+          (princ (format "\n==============================================================================\n"))
+          (princ "Spectral Coherence Summary: 0 Coherent, 0 Divergent (Skipped non-woodland theme).\n\n")
+          t)
+      (princ (format "\n+----------------------+---------+----------+------------------+-------------+\n"))
+      (princ (format "| %-20s | %-7s | %-8s | %-16s | %-11s |\n"
+                     "Token Role" "Hex" "Eff Wave" "Canopy Window" "Coherence"))
+      (princ (format "+----------------------+---------+----------+------------------+-------------+\n"))
+      (dolist (tok tokens)
+        (let* ((name (nth 0 tok))
+               (key  (nth 1 tok))
+               (min-w (nth 2 tok))
+               (max-w (nth 3 tok))
+               (hex (plist-get pal key))
+               (wave (rf-effective-wavelength hex))
+               (ok (and (>= wave min-w) (<= wave max-w))))
+          (if ok
+              (setq passes (1+ passes))
+            (setq warnings (1+ warnings)))
+          (princ (format "| %-20s | %-7s | %6.1fnm | [%5.1f..%5.1fnm] |  %-9s  |\n"
+                         name hex wave min-w max-w
+                         (if ok "COHERENT" "DIVERGENT")))))
+      (princ (format "+----------------------+---------+----------+------------------+-------------+\n"))
+      (princ (format "\n==============================================================================\n"))
+      (princ (format "Spectral Coherence Summary: %d Coherent, %d Divergent.\n\n" passes warnings))
+      (zerop fails))))
 
 (when (and noninteractive (not (bound-and-true-p rf-running-all-tests)))
   (unless (test-spectral-coherence-run)
