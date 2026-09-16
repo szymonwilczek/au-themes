@@ -38,9 +38,9 @@
     (bg-main "#12100e")                   ; Primary canvas background
     (bg-dim "#1c1815")                    ; Inactive windows, dim canvas
     (bg-alt "#28221e")                    ; Subtle borders, alternating stripes
-    (fg-main "#b2a47e")                   ; Default buffer text
+    (fg-main "#ada490")                   ; Default buffer text
     (fg-dim "#706658")                    ; Comments, metadata
-    (fg-alt "#8d9078")                    ; Struct properties
+    (fg-alt "#8a8e76")                    ; Struct properties
     (fg-var "#a89876")                    ; Variable definitions
     (bg-active "#3e3228")                 ; Active modeline frame, focused bars
     (bg-inactive "#1c1815")               ; Inactive modeline
@@ -64,7 +64,7 @@
 
     (blue "#9a6b3d")                      ; Function definitions
     (blue-warmer "#b26457")               ; Function calls
-    (blue-cooler "#8a7e70")               ; Binary and unary operators
+    (blue-cooler "#847a6c")               ; Binary and unary operators
     (blue-faint "#767a66")                ; Built-in functions
 
     (magenta "#d2956a")                   ; Composite types: struct, union, enum
@@ -74,7 +74,7 @@
 
     (cyan "#a97a3a")                      ; Keyword fallback
     (cyan-warmer "#ad7d64")               ; Preprocessor alias
-    (cyan-cooler "#8a7e70")               ; Operator alias
+    (cyan-cooler "#847a6c")               ; Operator alias
     (cyan-faint "#7c7262")                ; Punctuation delimiters
 
     ;; Panels, Diffs and Structural Highlights
