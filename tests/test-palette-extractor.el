@@ -55,18 +55,32 @@
         (let ((feat (intern (file-name-sans-extension (file-name-nondirectory file)))))
           (require feat nil t))))))
 
+(require 'au-themes nil t)
+
+(defun au-test-discover-themes ()
+  "Return list of discovered au-theme symbols across load paths."
+  (if (fboundp 'au-themes--discover-themes)
+      (au-themes--discover-themes)
+    (let ((themes nil))
+      (dolist (dir (list default-directory))
+        (when (file-directory-p dir)
+          (dolist (file (directory-files dir nil "\\`au-[-a-z0-9]+-theme\\.el\\'"))
+            (when (string-match "\\`\\(au-[-a-z0-9]+\\)-theme\\.el\\'" file)
+              (push (intern (match-string 1 file)) themes)))))
+      (sort (delete-dups themes) (lambda (a b) (string< (symbol-name a) (symbol-name b)))))))
+
 (defvar rf-active-theme
   (let ((env (or (getenv "AU_TEST_THEMES") (getenv "RF_TEST_THEMES"))))
     (if (and env (not (string-empty-p env)))
         (intern (car (split-string env "[, ]+" t)))
-      'au-whispergrove-night))
+      (car (au-test-discover-themes))))
   "Theme currently being evaluated by tests.")
 
 (defvaralias 'au-active-theme 'rf-active-theme)
 
 (defun rf-theme-polarity (&optional theme-name)
   "Return \\='light or \\='dark based on background luminance for THEME-NAME."
-  (let* ((theme (or theme-name rf-active-theme 'au-whispergrove-night))
+  (let* ((theme (or theme-name rf-active-theme (car (au-test-discover-themes))))
          (pal (au-extract-active-palette theme))
          (bg (plist-get pal :bg-main))
          (y (rf-luminance-y bg)))
@@ -120,7 +134,7 @@
 
 (defun au-extract-active-palette (&optional theme-name)
   "Extract complete semantic color dictionary directly from THEME-NAME (default `rf-active-theme')."
-  (let* ((theme (or theme-name rf-active-theme 'au-whispergrove-night)))
+  (let* ((theme (or theme-name rf-active-theme (car (au-test-discover-themes)))))
     (if (string-prefix-p "ef-" (symbol-name theme))
         (progn
           (require 'ef-themes nil t)
