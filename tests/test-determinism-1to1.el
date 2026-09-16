@@ -37,7 +37,7 @@
 
 (defun test-determinism-1to1-run ()
   "Evaluate 1:1 keyface uniqueness and pairwise CIEDE2000 separation (min 10.0)"
-  (let* ((theme (or rf-active-theme 'au-whispergrove-night))
+  (let* ((theme (or rf-active-theme (car (au-test-discover-themes))))
          (pal (au-extract-active-palette theme))
          (passes 0)
          (fails 0)
