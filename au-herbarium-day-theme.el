@@ -167,13 +167,6 @@
    nil
    (append au-herbarium-day-palette-mappings-partial ef-themes-palette-common)))
 
-(defconst au-herbarium-day-custom-faces
-  '(`(font-lock-keyword-face ((,c :slant italic :foreground ,keyword)))
-    `(font-lock-builtin-face ((,c :slant italic :foreground ,builtin)))
-    `(font-lock-comment-face ((,c :slant italic :foreground ,comment)))
-    `(font-lock-doc-face ((,c :slant italic :foreground ,docstring)))
-    `(font-lock-type-face ((,c :slant italic :foreground ,type)))))
-
 ;;;###theme-autoload
 (modus-themes-theme
  'au-herbarium-day
@@ -182,8 +175,7 @@
  'light
  'au-herbarium-day-palette
  nil
- nil
- 'au-herbarium-day-custom-faces)
+ nil)
 
 (provide 'au-herbarium-day-theme)
 ;;; au-herbarium-day-theme.el ends here
