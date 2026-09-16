@@ -40,35 +40,29 @@
 (require 'test-palette-extractor)
 
 (defun test-trigeminal-nerve-excitation-run ()
-  "Evaluate retino-thalamic trigeminovascular photophobia exacerbation from long-wavelength red.
-Photophobia in migraine is mediated by retinal projections converging onto dura-sensitive
-thalamic trigeminovascular neurons (Noseda et al. 2010, 2016). Narrowband long-wavelength red
-and short-wavelength blue maximally exacerbate headache pain, whereas green (~530 nm) shows
-minimal exacerbation.
-Ref: Noseda et al. (2010) Nat. Neurosci. 13:239-245; Noseda et al. (2016) Brain 139:1971-1986;
-     Burstein et al. (2015) Nature Rev. Neurosci.; Digre & Brennan (2012)."
+  "Evaluate retino-thalamic trigeminovascular photophobia exacerbation from long-wavelength red."
   (let* ((pal (au-extract-active-palette))
          (theme (plist-get pal :theme))
          (polarity (rf-theme-polarity theme))
          (bg (plist-get pal :bg-main))
          (passes 0)
          (fails 0)
-         (warm-tokens '(("Alerts / Errors (Yew berry)"        :err)
-                        ("Strings (Burnt oak)"                :string)
-                        ("Builtins"                           :builtin)
-                        ("Numbers (Golden amber honey)"       :number)
-                        ("Preprocessor (#define)"             :preprocessor))))
+         (warm-tokens '(("Alerts / Errors" :err)
+                        ("Strings"         :string)
+                        ("Builtins"        :builtin)
+                        ("Numbers"         :number)
+                        ("Preprocessor"    :preprocessor))))
 
-    (princ (format "\n======================================================================\n"))
-    (princ (format " Retino-Thalamic Trigeminovascular Red Photophobia Suite\n"))
-    (princ (format " Ref: Noseda et al. (2010, 2016); Burstein (2015); Digre & Brennan (2012)\n"))
-    (princ (format " Theme: %s (%s) | Background: %s\n" theme polarity bg))
-    (princ (format " Requirements: Red Channel Frac <= 0.850, Muted Red Lum Y <= 0.250 (Dark mode)\n"))
-    (princ (format "======================================================================\n"))
+    (princ (format "\n.~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~.\n"))
+    (princ (format "| Retino-Thalamic Trigeminovascular Red Photophobia Suite\n"))
+    (princ (format "| Theme: %s (%s) | Background: %s\n" theme polarity bg))
+    (princ (format "| Requirements:  Red Channel Frac <= 0.850, Muted Red Lum Y <= 0.250\n\t\t (Dark mode)\n"))
+    (princ (format "'~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~'\n"))
 
-    (princ (format "%-32s | %-8s | %-8s | %-10s | %-8s | %-8s\n"
+    (princ (format "\n-------------------+---------+---------+----------+-----------+--------+\n"))
+    (princ (format "| %-16s | %-7s | %-7s | %-8s | %-8s | %-7s|\n"
                    "Warm / Red Token" "Hex" "Lum (Y)" "Red Frac" "R/G Ratio" "Status"))
-    (princ (format "---------------------------------+----------+----------+------------+----------+----------\n"))
+    (princ (format "-------------------+---------+---------+----------+-----------+--------+\n"))
     (dolist (tok warm-tokens)
       (let* ((label (car tok))
              (key   (cadr tok))
@@ -87,12 +81,13 @@ Ref: Noseda et al. (2010) Nat. Neurosci. 13:239-245; Noseda et al. (2016) Brain 
         (if ok
             (setq passes (1+ passes))
           (setq fails (1+ fails)))
-        (princ (format "%-32s | %-8s | %8.4f | %10.4f | %8.2f | %s\n"
+        (princ (format "| %-16s | %-7s | %7.4f | %8.4f | %9.2f |  %s  |\n"
                        label hex y-val purity rg-ratio (if ok "PASS" "FAIL")))))
-    (princ (format "---------------------------------+----------+----------+------------+----------+----------\n"))
+    (princ (format "-------------------+---------+---------+----------+-----------+--------+\n"))
 
-    ;; Part 2: Monochromatic Laser Spike Absence Check
-    (princ "\nPart 2: Monochromatic Laser-Red Absence Check (Green Grounding):\n")
+    (princ "\nMonochromatic Laser-Red Absence Check (Green Grounding):\n")
+    (princ (format "------------------------------------------------------------------------\n"))
+
     (let* ((err-hex (plist-get pal :err))
            (err-rgb (rf-hex-to-rgb err-hex))
            (err-g   (rf-srgb-to-linear (nth 1 err-rgb)))
@@ -100,14 +95,14 @@ Ref: Noseda et al. (2010) Nat. Neurosci. 13:239-245; Noseda et al. (2016) Brain 
            (grounding-ok (> (+ err-g err-b) 0.050)))
       (if grounding-ok
           (progn
-            (princ (format "   [PASS] Alert token maintains green/blue grounding (G+B = %.4f > 0.050): Prevents pure laser red.\n"
+            (princ (format "[PASS]  Alert token maintains green/blue grounding\n\t(G+B = %.4f > 0.050): Prevents pure laser red.\n"
                            (+ err-g err-b)))
             (setq passes (1+ passes)))
-        (princ (format "   [FAIL] Alert token is pure monochromatic red (G+B = %.4f <= 0.050): Severe trigeminal migraine risk.\n"
+        (princ (format "[FAIL]  Alert token is pure monochromatic red\n\t(G+B = %.4f <= 0.050): Severe trigeminal migraine risk.\n"
                        (+ err-g err-b)))
         (setq fails (1+ fails))))
 
-    (princ (format "\n----------------------------------------------------------------------\n"))
+    (princ (format "\n========================================================================\n"))
     (princ (format "Trigeminal Nerve Excitation Summary: %d Passed, %d Failed.\n\n" passes fails))
     (zerop fails)))
 
