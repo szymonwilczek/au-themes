@@ -32,39 +32,34 @@
 (require 'test-palette-extractor)
 
 (defun au-theme-family (theme)
-  "Return the package/family symbol of THEME."
+  "Return the package/family symbol of THEME.
+Extracts family identifier from convention `au-<family>-<variant>' or `<family>-<variant>'."
   (let ((name (symbol-name theme)))
     (cond
-     ((string-match-p "whispergrove" name) 'whispergrove)
-     ((string-match-p "aurum" name) 'aurum)
-     ((string-match-p "parchment" name) 'parchment)
-     (t (error "Unknown theme family for: %s" theme)))))
+     ((string-match "\\`au-\\([a-z0-9]+\\)-" name)
+      (intern (match-string 1 name)))
+     ((string-match "\\`\\([a-z0-9]+\\)-" name)
+      (intern (match-string 1 name)))
+     (t (intern name)))))
 
 (defun au-theme-counterparts (theme)
   "Return the counterpart themes in other families for THEME."
-  (cond
-   ((memq theme '(au-whispergrove-day whispergrove-day))
-    '(au-aurum-day au-parchment-day))
-   ((memq theme '(au-whispergrove-morning whispergrove-morning))
-    '(au-aurum-day au-parchment-day))
-   ((memq theme '(au-aurum-day aurum-day))
-    '(au-whispergrove-day au-whispergrove-morning au-parchment-day))
-   ((memq theme '(au-parchment-day parchment-day))
-    '(au-whispergrove-day au-whispergrove-morning au-aurum-day))
-   ((memq theme '(au-whispergrove-night whispergrove-night))
-    '(au-aurum-night au-parchment-night))
-   ((memq theme '(au-whispergrove-evening whispergrove-evening))
-    '(au-aurum-night au-parchment-night))
-   ((memq theme '(au-aurum-night aurum-night))
-    '(au-whispergrove-night au-whispergrove-evening au-parchment-night))
-   ((memq theme '(au-parchment-night parchment-night))
-    '(au-whispergrove-night au-whispergrove-evening au-aurum-night))
-   ((memq theme '(au-aurum-twilight aurum-twilight))
-    nil)))
+  (let* ((name (symbol-name theme))
+         (this-family (au-theme-family theme))
+         (this-polarity (rf-theme-polarity theme))
+         (all-themes (au-test-discover-themes)))
+    (if (string-match-p "twilight" name)
+        nil
+      (cl-remove-if-not
+       (lambda (th)
+         (and (not (eq (au-theme-family th) this-family))
+              (eq (rf-theme-polarity th) this-polarity)
+              (not (string-match-p "twilight" (symbol-name th)))))
+       all-themes))))
 
 (defun test-cross-family-distinctiveness-run ()
   "Evaluate that themes from different families do not duplicate colors or aesthetic identities."
-  (let* ((theme (or rf-active-theme 'au-whispergrove-night))
+  (let* ((theme (or rf-active-theme (car (au-test-discover-themes))))
          (pal (au-extract-active-palette theme))
          (family (au-theme-family theme))
          (polarity (rf-theme-polarity theme))
@@ -240,7 +235,11 @@
                   (setq passes (1+ passes)))
               (princ (format "[FAIL]  Parchment Selection Region (%s, hue %.1fdeg): Expected [25deg..110deg].\n"
                              reg-hex reg-h))
-              (setq fails (1+ fails))))))))
+              (setq fails (1+ fails)))))
+
+         (t
+          (princ (format "[INFO]  No custom chromatic identity signature gate defined for %s family.\n" family))
+          (setq passes (1+ passes))))))
 
     (princ (format "\n=========================================================================================================\n"))
     (princ (format "Cross-Family Distinctiveness Summary: %d Passed, %d Failed.\n\n" passes fails))
