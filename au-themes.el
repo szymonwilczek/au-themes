@@ -133,16 +133,23 @@ When nil (the default), themes are dynamically discovered from
       (symbol-value pal-sym))))
 
 (defun au-themes--theme-polarity (theme)
-  "Determine whether THEME is `light' or `dark' via biophysical luminance.
-Calculates luminance Y of `bg-main' and caches the polarity on the theme
-symbol property `au-themes-polarity'.
-Threshold: Y >= 0.25 is light, Y < 0.25 is dark."
+  "Return `light' or `dark' for THEME.
+The polarity is the BACKGROUND-MODE THEME declares to `modus-themes-theme'.
+If THEME has not been declared, fall back to contrast polarity: the
+theme is light when its `bg-main' is more luminous than its `fg-main'.
+The result and the luminance Y of `bg-main' are cached on the theme
+symbol properties `au-themes-polarity' and `au-themes-luminance-y'."
   (or (get theme 'au-themes-polarity)
       (let* ((palette (au-themes--theme-palette theme))
-             (bg-main (cadr (assq 'bg-main palette))))
-        (when bg-main
+             (bg-main (cadr (assq 'bg-main palette)))
+             (fg-main (cadr (assq 'fg-main palette))))
+        (when (and bg-main fg-main)
           (let* ((y (au-themes--luminance-y bg-main))
-                 (polarity (if (>= y 0.25) 'light 'dark)))
+                 (declared (plist-get (get theme 'theme-properties) :background-mode))
+                 (polarity (cond
+                            ((memq declared '(light dark)) declared)
+                            ((> y (au-themes--luminance-y fg-main)) 'light)
+                            (t 'dark))))
             (put theme 'au-themes-polarity polarity)
             (put theme 'au-themes-luminance-y y)
             polarity)))))
