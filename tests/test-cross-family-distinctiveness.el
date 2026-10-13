@@ -216,9 +216,9 @@ Extracts family identifier from convention `au-<family>-<variant>' or `<family>-
                   (push (list tok hex c) excess-chroma))))
             (if (null excess-chroma)
                 (progn
-                  (princ "[PASS]  All syntax tokens maintain Oklab C < 0.040\n")
+                  (princ "[PASS]  All syntax tokens maintain Oklab C <= 0.042\n")
                   (setq passes (1+ passes)))
-              (princ (format "[FAIL]  Tokens exceed sensory-safe ceiling C=0.040: %S\n"
+              (princ (format "[FAIL]  Tokens exceed sensory-safe ceiling C=0.042: %S\n"
                              excess-chroma))
               (setq fails (1+ fails))))
 
