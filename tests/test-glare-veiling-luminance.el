@@ -92,7 +92,7 @@
              (cm-nom   (/ (abs (- y-tok bg-y)) (max 1e-6 (+ y-tok bg-y))))
              ;; Retinal Michelson contrast with intraocular veiling luminance Lv:
              (cm-ret   (/ (abs (- y-tok bg-y)) (max 1e-6 (+ y-tok bg-y (* 2.0 lv)))))
-             ;; Contrast retention ratio: must retain >= 70% under ocular veiling glare
+             ;; Contrast retention ratio: must retain >= 65% under ocular veiling glare
              (retention (/ cm-ret (max 1e-6 cm-nom)))
              (ok       (and (>= lc min-lc) (<= lc max-lc) (>= retention 0.65))))
         (if ok
