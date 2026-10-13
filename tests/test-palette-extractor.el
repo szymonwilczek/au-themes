@@ -78,13 +78,21 @@
 
 (defvaralias 'au-active-theme 'rf-active-theme)
 
+(defun rf-theme-declared-polarity (&optional theme-name)
+  "Return the BACKGROUND-MODE THEME-NAME declares to `modus-themes-theme'."
+  (let ((theme (or theme-name rf-active-theme (car (au-test-discover-themes)))))
+    (au-extract-active-palette theme)    ; loads the theme file if needed
+    (plist-get (get theme 'theme-properties) :background-mode)))
+
 (defun rf-theme-polarity (&optional theme-name)
-  "Return \\='light or \\='dark based on background luminance for THEME-NAME."
-  (let* ((theme (or theme-name rf-active-theme (car (au-test-discover-themes))))
-         (pal (au-extract-active-palette theme))
-         (bg (plist-get pal :bg-main))
-         (y (rf-luminance-y bg)))
-    (if (> y 0.20) 'light 'dark)))
+  "Return \\='light or \\='dark for THEME-NAME.
+This is the polarity the theme declares, the same source `au-themes'
+uses; `test-theme-integrity' checks that it matches the palette."
+  (let ((declared (rf-theme-declared-polarity theme-name)))
+    (unless (memq declared '(light dark))
+      (error "Theme %s declares no light/dark background mode"
+             (or theme-name rf-active-theme)))
+    declared))
 
 (defun au-extract-fg-from-spec (spec)
   "Recursively search SPEC for :foreground value."
