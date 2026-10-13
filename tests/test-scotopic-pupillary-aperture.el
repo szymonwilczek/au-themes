@@ -57,7 +57,7 @@
 
     (princ "\n.~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~.\n")
     (princ (format "| Stiles-Crawford (SCE-I) and Viewport Scopic Load Ratio Suite\n"))
-    (princ (format "| Theme: %s (%s)\n" theme polarity bg bg-y))
+    (princ (format "| Theme: %s (%s)\n" theme polarity))
     (princ (format "| Background: %s (Y_bg: %.6f)\n" bg bg-y))
     (princ (format "| Model: 80x40 Viewport\n|\t (3200 cells, 20%% glyph ink fill, White: %.0f cd/m2)\n"
                    rf-display-white-luminance))
