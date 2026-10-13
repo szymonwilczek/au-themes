@@ -95,9 +95,9 @@
         (princ (format "---------------------------------------------------------------------------------\n"))
         (if bg-ok
             (progn
-              (princ (format "[PASS] Canopy canvas luminance Y=%.4f in [0.40..0.75]\n(eliminates paper-white glare)\n" bg-y))
+              (princ (format "[PASS] Canopy canvas luminance Y=%.4f in [0.30..0.75]\n(eliminates paper-white glare)\n" bg-y))
               (setq passes (1+ passes)))
-          (princ (format "[FAIL] Canvas luminance Y=%.4f out of bounds [0.40..0.75]\n(too bright/paper white or too dark)\n" bg-y))
+          (princ (format "[FAIL] Canvas luminance Y=%.4f out of bounds [0.30..0.75]\n(too bright/paper white or too dark)\n" bg-y))
           (setq fails (1+ fails)))))
     (princ (format "\n+--------------------------------+----------+---------+--------------+----------+\n"))
     (princ (format "| %-30s | %-8s | %-7s | %-12s | %-9s|\n" "Token Role" "Hex" "Lc" "Target Lc" "Status"))
