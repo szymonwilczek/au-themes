@@ -195,9 +195,6 @@
     (zerop fails)))
 
 (when (and noninteractive (not (bound-and-true-p rf-running-all-tests)))
-  (let ((env (getenv "RF_TEST_THEMES")))
-    (when (and env (not (string-empty-p env)))
-      (setq rf-active-theme (intern (car (split-string env "[, ]+" t))))))
   (unless (test-determinism-1to1-run)
     (kill-emacs 1)))
 
