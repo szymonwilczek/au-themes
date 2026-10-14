@@ -41,7 +41,7 @@
     (fg-main "#ada490")                   ; Default buffer text
     (fg-dim "#706658")                    ; Comments, metadata
     (fg-alt "#84967c")                    ; Struct properties
-    (fg-var "#a89876")                    ; Variable definitions
+    (fg-var "#a69c80")                    ; Variable definitions
     (bg-active "#3e3228")                 ; Active modeline frame, focused bars
     (bg-inactive "#1c1815")               ; Inactive modeline
     (border "#44382e")                    ; Window dividers
@@ -53,13 +53,13 @@
     (red-faint "#84786a")                 ; Structural brackets
 
     (green "#54a866")                     ; Primitive types
-    (green-warmer "#9e4c38")              ; Constant values and macros
+    (green-warmer "#9e462d")              ; Constant values and macros
     (green-cooler "#b46a36")              ; Control keywords
     (green-faint "#706658")               ; Documentation strings, inline comments
 
     (yellow "#b46a36")                    ; Keyword alias
     (yellow-warmer "#c49c3e")             ; Numeric literals
-    (yellow-cooler "#987a30")             ; Preprocessor directives
+    (yellow-cooler "#977e48")             ; Preprocessor directives
     (yellow-faint "#7a6e5c")              ; Informational tooltips, fringe markers
 
     (blue "#8e649a")                      ; Function definitions
