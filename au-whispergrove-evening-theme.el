@@ -48,7 +48,7 @@
 
     ;; Basic Chromatic Scale
     (red "#c24e46")                       ; Errors, critical warnings
-    (red-warmer "#aa6a58")                ; String literals
+    (red-warmer "#a76757")                ; String literals
     (red-cooler "#b2564e")                ; Diff deletions, removal markers
     (red-faint "#6a806d")                 ; Structural brackets
 
@@ -75,7 +75,7 @@
     (cyan "#ae7a32")                      ; Keyword fallback
     (cyan-warmer "#887028")               ; Preprocessor alias
     (cyan-cooler "#688c7e")               ; Operator alias
-    (cyan-faint "#748276")                ; Punctuation delimiters
+    (cyan-faint "#768579")                ; Punctuation delimiters
 
     ;; Panels, Diffs and Structural Highlights
     (bg-red-intense "#7e221e")            ; Blocking errors, fatal assertion panel
