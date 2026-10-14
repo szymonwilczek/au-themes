@@ -76,9 +76,7 @@
 
     (princ "\nAPCA Base Text Legibility Contrast:\n")
     (princ (format "--------------------------------------------------------------------\n"))
-    (let* ((min-lc (if (eq polarity 'light)
-                       (if (< bg-y 0.420) 48.0 58.0)
-                     45.0))
+    (let* ((min-lc (car (rf-base-text-lc-band polarity bg)))
            (lc-ok (>= apca-lc min-lc)))
       (if lc-ok
           (progn

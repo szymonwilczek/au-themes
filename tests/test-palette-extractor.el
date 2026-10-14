@@ -358,6 +358,21 @@ If OLED-P is non-nil, assume emissive zero black floor."
      (* (- 1.0 black-level) (rf-apca-screen-y hex))
      (rf-reflected-luminance-y)))
 
+(defconst rf-subdued-canvas-y 0.420
+  "Canvas luminance Y below which a light theme counts as subdued.
+Subdued canvases lower every Lc floor, since less canvas luminance is
+left to contrast against.")
+
+(defun rf-base-text-lc-band (polarity bg-hex)
+  "Return the APCA |Lc| band (MIN . MAX) for body text under POLARITY on BG-HEX.
+Dark themes hold body text to a moderate 46..62 to limit edge
+irradiation; light themes need 58 (48 on a subdued canvas) and are
+capped at 85.  This band is an au-themes calibration, not an APCA
+conformance level, and every module gating body text uses it."
+  (if (eq polarity 'light)
+      (cons (if (< (rf-luminance-y bg-hex) rf-subdued-canvas-y) 48.0 58.0) 85.0)
+    (cons 46.0 62.0)))
+
 (defun rf-lcd-contrast (txt-hex bg-hex)
   "APCA Lc on an IPS LCD: native black level plus reflected ambient."
   (let ((black (/ 1.0 rf-lcd-contrast-ratio)))
