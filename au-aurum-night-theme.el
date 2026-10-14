@@ -52,9 +52,9 @@
     (red-cooler "#a44638")                ; Diff deletions, removal markers
     (red-faint "#84786a")                 ; Structural brackets
 
-    (green "#d2956a")                     ; Primitive types
+    (green "#d59368")                     ; Primitive types
     (green-warmer "#9c4628")              ; Constant values and macros
-    (green-cooler "#a97a3a")              ; Control keywords
+    (green-cooler "#a97533")              ; Control keywords
     (green-faint "#706658")               ; Documentation strings, inline comments
 
     (yellow "#a97a3a")                    ; Keyword alias
@@ -65,7 +65,7 @@
     (blue "#9a6b3d")                      ; Function definitions
     (blue-warmer "#b5675c")               ; Function calls
     (blue-cooler "#847a6c")               ; Binary and unary operators
-    (blue-faint "#767a66")                ; Built-in functions
+    (blue-faint "#787d69")                ; Built-in functions
 
     (magenta "#d2956a")                   ; Composite types: struct, union, enum
     (magenta-warmer "#b26457")            ; Extended library types
