@@ -24,6 +24,9 @@
 ;;
 ;; Evaluate Oklch perceptual parameters [L C h].
 ;;
+;; Variables may be drawn as body text or as a syntax role, so their
+;; envelope is the hull of the base-text and keyword envelopes.
+;;
 ;; Ref:
 ;; Ottosson (2020) A Perceptual Color Space for Computer Graphics.
 
@@ -56,6 +59,7 @@
                 ("Function calls"       :fnname-call  0.34 0.50 0.05 0.20)
                 ("Strings"              :string       0.30 0.50 0.05 0.20)
                 ("Struct fields"        :property     0.30 0.50 0.03 0.16)
+                ("Variables"            :variable     0.20 0.50 0.01 0.22)
                 ("Operators"            :operator     0.30 0.50 0.01 0.10)
                 ("Brackets"             :bracket      0.30 0.50 0.01 0.10)
                 ("Alerts / Errors (!)"  :err          0.35 0.55 0.08 0.25))
@@ -72,6 +76,7 @@
               ("Function calls"         :fnname-call  0.50 0.75 0.07 0.20)
               ("Strings"                :string       0.48 0.72 0.08 0.25)
               ("Struct fields"          :property     0.50 0.72 0.04 0.16)
+              ("Variables"              :variable     0.40 0.85 0.01 0.25)
               ("Operators"              :operator     0.42 0.65 0.01 0.08)
               ("Brackets"               :bracket      0.35 0.58 0.01 0.08)
               ("Alerts / Errors (!)"    :err          0.40 0.65 0.10 0.28)))))
