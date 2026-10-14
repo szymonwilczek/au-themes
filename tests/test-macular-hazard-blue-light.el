@@ -47,10 +47,10 @@
          ;; Roles that are deliberately short-wavelength (cursor, constants,
          ;; call names) are allowed twice that, being sparse and non-continuous
          ;; in the field.
-         (warm-roles '(:string :number :builtin :err :fg-dim :type :keyword
+         (warm-roles '(:string :number :builtin :err :comment :type :keyword
                                :preprocessor :operator :bracket :fg-main))
          (tokens '(("Base text"            :fg-main)
-                   ("Comments"             :fg-dim)
+                   ("Comments"             :comment)
                    ("Cursor"               :cursor)
                    ("Preprocessor"         :preprocessor)
                    ("Keywords"             :keyword)

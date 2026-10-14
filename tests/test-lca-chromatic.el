@@ -52,7 +52,7 @@
                    ("Struct fields"        :property)
                    ("Operators"            :operator)
                    ("Brackets"             :bracket)
-                   ("Comments"             :fg-dim)
+                   ("Comments"             :comment)
                    ("Alerts / Errors (!)"  :err))))
     (princ (format "\n.~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~.\n"))
     (princ (format "| Longitudinal Chromatic Aberration (LCA) and Common Focal Plane Suite\n"))

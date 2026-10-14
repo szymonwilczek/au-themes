@@ -38,7 +38,7 @@
          (theme (plist-get pal :theme))
          (polarity (rf-theme-polarity theme))
          (fg (plist-get pal :fg-main))
-         (dim (plist-get pal :fg-dim))
+         (dim (plist-get pal :comment))
          (lc-fg (abs (rf-apca-contrast fg bg)))
          (lc-lcd (abs (rf-lcd-contrast fg bg)))
          (chroma-fg (rf-cielab-chroma fg))

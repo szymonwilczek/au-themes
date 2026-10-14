@@ -51,7 +51,7 @@
          (bg-y (rf-luminance-y bg))
          (passes 0)
          (fails 0)
-         (keys '(:fg-main :fg-dim :preprocessor :keyword :type :constant :number
+         (keys '(:fg-main :comment :preprocessor :keyword :type :constant :number
                           :builtin :fnname :fnname-call :string :property :operator :bracket :err))
          (lums (mapcar (lambda (k) (rf-luminance-y (plist-get pal k))) keys))
          (n (length lums))
@@ -68,7 +68,7 @@
             ("base text vs builtin"  :fg-main     :builtin)
             ("base text vs number"   :fg-main     :number)
             ("base text vs string"   :fg-main     :string)
-            ("base text vs comments" :fg-main     :fg-dim)
+            ("base text vs comments" :fg-main     :comment)
             ("base text vs operator" :fg-main     :operator)
             ("base text vs bracket"  :fg-main     :bracket))))
 

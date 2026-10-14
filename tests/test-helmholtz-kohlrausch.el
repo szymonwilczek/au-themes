@@ -37,7 +37,7 @@
          (theme (plist-get pal :theme))
          (passes 0)
          (tokens '(("Base text"            :fg-main)
-                   ("Comments"             :fg-dim)
+                   ("Comments"             :comment)
                    ("Cursor"               :cursor)
                    ("Preprocessor"         :preprocessor)
                    ("Keywords"             :keyword)

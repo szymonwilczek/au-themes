@@ -45,7 +45,7 @@
          (passes 0)
          (fails 0)
          (tokens '(("Base text"                 :fg-main)
-                   ("Comments"                  :fg-dim)
+                   ("Comments"                  :comment)
                    ("Keywords"                  :keyword)
                    ("Data types"                :type)
                    ("Constants"                 :constant)

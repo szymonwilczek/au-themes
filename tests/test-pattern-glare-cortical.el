@@ -48,7 +48,7 @@
          (fails 0)
          (duty-cycle 0.35)
          (tokens '(("Base text"            :fg-main)
-                   ("Comments"             :fg-dim)
+                   ("Comments"             :comment)
                    ("Keywords"             :keyword)
                    ("Data types"           :type)
                    ("Preprocessor"         :preprocessor)

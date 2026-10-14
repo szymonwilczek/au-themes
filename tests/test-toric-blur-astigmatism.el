@@ -52,7 +52,7 @@
                    ("Numbers"              :number)
                    ("Builtins"             :builtin)
                    ("Brackets"             :bracket)
-                   ("Comments"             :fg-dim))))
+                   ("Comments"             :comment))))
     (princ (format "\n.~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~.\n"))
     (princ (format "| Toric Blur Astigmatism PSF Suite (1.25D Cylinder Defocus)\n"))
     (princ (format "| Theme: %s (%s) | Background: %s (Lum: %.6f)\n" theme polarity bg (rf-luminance-y bg)))

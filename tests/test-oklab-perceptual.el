@@ -44,7 +44,7 @@
          (tokens
           (if (eq polarity 'light)
               '(("Base text"            :fg-main      0.20 0.35 0.01 0.08)
-                ("Comments"             :fg-dim       0.40 0.55 0.01 0.08)
+                ("Comments"             :comment       0.40 0.55 0.01 0.08)
                 ("Cursor"               :cursor       0.35 0.60 0.05 0.20)
                 ("Preprocessor"         :preprocessor 0.30 0.50 0.04 0.20)
                 ("Keywords"             :keyword      0.34 0.50 0.06 0.22)
@@ -60,7 +60,7 @@
                 ("Brackets"             :bracket      0.30 0.50 0.01 0.10)
                 ("Alerts / Errors (!)"  :err          0.35 0.55 0.08 0.25))
             '(("Base text"              :fg-main      0.60 0.85 0.01 0.08)
-              ("Comments"               :fg-dim       0.30 0.55 0.01 0.08)
+              ("Comments"               :comment       0.30 0.55 0.01 0.08)
               ("Cursor"                 :cursor       0.50 0.75 0.06 0.20)
               ("Preprocessor"           :preprocessor 0.48 0.75 0.03 0.22)
               ("Keywords"               :keyword      0.40 0.65 0.08 0.25)

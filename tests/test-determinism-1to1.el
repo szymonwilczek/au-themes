@@ -43,7 +43,7 @@
          (fails 0)
          (tokens-to-check '(:preprocessor :keyword :type :constant :number
                                           :builtin :fnname :fnname-call :string :property
-                                          :operator :bracket :delimiter :err :fg-dim :fg-main))
+                                          :operator :bracket :delimiter :err :comment :fg-main))
          (critical-pairs
           '(("define vs keyword"               :preprocessor :keyword)
             ("define vs constant"              :preprocessor :constant)
@@ -72,7 +72,7 @@
             ("string vs base text"             :string       :fg-main)
             ("err (!) vs base text"            :err          :fg-main)
             ("bracket vs base text"            :bracket      :fg-main)
-            ("comments (needles) vs base text" :fg-dim       :fg-main)
+            ("comments (needles) vs base text" :comment       :fg-main)
             ("define vs string"                :preprocessor :string)
             ("define vs number"                :preprocessor :number)
             ("define vs builtin"               :preprocessor :builtin)

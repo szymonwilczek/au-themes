@@ -47,7 +47,7 @@ CIE S 026 melanopic irradiance, and photoreceptor saturation/bleaching glare.:"
          (fails 0)
          (tokens-to-test
           '(("Base text"            :fg-main)
-            ("Comments"             :fg-dim)
+            ("Comments"             :comment)
             ("Cursor"               :cursor)
             ("Preprocessor"         :preprocessor)
             ("Keywords"             :keyword)
@@ -117,7 +117,7 @@ CIE S 026 melanopic irradiance, and photoreceptor saturation/bleaching glare.:"
                         0.25
                       (cond
                        ;; strictly subdued melanopic excitation
-                       ((memq key '(:string :number :builtin :err :fg-dim :preprocessor)) 0.35)
+                       ((memq key '(:string :number :builtin :err :comment :preprocessor)) 0.35)
                        ;; safe neuro threshold
                        (t 0.65))))
              (max-mp 2.00)
