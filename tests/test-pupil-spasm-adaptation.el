@@ -33,8 +33,13 @@
 ;; (sigma^2) prevents excessive post-saccadic retinal adaptation transients
 ;; and asthenopia.
 ;;
+;; Basis: au-themes heuristics.  The pupil model is Watson & Yellott
+;; (2012); the 0.0400 step, the 0.0250 variance and the 1.00 mm pupil
+;; step between an empty canvas and a full code viewport are our limits.
+;;
 ;; Ref:
 ;; - Loewenfeld (1993) The Pupil
+;; - Watson & Yellott (2012) JoV 12(10):12 (pupil diameter model)
 ;; - Binda & Murray (2015) PNAS
 ;; - Mathôt (2018) JoV
 
@@ -111,22 +116,26 @@
                        variance))
         (setq fails (1+ fails))))
 
-    (princ "\nPupillary Steady-State Deadband Check:\n")
+    (princ "\nPupil Step Between Empty Canvas and Code Viewport (Delta-d <= 1.00 mm):\n")
     (princ (format "---------------------------------------------------------------------\n"))
-    ;; Adapting field:
-    ;; the viewport at the IEC 61966-2-1 reference white plus the reference
-    ;; display veiling glare (0.2 cd/m2)
-    (let* ((pupil-mm (rf-pupil-diameter
-                      (+ (* (rf-viewport-mean-luminance-y pal) rf-display-white-luminance)
-                         rf-reference-veiling-glare)))
-           (deadband-ok (and (>= pupil-mm 2.0) (<= pupil-mm 7.5))))
-      (if deadband-ok
+    ;; Adapting fields at the IEC 61966-2-1 reference white plus the
+    ;; reference display veiling glare (0.2 cd/m2): an empty buffer (canvas
+    ;; only) and a full viewport of code.
+    ;; Switching between them drives the pupil by Delta-d.
+    (let* ((pupil-at (lambda (y)
+                       (rf-pupil-diameter (+ (* y rf-display-white-luminance)
+                                             rf-reference-veiling-glare))))
+           (d-canvas (funcall pupil-at bg-y))
+           (d-code (funcall pupil-at (rf-viewport-mean-luminance-y pal)))
+           (step (abs (- d-canvas d-code)))
+           (step-ok (<= step 1.0)))
+      (princ (format "Empty canvas: %.2f mm | Code viewport: %.2f mm | Delta-d = %.3f mm\n"
+                     d-canvas d-code step))
+      (if step-ok
           (progn
-            (princ (format "[PASS]  Steady-state pupil diameter = %.2f mm in [2.0..7.5 mm]:\n\tStable iris posture.\n"
-                           pupil-mm))
+            (princ "[PASS]  Pupil step stays within 1.00 mm.\n")
             (setq passes (1+ passes)))
-        (princ (format "[FAIL]  Pupil diameter = %.2f mm outside physiological operating window.\n"
-                       pupil-mm))
+        (princ "[FAIL]  Pupil step exceeds 1.00 mm.\n")
         (setq fails (1+ fails))))
 
     (princ (format "\n=====================================================================\n"))
