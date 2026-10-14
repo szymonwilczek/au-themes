@@ -64,7 +64,7 @@
 
     (blue "#303753")                      ; Function definitions
     (blue-warmer "#085474")               ; Function calls
-    (blue-cooler "#324244")               ; Binary and unary operators
+    (blue-cooler "#2d3d3f")               ; Binary and unary operators
     (blue-faint "#085046")                ; Built-in functions
 
     (magenta "#502f12")                   ; Composite types: struct, union, enum
@@ -75,7 +75,7 @@
     (cyan "#502f12")                      ; Keyword fallback
     (cyan-warmer "#363412")               ; Preprocessor alias
     (cyan-cooler "#324244")               ; Operator alias
-    (cyan-faint "#2a3832")                ; Punctuation delimiters
+    (cyan-faint "#2c3b33")                ; Punctuation delimiters
 
     ;; Panels, Diffs and Structural Highlights
     (bg-red-intense "#e09d9c")            ; Blocking errors, fatal assertion panel
