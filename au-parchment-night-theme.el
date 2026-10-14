@@ -63,7 +63,7 @@
     (yellow-faint "#786c5c")              ; Informational tooltips, fringe markers
 
     (blue "#646c5a")                      ; Function definitions
-    (blue-warmer "#80646f")               ; Function calls
+    (blue-warmer "#836771")               ; Function calls
     (blue-cooler "#787062")               ; Binary and unary operators
     (blue-faint "#9e8184")                ; Built-in functions
 
