@@ -51,8 +51,8 @@
     (red-cooler "#9e422c")                ; Diff deletions, removal markers
     (red-faint "#544e45")                 ; Structural brackets
 
-    (green "#7c5610")                     ; Primitive types
-    (green-warmer "#761814")              ; Constant values and macros
+    (green "#755104")                     ; Primitive types
+    (green-warmer "#6e1d1b")              ; Constant values and macros
     (green-cooler "#4a3400")              ; Control keywords
     (green-faint "#625d54")               ; Documentation strings, inline comments
 
