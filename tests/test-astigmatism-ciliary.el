@@ -52,8 +52,7 @@
                          60.0
                        (if (> (rf-luminance-y bg) 0.010) 28.0 24.0)))
          (passes 0)
-         (fails 0)
-         (warnings 0))
+         (fails 0))
     (princ (format "\n.~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~.\n"))
     (princ (format "| Astigmatism & Ciliary Micro-fluctuation Biometrics Suite\n"))
     (princ (format "| Theme: %s (%s) | Background: %s\n" theme polarity bg))
@@ -80,8 +79,8 @@
         (progn
           (princ "[PASS]  Within photophobic comfort window; excessive irradiation spreading\n\tavoided.\n")
           (setq passes (1+ passes)))
-      (princ "[WARN] High contrast: risk of glare irradiation in photophobia.\n")
-      (setq warnings (1+ warnings)))
+      (princ "[FAIL]  High contrast: risk of glare irradiation in photophobia.\n")
+      (setq fails (1+ fails)))
 
     (princ "\nBase Text Subpixel Fringing (C* <= 12.0):\n")
     (princ (format "---------------------------------------------------------------------------\n"))
@@ -90,8 +89,8 @@
         (progn
           (princ "[PASS] Achromatic balance preserved; no LCD subpixel color bleeding.\n")
           (setq passes (1+ passes)))
-      (princ "[WARN] Elevated chroma on body text: risk of chromatic fringing.\n")
-      (setq warnings (1+ warnings)))
+      (princ "[FAIL] Elevated chroma on body text: risk of chromatic fringing.\n")
+      (setq fails (1+ fails)))
 
     (let ((lc-dim (abs (rf-apca-contrast dim bg))))
       (princ (format "\nComment Layer Subordination (|Lc| in [%.1f..%.1f]):\n" min-dim-lc max-dim-lc))
@@ -105,8 +104,8 @@
         (setq fails (1+ fails))))
 
     (princ (format "\n===========================================================================\n"))
-    (princ (format "Astigmatism Biometrics Summary: %d Passed, %d Failed, %d Warnings.\n\n"
-                   passes fails warnings))
+    (princ (format "Astigmatism Biometrics Summary: %d Passed, %d Failed.\n\n"
+                   passes fails))
     (zerop fails)))
 
 (when (and noninteractive (not (bound-and-true-p rf-running-all-tests)))
