@@ -157,6 +157,9 @@ so the colours tested are the colours the faces render."
      :bracket      (funcall get-p 'bracket)
      :delimiter    (funcall get-p 'delimiter)
      :err          (funcall get-p 'err)
+     :comment      (funcall get-p 'comment)
+     :docstring    (funcall get-p 'docstring)
+     :variable     (funcall get-p 'variable)
 
      ;; Panels, Diffs and Structural Highlights:
      :bg-red-intense          (funcall get-opt 'bg-red-intense)
