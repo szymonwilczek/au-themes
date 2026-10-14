@@ -52,9 +52,9 @@
     (red-cooler "#9e3a2a")                ; Diff deletions, removal markers
     (red-faint "#4b453e")                 ; Structural brackets
 
-    (green "#665f48")                     ; Primitive types
-    (green-warmer "#5c634e")              ; Constant values and macros
-    (green-cooler "#363f2c")              ; Control keywords
+    (green "#646258")                     ; Primitive types
+    (green-warmer "#4b6358")              ; Constant values and macros
+    (green-cooler "#343f33")              ; Control keywords
     (green-faint "#685e50")               ; Documentation strings, inline comments
 
     (yellow "#363f2c")                    ; Keyword alias
@@ -63,7 +63,7 @@
     (yellow-faint "#726858")              ; Informational tooltips, fringe markers
 
     (blue "#404138")                      ; Function definitions
-    (blue-warmer "#564740")               ; Function calls
+    (blue-warmer "#594a42")               ; Function calls
     (blue-cooler "#524c44")               ; Binary and unary operators
     (blue-faint "#765b5c")                ; Built-in functions
 
