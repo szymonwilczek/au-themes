@@ -1,4 +1,4 @@
-;;; test-oklab-perceptual.el --- Oklab / Oklch perceptual uniformity and faded color diagnosis -*- lexical-binding: t -*-
+;;; test-oklab-perceptual.el --- Oklab / Oklch lightness bands and chroma ceilings -*- lexical-binding: t -*-
 
 ;; Copyright (C) 2026  Szymon Wilczek
 
@@ -27,6 +27,13 @@
 ;; Variables may be drawn as body text or as a syntax role, so their
 ;; envelope is the hull of the base-text and keyword envelopes.
 ;;
+;; There is deliberately no chroma floor.  The themes aim for low chroma,
+;; and whether two roles can be told apart is gated by CIEDE2000 in the
+;; determinism and CVD suites, not by how saturated each one is.
+;;
+;; Basis: Oklab is Ottosson (2020); the per-role bands are au-themes
+;; calibrations.
+;;
 ;; Ref:
 ;; Ottosson (2020) A Perceptual Color Space for Computer Graphics.
 
@@ -42,46 +49,45 @@
          (polarity (rf-theme-polarity theme))
          (bg-oklch (rf-hex-to-oklch bg))
          (passes 0)
-         (warnings 0)
          (fails 0)
          (tokens
           (if (eq polarity 'light)
-              '(("Base text"            :fg-main      0.20 0.35 0.01 0.08)
-                ("Comments"             :comment       0.40 0.55 0.01 0.08)
-                ("Cursor"               :cursor       0.35 0.60 0.05 0.20)
-                ("Preprocessor"         :preprocessor 0.30 0.50 0.04 0.20)
-                ("Keywords"             :keyword      0.34 0.50 0.06 0.22)
-                ("Data types"           :type         0.35 0.50 0.06 0.22)
-                ("Constants"            :constant     0.30 0.50 0.06 0.22)
-                ("Numbers"              :number       0.34 0.50 0.05 0.22)
-                ("Builtins"             :builtin      0.30 0.50 0.04 0.20)
-                ("Function definitions" :fnname       0.34 0.50 0.04 0.20)
-                ("Function calls"       :fnname-call  0.34 0.50 0.05 0.20)
-                ("Strings"              :string       0.30 0.50 0.05 0.20)
-                ("Struct fields"        :property     0.30 0.50 0.03 0.16)
-                ("Variables"            :variable     0.20 0.50 0.01 0.22)
-                ("Operators"            :operator     0.30 0.50 0.01 0.10)
-                ("Brackets"             :bracket      0.30 0.50 0.01 0.10)
-                ("Alerts / Errors (!)"  :err          0.35 0.55 0.08 0.25))
-            '(("Base text"              :fg-main      0.60 0.85 0.01 0.08)
-              ("Comments"               :comment       0.30 0.55 0.01 0.08)
-              ("Cursor"                 :cursor       0.50 0.75 0.06 0.20)
-              ("Preprocessor"           :preprocessor 0.48 0.75 0.03 0.22)
-              ("Keywords"               :keyword      0.40 0.65 0.08 0.25)
-              ("Data types"             :type         0.50 0.75 0.09 0.25)
-              ("Constants"              :constant     0.40 0.80 0.08 0.25)
-              ("Numbers"                :number       0.55 0.78 0.10 0.25)
-              ("Builtins"               :builtin      0.45 0.68 0.06 0.20)
-              ("Function definitions"   :fnname       0.40 0.65 0.05 0.18)
-              ("Function calls"         :fnname-call  0.50 0.75 0.07 0.20)
-              ("Strings"                :string       0.48 0.72 0.08 0.25)
-              ("Struct fields"          :property     0.50 0.72 0.04 0.16)
-              ("Variables"              :variable     0.40 0.85 0.01 0.25)
-              ("Operators"              :operator     0.42 0.65 0.01 0.08)
-              ("Brackets"               :bracket      0.35 0.58 0.01 0.08)
-              ("Alerts / Errors (!)"    :err          0.40 0.65 0.10 0.28)))))
+              '(("Base text"            :fg-main      0.20 0.35 0.08)
+                ("Comments"             :comment      0.40 0.55 0.08)
+                ("Cursor"               :cursor       0.35 0.60 0.20)
+                ("Preprocessor"         :preprocessor 0.30 0.50 0.20)
+                ("Keywords"             :keyword      0.34 0.50 0.22)
+                ("Data types"           :type         0.35 0.50 0.22)
+                ("Constants"            :constant     0.30 0.50 0.22)
+                ("Numbers"              :number       0.34 0.50 0.22)
+                ("Builtins"             :builtin      0.30 0.50 0.20)
+                ("Function definitions" :fnname       0.34 0.50 0.20)
+                ("Function calls"       :fnname-call  0.34 0.50 0.20)
+                ("Strings"              :string       0.30 0.50 0.20)
+                ("Struct fields"        :property     0.30 0.50 0.16)
+                ("Variables"            :variable     0.20 0.50 0.22)
+                ("Operators"            :operator     0.30 0.50 0.10)
+                ("Brackets"             :bracket      0.30 0.50 0.10)
+                ("Alerts / Errors (!)"  :err          0.35 0.55 0.25))
+            '(("Base text"              :fg-main      0.60 0.85 0.08)
+              ("Comments"               :comment      0.30 0.55 0.08)
+              ("Cursor"                 :cursor       0.50 0.75 0.20)
+              ("Preprocessor"           :preprocessor 0.48 0.75 0.22)
+              ("Keywords"               :keyword      0.40 0.65 0.25)
+              ("Data types"             :type         0.50 0.75 0.25)
+              ("Constants"              :constant     0.40 0.80 0.25)
+              ("Numbers"                :number       0.55 0.78 0.25)
+              ("Builtins"               :builtin      0.45 0.68 0.20)
+              ("Function definitions"   :fnname       0.40 0.65 0.18)
+              ("Function calls"         :fnname-call  0.50 0.75 0.20)
+              ("Strings"                :string       0.48 0.72 0.25)
+              ("Struct fields"          :property     0.50 0.72 0.16)
+              ("Variables"              :variable     0.40 0.85 0.25)
+              ("Operators"              :operator     0.42 0.65 0.08)
+              ("Brackets"               :bracket      0.35 0.58 0.08)
+              ("Alerts / Errors (!)"    :err          0.40 0.65 0.28)))))
     (princ (format "\n.~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~.\n"))
-    (princ (format " Oklab / Oklch Perceptual Uniformity and Faded Color Diagnosis Suite\n"))
+    (princ (format " Oklab / Oklch Lightness Band and Chroma Ceiling Suite\n"))
     (princ (format " Theme: %s (%s) | Background: %s (Oklab L: %.3f)\n" theme polarity bg (nth 0 bg-oklch)))
     (princ (format "'~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~'\n"))
     (princ (format "+----------------------+---------+---------+--------+----------+--------+--------------+\n"))
@@ -93,8 +99,7 @@
              (key  (nth 1 tok))
              (min-l (nth 2 tok))
              (max-l (nth 3 tok))
-             (min-c (nth 4 tok))
-             (max-c (nth 5 tok))
+             (max-c (nth 4 tok))
              (hex (plist-get pal key))
              (oklch (rf-hex-to-oklch hex))
              (l (nth 0 oklch))
@@ -103,7 +108,7 @@
              (c-over-l (if (> l 0.001) (/ c l) 0.0))
              (status "OPTIMAL"))
 
-        ;; Diagnose if color is faded (too low chroma for its lightness)
+        ;; Lightness must sit in the role's band and chroma under its ceiling.
         (cond
          ((< l min-l)
           (setq status "TOO DARK")
@@ -111,12 +116,9 @@
          ((> l max-l)
           (setq status "TOO LIGHT")
           (setq fails (1+ fails)))
-         ((< c min-c)
-          (setq status "WASHED OUT")
-          (setq warnings (1+ warnings)))
          ((> c max-c)
           (setq status "OVER-SAT")
-          (setq warnings (1+ warnings)))
+          (setq fails (1+ fails)))
          (t
           (setq passes (1+ passes))))
 
@@ -124,8 +126,8 @@
                        name hex l c h c-over-l status))))
     (princ (format "+----------------------+---------+---------+--------+----------+--------+--------------+\n"))
     (princ (format "\n========================================================================================\n"))
-    (princ (format "Oklab Diagnosis Summary: %d Optimal, %d Warnings, %d Failed.\n\n"
-                   passes warnings fails))
+    (princ (format "Oklab Diagnosis Summary: %d Optimal, %d Failed.\n\n"
+                   passes fails))
     (zerop fails)))
 
 (when (and noninteractive (not (bound-and-true-p rf-running-all-tests)))
