@@ -33,6 +33,9 @@
 ;; syntactic tokens deliberately sit below Lc 30 to suppress distraction.
 ;; Targets represent intentional photophobia-adapted calibration boundaries
 ;; rather than unadapted APCA Bronze levels.
+;;
+;; Variables may be drawn as body text or as a syntax role, so their band
+;; spans both: the syntax floor and the body-text ceiling.
 
 ;;; Code:
 
@@ -63,6 +66,7 @@
                   ("Function calls"         :fnname-call  ,(if subdued 32.0 40.0) 78.0)
                   ("Strings"    :string       ,(if subdued 32.0 40.0) 78.0)
                   ("Struct fields"           :property     ,(if subdued 32.0 40.0) 78.0)
+                  ("Variables"              :variable     ,(if subdued 32.0 40.0) 85.0)
                   ("Operators"          :operator     ,(if subdued 32.0 40.0) 78.0)
                   ("Brackets"           :bracket      ,(if subdued 32.0 40.0) 78.0)
                   ("Alerts / Errors (!)"              :err          ,(if subdued 32.0 40.0) 78.0)))
@@ -79,6 +83,7 @@
               ("Function calls"         :fnname-call  16.0 55.0)
               ("Strings"    :string       16.0 50.0)
               ("Struct fields"           :property     16.0 55.0)
+              ("Variables"               :variable     16.0 62.0)
               ("Operators"          :operator     15.0 45.0)
               ("Brackets"           :bracket      14.0 40.0)
               ("Alerts / Errors (!)"              :err          16.0 50.0)))))
