@@ -50,7 +50,7 @@
     (red "#9e3a2a")                       ; Errors, critical warnings
     (red-warmer "#463726")                ; String literals
     (red-cooler "#9e3a2a")                ; Diff deletions, removal markers
-    (red-faint "#4e4840")                 ; Structural brackets
+    (red-faint "#4b453e")                 ; Structural brackets
 
     (green "#665f48")                     ; Primitive types
     (green-warmer "#5c634e")              ; Constant values and macros
@@ -75,7 +75,7 @@
     (cyan "#363f2c")                      ; Keyword fallback
     (cyan-warmer "#442b28")               ; Preprocessor alias
     (cyan-cooler "#524c44")               ; Operator alias
-    (cyan-faint "#625c52")                ; Punctuation delimiters
+    (cyan-faint "#61584e")                ; Punctuation delimiters
 
     ;; Panels, Diffs and Structural Highlights
     (bg-red-intense "#e6a79c")            ; Blocking errors, fatal assertion panel
