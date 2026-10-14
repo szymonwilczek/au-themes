@@ -38,7 +38,8 @@
   "Flag indicating that master test suite runner is active.")
 
 (defvar rf-test-modules
-  '(test-apca-contrast
+  '(test-theme-integrity
+    test-apca-contrast
     test-wcag21-ratios
     test-astigmatism-ciliary
     test-pupil-aberrations
