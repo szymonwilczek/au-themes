@@ -42,7 +42,7 @@
     (fg-main "#969e90")                   ; Default buffer text
     (fg-dim "#5e5850")                    ; Comments, metadata
     (fg-alt "#727e6e")                    ; Struct properties
-    (fg-var "#7e6f6a")                    ; Variable definitions
+    (fg-var "#81726c")                    ; Variable definitions
     (bg-active "#242220")                 ; Active modeline frame, focused bars
     (bg-inactive "#1a1816")               ; Inactive modeline
     (border "#36322e")                    ; Window dividers
@@ -51,7 +51,7 @@
     (red "#ba483e")                       ; Errors, critical warnings
     (red-warmer "#446c54")                ; Dried rosemary herbal string literals
     (red-cooler "#a23c34")                ; Diff deletions, removal markers
-    (red-faint "#687066")                 ; Structural brackets
+    (red-faint "#6a736a")                 ; Structural brackets
 
     (green "#728c56")                     ; Primitive types
     (green-warmer "#8e709e")              ; Constant values and macros
@@ -76,7 +76,7 @@
     (cyan "#927658")                      ; Builtin fallback
     (cyan-warmer "#3c7674")               ; Preprocessor alias
     (cyan-cooler "#6c7068")               ; Operator alias
-    (cyan-faint "#687066")                ; Punctuation delimiters
+    (cyan-faint "#6a736a")                ; Punctuation delimiters
 
     ;; Panels, Diffs and Structural Highlights
     (bg-red-intense "#4e1a18")            ; Blocking errors, fatal assertion panel
