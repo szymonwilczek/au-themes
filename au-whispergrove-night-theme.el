@@ -52,7 +52,7 @@
     (red-cooler "#a44a42")                ; Diff deletions, removal markers
     (red-faint "#687e6b")                 ; Structural brackets
 
-    (green "#5ca660")                     ; Primitive types
+    (green "#51a85f")                     ; Primitive types
     (green-warmer "#b05c70")              ; Constant values and macros
     (green-cooler "#a47028")              ; Control keywords
     (green-faint "#586c5a")               ; Documentation strings, inline comments
