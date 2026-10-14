@@ -98,16 +98,6 @@ Ref: Thibos et al. (2004) JOSA A; Legras et al. (2004) OPO; Charman (2005) Clin 
                        label hex peak-y acutance mod-d (if ok "PASS" "FAIL")))))
     (princ (format "+------------------------------+----------+----------+----------+------------+---------+\n"))
 
-    (princ "\nConoid of Sturm Horizontal Smear Resistance:\n")
-    (princ (format "----------------------------------------------------------------------------------------\n"))
-    (if (eq polarity 'dark)
-        (progn
-          (princ "[PASS] Dark background absorbs horizontal Gaussian PSF skirts; letters do not melt.\n")
-          (setq passes (1+ passes)))
-      (progn
-        (princ "[PASS] Daylight contrast ratio maintains positive edge acutance under cylinder defocus.\n")
-        (setq passes (1+ passes))))
-
     (princ (format "\n========================================================================================\n"))
     (princ (format "Astigmatism Meridional Blur Summary: %d Passed, %d Failed.\n\n" passes fails))
     (zerop fails)))
