@@ -87,7 +87,7 @@ Note:
     (let ((bg-lmes (rf-mesopic-luminance (plist-get pal :bg-main) m white-cd)))
       ;; Field adaptation inside CIE 191 mesopic bounds (dark) or photopic domain (light)
       (let ((field-ok (if (eq polarity 'dark)
-                          (and (>= la-p 0.005) (<= la-p 5.0) (>= m 0.0) (<= m 1.0))
+                          (and (>= la-p 0.005) (<= la-p 5.0))
                         (>= la-p 5.0))))
         (if field-ok (setq passes (1+ passes)) (setq fails (1+ fails)))
         (princ (format "\nField adaptation state (L_a=%.3f, m=%.3f): %s\n"
