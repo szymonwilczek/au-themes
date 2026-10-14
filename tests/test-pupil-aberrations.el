@@ -48,8 +48,7 @@
          (pupil-diam (rf-pupil-diameter l-bg))
          (aber-factor (rf-wavefront-aberration-factor pupil-diam))
          (passes 0)
-         (fails 0)
-         (warnings 0))
+         (fails 0))
     (princ (format "\n.~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~.\n"))
     (princ (format "| Pupil Dynamics & 4th-Order Spherical Wavefront Aberration Suite\n"))
     (princ (format "| Theme: %s | Background: %s\n" theme bg))
@@ -70,8 +69,8 @@
             (princ (format "[PASS]  Pupil (%.2f mm) remains in optimal optical zone (< %.2f mm).\n" pupil-diam max-d))
             (princ "\tAstigmatic cylinder defocus and spherical aberration remain\n\tcontained.\n")
             (setq passes (1+ passes)))
-        (princ "[WARN]  Pupil exceeds limit: r^4 scaling increases blur halo.\n")
-        (setq warnings (1+ warnings)))
+        (princ "[FAIL]  Pupil exceeds limit: r^4 scaling increases blur halo.\n")
+        (setq fails (1+ fails)))
 
       ;; Pupil diffraction limit lower bound
       (princ (format "\nDiffraction Blur Avoidance (d >= %.2f mm):\n" min-d))
@@ -83,8 +82,8 @@
         (setq fails (1+ fails))))
 
     (princ (format "\n====================================================================\n"))
-    (princ (format "Pupil Aberrations Summary: %d Passed, %d Failed, %d Warnings.\n\n"
-                   passes fails warnings))
+    (princ (format "Pupil Aberrations Summary: %d Passed, %d Failed.\n\n"
+                   passes fails))
     (zerop fails)))
 
 (when (and noninteractive (not (bound-and-true-p rf-running-all-tests)))
