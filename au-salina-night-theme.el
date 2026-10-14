@@ -42,7 +42,7 @@
     (fg-main "#8e9fa2")                   ; Default buffer text
     (fg-dim "#566468")                    ; Comments, metadata
     (fg-alt "#587e8c")                    ; Struct properties
-    (fg-var "#528ca0")                    ; Variable definitions
+    (fg-var "#70908a")                    ; Variable definitions
     (bg-active "#1e2626")                 ; Active modeline frame, focused bars
     (bg-inactive "#161c1c")               ; Inactive modeline
     (border "#283438")                    ; Window dividers
