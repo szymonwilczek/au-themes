@@ -52,8 +52,7 @@
          (s-10 (* 100.0 (rf-glare-spread-function 10.0)))
          (log-s (log s-10 10))
          (passes 0)
-         (fails 0)
-         (warnings 0))
+         (fails 0))
     (princ (format "\n.~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~.\n"))
     (princ (format "| Intraocular Straylight & Disability Glare Suite\n"))
     (princ (format "| Theme: %s (%s) | Background: %s\n" theme polarity bg))
@@ -74,8 +73,8 @@
               (progn
                 (princ "[PASS]  Background is soft canopy mist; avoids stark white corneal\n\tglare.\n")
                 (setq passes (1+ passes)))
-            (princ "[WARN]  Blinding bright background: risk of photophobia\n\tand pupillary strain.\n")
-            (setq warnings (1+ warnings)))
+            (princ "[FAIL]  Blinding bright background: risk of photophobia\n\tand pupillary strain.\n")
+            (setq fails (1+ fails)))
 
           (princ "\nNon-Harsh Edge Contrast (|C_W| <= 0.98):\n")
           (princ (format "------------------------------------------------------------------\n"))
@@ -93,8 +92,8 @@
           (progn
             (princ "[PASS]  Weber contrast controlled; no intraocular halo glowing\n\tat letter edges.\n")
             (setq passes (1+ passes)))
-        (princ "[WARN]  High Weber contrast: risk of disability glare on older eyes / astigmatism.\n")
-        (setq warnings (1+ warnings)))
+        (princ "[FAIL]  High Weber contrast: risk of disability glare on older eyes / astigmatism.\n")
+        (setq fails (1+ fails)))
 
       (princ "\nAbsolute Black Hole Avoidance (Y_bg >= 0.0010):\n")
       (princ (format "------------------------------------------------------------------\n"))
@@ -106,8 +105,8 @@
         (setq fails (1+ fails))))
 
       (princ (format "\n==================================================================\n"))
-    (princ (format "Straylight & Glare Summary: %d Passed, %d Failed, %d Warnings.\n\n"
-                   passes fails warnings))
+    (princ (format "Straylight & Glare Summary: %d Passed, %d Failed.\n\n"
+                   passes fails))
     (zerop fails)))
 
 (when (and noninteractive (not (bound-and-true-p rf-running-all-tests)))
