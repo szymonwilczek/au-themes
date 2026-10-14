@@ -33,6 +33,14 @@
 ;; A non-zero separation deadband (Delta-Y >= 0.0050) maintains distinct contour
 ;; sharpness.
 ;;
+;; The pairs are the role boundaries that touch without whitespace in C
+;; (`fn(', `x[i]', `p->f', `");', `x;').  Two roles drawn in the same
+;; colour form no chromatic edge and are exempt.
+;;
+;; Basis: au-themes heuristic.  The 0.0050 deadband is our choice;
+;; the cited work establishes that isoluminant edges are poorly resolved,
+;; not this threshold.
+;;
 ;; Ref:
 ;; - Livingstone & Hubel (1987) J. Neurosci.
 ;; - Mullen (1985) J. Physiol.
@@ -74,17 +82,33 @@ Ref: Livingstone & Hubel (1987) J. Neurosci.; Mullen (1985) J. Physiol.; Gegenfu
             ("operator vs number"     :operator    :number)
             ("bracket vs base text"   :bracket     :fg-main)
             ("bracket vs type"        :bracket     :type)
-            ("bracket vs keyword"     :bracket     :keyword))))
+            ("bracket vs keyword"     :bracket     :keyword)
+            ("bracket vs operator"    :bracket     :operator)
+            ("fnname-call vs bracket" :fnname-call :bracket)
+            ("fnname vs bracket"      :fnname      :bracket)
+            ("variable vs bracket"    :variable    :bracket)
+            ("variable vs operator"   :variable    :operator)
+            ("variable vs delimiter"  :variable    :delimiter)
+            ("property vs bracket"    :property    :bracket)
+            ("string vs bracket"      :string      :bracket)
+            ("number vs bracket"      :number      :bracket)
+            ("constant vs bracket"    :constant    :bracket)
+            ("delimiter vs base text" :delimiter   :fg-main)
+            ("delimiter vs bracket"   :delimiter   :bracket)
+            ("delimiter vs string"    :delimiter   :string)
+            ("delimiter vs number"    :delimiter   :number)
+            ("delimiter vs constant"  :delimiter   :constant)
+            ("delimiter vs property"  :delimiter   :property))))
 
     (princ (format "\n.~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~.\n"))
     (princ (format "| Isoluminance Boundary Jitter & Contiguous Syntax Suite\n"))
     (princ (format "| Theme: %s (%s) | Background: %s (Y_bg: %.6f)\n" theme polarity bg bg-y))
     (princ (format "| Requirement: Contiguous syntax pairs maintain Delta-Y >= 0.0050\n"))
     (princ (format "'~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~'\n"))
-    (princ (format "\n+-----------------------+---------+---------+--------+--------+---------+--------+\n"))
-    (princ (format "| %-21s | %-7s | %-7s | %-6s | %-6s | %-7s | %-7s|\n"
+    (princ (format "\n+------------------------+---------+---------+--------+--------+---------+--------+\n"))
+    (princ (format "| %-22s | %-7s | %-7s | %-6s | %-6s | %-7s | %-7s|\n"
                    "Adjacent Syntax Pair" "Color 1" "Color 2" "Y 1" "Y 2" "Delta-Y" "Status"))
-    (princ (format "+-----------------------+---------+---------+--------+--------+---------+--------+\n"))
+    (princ (format "+------------------------+---------+---------+--------+--------+---------+--------+\n"))
     (dolist (p touching-pairs)
       (let* ((label (nth 0 p))
              (k1    (nth 1 p))
@@ -95,13 +119,14 @@ Ref: Livingstone & Hubel (1987) J. Neurosci.; Mullen (1985) J. Physiol.; Gegenfu
              (y2    (rf-luminance-y h2))
              (dy    (abs (- y1 y2)))
              (min-dy 0.0050)
-             (ok    (>= dy min-dy)))
+             (same  (string= h1 h2))
+             (ok    (or same (>= dy min-dy))))
         (if ok
             (setq passes (1+ passes))
           (setq fails (1+ fails)))
-        (princ (format "| %-21s | %-7s | %-7s | %6.4f | %6.4f | %7.4f |  %s  |\n"
-                       label h1 h2 y1 y2 dy (if ok "PASS" "FAIL")))))
-    (princ (format "+-----------------------+---------+---------+--------+--------+---------+--------+\n"))
+        (princ (format "| %-22s | %-7s | %-7s | %6.4f | %6.4f | %7.4f |  %s  |\n"
+                       label h1 h2 y1 y2 dy (cond (same "SAME") (ok "PASS") (t "FAIL"))))))
+    (princ (format "+------------------------+---------+---------+--------+--------+---------+--------+\n"))
     (princ (format "\n==================================================================================\n"))
     (princ (format "Isoluminance Jitter Summary: %d Passed, %d Failed.\n\n" passes fails))
     (zerop fails)))
