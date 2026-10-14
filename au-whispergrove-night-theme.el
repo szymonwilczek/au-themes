@@ -75,7 +75,7 @@
     (cyan "#a47028")                      ; Keyword fallback
     (cyan-warmer "#7e5a28")               ; Preprocessor alias
     (cyan-cooler "#5e8274")               ; Operator alias
-    (cyan-faint "#6c786e")                ; Punctuation delimiters
+    (cyan-faint "#6a756b")                ; Punctuation delimiters
 
     ;; Panels, Diffs and Structural Highlights
     (bg-red-intense "#741d1a")            ; Blocking errors, fatal assertion panel
