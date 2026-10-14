@@ -50,6 +50,7 @@
                    ("Function calls"       :fnname-call)
                    ("Strings"              :string)
                    ("Struct fields"        :property)
+                   ("Variables"            :variable)
                    ("Operators"            :operator)
                    ("Brackets"             :bracket)
                    ("Comments"             :comment)
