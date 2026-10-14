@@ -94,25 +94,47 @@ uses; `test-theme-integrity' checks that it matches the palette."
              (or theme-name rf-active-theme)))
     declared))
 
-(defun au-extract-active-palette (&optional theme-name)
-  "Extract complete semantic color dictionary directly from THEME-NAME (default `rf-active-theme')."
-  (let* ((theme (or theme-name rf-active-theme (car (au-test-discover-themes))))
-         (canonical (let ((name (symbol-name theme)))
+(defun au-test-theme-palette-alist (theme)
+  "Return the unresolved palette alist of THEME, loading the theme file if needed.
+This is the `<theme>-palette' that `modus-themes-generate-palette' builds
+from the theme's colours, its semantic mappings and the shared ef-themes
+mappings, i.e. the palette the theme's faces are rendered from (without
+user overrides)."
+  (let* ((canonical (let ((name (symbol-name theme)))
                       (if (string-prefix-p "au-" name)
                           name
                         (format "au-%s" name))))
-         (pal-sym (intern (format "%s-palette-partial" canonical)))
-         (file-sym (intern (format "%s-theme" canonical)))
-         (_ (unless (boundp pal-sym)
-              (require file-sym nil t)))
-         (partial (if (boundp pal-sym)
-                      (symbol-value pal-sym)
-                    (error "Unknown theme or missing palette: %s" theme)))
+         (pal-sym (intern (format "%s-palette" canonical)))
+         (file-sym (intern (format "%s-theme" canonical))))
+    (unless (boundp pal-sym)
+      (require file-sym nil t))
+    (unless (boundp pal-sym)
+      (error "Unknown theme or missing palette: %s" theme))
+    (symbol-value pal-sym)))
+
+(defun au-test-resolve-color (alist name &optional seen)
+  "Resolve palette entry NAME in ALIST to a hex string, following mappings.
+Return nil when NAME is undefined or maps to `unspecified'."
+  (let ((value (cadr (assq name alist))))
+    (cond
+     ((stringp value) value)
+     ((and value (symbolp value) (not (eq value 'unspecified)))
+      (when (memq value seen)
+        (error "Circular palette mapping through %s" value))
+      (au-test-resolve-color alist value (cons name seen)))
+     (t nil))))
+
+(defun au-extract-active-palette (&optional theme-name)
+  "Extract complete semantic color dictionary directly from THEME-NAME (default `rf-active-theme').
+Syntax roles are resolved through the theme's own semantic mappings,
+so the colours tested are the colours the faces render."
+  (let* ((theme (or theme-name rf-active-theme (car (au-test-discover-themes))))
+         (alist (au-test-theme-palette-alist theme))
          (get-p (lambda (sym)
-                  (or (cadr (assq sym partial))
+                  (or (au-test-resolve-color alist sym)
                       (error "Theme %s does not define %s" theme sym))))
          (get-opt (lambda (sym)
-                    (cadr (assq sym partial)))))
+                    (au-test-resolve-color alist sym))))
     (list
      :theme theme
      :bg-main      (funcall get-p 'bg-main)
@@ -121,20 +143,20 @@ uses; `test-theme-integrity' checks that it matches the palette."
      :fg-main      (funcall get-p 'fg-main)
      :fg-dim       (funcall get-p 'fg-dim)
      :cursor       (funcall get-p 'cursor)
-     :preprocessor (funcall get-p 'yellow-cooler)
-     :keyword      (funcall get-p 'green-cooler)
-     :type         (funcall get-p 'green)
-     :constant     (funcall get-p 'green-warmer)
-     :number       (funcall get-p 'yellow-warmer)
-     :builtin      (funcall get-p 'blue-faint)
-     :fnname       (funcall get-p 'blue)
-     :fnname-call  (funcall get-p 'blue-warmer)
-     :string       (funcall get-p 'red-warmer)
-     :property     (funcall get-p 'fg-alt)
-     :operator     (funcall get-p 'blue-cooler)
-     :bracket      (funcall get-p 'red-faint)
-     :delimiter    (funcall get-p 'cyan-faint)
-     :err          (funcall get-p 'red)
+     :preprocessor (funcall get-p 'preprocessor)
+     :keyword      (funcall get-p 'keyword)
+     :type         (funcall get-p 'type)
+     :constant     (funcall get-p 'constant)
+     :number       (funcall get-p 'number)
+     :builtin      (funcall get-p 'builtin)
+     :fnname       (funcall get-p 'fnname)
+     :fnname-call  (funcall get-p 'fnname-call)
+     :string       (funcall get-p 'string)
+     :property     (funcall get-p 'property)
+     :operator     (funcall get-p 'operator)
+     :bracket      (funcall get-p 'bracket)
+     :delimiter    (funcall get-p 'delimiter)
+     :err          (funcall get-p 'err)
 
      ;; Panels, Diffs and Structural Highlights:
      :bg-red-intense          (funcall get-opt 'bg-red-intense)
