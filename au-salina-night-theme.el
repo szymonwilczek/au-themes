@@ -49,12 +49,12 @@
 
     ;; Basic Chromatic Scale
     (red "#ba483e")                       ; Errors, critical warnings
-    (red-warmer "#846a58")                ; String literals
+    (red-warmer "#80644f")                ; String literals
     (red-cooler "#a24238")                ; Diff deletions, removal markers
     (red-faint "#60777f")                 ; Structural brackets
 
-    (green "#28968a")                     ; Primitive types
-    (green-warmer "#b06e3e")              ; Constant values and macros
+    (green "#199a94")                     ; Primitive types
+    (green-warmer "#a97248")              ; Constant values and macros
     (green-cooler "#a8545e")              ; Control keywords
     (green-faint "#546468")               ; Documentation strings, inline comments
 
@@ -63,7 +63,7 @@
     (yellow-cooler "#207866")             ; Maritime petrol preprocessor directives
     (yellow-faint "#686858")              ; Informational tooltips, fringe markers
 
-    (blue "#346698")                      ; Oceanic cobalt function definitions
+    (blue "#326492")                      ; Oceanic cobalt function definitions
     (blue-warmer "#6094ca")               ; Wave surf blue function calls
     (blue-cooler "#5a7276")               ; Slate oceanic operators
     (blue-faint "#827030")                ; Salted amber built-in functions
