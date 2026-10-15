@@ -46,7 +46,6 @@
     (bg-inactive "#8c948e")               ; Inactive modeline
     (border "#626a64")                    ; Window dividers
 
-
     ;; Basic Chromatic Scale
     (red "#94322a")                       ; Errors, critical warnings
     (red-warmer "#5c1e10")                ; String literals
