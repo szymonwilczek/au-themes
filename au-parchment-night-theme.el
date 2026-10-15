@@ -53,7 +53,7 @@
     (red-faint "#736b5d")                 ; Structural brackets
 
     (green "#87927d")                     ; Primitive types
-    (green-warmer "#b4bea6")              ; Constant values and macros
+    (green-warmer "#a3af98")              ; Constant values and macros
     (green-cooler "#6c7158")              ; Control keywords
     (green-faint "#665c4e")               ; Documentation strings, inline comments
 
