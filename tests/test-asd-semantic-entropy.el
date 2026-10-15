@@ -27,6 +27,12 @@
 ;; (weak central coherence). Excessive chroma variance ('code christmas tree')
 ;; causes sensory noise and cognitive overwhelm.
 ;;
+;; Basis: Shannon entropy is Shannon (1948) and chroma is Oklch
+;; (Ottosson 2020).  The five 0.04-wide chroma bins, the 2.10 bit entropy
+;; ceiling and the per-token, mean and spread chroma limits are au-themes
+;; heuristics; weak central coherence (Happe & Frith 2006) motivates them
+;; but does not set them.
+;;
 ;; Ref:
 ;; - Happé & Frith (2006) J. Autism Dev. Disord.
 ;; - Shannon (1948)
