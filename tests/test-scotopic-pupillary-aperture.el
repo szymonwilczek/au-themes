@@ -1,4 +1,4 @@
-;;; test-scotopic-pupillary-aperture.el --- Stiles-Crawford Effect and Scopic Load Ratio -*- lexical-binding: t -*-
+;;; test-scotopic-pupillary-aperture.el --- Stiles-Crawford Effect and Mesopic Load -*- lexical-binding: t -*-
 
 ;; Copyright (C) 2026  Szymon Wilczek
 
@@ -23,8 +23,8 @@
 
 ;;; Commentary:
 ;;
-;; Evaluate Stiles-Crawford effect (SCE-I) and 80x40 viewport Scopic Load
-;; Ratio.
+;; Evaluate Stiles-Crawford effect (SCE-I) and 80x40 viewport Mesopic
+;; Load.
 ;; In dark rooms with wide pupils (6.5-7.5mm), peripheral rays cause spherical
 ;; aberrations.
 ;; In ASD, prolonged pupillary latency impairs light constriction.
@@ -51,7 +51,7 @@
 (require 'test-palette-extractor)
 
 (defun test-scotopic-pupillary-aperture-run ()
-  "Evaluate Stiles-Crawford effect (SCE-I) and 80x40 viewport Scopic Load Ratio."
+  "Evaluate Stiles-Crawford effect (SCE-I) and 80x40 viewport Mesopic Load."
   (let* ((pal (au-extract-active-palette))
          (theme (plist-get pal :theme))
          (polarity (rf-theme-polarity theme))
@@ -66,14 +66,14 @@
          (mean-viewport-cd (* mean-viewport-y rf-display-white-luminance)))
 
     (princ "\n.~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~.\n")
-    (princ (format "| Stiles-Crawford (SCE-I) and Viewport Scopic Load Ratio Suite\n"))
+    (princ (format "| Stiles-Crawford (SCE-I) and Viewport Mesopic Load Suite\n"))
     (princ (format "| Theme: %s (%s)\n" theme polarity))
     (princ (format "| Background: %s (Y_bg: %.6f)\n" bg bg-y))
     (princ (format "| Model: 80x40 Viewport\n|\t (3200 cells, 20%% glyph ink fill, White: %.0f cd/m2)\n"
                    rf-display-white-luminance))
     (princ "'~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~'\n")
 
-    (princ "\n80x40 Viewport Scopic Load & Photopic Threshold Check:\n")
+    (princ "\n80x40 Viewport Mesopic Load & Photopic Threshold Check:\n")
     (princ "----------------------------------------------------------------\n")
     (if (eq polarity 'dark)
         (let* ((max-mesopic-cd 5.0) ; CIE 191:2010 mesopic/photopic transition threshold
@@ -136,7 +136,7 @@
         (setq fails (1+ fails))))
 
     (princ "\n================================================================\n")
-    (princ (format "Stiles-Crawford Scopic Load Summary: %d Passed, %d Failed.\n\n" passes fails))
+    (princ (format "Stiles-Crawford Mesopic Load Summary: %d Passed, %d Failed.\n\n" passes fails))
     (zerop fails)))
 
 (when (and noninteractive (not (bound-and-true-p rf-running-all-tests)))
