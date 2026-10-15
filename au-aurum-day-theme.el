@@ -1,4 +1,4 @@
-;;; au-aurum-day-theme.el --- Warm daylight theme without blue-light hazard -*- lexical-binding:t -*-
+;;; au-aurum-day-theme.el --- Warm daylight theme for photophobia and ocular migraine -*- lexical-binding:t -*-
 
 ;; Copyright (C) 2026  Szymon Wilczek
 
@@ -23,7 +23,7 @@
 
 ;;; Commentary:
 ;;
-;; Light theme with warm earth tones and no blue-light emission.
+;; Light theme with warm earth tones on a muted canvas.
 ;; Calibrated for severe photophobia, ocular migraine, and daytime readability.
 ;; Part of the `au-themes' collection.
 
@@ -169,7 +169,7 @@
 (modus-themes-theme
  'au-aurum-day
  'ef-themes
- "Warm daylight theme with zero blue-light hazard, calibrated for photophobia."
+ "Warm daylight theme with earth tones, calibrated for photophobia."
  'light
  'au-aurum-day-palette
  nil
