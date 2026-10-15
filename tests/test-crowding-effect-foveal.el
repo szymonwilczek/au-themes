@@ -31,6 +31,14 @@
 ;; In code reading, punctuation, brackets, and operators act as flankers
 ;; adjacent to identifiers; subordinating delimiter contrast mitigates flanker
 ;; interference and supports local detail processing.
+;; On dark themes delimiters must stay at or under 0.75 of the APCA
+;; contrast of body text, brackets at or under 0.75 of data types,
+;; and operators at or under 0.85 of struct fields.  On light themes
+;; delimiters and brackets keep at least Lc 40 instead.
+;;
+;; Basis: flanker contrast differences reducing crowding are Kooi et al.
+;; (1994) and Levi (2008).  The 0.75 and 0.85 ratios and the Lc 40
+;; floor are au-themes heuristics.
 ;;
 ;; Ref:
 ;; - Kooi et al. (1994) Vision Res. 34:269-276
