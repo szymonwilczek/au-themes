@@ -134,25 +134,25 @@
     (fg-prompt blue)
 
     ;; Syntax Mappings:
-    (keyword green-cooler)             ; Mapped on #a47028
-    (builtin blue-faint)               ; Mapped on #398a80
-    (type green)                       ; Mapped on #5ca660
-    (preprocessor yellow-cooler)       ; Mapped on #7e5a28
-    (constant green-warmer)            ; Mapped on #b05c70
-    (number yellow-warmer)             ; Mapped on #bca03c
-    (fnname blue)                      ; Mapped on #227086
-    (fnname-call blue-warmer)          ; Mapped on #4e92a4
-    (string red-warmer)                ; Mapped on #9e604e
-    (property fg-alt)                  ; Mapped on #6ea288
-    (variable fg-var)                  ; Mapped on #98aba0
-    (variable-use fg-main)             ; Variable usage -> #9ca69e
-    (operator blue-cooler)             ; Mapped on #5e8274
-    (bracket red-faint)                ; Mapped on #687e6b
-    (delimiter cyan-faint)             ; Mapped on #6c786e
-    (comment green-faint)              ; Buffer comments -> #586c5a
-    (docstring green-faint)            ; In-source docstrings -> #586c5a
-    (rx-backslash yellow-cooler)       ; Regex backslashes
-    (rx-construct red)                 ; Regex constructs
+    (keyword green-cooler)
+    (builtin blue-faint)
+    (type green)
+    (preprocessor yellow-cooler)
+    (constant green-warmer)
+    (number yellow-warmer)
+    (fnname blue)
+    (fnname-call blue-warmer)
+    (string red-warmer)
+    (property fg-alt)
+    (variable fg-var)
+    (variable-use fg-main)
+    (operator blue-cooler)
+    (bracket red-faint)
+    (delimiter cyan-faint)
+    (comment green-faint)
+    (docstring green-faint)
+    (rx-backslash yellow-cooler)
+    (rx-construct red)
 
     (accent-0 blue)
     (accent-1 green)
