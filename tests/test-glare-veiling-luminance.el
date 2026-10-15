@@ -24,6 +24,13 @@
 ;;
 ;; Evaluate intraocular veiling glare spatial integral and token contrast
 ;; retention.
+;; Each listed role must sit in its APCA band and keep at least 65 % of
+;; its Michelson contrast once the CIE 146 veiling luminance of the
+;; viewport is added to both text and canvas.
+;;
+;; Basis: the veiling luminance is CIE 146:2002 (Vos & van den Berg
+;; 1999).  The 65 % retention floor and the per-role Lc bands are
+;; au-themes heuristics; the body-text band is `rf-base-text-lc-band'.
 ;;
 ;; Ref:
 ;; - CIE 112-1994
