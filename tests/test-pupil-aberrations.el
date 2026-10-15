@@ -27,6 +27,13 @@
 ;; white luminance, not the background colour alone: the pupil integrates
 ;; corneal flux over the field (Stanley & Davies 1995), so using only the canvas
 ;; luminance under-drives the model.
+;; The pupil must stay at or under 4.5 mm (light) or 5.5 mm (dark), where
+;; fourth-order spherical aberration grows quickly, and at or above
+;; 2.0 mm (light) or 2.5 mm (dark), below which diffraction dominates.
+;;
+;; Basis: pupil size is Watson & Yellott (2012) and the r^4 growth of
+;; spherical aberration follows Liang & Williams (1997).  The four
+;; diameter limits are au-themes heuristics.
 ;;
 ;; Ref:
 ;; - Liang & Williams (1997) JOSA A 14:2873-2883
