@@ -770,6 +770,20 @@ underestimates the defocus of broadband or mixed-primary colours (up to
   "Solid-angle area of the display in square degrees."
   (* (rf-degrees rf-display-width-mm) (rf-degrees rf-display-height-mm)))
 
+(defun rf-display-projected-solid-angle ()
+  "Projected solid angle of the display in sr, seen on-axis from its centre.
+Corneal illuminance from a uniform Lambertian panel of luminance L is
+E = L * this value.  Sums the configuration factor of the four quadrants
+of a rectangle viewed along the normal through one corner (Howell,
+A Catalog of Radiation Heat Transfer Configuration Factors, B-3)."
+  (let* ((a (/ (* 0.5 rf-display-width-mm) rf-viewing-distance-mm))
+         (b (/ (* 0.5 rf-display-height-mm) rf-viewing-distance-mm))
+         (ra (sqrt (+ 1.0 (* a a))))
+         (rb (sqrt (+ 1.0 (* b b)))))
+    ;; pi * 4 quadrants * (1/2pi) [...] = 2 [...]
+    (* 2.0 (+ (* (/ a ra) (atan (/ b ra)))
+              (* (/ b rb) (atan (/ a rb)))))))
+
 ;; Pupil diameter:
 ;; Unified formula of Watson & Yellott (2012) "A unified formula for
 ;; light-adapted pupil size", J. Vis. 12(10):12, DOI: 10.1167/12.10.12, which
@@ -1034,22 +1048,28 @@ field, not of the individual stimulus."
 (defconst rf-glyph-ink-coverage 0.20
   "Typical typographic ink coverage inside a character cell (15-25%).")
 
-(defun rf-viewport-mean-luminance-y (pal)
-  "Mean relative luminance of an 80x40 viewport rendered with palette PAL.
-Accounts for ~20% typographic stroke coverage within code glyph cells."
+(defun rf-viewport-mean (pal fn)
+  "Mean of FN over an 80x40 viewport rendered with palette PAL.
+FN maps a hex colour to a quantity that adds linearly over area, such as
+relative luminance.  Accounts for ~20% typographic stroke coverage within
+code glyph cells."
   (let* ((keys '(:fg-main :keyword :type :property :fnname-call :number :string :constant))
-         (ink-y (/ (cl-loop for k in keys sum (rf-luminance-y (plist-get pal k)))
-                   (float (length keys))))
-         (hl-y (rf-luminance-y (plist-get pal :bg-hl-line)))
-         (bg-y (rf-luminance-y (plist-get pal :bg-main)))
+         (ink (/ (cl-loop for k in keys sum (funcall fn (plist-get pal k)))
+                 (float (length keys))))
+         (hl (funcall fn (plist-get pal :bg-hl-line)))
+         (bg (funcall fn (plist-get pal :bg-main)))
          ;; Inside code cells, glyph ink occupies ~20% of area, rest is background:
-         (code-cell-y (+ (* rf-glyph-ink-coverage ink-y)
-                         (* (- 1.0 rf-glyph-ink-coverage) bg-y)))
+         (code-cell (+ (* rf-glyph-ink-coverage ink)
+                       (* (- 1.0 rf-glyph-ink-coverage) bg)))
          (bg-cells (- rf-viewport-cells rf-viewport-code-cells rf-viewport-hl-cells)))
-    (/ (+ (* rf-viewport-code-cells code-cell-y)
-          (* rf-viewport-hl-cells hl-y)
-          (* bg-cells bg-y))
+    (/ (+ (* rf-viewport-code-cells code-cell)
+          (* rf-viewport-hl-cells hl)
+          (* bg-cells bg))
        (float rf-viewport-cells))))
+
+(defun rf-viewport-mean-luminance-y (pal)
+  "Mean relative luminance of an 80x40 viewport rendered with palette PAL."
+  (rf-viewport-mean pal #'rf-luminance-y))
 
 ;;;; Toric Blur Astigmatism PSF (Geometric Optics: Charman 2005)
 (defun rf-toric-blur-michelson (hex bg-hex &optional blur-attenuation)
