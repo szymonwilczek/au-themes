@@ -31,6 +31,11 @@
 ;; contrast adaptation and receptive-field gain control in retinal ganglion
 ;; cells and primary visual cortex.
 ;;
+;; Basis: the 0.45 s decay constant is taken from Loomis (1978) and Kelly
+;; (1979).  The adaptation contrast A0 = |dY| / (Y_tok + Y_bg + 0.50), its
+;; 0.50 semi-saturation term, and the 5.0, 5.5 and 6.0% residual limits
+;; are au-themes heuristics.
+;;
 ;; Ref:
 ;; - Loomis (1978)
 ;; - Kelly (1979)
