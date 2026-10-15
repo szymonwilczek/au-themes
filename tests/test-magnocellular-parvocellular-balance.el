@@ -30,6 +30,13 @@
 ;; Backgrounds (hl-line, region) must have minimal luminance contrast
 ;; (Lc < 12.0), leaving all semantic differentiation to the slow, detailed,
 ;; color-sensitive P-pathway.
+;; Syntax roles keep at least Lc 20, and the hl-line luminance step may
+;; be at most 0.35 of the body-text step.
+;;
+;; Basis: the M and P pathway properties are Livingstone & Hubel (1988)
+;; and Merigan & Maunsell (1993).  The Lc 12 and Michelson 0.35 chrome
+;; limits, the Lc 20 role floor and the 0.35 gain ratio are au-themes
+;; heuristics.
 ;;
 ;; Ref:
 ;; - Livingstone & Hubel (1988) Science
