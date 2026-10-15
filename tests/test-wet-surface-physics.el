@@ -1,4 +1,4 @@
-;;; test-wet-surface-physics.el --- Organic gamut chroma ceiling and Lekner-Dorf (1988) wet optics -*- lexical-binding: t -*-
+;;; test-wet-surface-physics.el --- Organic CIELAB chroma ceilings per syntax role -*- lexical-binding: t -*-
 
 ;; Copyright (C) 2026  Szymon Wilczek
 
@@ -22,25 +22,22 @@
 
 ;;; Commentary:
 ;;
-;; Evaluate organic gamut chroma boundaries and Lekner & Dorf (1988)
-;; wetting optics.
+;; Cap the CIELAB chroma C*ab of each syntax role, so that no role is
+;; drawn more saturated than the muted, natural-surface ("organic")
+;; palette the themes are designed around.
 ;;
-;; Ref:
-;; Lekner & Dorf (1988) Applied Optics 27(7), 1278-1280.
+;; Basis: au-themes heuristic.  The per-role ceilings are design limits.
 
 ;;; Code:
 
 (require 'test-palette-extractor)
 
 (defun test-wet-surface-physics-run ()
-  "Evaluate organic gamut chroma boundaries and Lekner & Dorf (1988) wetting optics."
+  "Cap the CIELAB chroma of each syntax role at its organic ceiling."
   (let* ((pal (au-extract-active-palette))
          (theme (plist-get pal :theme))
          (passes 0)
          (fails 0)
-         ;; Internal reflection fraction at water-air boundary
-         ;; (n=1.333, Lekner & Dorf 1988 eq. 4)
-         (r-wa 0.55)
          (tokens '(("Preprocessor"         :preprocessor 50.0)
                    ("Keywords"             :keyword      50.0)
                    ("Data types"           :type         52.0)
@@ -56,34 +53,29 @@
                    ("Comments"             :comment      20.0)
                    ("Alerts / Errors (!)"  :err          55.0))))
     (princ (format "\n.~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~.\n"))
-    (princ (format "| Organic Chroma Ceiling & Lekner & Dorf (1988) Wet Surface Optics\n"))
+    (princ (format "| Organic CIELAB Chroma Ceiling Suite\n"))
     (princ (format "| Theme: %s\n" theme))
     (princ (format "'~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~'\n"))
-    (princ (format "\n+----------------------+---------+-----------+------------+---------+-----------+\n"))
-    (princ (format "| %-20s | %-7s | %-8s | %-10s | %-7s | %-10s|\n"
-                   "Token Role" "Hex" "Chroma C*" "C* Ceiling" "Y_wet/Y" "Status"))
-    (princ (format "+----------------------+---------+-----------+------------+---------+-----------+\n"))
+    (princ (format "\n+----------------------+---------+-----------+------------+-----------+\n"))
+    (princ (format "| %-20s | %-7s | %-8s | %-10s | %-10s|\n"
+                   "Token Role" "Hex" "Chroma C*" "C* Ceiling" "Status"))
+    (princ (format "+----------------------+---------+-----------+------------+-----------+\n"))
     (dolist (tok tokens)
       (let* ((name (nth 0 tok))
              (key  (nth 1 tok))
              (max-c (nth 2 tok))
              (hex (plist-get pal key))
-             (y   (rf-luminance-y hex))
              (c   (rf-cielab-chroma hex))
-             ;; Lekner & Dorf (1988) wetting darkening factor:
-             ;; R_wet = (1 - r_wa) R_dry / (1 - r_wa R_dry)
-             (y-wet (/ (* (- 1.0 r-wa) y) (max 1e-6 (- 1.0 (* r-wa y)))))
-             (ratio (if (> y 1e-6) (/ y-wet y) 0.0))
              (ok  (<= c max-c)))
         (if ok
             (setq passes (1+ passes))
           (setq fails (1+ fails)))
-        (princ (format "| %-20s | %-7s | %9.2f | <= %5.1f   | %7.3f |  %s  |\n"
-                       name hex c max-c ratio
+        (princ (format "| %-20s | %-7s | %9.2f | <= %5.1f   |  %s  |\n"
+                       name hex c max-c
                        (if ok "ORGANIC" "HYPER-SAT")))))
-    (princ (format "+----------------------+---------+-----------+------------+---------+-----------+\n"))
+    (princ (format "+----------------------+---------+-----------+------------+-----------+\n"))
     (princ (format "\n=================================================================================\n"))
-    (princ (format "Organic Gamut & Wetting Optics Summary: %d Organic, %d Hyper-saturated.\n\n" passes fails))
+    (princ (format "Organic Chroma Summary: %d Organic, %d Hyper-saturated.\n\n" passes fails))
     (zerop fails)))
 
 (when (and noninteractive (not (bound-and-true-p rf-running-all-tests)))
