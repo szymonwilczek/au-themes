@@ -24,6 +24,13 @@
 ;;
 ;; Evaluate typographical stroke contrast against spatial frequency
 ;; visibility thresholds (~6 cpd).
+;; Each role's Michelson contrast against the canvas must reach its
+;; minimum: 0.35 for body text, down to 0.12 for comments and brackets.
+;;
+;; Basis: contrast sensitivity peaking near the stroke frequency of text
+;; is Campbell & Robson (1968), and reading speed falling at low text
+;; contrast is Legge et al. (1985).  The per-role Michelson minima are
+;; au-themes heuristics.
 ;;
 ;; Ref:
 ;; - Campbell & Robson (1968) J. Physiol.
