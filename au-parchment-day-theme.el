@@ -23,7 +23,7 @@
 
 ;;; Commentary:
 ;;
-;; Monochrome-leaning light theme with low chromatic entropy.
+;; Light theme leaning to monochrome, with low chromatic entropy.
 ;; Uses typographic italics and luminance steps instead of color contrasts
 ;; to suppress visual noise.
 ;; Part of the `au-themes' collection.
