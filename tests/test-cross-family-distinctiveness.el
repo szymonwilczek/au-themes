@@ -150,96 +150,96 @@ Extracts family identifier from convention `au-<family>-<variant>' or `<family>-
                   (princ (format "[PASS]  Mean cross-family syntax separation = %.2f >= 18.0\n" mean-dist))
                   (setq passes (1+ passes)))
               (princ (format "[FAIL]  Palette clone alert: Mean separation = %.2f < 18.0\n" mean-dist))
-              (setq fails (1+ fails)))))
+              (setq fails (1+ fails)))))))
 
-        (princ (format "\nChromatic Identity Purity Gate (%s family signature):\n" family))
-        (princ (format "---------------------------------------------------------------------------------------------------------\n"))
-        (cond
-         ((eq family 'aurum)
-          ;; Aurum requirements:
-          ;; Selection region: h in [40deg..110deg]
-          ;; and NEVER h in [115deg..175deg])
-          (let* ((reg-hex (plist-get pal :bg-region))
-                 (reg-okl (rf-hex-to-oklch reg-hex))
-                 (reg-h   (nth 2 reg-okl))
-                 (reg-ok  (and (>= reg-h 40.0) (<= reg-h 110.0))))
-            (if reg-ok
-                (progn
-                  (princ (format "[PASS]  Aurum Selection Region (%s, hue %.1fdeg).\n"
-                                 reg-hex reg-h))
-                  (setq passes (1+ passes)))
-              (princ (format "[FAIL]  Aurum Selection Region (%s, hue %.1fdeg): expected [40deg..110deg].\n"
+    (princ (format "\nChromatic Identity Purity Gate (%s family signature):\n" family))
+    (princ (format "---------------------------------------------------------------------------------------------------------\n"))
+    (cond
+     ((eq family 'aurum)
+      ;; Aurum requirements:
+      ;; Selection region: h in [40deg..110deg]
+      ;; and NEVER h in [115deg..175deg])
+      (let* ((reg-hex (plist-get pal :bg-region))
+             (reg-okl (rf-hex-to-oklch reg-hex))
+             (reg-h   (nth 2 reg-okl))
+             (reg-ok  (and (>= reg-h 40.0) (<= reg-h 110.0))))
+        (if reg-ok
+            (progn
+              (princ (format "[PASS]  Aurum Selection Region (%s, hue %.1fdeg).\n"
                              reg-hex reg-h))
-              (setq fails (1+ fails))))
+              (setq passes (1+ passes)))
+          (princ (format "[FAIL]  Aurum Selection Region (%s, hue %.1fdeg): expected [40deg..110deg].\n"
+                         reg-hex reg-h))
+          (setq fails (1+ fails))))
 
-          ;; For aurum-day, Data Type: h not in [120deg..175deg]
-          (when (eq polarity 'light)
-            (let* ((type-hex (plist-get pal :type))
-                   (type-okl (rf-hex-to-oklch type-hex))
-                   (type-h   (nth 2 type-okl))
-                   (type-not-green (not (and (>= type-h 120.0) (<= type-h 175.0)))))
-              (if type-not-green
-                  (progn
-                    (princ (format "[PASS]  Aurum Daylight Data Type (%s, hue %.1fdeg).\n"
-                                   type-hex type-h))
-                    (setq passes (1+ passes)))
-                (princ (format "[FAIL]  Aurum Daylight Data Type (%s, hue %.1fdeg): Green hue stolen.\n"
+      ;; For aurum-day, Data Type: h not in [120deg..175deg]
+      (when (eq polarity 'light)
+        (let* ((type-hex (plist-get pal :type))
+               (type-okl (rf-hex-to-oklch type-hex))
+               (type-h   (nth 2 type-okl))
+               (type-not-green (not (and (>= type-h 120.0) (<= type-h 175.0)))))
+          (if type-not-green
+              (progn
+                (princ (format "[PASS]  Aurum Daylight Data Type (%s, hue %.1fdeg).\n"
                                type-hex type-h))
-                (setq fails (1+ fails))))))
+                (setq passes (1+ passes)))
+            (princ (format "[FAIL]  Aurum Daylight Data Type (%s, hue %.1fdeg): Green hue stolen.\n"
+                           type-hex type-h))
+            (setq fails (1+ fails))))))
 
-         ((eq family 'whispergrove)
-          ;; Whispergrove requirements:
-          ;; Selection region: h in [115deg..175deg]
-          (let* ((reg-hex (plist-get pal :bg-region))
-                 (reg-okl (rf-hex-to-oklch reg-hex))
-                 (reg-h   (nth 2 reg-okl))
-                 (reg-ok  (and (>= reg-h 115.0) (<= reg-h 175.0))))
-            (if reg-ok
-                (progn
-                  (princ (format "[PASS]  Whispergrove Selection Region (%s, hue %.1fdeg).\n"
-                                 reg-hex reg-h))
-                  (setq passes (1+ passes)))
-              (princ (format "[FAIL]  Whispergrove Selection Region (%s, hue %.1fdeg): Not in forest moss envelope.\n"
+     ((eq family 'whispergrove)
+      ;; Whispergrove requirements:
+      ;; Selection region: h in [115deg..175deg]
+      (let* ((reg-hex (plist-get pal :bg-region))
+             (reg-okl (rf-hex-to-oklch reg-hex))
+             (reg-h   (nth 2 reg-okl))
+             (reg-ok  (and (>= reg-h 115.0) (<= reg-h 175.0))))
+        (if reg-ok
+            (progn
+              (princ (format "[PASS]  Whispergrove Selection Region (%s, hue %.1fdeg).\n"
                              reg-hex reg-h))
-              (setq fails (1+ fails)))))
+              (setq passes (1+ passes)))
+          (princ (format "[FAIL]  Whispergrove Selection Region (%s, hue %.1fdeg): Not in forest moss envelope.\n"
+                         reg-hex reg-h))
+          (setq fails (1+ fails)))))
 
-         ((eq family 'parchment)
-          ;; Parchment requirements:
-          ;; All syntax code tokens must maintain Oklab C < 0.042
-          (let* ((syntax-tokens '(:keyword :type :builtin :constant :number :fnname
-                                           :fnname-call :string :property))
-                 (excess-chroma nil))
-            (dolist (tok syntax-tokens)
-              (let* ((hex (plist-get pal tok))
-                     (c (nth 1 (rf-hex-to-oklch hex))))
-                (when (> c 0.042)
-                  (push (list tok hex c) excess-chroma))))
-            (if (null excess-chroma)
-                (progn
-                  (princ "[PASS]  All syntax tokens maintain Oklab C <= 0.042\n")
-                  (setq passes (1+ passes)))
-              (princ (format "[FAIL]  Tokens exceed sensory-safe ceiling C=0.042: %S\n"
-                             excess-chroma))
-              (setq fails (1+ fails))))
+     ((eq family 'parchment)
+      ;; Parchment requirements:
+      ;; All syntax code tokens must maintain Oklab C < 0.042
+      (let* ((syntax-tokens '(:keyword :type :builtin :constant :number :fnname
+                                       :fnname-call :string :property))
+             (excess-chroma nil))
+        (dolist (tok syntax-tokens)
+          (let* ((hex (plist-get pal tok))
+                 (c (nth 1 (rf-hex-to-oklch hex))))
+            (when (> c 0.042)
+              (push (list tok hex c) excess-chroma))))
+        (if (null excess-chroma)
+            (progn
+              (princ "[PASS]  All syntax tokens maintain Oklab C <= 0.042\n")
+              (setq passes (1+ passes)))
+          (princ (format "[FAIL]  Tokens exceed sensory-safe ceiling C=0.042: %S\n"
+                         excess-chroma))
+          (setq fails (1+ fails))))
 
-          ;; Selection region: h in [25deg..110deg]
-          ;; and NEVER in [120deg..280deg]
-          (let* ((reg-hex (plist-get pal :bg-region))
-                 (reg-okl (rf-hex-to-oklch reg-hex))
-                 (reg-h   (nth 2 reg-okl))
-                 (reg-ok  (and (>= reg-h 25.0) (<= reg-h 110.0))))
-            (if reg-ok
-                (progn
-                  (princ (format "[PASS]  Parchment Selection Region (%s, hue %.1fdeg).\n"
-                                 reg-hex reg-h))
-                  (setq passes (1+ passes)))
-              (princ (format "[FAIL]  Parchment Selection Region (%s, hue %.1fdeg): Expected [25deg..110deg].\n"
+      ;; Selection region: h in [25deg..110deg]
+      ;; and NEVER in [120deg..280deg]
+      (let* ((reg-hex (plist-get pal :bg-region))
+             (reg-okl (rf-hex-to-oklch reg-hex))
+             (reg-h   (nth 2 reg-okl))
+             (reg-ok  (and (>= reg-h 25.0) (<= reg-h 110.0))))
+        (if reg-ok
+            (progn
+              (princ (format "[PASS]  Parchment Selection Region (%s, hue %.1fdeg).\n"
                              reg-hex reg-h))
-              (setq fails (1+ fails)))))
+              (setq passes (1+ passes)))
+          (princ (format "[FAIL]  Parchment Selection Region (%s, hue %.1fdeg): Expected [25deg..110deg].\n"
+                         reg-hex reg-h))
+          (setq fails (1+ fails)))))
 
-         (t
-          (princ (format "[INFO]  No custom chromatic identity signature gate defined for %s family.\n" family))
-          (setq passes (1+ passes))))))
+     (t
+      (princ (format "[INFO]  No custom chromatic identity signature gate defined for %s family.\n" family))
+      (setq passes (1+ passes))))
 
     (princ (format "\n=========================================================================================================\n"))
     (princ (format "Cross-Family Distinctiveness Summary: %d Passed, %d Failed.\n\n" passes fails))
