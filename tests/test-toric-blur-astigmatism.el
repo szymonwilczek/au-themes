@@ -24,6 +24,16 @@
 ;;
 ;; Evaluate blurred edge Michelson contrast under 1.25D toric astigmatic
 ;; defocus.
+;; A 1.25 D cylinder through a 4.3 mm pupil blurs a 1.6 arcmin stroke to
+;; about 0.22 of its contrast; each role's blurred Michelson contrast must
+;; stay above its floor (0.10 body text and 0.08 other roles on light
+;; themes, 0.70 and 0.45 on dark themes).
+;;
+;; Basis: the geometric blur width beta = d C / 2 is standard defocus
+;; optics (Charman 2005), and the 0.015 contrast threshold near 6 c/deg
+;; that the floors are compared with is Campbell & Robson (1968).  The
+;; 4.3 mm pupil, 1.6 arcmin stroke and the four floors are au-themes
+;; heuristics.
 ;;
 ;; Ref:
 ;; - Legras et al. (2004) Ophthalmic Physiol Opt
