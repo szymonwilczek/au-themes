@@ -28,8 +28,18 @@
 ;; In dark rooms with wide pupils (6.5-7.5mm), peripheral rays cause spherical
 ;; aberrations.
 ;; In ASD, prolonged pupillary latency impairs light constriction.
-;; Viewport total energy must not cross the photopic activation threshold
-;; (~10 cd/m2 on 100 cd/m2 displays).
+;; On dark themes the mean viewport luminance at the 80 cd/m2 reference
+;; white must stay at or under 5 cd/m2, the upper bound of CIE 191
+;; mesopic photometry; light themes keep the viewport mean Y at or under
+;; 0.75.  At the resulting pupil, the Stiles-Crawford efficiency of the
+;; marginal ray must stay at or above 0.30, and the hl-line may be at
+;; most 1.5x (light) or 5x (dark) as luminous as the canvas.
+;;
+;; Basis: the 5 cd/m2 bound is CIE 191:2010 and the directional
+;; sensitivity eta = 10^(-rho r^2) with rho = 0.05 mm^-2 follows Stiles &
+;; Crawford (1933).  The 0.5 mm peak decentration, the 0.30 efficiency
+;; floor, the 0.75 light-theme ceiling and the hl-line ratios are
+;; au-themes heuristics.
 ;;
 ;; Ref:
 ;; - Stiles & Crawford (1933) Proc. R. Soc.
