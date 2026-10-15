@@ -26,9 +26,23 @@
 ;; CIE S 026 melanopic irradiance, and photoreceptor saturation/bleaching
 ;; glare.
 ;;
+;; The corneal melanopic EDI of the display is its mel-DER-weighted mean
+;; viewport luminance times its projected solid angle.  On dark themes it
+;; must stay at or under the 10 lx evening limit of Brown et al. (2022);
+;; light themes are daytime themes, so the value is only reported.  The
+;; display is the only source counted: room lighting adds to it.
+;;
+;; Basis: melanopic EDI is CIE S 026:2018 and the 10 lx evening limit is
+;; Brown et al. (2022).  Everything else is an au-themes heuristic: the
+;; Hopkinson glare constant and DGI were defined for luminaires and are
+;; applied here to glyphs as a relative measure, and the per-token
+;; glare, melanopic and mel-DER caps, the rod-protection canvas ceiling
+;; and the dynamic-range limits are calibrations, not published limits.
+;;
 ;; Ref:
-;; - CIE Discomfort Glare Index
+;; - Hopkinson (1972) Glare from daylighting in buildings
 ;; - CIE S 026:2018
+;; - Brown et al. (2022) PLoS Biol 20(3):e3001571
 ;; - Noseda et al. (2010, 2017) Nature Neurosci / Brain
 
 ;;; Code:
@@ -37,7 +51,7 @@
 
 (defun test-photophobia-glare-run ()
   "Evaluate clinical photophobia risk, CIE Discomfort Glare Index (DGI),
-CIE S 026 melanopic irradiance, and photoreceptor saturation/bleaching glare.:"
+CIE S 026 melanopic irradiance, and photoreceptor saturation/bleaching glare."
   (let* ((pal (au-extract-active-palette))
          (theme (plist-get pal :theme))
          (polarity (rf-theme-polarity theme))
@@ -129,19 +143,24 @@ CIE S 026 melanopic irradiance, and photoreceptor saturation/bleaching glare.:"
                        label hex m-val mp max-m (if ok "PASS" "FAIL")))))
     (princ (format "+----------------------+---------+-----------+----------+-----------+--------+\n"))
 
-    ;; Whole-viewport corneal melanopic EDI gate
-    ;; Display solid angle at 60cm: Omega ~= 0.482 sr.
-    ;; Evening indoor threshold: <= 10.0 lx.
-    (let* ((solid-angle 0.482)
-           (view-y (rf-viewport-mean-luminance-y pal))
-           (corneal-mel-edi (* view-y rf-display-white-luminance solid-angle))
-           (max-corneal (if (eq polarity 'dark) 10.0 50.0))
-           (edi-ok (<= corneal-mel-edi max-corneal)))
-      (if edi-ok
-          (setq passes (1+ passes))
-        (setq fails (1+ fails)))
-      (princ (format "Corneal Melanopic EDI: %.2f lx (Brown et al. 2022 evening limit <= %.1f lx)\n\t-> %s\n"
-                     corneal-mel-edi max-corneal (if edi-ok "PASS" "FAIL"))))
+    ;; Whole-viewport corneal melanopic EDI.  The display is a Lambertian
+    ;; panel, so corneal illuminance is its mean luminance times its
+    ;; projected solid angle; weighting that luminance by mel-DER instead of
+    ;; V(lambda) gives melanopic EDI directly (CIE S 026:2018).
+    (let* ((omega-p (rf-display-projected-solid-angle))
+           (view-mel (rf-viewport-mean pal #'rf-melanopic-irradiance))
+           (corneal-mel-edi (* view-mel rf-display-white-luminance omega-p))
+           (max-corneal 10.0))
+      (princ (format "\nCorneal Melanopic EDI (display only, %.3f sr projected):\n" omega-p))
+      (if (eq polarity 'dark)
+          (let ((edi-ok (<= corneal-mel-edi max-corneal)))
+            (if edi-ok
+                (setq passes (1+ passes))
+              (setq fails (1+ fails)))
+            (princ (format "\t%.2f lx (Brown et al. 2022 evening limit <= %.1f lx) -> %s\n"
+                           corneal-mel-edi max-corneal (if edi-ok "PASS" "FAIL"))))
+        (princ (format "\t%.2f lx (light theme: daytime use, evening limit not applied)\n"
+                       corneal-mel-edi))))
 
     (princ "\nPhotoreceptor Bleaching & Scotopic/Mesopic Saturation Glare:\n")
     (princ (format "------------------------------------------------------------------------------\n"))
