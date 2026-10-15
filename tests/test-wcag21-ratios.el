@@ -44,7 +44,7 @@
          (passes 0)
          (fails 0)
          (tokens '(("Base text"            :fg-main      4.5)
-                   ("Comments"             :comment       1.5)
+                   ("Comments"             :comment      1.5)
                    ("Cursor"               :cursor       3.0)
                    ("Preprocessor"         :preprocessor 3.0)
                    ("Keywords"             :keyword      2.0)

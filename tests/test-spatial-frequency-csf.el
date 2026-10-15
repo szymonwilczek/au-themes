@@ -47,7 +47,7 @@
          ;; above threshold:
          ;; m >= 0.12 for subordinate comments, m >= 0.35 for primary code text
          (tokens '(("Base text"            :fg-main      0.35)
-                   ("Comments"             :comment       0.12)
+                   ("Comments"             :comment      0.12)
                    ("Cursor"               :cursor       0.25)
                    ("Preprocessor"         :preprocessor 0.25)
                    ("Keywords"             :keyword      0.15)

@@ -43,7 +43,7 @@
          (passes 0)
          (fails 0)
          (tokens '(("Base text"            :fg-main      nil)
-                   ("Comments"             :comment       10.0)
+                   ("Comments"             :comment      10.0)
                    ("Cursor"               :cursor       28.0)
                    ("Preprocessor"         :preprocessor 15.0)
                    ("Keywords"             :keyword      15.0)

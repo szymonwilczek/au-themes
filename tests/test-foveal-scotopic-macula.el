@@ -47,7 +47,7 @@
                    ("Struct fields"           :property     0.850)
                    ("Keywords"         :keyword      0.850)
                    ("Data types"         :type         0.850)
-                   ("Comments"          :comment       0.850))))
+                   ("Comments"          :comment      0.850))))
     (princ (format "\n.~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~.\n"))
     (princ (format "| Foveal S-Cone Exclusion and Macular Pigment Transmission Suite\n"))
     (princ (format "| Requirement: Non-S photopic luminance fraction F_(L+M) >= 85.0%%\n"))

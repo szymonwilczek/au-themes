@@ -53,7 +53,7 @@
                    ("Struct fields"        :property     40.0)
                    ("Operators"            :operator     25.0)
                    ("Brackets"             :bracket      20.0)
-                   ("Comments"             :comment       20.0)
+                   ("Comments"             :comment      20.0)
                    ("Alerts / Errors (!)"  :err          55.0))))
     (princ (format "\n.~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~.\n"))
     (princ (format "| Organic Chroma Ceiling & Lekner & Dorf (1988) Wet Surface Optics\n"))

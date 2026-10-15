@@ -205,7 +205,7 @@ so the colours tested are the colours the faces render."
     ("string vs base text"             :string       :fg-main)
     ("err (!) vs base text"            :err          :fg-main)
     ("bracket vs base text"            :bracket      :fg-main)
-    ("comments (needles) vs base text" :comment       :fg-main)
+    ("comments (needles) vs base text" :comment      :fg-main)
     ("define vs string"                :preprocessor :string)
     ("define vs number"                :preprocessor :number)
     ("define vs builtin"               :preprocessor :builtin)
