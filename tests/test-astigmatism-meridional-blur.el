@@ -29,6 +29,13 @@
 ;; In dark themes, directional horizontal blur smears stroke light across
 ;; inter-glyph spaces.
 ;;
+;; Basis: the -1.50 D cylinder is a common uncorrected astigmatism
+;; (Thibos et al. 2004).  The blurred stroke model is an au-themes
+;; heuristic: peak retention 0.52, valley fill 0.26 and the 1.8 acutance
+;; normaliser in `rf-meridional-blur-metrics' were not derived from a
+;; point-spread function, and the acutance and modulation floors are
+;; calibrations.
+;;
 ;; Ref:
 ;; - Thibos et al. (2004) JOSA A
 ;; - Legras et al. (2004) OPO
