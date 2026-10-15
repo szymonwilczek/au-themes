@@ -27,10 +27,13 @@
 ;; Note:
 ;; Full ISO/IEC 40500 / WCAG 2.1 SC 1.4.3 requires >= 4.5:1 across all body
 ;; text.
-;; In photophobic nocturnal themes, primary body text meets the 4.5:1 threshold,
-;; while secondary syntactic roles (comments, delimiters, brackets)
-;; are intentionally subordinated to 1.5:1 - 3.0:1 to reduce sensory overload
-;; and cortical stress.
+;; In every theme body text meets the 4.5:1 threshold, while syntax
+;; roles are held to per-role minima between 1.5:1 (comments) and 3.0:1
+;; so they stay subordinate to it and reduce sensory overload.
+;;
+;; Basis: the contrast ratio and the 4.5:1 body-text minimum are WCAG 2.1
+;; SC 1.4.3 (ISO/IEC 40500:2012).  The per-role minima below 4.5:1 are
+;; au-themes heuristics and do not meet SC 1.4.3 for those roles.
 
 ;;; Code:
 
