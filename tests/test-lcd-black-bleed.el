@@ -28,8 +28,13 @@
 ;; with L_black = L_white/1000 (typical IPS native contrast)
 ;; and L_reflected = R_d E/pi = 0.102 cd/m^2 for R_d = 0.5 % under the IEC
 ;; 61966-2-1 reference ambient of 64 lx.
-;; The previous additive constant of 0.008 (a contrast ratio of 125:1)
-;; corresponded to no measurable panel property.
+;; Every role must keep its minimum APCA contrast once black level and
+;; reflection are added to both text and canvas.
+;;
+;; Basis: the 64 lx reference ambient is IEC 61966-2-1 and Lc is APCA
+;; 0.0.98G-4g.  The 1000:1 native contrast and 0.5 % diffuse reflectance
+;; are typical IPS values, not a specific panel, and the per-role Lc
+;; minima are au-themes heuristics.
 
 ;;; Code:
 
