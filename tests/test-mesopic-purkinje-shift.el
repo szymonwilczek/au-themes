@@ -23,6 +23,16 @@
 ;;; Commentary:
 ;;
 ;; Evaluate mesopic luminance and Purkinje rod shift.
+;; At a nocturnal display setting of 25 % of reference white (20 cd/m2),
+;; a dark theme's adaptation field must lie inside the CIE 191 mesopic
+;; domain [0.005, 5] cd/m2 and a light theme's must be photopic; the
+;; viewport must leave the mesopic domain below a 500 cd/m2 white; and
+;; every listed role must keep its contrast polarity against the canvas
+;; once rod intrusion is applied.
+;;
+;; Basis: mesopic luminance, the adaptation coefficient m and the
+;; [0.005, 5] cd/m2 domain are CIE 191:2010 (MES-2).  The 25 % nocturnal
+;; setting and the 500 cd/m2 onset ceiling are au-themes assumptions.
 ;;
 ;; Ref:
 ;; - CIE 191:2010 (MES-2)
