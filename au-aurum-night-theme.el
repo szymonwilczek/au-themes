@@ -1,4 +1,4 @@
-;;; au-aurum-night-theme.el --- Warm dark theme without blue-light hazard -*- lexical-binding:t -*-
+;;; au-aurum-night-theme.el --- Warm dark theme with a low blue-light share -*- lexical-binding:t -*-
 
 ;; Copyright (C) 2026  Szymon Wilczek
 
@@ -24,8 +24,8 @@
 ;;; Commentary:
 ;;
 ;; Dark theme with amber and gold tones on deep background.
-;; Calibrated for nocturnal light sensitivity, melatonin preservation,
-;; and zero melanopic excitation.
+;; Calibrated for nocturnal light sensitivity and low melanopic excitation
+;; to protect evening melatonin.
 ;; Part of the `au-themes' collection.
 
 ;;; Code:
@@ -170,7 +170,7 @@
 (modus-themes-theme
  'au-aurum-night
  'ef-themes
- "Warm dark theme without blue-light hazard, calibrated for nocturnal photophobia."
+ "Warm dark theme with a low blue-light share, calibrated for nocturnal photophobia."
  'dark
  'au-aurum-night-palette
  nil
