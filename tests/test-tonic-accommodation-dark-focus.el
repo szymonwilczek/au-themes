@@ -25,10 +25,17 @@
 ;; Evaluate ciliary muscle tonic accommodation anchoring and dark focus
 ;; prevention.
 ;; In dark rooms with astigmatism/photophobia, lack of crisp edge contrast
-;; causes the ciliary muscle to relax into tonic dark focus (resting point
-;; ~80-100cm instead of screen 50-60cm).
+;; lets accommodation drift toward its intermediate resting state, the
+;; dark focus (Leibowitz & Owens 1978), instead of holding the screen.
 ;; High-frequency edge contrast on fg-main must provide an unambiguous
-;; accommodation lock.
+;; accommodation lock: body text needs a minimum edge energy (Michelson
+;; contrast times peak luminance), its band's APCA floor, and a Michelson
+;; contrast of at least 0.85 (light) or 0.90 (dark).
+;;
+;; Basis: dark focus is Leibowitz & Owens (1978) and accommodation's
+;; dependence on contrast Charman (1982).  The edge energy floors, the
+;; Michelson floors and the APCA floor from `rf-base-text-lc-band' are
+;; au-themes heuristics.
 ;;
 ;; Ref:
 ;; - Leibowitz & Owens (1978) Science
