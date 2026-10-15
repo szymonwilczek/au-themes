@@ -26,6 +26,12 @@
 ;; OLED black is emissive-off, so the only floor is the ambient light reflected
 ;; by the front surface, L_reflected = R_d E/pi = 0.102 cd/m^2 (R_d = 0.5 %,
 ;; IEC 61966-2-1 reference ambient 64 lx).
+;; Every role must keep its minimum APCA contrast once that floor is
+;; added to both text and canvas.
+;;
+;; Basis: the 64 lx reference ambient is IEC 61966-2-1 and Lc is APCA
+;; 0.0.98G-4g.  The 0.5 % reflectance is a typical value, not a measured
+;; panel, and the per-role Lc minima are au-themes heuristics.
 
 ;;; Code:
 
