@@ -24,6 +24,13 @@
 ;;
 ;; Evaluate foveal non-S (R+G) luminance fraction for high-frequency
 ;; glyphs.
+;; The central foveola has almost no S cones and sits behind the macular
+;; pigment, so fine glyph detail is resolved by L and M cones.  Every
+;; listed glyph role must draw at least 85 % of its luminance from them.
+;;
+;; Basis: the S-cone-free foveola is Curcio et al. (1991), macular
+;; pigment Bone et al. (1988) and the cone fundamentals Stockman & Sharpe
+;; (2000).  The 85 % floor is an au-themes heuristic.
 ;;
 ;; Ref:
 ;; - Curcio et al. (1991)
