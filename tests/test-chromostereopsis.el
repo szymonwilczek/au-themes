@@ -24,6 +24,15 @@
 ;;
 ;; Evaluate chromostereopsis and binocular chromatic dispersion.
 ;;
+;; For each pair of roles that often sit side by side, transverse
+;; chromatic aberration is the refraction difference times a 0.5 mm
+;; pupil decentration; the resulting disparity must stay under 0.60
+;; arcmin so the pair does not appear to float at different depths.
+;;
+;; Basis: the refraction model is Thibos et al. (1992) and the 0.5 mm
+;; decentration follows Thibos et al. (1990) and Vos (1960).  The 0.60
+;; arcmin limit is an au-themes heuristic.
+;;
 ;; Ref:
 ;; - Thibos et al. (1990, 1992)
 ;; - Vos (1960)
