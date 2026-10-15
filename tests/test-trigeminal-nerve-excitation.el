@@ -28,6 +28,13 @@
 ;; dura-sensitive thalamic trigeminovascular neurons (Noseda et al. 2010, 2016).
 ;; Narrowband long-wavelength red and short-wavelength blue maximally exacerbate
 ;; headache pain, whereas green (~530 nm) shows minimal exacerbation.
+;; Each role's excitation purity is capped (0.85 dark, 0.88 light), roles
+;; purer than 0.40 are also capped in luminance, and the error colour
+;; must keep some green and blue so it is not a narrowband red.
+;;
+;; Basis: the wavelength dependence of migraine photophobia is Noseda et
+;; al. (2010, 2016).  The purity and luminance caps and the 0.05 green
+;; plus blue floor for errors are au-themes heuristics.
 ;;
 ;; Ref:
 ;; - Noseda et al. (2010) Nat. Neurosci. 13:239-245
