@@ -145,8 +145,6 @@ GPL-3.0-or-later. See [[file:LICENSE][LICENSE]].
   /Applied Optics/, 31(19), 3594-3600.
 - Brettel, H., Viénot, F., & Mollon, J. D. (1997). Computerized simulation
   of color appearance for dichromats. /JOSA A/, 14(10), 2647-2655.
-- Lekner, J., & Dorf, M. C. (1988). Why some things are darker when wet.
-  /Applied Optics/, 27(7), 1278-1280.
 - Ottosson, B. (2020). /A perceptual color space for image processing/.
 - CIE 142:2001. /Improvement to industrial colour-difference evaluation/
   (CIEDE2000).
