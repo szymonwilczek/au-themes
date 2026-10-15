@@ -24,7 +24,8 @@
 ;;; Commentary:
 ;;
 ;; Light theme with subdued canvas luminance.
-;; Designed for sensitive eyes in early daylight or low ambient illumination.
+;; Calibrated for sensitive eyes in early daylight or low ambient
+;; illumination.
 ;; Part of the `au-themes' collection.
 
 ;;; Code:

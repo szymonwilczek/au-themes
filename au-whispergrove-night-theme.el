@@ -23,9 +23,9 @@
 
 ;;; Commentary:
 ;;
-;; Deep nocturnal theme with organic muted greens and earth tones.
-;; Calibrated for zero-light environments, low photic irradiation,
-;; and anti-glare thresholds.
+;; Dark theme with organic muted greens and earth tones.
+;; Calibrated for unlit rooms, low photic irradiation, and anti-glare
+;; thresholds.
 ;; Part of the `au-themes' collection.
 
 ;;; Code:
