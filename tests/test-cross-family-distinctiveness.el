@@ -23,8 +23,21 @@
 ;;; Commentary:
 ;;
 ;; Verification of chromatic divergence and anti-cloning separation
-;; between theme families (whispergrove, aurum, parchment).
-;; This test is tailored speficially for au-themes, it will not serve
+;; between theme families (aurum, herbarium, parchment, salina,
+;; whispergrove).  Each theme is compared with every theme of the same
+;; polarity in the other families, and must also hold its own family's
+;; chromatic signature: the hue envelope of the selection region, plus
+;; the chroma ceiling for parchment and the non-green data type for
+;; aurum's light variant.
+;;
+;; Pairs listed in `au-cross-family-exemptions' are skipped, each with
+;; its reason.
+;;
+;; Basis: CIEDE2000 (CIE 142-2001).  The 10 and 18 dE00 separations and
+;; every family signature are au-themes heuristics; they keep the
+;; families from converging, they do not model perception.
+;;
+;; This test is tailored specifically for au-themes, it will not serve
 ;; any good purpose in any other package/themes.
 
 ;;; Code:
@@ -33,7 +46,8 @@
 
 (defun au-theme-family (theme)
   "Return the package/family symbol of THEME.
-Extracts family identifier from convention `au-<family>-<variant>' or `<family>-<variant>'."
+Extracts the family identifier from the convention `au-<family>-<variant>'
+or `<family>-<variant>'."
   (let ((name (symbol-name theme)))
     (cond
      ((string-match "\\`au-\\([a-z0-9]+\\)-" name)
@@ -66,7 +80,9 @@ It is still compared with every other family.")
      (au-test-discover-themes))))
 
 (defun test-cross-family-distinctiveness-run ()
-  "Evaluate that themes from different families do not duplicate colors or aesthetic identities."
+  "Evaluate that themes from different families do not clone each other.
+Checks shared hex codes, per-role and mean CIEDE2000 separation, and the
+family's own chromatic signature."
   (let* ((theme (or rf-active-theme (car (au-test-discover-themes))))
          (pal (au-extract-active-palette theme))
          (family (au-theme-family theme))
