@@ -27,6 +27,13 @@
 ;; In photophobia, high contrast jumps between adjacent syntax tokens
 ;; (e.g. keyword -> bracket -> literal) cause retinal micro-flicker during
 ;; fixational eye movements and micro-saccades.
+;; For each pair of roles that commonly sit next to each other, the
+;; difference of their APCA Lc against the canvas must stay at or under
+;; 22.5.
+;;
+;; Basis: Lc is APCA 0.0.98G-4g and fixational eye movements are
+;; reviewed by Martinez-Conde et al. (2004).  The 22.5 step limit and
+;; the pair list are au-themes heuristics.
 ;;
 ;; Ref:
 ;; - Martinez-Conde et al. (2004) Nature Rev. Neurosci.
