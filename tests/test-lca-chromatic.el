@@ -24,6 +24,15 @@
 ;;
 ;; Evaluate Longitudinal Chromatic Aberration (LCA) chromatic dispersion.
 ;;
+;; Each role is reduced to an effective wavelength, its refraction is
+;; read from the chromatic eye model, and its focus must lie within
+;; 0.25 D of body text so every role is sharp at the same focal plane.
+;;
+;; Basis: the refraction curve is the chromatic eye of Thibos et al.
+;; (1992).  Collapsing a spectrum to one effective wavelength and the
+;; 0.25 D tolerance, chosen inside the eye's depth of focus, are
+;; au-themes heuristics.
+;;
 ;; Ref:
 ;; Thibos et al. (1992) Applied Optics 31(19), DOI: 10.1364/AO.31.003594.
 
