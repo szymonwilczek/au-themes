@@ -29,13 +29,19 @@
 ;; Standard APCA Bronze guidelines target Lc >= 75 for body text and Lc >= 60
 ;; for content.
 ;; In dark-mode photophobia design, body text is calibrated to moderate Lc
-;; (46-62) to prevent edge irradiation and pupil constriction, while secondary
-;; syntactic tokens deliberately sit below Lc 30 to suppress distraction.
-;; Targets represent intentional photophobia-adapted calibration boundaries
-;; rather than unadapted APCA Bronze levels.
+;; (46-62) to prevent edge irradiation and pupil constriction, syntax
+;; roles sit between Lc 14 and 68 so they stay subordinate to it, and
+;; comments recede to Lc 10-28.  On light canvases body text reaches
+;; Lc 85 and syntax roles Lc 78.  Targets represent intentional
+;; photophobia-adapted calibration boundaries.
 ;;
 ;; Variables may be drawn as body text or as a syntax role, so their band
 ;; spans both: the syntax floor and the body-text ceiling.
+;;
+;; Basis: Lc is APCA 0.0.98G-4g (Somers, apca-w3), and the Bronze
+;; levels quoted above are APCA's.  The role bands and the canvas,
+;; selection and panel limits are au-themes heuristics; the body-text
+;; band is shared with other modules through `rf-base-text-lc-band'.
 
 ;;; Code:
 
