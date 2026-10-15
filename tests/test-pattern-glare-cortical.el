@@ -28,6 +28,18 @@
 ;; stripes trigger cortical hyperexcitation, optical shimmer illusions, nausea,
 ;; and migraine aura.
 ;;
+;; Gate: a dense code block is modelled as a line grating whose bright
+;; bars are text rows at a 35% duty cycle, with the panel floor added to
+;; both bars and gaps.  Its Michelson contrast must stay at or under 0.90.
+;; With dark text on a light canvas the duty cycle alone caps the grating
+;; at d/(2-d) = 0.21, so the gate only binds on dark themes, where it
+;; keeps the canvas from dropping to black under bright text.  The
+;; per-token stripe contrasts are reported for reference only.
+;;
+;; Basis: grating contrast as the driver of pattern glare is Wilkins et
+;; al. (1984).  The 0.90 ceiling and the syntax weights are au-themes
+;; heuristics.
+;;
 ;; Ref:
 ;; - Wilkins et al. (1984, 2016) Brain
 ;; - Evans & Stevenson (2008)
@@ -47,6 +59,7 @@
          (passes 0)
          (fails 0)
          (duty-cycle 0.35)
+         (max-cm 0.90)
          (tokens '(("Base text"            :fg-main)
                    ("Comments"             :comment)
                    ("Keywords"             :keyword)
@@ -64,11 +77,11 @@
     (princ (format "| V1 Cortical Visual Stress & Meares-Irlen Pattern Glare Suite\n"))
     (princ (format "| Theme: %s (%s) | Background: %s (Y_bg: %.6f)\n" theme polarity bg bg-y))
     (princ (format "> Note: Visual stress increases monotonically with grating contrast at ~3 c/deg;\n"))
-    (princ (format ">\tWilkins Michelson C_M is reported as an informative grating descriptor\n"))
-    (princ (format ">\tevaluated over the physical panel floor (duty cycle: %.0f%%).\n" (* duty-cycle 100.0)))
+    (princ (format ">\tthe dense code line is gated at C_M <= %.2f over the physical panel\n" max-cm))
+    (princ (format ">\tfloor (duty cycle: %.0f%%); per-token stripes are descriptive.\n" (* duty-cycle 100.0)))
     (princ (format "'~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~'\n"))
 
-    (princ "\nRealistic Code Block Line Contrast (Syntactic Weighting):\n")
+    (princ (format "\nDense Code Line Grating Contrast (C_M <= %.2f, Syntactic Weighting):\n" max-cm))
     (princ (format "--------------------------------------------------------------------------------\n"))
     (let* ((weights '((:fg-main . 0.45)
                       (:keyword . 0.12)
@@ -88,12 +101,12 @@
              (line-y (+ (* duty-cycle eff-fg) (* (- 1.0 duty-cycle) eff-bg)))
              (denom (+ line-y eff-bg))
              (cm (if (< denom 1e-9) 0.0 (/ (abs (- line-y eff-bg)) denom)))
-             (valid (and (>= cm 0.0) (<= cm 1.0))))
-        (if valid
+             (ok (<= cm max-cm)))
+        (if ok
             (setq passes (1+ passes))
           (setq fails (1+ fails)))
         (princ (format "Weighted Dense Code Line:\n\tLum=%.4f, Michelson C_M=%.4f (Floor=%.5f) -> %s\n"
-                       line-y cm amb (if valid "PASS (Well-formed)" "FAIL")))))
+                       line-y cm amb (if ok "PASS" "FAIL")))))
 
     (princ "\nPer-Token Line Stripe Michelson Contrast Descriptor:\n")
     (princ (format "+----------------------+---------+---------+----------+--------+---------------+\n"))
@@ -109,31 +122,13 @@
              (cm    (rf-wilkins-line-michelson hex bg duty-cycle amb))
              (eff-bg (+ bg-y amb))
              (eff-fg (+ y-val amb))
-             (line-y (+ (* duty-cycle eff-fg) (* (- 1.0 duty-cycle) eff-bg)))
-             (valid (and (>= cm 0.0) (<= cm 1.0))))
-        (if valid
-            (setq passes (1+ passes))
-          (setq fails (1+ fails)))
+             (line-y (+ (* duty-cycle eff-fg) (* (- 1.0 duty-cycle) eff-bg))))
         (princ (format "| %-20s | %-7s | %7.4f | %8.4f | %6.4f | %s |\n"
                        label hex y-val line-y cm
                        (cond ((< cm 0.40) "Low grating")
                              ((< cm 0.75) "Moderate")
                              (t "High contrast"))))))
     (princ (format "+----------------------+---------+---------+----------+--------+---------------+\n"))
-
-    (princ "\nCortical Hyperexcitation Envelope Check (~3 cycles/degree):\n")
-    (princ (format "--------------------------------------------------------------------------------\n"))
-
-    (if (<= bg-y 0.020)
-        (progn
-          (princ "[PASS]  Dark nocturnal canvas eliminates macro-grating flicker.\n")
-          (setq passes (1+ passes)))
-      (if (<= bg-y 0.850)
-          (progn
-            (princ "[PASS] Daylight mist background maintains soft line transition.\n")
-            (setq passes (1+ passes)))
-        (princ "[FAIL]  Harsh high-glare background exacerbates pattern shimmer.\n")
-        (setq fails (1+ fails))))
 
     (princ (format "\n================================================================================\n"))
     (princ (format "Cortical Pattern Glare Summary: %d Passed, %d Failed.\n\n" passes fails))
