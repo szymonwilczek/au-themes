@@ -23,7 +23,7 @@
 
 ;;; Commentary:
 ;;
-;; Coastal daylight theme inspired by sea-salt flats, wind-swept sand dunes,
+;; Light theme with coastal tones: sea-salt flats, wind-swept sand dunes,
 ;; deep cobalt ocean water, and weathered driftwood.
 ;; Calibrated to minimize visual noise and photophobic strain for autistic
 ;; and neurodivergent sensory profiles.

@@ -23,8 +23,8 @@
 
 ;;; Commentary:
 ;;
-;; Nocturnal herbal theme inspired by darkened botanical herbariums, pressed sage leaves,
-;; dried lavender petals, oak-gall ink, terracotta flora, and chamomile pollen.
+;; Dark theme with herbarium tones: pressed sage leaves, dried lavender
+;; petals, oak-gall ink, terracotta flora, and chamomile pollen.
 ;; Calibrated to minimize visual glare and photophobic strain for autistic
 ;; and neurodivergent sensory profiles.
 ;; Part of the `au-themes' collection.

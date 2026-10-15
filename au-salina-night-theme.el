@@ -23,7 +23,7 @@
 
 ;;; Commentary:
 ;;
-;; Nocturnal coastal theme inspired by midnight ocean waters, dark basalt,
+;; Dark theme with coastal tones: midnight ocean water, dark basalt,
 ;; phosphorescent turquoise, and maritime coral.
 ;; Calibrated to minimize visual glare and photophobic strain for autistic
 ;; and neurodivergent sensory profiles.

@@ -23,8 +23,8 @@
 
 ;;; Commentary:
 ;;
-;; Herbal daylight theme inspired by botanical herbariums, pressed sage leaves,
-;; dried lavender petals, oak-bark ink, and chamomile pollen.
+;; Light theme with herbarium tones: pressed sage leaves, dried lavender
+;; petals, oak-bark ink, and chamomile pollen.
 ;; Calibrated to minimize visual noise and photophobic fatigue for autistic
 ;; and neurodivergent sensory profiles.
 ;; Part of the `au-themes' collection.
