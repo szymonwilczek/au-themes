@@ -42,20 +42,28 @@ Extracts family identifier from convention `au-<family>-<variant>' or `<family>-
       (intern (match-string 1 name)))
      (t (intern name)))))
 
+(defconst au-cross-family-exemptions
+  '((au-aurum-twilight . whispergrove))
+  "Declared (THEME . FAMILY) pairs that are not compared with each other.
+`au-aurum-twilight' keeps the original aurum palette, whose olivine data
+types and builtins share the forest greens of whispergrove on purpose.
+It is still compared with every other family.")
+
+(defun au-cross-family-exempt-p (theme other)
+  "Return non-nil when THEME and OTHER form a declared exemption."
+  (or (member (cons theme (au-theme-family other)) au-cross-family-exemptions)
+      (member (cons other (au-theme-family theme)) au-cross-family-exemptions)))
+
 (defun au-theme-counterparts (theme)
   "Return the counterpart themes in other families for THEME."
-  (let* ((name (symbol-name theme))
-         (this-family (au-theme-family theme))
-         (this-polarity (rf-theme-polarity theme))
-         (all-themes (au-test-discover-themes)))
-    (if (string-match-p "twilight" name)
-        nil
-      (cl-remove-if-not
-       (lambda (th)
-         (and (not (eq (au-theme-family th) this-family))
-              (eq (rf-theme-polarity th) this-polarity)
-              (not (string-match-p "twilight" (symbol-name th)))))
-       all-themes))))
+  (let ((this-family (au-theme-family theme))
+        (this-polarity (rf-theme-polarity theme)))
+    (cl-remove-if-not
+     (lambda (th)
+       (and (not (eq (au-theme-family th) this-family))
+            (eq (rf-theme-polarity th) this-polarity)
+            (not (au-cross-family-exempt-p theme th))))
+     (au-test-discover-themes))))
 
 (defun test-cross-family-distinctiveness-run ()
   "Evaluate that themes from different families do not duplicate colors or aesthetic identities."
@@ -83,8 +91,7 @@ Extracts family identifier from convention `au-<family>-<variant>' or `<family>-
           (setq passes (1+ passes)))
 
       (dolist (c-theme counterparts)
-        (let* ((c-pal (au-extract-active-palette c-theme))
-               (c-family (au-theme-family c-theme)))
+        (let ((c-pal (au-extract-active-palette c-theme)))
 
           (princ (format "\nCross-Family Hex Collision Check (%s vs %s):\n" theme c-theme))
           (princ (format "---------------------------------------------------------------------------------------------------------\n"))
