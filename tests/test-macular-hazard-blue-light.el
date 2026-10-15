@@ -23,6 +23,17 @@
 ;;; Commentary:
 ;;
 ;; Evaluate the retinal blue-light photochemical hazard of the palette.
+;; The blue-light weighted radiance of the most hazardous colour must stay
+;; at or under 100 W m^-2 sr^-1, the ICNIRP limit for viewing longer than
+;; 10^4 s.  A self-luminous display at 80 cd/m2 is far below it, so this
+;; check guards against a modelling error. Separately, each role's
+;; hazard-weighted energy per lumen may be at most that of D65 (warm and
+;; neutral roles) or twice it (sparse short-wavelength roles), and the
+;; canvas at most that of D65.
+;;
+;; Basis: the blue-light hazard function and the 100 W m^-2 sr^-1 limit
+;; are ICNIRP (2013) and IEC 62471.  The per-lumen ratios against D65 are
+;; au-themes heuristics, not hazard criteria.
 ;;
 ;; Ref:
 ;; - ICNIRP (2013) Health Phys. 105(1):74-96, DOI: 10.1097/HP.0b013e318289a611
