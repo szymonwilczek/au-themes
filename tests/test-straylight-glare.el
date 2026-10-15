@@ -23,6 +23,14 @@
 ;;; Commentary:
 ;;
 ;; Evaluate intraocular forward straylight and disability glare.
+;; The retinal background is the canvas plus the panel floor plus the
+;; straylight veil of the whole viewport.  Light themes keep the canvas
+;; at or under Y 0.85 and the retinal Weber contrast of body text at or
+;; under 0.98; dark themes keep that contrast at or under 60 and the
+;; canvas at or above Y 0.001.
+;;
+;; Basis: the glare spread function and straylight integral are CIE
+;; 146:2002.  The canvas and Weber limits are au-themes heuristics.
 ;;
 ;; Ref:
 ;; Vos (2003) CIE Report on Disability Glare (CIE 146:2002).
