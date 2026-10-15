@@ -237,9 +237,41 @@ Extracts family identifier from convention `au-<family>-<variant>' or `<family>-
                          reg-hex reg-h))
           (setq fails (1+ fails)))))
 
+     ((eq family 'herbarium)
+      ;; Herbarium requirements:
+      ;; Selection region: h in [290deg..340deg] (pressed-petal mauve)
+      (let* ((reg-hex (plist-get pal :bg-region))
+             (reg-okl (rf-hex-to-oklch reg-hex))
+             (reg-h   (nth 2 reg-okl))
+             (reg-ok  (and (>= reg-h 290.0) (<= reg-h 340.0))))
+        (if reg-ok
+            (progn
+              (princ (format "[PASS]  Herbarium Selection Region (%s, hue %.1fdeg).\n"
+                             reg-hex reg-h))
+              (setq passes (1+ passes)))
+          (princ (format "[FAIL]  Herbarium Selection Region (%s, hue %.1fdeg): expected [290deg..340deg].\n"
+                         reg-hex reg-h))
+          (setq fails (1+ fails)))))
+
+     ((eq family 'salina)
+      ;; Salina requirements:
+      ;; Selection region: h in [195deg..265deg] (brine blue)
+      (let* ((reg-hex (plist-get pal :bg-region))
+             (reg-okl (rf-hex-to-oklch reg-hex))
+             (reg-h   (nth 2 reg-okl))
+             (reg-ok  (and (>= reg-h 195.0) (<= reg-h 265.0))))
+        (if reg-ok
+            (progn
+              (princ (format "[PASS]  Salina Selection Region (%s, hue %.1fdeg).\n"
+                             reg-hex reg-h))
+              (setq passes (1+ passes)))
+          (princ (format "[FAIL]  Salina Selection Region (%s, hue %.1fdeg): expected [195deg..265deg].\n"
+                         reg-hex reg-h))
+          (setq fails (1+ fails)))))
+
      (t
-      (princ (format "[INFO]  No custom chromatic identity signature gate defined for %s family.\n" family))
-      (setq passes (1+ passes))))
+      (princ (format "[FAIL]  No chromatic identity signature defined for the %s family.\n" family))
+      (setq fails (1+ fails))))
 
     (princ (format "\n=========================================================================================================\n"))
     (princ (format "Cross-Family Distinctiveness Summary: %d Passed, %d Failed.\n\n" passes fails))
