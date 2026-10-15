@@ -24,6 +24,16 @@
 ;;
 ;; Evaluate ciliary muscle stability and astigmatism tolerance.
 ;;
+;; Body text must carry enough APCA contrast to hold focus, stay under
+;; an edge-irradiation ceiling, keep its CIELAB chroma at or under 12 so
+;; it shows no subpixel colour fringes, and comments must sit in their
+;; subordinate band.
+;;
+;; Basis: Charman & Heron (1988) found accommodation fluctuations do not
+;; grow with contrast, so the upper limit addresses irradiation, not
+;; focus.  The body-text band (`rf-base-text-lc-band'), the comment band
+;; and the C* <= 12 limit are au-themes heuristics.
+;;
 ;; Ref:
 ;; Charman & Heron (1988), DOI: 10.1111/j.1475-1313.1988.tb01090.x
 
