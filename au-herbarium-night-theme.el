@@ -49,7 +49,7 @@
 
     ;; Basic Chromatic Scale
     (red "#ba483e")                       ; Errors, critical warnings
-    (red-warmer "#446c54")                ; Dried rosemary herbal string literals
+    (red-warmer "#446c54")                ; String literals
     (red-cooler "#a23c34")                ; Diff deletions, removal markers
     (red-faint "#6a736a")                 ; Structural brackets
 

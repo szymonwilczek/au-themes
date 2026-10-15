@@ -59,14 +59,14 @@
     (green-faint "#546468")               ; Documentation strings, inline comments
 
     (yellow "#a8545e")                    ; Keyword alias
-    (yellow-warmer "#9e8644")             ; Golden dune numeric literals
-    (yellow-cooler "#207866")             ; Maritime petrol preprocessor directives
+    (yellow-warmer "#9e8644")             ; Numeric literals
+    (yellow-cooler "#207866")             ; Preprocessor directives
     (yellow-faint "#686858")              ; Informational tooltips, fringe markers
 
-    (blue "#326492")                      ; Oceanic cobalt function definitions
-    (blue-warmer "#6094ca")               ; Wave surf blue function calls
-    (blue-cooler "#5a7276")               ; Slate oceanic operators
-    (blue-faint "#827030")                ; Salted amber built-in functions
+    (blue "#326492")                      ; Function definitions
+    (blue-warmer "#6094ca")               ; Function calls
+    (blue-cooler "#5a7276")               ; Binary and unary operators
+    (blue-faint "#827030")                ; Built-in functions
 
     (magenta "#28968a")                   ; Composite types: struct, union, enum
     (magenta-warmer "#6094ca")            ; Extended library types

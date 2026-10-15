@@ -49,7 +49,7 @@
 
     ;; Basic Chromatic Scale
     (red "#9c3a2e")                       ; Errors, critical warnings
-    (red-warmer "#523614")                ; Driftwood string literals
+    (red-warmer "#523614")                ; String literals
     (red-cooler "#842e26")                ; Diff deletions, removal markers
     (red-faint "#4a534d")                 ; Structural brackets
 
