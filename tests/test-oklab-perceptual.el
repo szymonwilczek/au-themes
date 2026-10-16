@@ -35,7 +35,7 @@
 ;; calibrations.
 ;;
 ;; Ref:
-;; Ottosson (2020) A Perceptual Color Space for Computer Graphics.
+;; Ottosson (2020) A perceptual color space for image processing.
 
 ;;; Code:
 
