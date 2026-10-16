@@ -105,7 +105,7 @@
 
     (bg-removed "#eecac6")                ; Diff removed line baseline
     (bg-removed-faint "#f8dedc")          ; Diff removed unchanged context
-    (bg-removed-refine "#e2b6b0")         ; Diff removed word-level highlight
+    (bg-removed-refine "#e7bbb5")         ; Diff removed word-level highlight
     (fg-removed "#7a1e1c")                ; Diff removed foreground text
 
     (bg-mode-line-active "#bcbab0")       ; Active modeline surface
