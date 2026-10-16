@@ -28,8 +28,20 @@
 ;; the same numeric gate of 8000 corresponded to dE00 between 9.7 and 19.7
 ;; depending on the hue pair.
 ;;
+;; Roles must differ in category: by Oklch hue, or by lightness when hue
+;; cannot carry the difference.  Hue is undefined near grey, so it is only
+;; compared when both colours are at least one Oklab just-noticeable difference
+;; (0.02, as used by CSS Color 4 gamut mapping) away from the neutral axis;
+;; a neutral colour against a clearly chromatic one (two JNDs) counts as
+;; a different category.
+;;
+;; Basis: CIEDE2000 is a CIE standard; the 10.0 floor, the per-pair hue
+;; minimums and the 0.08 lightness step are au-themes heuristics.
+;;
 ;; Ref:
 ;; CIE 142:2001 / ISO-CIE 11664-6:2014 (CIEDE2000).
+;; Ottosson (2020) A perceptual color space for image processing (Oklab).
+;; W3C CSS Color Module Level 4, gamut mapping (deltaEOK JND = 0.02).
 
 ;;; Code:
 
@@ -92,15 +104,14 @@
     (princ (format "+--------------------------------------+-------------+-------------+-----------+----------+\n"))
 
 
-    (princ "\nCategorical Role Disparity Check (Daylight Hue Delta-h >= 40deg or Night Delta-L >= 0.08):\n")
-
-
+    (princ "\nCategorical Role Disparity Check (Oklch hue Delta-h >= per-pair minimum, or Delta-L >= 0.08):\n")
+    (princ "Hue is only trusted when both colours have C >= 0.02 (one Oklab JND from grey).\n")
+    (princ "A neutral colour (C < 0.02) against a chromatic one (C >= 0.04) is a separate category.\n")
     (princ (format "+--------------------------------------+--------+----------+-----------+---------+--------+\n"))
     (princ (format "| %-36s | %-7s | %-7s | %-9s | %-7s | %-7s|\n"
                    "Role Comparison" "Color 1" "Color 2" " Delta-h" "Delta-L" "Status"))
     (princ (format "+--------------------------------------+---------+---------+-----------+---------+--------+\n"))
-    (let* ((polarity (rf-theme-polarity theme))
-           (hue-pairs '(("struct (keyword) vs int (type)"         :keyword      :type        40.0)
+    (let* ((hue-pairs '(("struct (keyword) vs int (type)"         :keyword      :type        40.0)
                         ("struct (keyword) vs sizeof (builtin)"   :keyword      :builtin     40.0)
                         ("int (type) vs sizeof (builtin)"         :type         :builtin     15.0)
                         ("struct (keyword) vs constant"           :keyword      :constant    40.0)
@@ -134,7 +145,11 @@
                (hue2 (nth 2 okl2))
                (raw-dh (abs (- hue1 hue2)))
                (dh (min raw-dh (- 360.0 raw-dh)))
-               (ok (or (>= dh min-dh) (>= dl 0.08))))
+               (c-lo (min (nth 1 okl1) (nth 1 okl2)))
+               (c-hi (max (nth 1 okl1) (nth 1 okl2)))
+               (ok (cond ((>= dl 0.08) t)
+                         ((>= c-lo 0.02) (>= dh min-dh))
+                         (t (>= c-hi 0.04)))))
           (if ok
               (setq passes (1+ passes))
             (setq fails (1+ fails)))
