@@ -130,6 +130,7 @@ says which parts come from a source and which are our own choice.
 | =afterimage-persistence=              | Loomis 1978, Kelly 1979                      | ours                                                                 |
 | =cross-family-distinctiveness=        | CIEDE2000                                    | ours                                                                 |
 | =ui-text-contrast=                    | APCA                                         | ours                                                                 |
+| =diff-refine-separation=              | CIEDE2000                                    | ours                                                                 |
 #+TBLFM: $1=spectral-coherence= (Whispergrove)
 
 Each module's commentary gives the details: what it measures, which
