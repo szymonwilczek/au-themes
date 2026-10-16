@@ -149,7 +149,7 @@ says which parts come from a source and which are our own choice.
 | =glare-veiling-luminance=             | CIE 146:2002                                 | ours                                                                 |
 | =oklab-perceptual=                    | Ottosson 2020                                | ours                                                                 |
 | =helmholtz-kohlrausch=                | Fairchild & Pirrotta 1991                    | ours                                                                 |
-| spectral - coherence = Whispergrove | Endler 1993                                  | ours                                                                 |
+| =spectral-coherence=                  | Endler 1993                                  | ours, Whispergrove only                                              |
 | =lcd-black-bleed=                     | IEC 61966-2-1, APCA                          | ours                                                                 |
 | =oled-irradiance=                     | IEC 61966-2-1, APCA                          | ours                                                                 |
 | =spatial-frequency-csf=               | Campbell & Robson 1968, Legge et al. 1985    | ours                                                                 |
@@ -172,7 +172,6 @@ says which parts come from a source and which are our own choice.
 | =cross-family-distinctiveness=        | CIEDE2000                                    | ours                                                                 |
 | =ui-text-contrast=                    | APCA                                         | ours                                                                 |
 | =diff-refine-separation=              | CIEDE2000                                    | ours                                                                 |
-#+TBLFM: $1=spectral-coherence= (Whispergrove)
 
 Each module's commentary gives the details: what it measures, which
 source it uses, and which numbers are ours.
