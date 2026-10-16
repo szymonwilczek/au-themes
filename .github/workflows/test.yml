@@ -1,0 +1,25 @@
+name: test
+
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        emacs-version: ['29.4', '30.1']
+    env:
+      EMACS_ELPA_DIR: ${{ github.workspace }}/.elpa
+    steps:
+      - uses: actions/checkout@v4
+      - uses: purcell/setup-emacs@master
+        with:
+          version: ${{ matrix.emacs-version }}
+      - name: Install ef-themes and modus-themes
+        run: emacs -Q --batch -l tests/install-deps.el
+      - name: Run the test suite
+        run: emacs -Q --batch -L . -l tests/run-all-tests.el
