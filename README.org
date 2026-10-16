@@ -97,6 +97,16 @@ Set =AU_TEST_THEMES= to check only some themes, for example
 =AU_TEST_THEMES=au-whispergrove-night=. The run fails if any theme
 fails any module.
 
+The tests look for ef-themes and modus-themes in your =elpa=
+directory. Without them installed, put both in a separate directory
+first:
+
+#+begin_src sh
+  export EMACS_ELPA_DIR=/tmp/au-elpa
+  emacs -Q --batch -l tests/install-deps.el
+  emacs -Q --batch -L . -l tests/run-all-tests.el
+#+end_src
+
 Each module measures the palette with a published model and compares
 the result with a limit. Most of the limits are ours: we chose them
 for these palettes, and they are not clinical thresholds. The table
