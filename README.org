@@ -74,6 +74,67 @@ We pick colours by hand and check each palette against these rules:
 
 The rules are based on the sources listed under [[*References][References]].
 
+* Tests
+
+Every theme is checked by the modules in [[file:tests][tests]]. To run them all:
+
+#+begin_src sh
+  emacs -Q --batch -L . -l tests/run-all-tests.el
+#+end_src
+
+Set =AU_TEST_THEMES= to check only some themes, for example
+=AU_TEST_THEMES=au-whispergrove-night=. The run fails if any theme
+fails any module.
+
+Each module measures the palette with a published model and compares
+the result with a limit. Most of the limits are ours: we chose them
+for these palettes, and they are not clinical thresholds. The table
+says which parts come from a source and which are our own choice.
+
+| Module                              | Model from                                   | Limit                                                                |
+|-------------------------------------+----------------------------------------------+----------------------------------------------------------------------|
+| =theme-integrity=                     | -                                            | file layout and palette structure                                    |
+| =apca-contrast=                       | APCA 0.0.98G-4g                              | ours                                                                 |
+| =wcag21-ratios=                       | WCAG 2.1                                     | 4.5:1 for body text (WCAG); others ours                              |
+| =astigmatism-ciliary=                 | Charman & Heron 1988                         | ours                                                                 |
+| =pupil-aberrations=                   | Watson & Yellott 2012, Liang & Williams 1997 | ours                                                                 |
+| =straylight-glare=                    | CIE 146:2002                                 | ours                                                                 |
+| =lca-chromatic=                       | Thibos et al. 1992                           | ours                                                                 |
+| =chromostereopsis=                    | Thibos et al. 1992                           | ours                                                                 |
+| =foveal-scotopic-macula=              | Curcio et al. 1991, Stockman & Sharpe 2000   | ours                                                                 |
+| =cvd-colorblindness=                  | Brettel et al. 1997                          | ours                                                                 |
+| =mesopic-purkinje-shift=              | CIE 191:2010                                 | ours                                                                 |
+| =toric-blur-astigmatism=              | Campbell & Robson 1968                       | ours                                                                 |
+| =glare-veiling-luminance=             | CIE 146:2002                                 | ours                                                                 |
+| =oklab-perceptual=                    | Ottosson 2020                                | ours                                                                 |
+| =helmholtz-kohlrausch=                | Fairchild & Pirrotta 1991                    | ours                                                                 |
+| spectral - coherence = Whispergrove | Endler 1993                                  | ours                                                                 |
+| =lcd-black-bleed=                     | IEC 61966-2-1, APCA                          | ours                                                                 |
+| =oled-irradiance=                     | IEC 61966-2-1, APCA                          | ours                                                                 |
+| =spatial-frequency-csf=               | Campbell & Robson 1968, Legge et al. 1985    | ours                                                                 |
+| =determinism-1to1=                    | CIEDE2000, Oklab, CSS Color 4                | ours                                                                 |
+| =wet-surface-physics=                 | CIELAB                                       | ours                                                                 |
+| =photophobia-glare=                   | CIE S 026:2018                               | 10 lx melanopic EDI for dark themes (Brown et al. 2022); others ours |
+| =pattern-glare-cortical=              | Wilkins et al. 1984                          | ours                                                                 |
+| =macular-hazard-blue-light=           | ICNIRP 2013, IEC 62471                       | 100 W * m^{-2} * sr^{-1} (ICNIRP); others ours                       |
+| =pupil-spasm-adaptation=              | Watson & Yellott 2012                        | ours                                                                 |
+| =astigmatism-meridional-blur=         | -                                            | ours                                                                 |
+| =asd-semantic-entropy=                | Shannon 1948, Ottosson 2020                  | ours                                                                 |
+| =photophobia-triplet-contrast=        | APCA                                         | ours                                                                 |
+| =trigeminal-nerve-excitation=         | Noseda et al. 2010, 2016                     | ours                                                                 |
+| =scotopic-pupillary-aperture=         | Stiles & Crawford 1933, CIE 191:2010         | ours                                                                 |
+| =magnocellular-parvocellular-balance= | Livingstone & Hubel 1988                     | ours                                                                 |
+| =tonic-accommodation-dark-focus=      | Leibowitz & Owens 1978                       | ours                                                                 |
+| =crowding-effect-foveal=              | Kooi et al. 1994, Levi 2008                  | ours                                                                 |
+| =isoluminance-jitter=                 | -                                            | ours                                                                 |
+| =afterimage-persistence=              | Loomis 1978, Kelly 1979                      | ours                                                                 |
+| =cross-family-distinctiveness=        | CIEDE2000                                    | ours                                                                 |
+| =ui-text-contrast=                    | APCA                                         | ours                                                                 |
+#+TBLFM: $1=spectral-coherence= (Whispergrove)
+
+Each module's commentary gives the details: what it measures, which
+source it uses, and which numbers are ours.
+
 * Emacs
 
 ** Requirements
