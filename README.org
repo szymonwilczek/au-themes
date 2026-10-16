@@ -31,13 +31,13 @@ belong together.
 
 * Themes
 
-| Family       | Variants                     |
-|--------------+------------------------------|
-| Whispergrove | =night=, =evening=, =morning=, =day= |
-| Aurum        | =night=, =twilight=, =day=         |
-| Parchment    | =night=, =day=                   |
-| Salina       | =night=, =day=                   |
-| Herbarium    | =night=, =day=                   |
+| Family       | Variants             |
+|--------------+----------------------|
+| Whispergrove | =night=, =morning=, =day=  |
+| Aurum        | =night=, =twilight=, =day= |
+| Parchment    | =night=, =day=           |
+| Salina       | =night=, =day=           |
+| Herbarium    | =night=, =day=           |
 
 Full names follow the pattern =au-<family>-<variant>=, for example
 =au-whispergrove-night=.
