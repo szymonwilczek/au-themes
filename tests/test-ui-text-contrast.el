@@ -32,9 +32,15 @@
 ;; mode line is meant to recede and shares the band of inactive line
 ;; numbers.
 ;;
+;; A theme listed in `test-ui-text-contrast-refine-floors' keeps the
+;; upper end of the band on its refine backgrounds but uses the floor
+;; given there.  On a mid-grey canvas a refine background dark enough
+;; to stand out from its diff line pulls the diff text under the body
+;; floor, and a lighter one leaves the changed words invisible.
+;;
 ;; Basis: Lc is APCA 0.0.98G-4g.  The body-text band is
-;; `rf-base-text-lc-band'; it and the inactive band are au-themes
-;; heuristics.
+;; `rf-base-text-lc-band'; it, the inactive band and the refine floors
+;; are au-themes heuristics.
 ;;
 ;; Ref:
 ;; Somers, APCA 0.0.98G-4g (apca-w3).
@@ -42,6 +48,10 @@
 ;;; Code:
 
 (require 'test-palette-extractor)
+
+(defvar test-ui-text-contrast-refine-floors
+  '((au-whispergrove-morning . 35.0))
+  "Alist of (THEME . FLOOR): lower Lc floor for text on refine backgrounds.")
 
 (defun test-ui-text-contrast-run ()
   "Evaluate APCA contrast of diff and mode line text."
@@ -54,12 +64,14 @@
          (bg (funcall colour 'bg-main))
          (body (rf-base-text-lc-band polarity bg))
          (dim (if (eq polarity 'light) '(30.0 . 55.0) '(15.0 . 30.0)))
+         (refine-floor (cdr (assq theme test-ui-text-contrast-refine-floors)))
+         (refine (if refine-floor (cons refine-floor (cdr body)) body))
          (checks
           (append
            (mapcan (lambda (k)
                      (let ((fg (intern (format "fg-%s" k))))
                        (list (list (format "Diff %s line" k) fg (intern (format "bg-%s" k)) body)
-                             (list (format "Diff %s refine" k) fg (intern (format "bg-%s-refine" k)) body))))
+                             (list (format "Diff %s refine" k) fg (intern (format "bg-%s-refine" k)) refine))))
                    '(added changed removed))
            (list (list "Mode line active" 'fg-mode-line-active 'bg-mode-line-active body)
                  (list "Mode line inactive" 'fg-mode-line-inactive 'bg-mode-line-inactive dim))))
