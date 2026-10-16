@@ -84,7 +84,7 @@
       (au-test-discover-themes)))
   "Themes evaluated by `run-all-au-tests'.
 Override with the AU_TEST_THEMES or RF_TEST_THEMES environment variable, e.g.
-AU_TEST_THEMES=au-whispergrove-night to gate a single variant.")
+AU_TEST_THEMES=au-salina-night to gate a single variant.")
 
 (defvaralias 'rf-test-themes 'au-test-themes)
 
