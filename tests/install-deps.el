@@ -16,9 +16,6 @@
 ;; for them.  Used by CI on a clean machine:
 ;;
 ;;   EMACS_ELPA_DIR=/tmp/elpa emacs -Q --batch -l tests/install-deps.el
-;;
-;; The GNU ELPA keyring that ships with Emacs 28 has an expired key, so
-;; the keyring update is installed first, as GNU ELPA advises.
 
 ;;; Code:
 
@@ -33,10 +30,6 @@
 (setq package-archives '(("gnu" . "https://elpa.gnu.org/packages/")))
 (package-initialize)
 (package-refresh-contents)
-
-(when (< emacs-major-version 29)
-  (let ((package-check-signature nil))
-    (package-install 'gnu-elpa-keyring-update)))
 
 (dolist (pkg '(modus-themes ef-themes))
   (package-install pkg))
