@@ -3,7 +3,6 @@
 ;; Copyright (C) 2026  Szymon Wilczek
 
 ;; Author: Szymon Wilczek <swilczek.lx@gmail.com>
-;; Maintainer: Szymon Wilczek <swilczek.lx@gmail.com>
 ;; URL: https://github.com/szymonwilczek/au-themes
 
 ;; This file is not part of GNU Emacs.
