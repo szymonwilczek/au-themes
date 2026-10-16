@@ -173,7 +173,7 @@ POLARITY should be `light' or `dark'."
   :type 'hook
   :group 'au-themes)
 
-(defcustom au-themes-toggle-themes '(au-aurum-day au-aurum-night)
+(defcustom au-themes-toggle-themes '(au-salina-day au-salina-night)
   "Default pair of themes to toggle between when no history exists."
   :type '(list symbol symbol)
   :group 'au-themes)
