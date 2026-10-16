@@ -40,29 +40,29 @@
     (bg-alt "#919993")                    ; Subtle borders, alternating stripes
     (fg-main "#141c16")                   ; Default buffer text
     (fg-dim "#425046")                    ; Comments, metadata
-    (fg-alt "#503c5a")                    ; Struct properties
-    (fg-var "#384d1f")                    ; Variable definitions
+    (fg-alt "#543e5c")                    ; Struct properties
+    (fg-var "#4b4e29")                    ; Variable definitions
     (bg-active "#808882")                 ; Active modeline frame, focused bars
     (bg-inactive "#8c948e")               ; Inactive modeline
     (border "#626a64")                    ; Window dividers
 
     ;; Basic Chromatic Scale
     (red "#94322a")                       ; Errors, critical warnings
-    (red-warmer "#5c1e10")                ; String literals
+    (red-warmer "#482509")                ; String literals
     (red-cooler "#7a2822")                ; Diff deletions, removal markers
-    (red-faint "#32443a")                 ; Structural brackets
+    (red-faint "#353422")                 ; Structural brackets
 
-    (green "#085a38")                     ; Primitive types
-    (green-warmer "#541434")              ; Constant values and macros
-    (green-cooler "#502f12")              ; Control keywords
+    (green "#145a3e")                     ; Primitive types
+    (green-warmer "#521236")              ; Constant values and macros
+    (green-cooler "#443717")              ; Control keywords
     (green-faint "#425046")               ; Documentation strings, inline comments
 
     (yellow "#502f12")                    ; Keyword alias
-    (yellow-warmer "#5e5000")             ; Numeric literals
-    (yellow-cooler "#363412")             ; Preprocessor directives
+    (yellow-warmer "#395a03")             ; Numeric literals
+    (yellow-cooler "#2a3620")             ; Preprocessor directives
     (yellow-faint "#4a4438")              ; Informational tooltips, fringe markers
 
-    (blue "#303753")                      ; Function definitions
+    (blue "#323656")                      ; Function definitions
     (blue-warmer "#085474")               ; Function calls
     (blue-cooler "#2d3d3f")               ; Binary and unary operators
     (blue-faint "#085046")                ; Built-in functions
@@ -73,7 +73,7 @@
     (magenta-faint "#425046")             ; Inactive conditional blocks
 
     (cyan "#502f12")                      ; Keyword fallback
-    (cyan-warmer "#363412")               ; Preprocessor alias
+    (cyan-warmer "#2a3620")               ; Preprocessor alias
     (cyan-cooler "#324244")               ; Operator alias
     (cyan-faint "#2c3b33")                ; Punctuation delimiters
 
