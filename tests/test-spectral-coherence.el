@@ -38,6 +38,13 @@
 ;; and blue (420-440 nm), filtering light into a 520-580 nm green-amber window
 ;; (Endler 1993).
 ;;
+;; A role whose centroid leaves its window fails the module.  Themes
+;; outside the woodland family return `skip', which the runner counts
+;; separately from passes.
+;;
+;; Basis: the canopy spectrum is Endler (1993); the per-role windows are
+;; au-themes design targets.
+;;
 ;; Ref:
 ;; Endler (1993) Ecol.  Monogr. 63(1):1-27 ('The color of light in forests').
 
@@ -51,7 +58,6 @@ Applies exclusively to forest/woodland theme families (currently `whispergrove`)
   (let* ((pal (au-extract-active-palette))
          (theme (plist-get pal :theme))
          (passes 0)
-         (warnings 0)
          (fails 0)
          (tokens '(("Preprocessor"         :preprocessor 520.0 570.0)
                    ("Keywords"             :keyword      520.0 570.0)
@@ -73,8 +79,8 @@ Applies exclusively to forest/woodland theme families (currently `whispergrove`)
         (progn
           (princ "\n[SKIP]  Spectral canopy filtration applies exclusively to woodland\n\tthemes (whispergrove family).\n")
           (princ (format "\n==============================================================================\n"))
-          (princ "Spectral Coherence Summary: 0 Coherent, 0 Divergent (Skipped non-woodland theme).\n\n")
-          t)
+          (princ "Spectral Coherence Summary: skipped (non-woodland theme).\n\n")
+          'skip)
       (princ (format "\n+----------------------+---------+----------+------------------+-------------+\n"))
       (princ (format "| %-20s | %-7s | %-8s | %-16s | %-11s |\n"
                      "Token Role" "Hex" "Eff Wave" "Canopy Window" "Coherence"))
@@ -89,13 +95,13 @@ Applies exclusively to forest/woodland theme families (currently `whispergrove`)
                (ok (and (>= wave min-w) (<= wave max-w))))
           (if ok
               (setq passes (1+ passes))
-            (setq warnings (1+ warnings)))
+            (setq fails (1+ fails)))
           (princ (format "| %-20s | %-7s | %6.1fnm | [%5.1f..%5.1fnm] |  %-9s  |\n"
                          name hex wave min-w max-w
                          (if ok "COHERENT" "DIVERGENT")))))
       (princ (format "+----------------------+---------+----------+------------------+-------------+\n"))
       (princ (format "\n==============================================================================\n"))
-      (princ (format "Spectral Coherence Summary: %d Coherent, %d Divergent.\n\n" passes warnings))
+      (princ (format "Spectral Coherence Summary: %d Coherent, %d Divergent.\n\n" passes fails))
       (zerop fails))))
 
 (when (and noninteractive (not (bound-and-true-p rf-running-all-tests)))
