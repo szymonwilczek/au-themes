@@ -154,7 +154,7 @@ says which parts come from a source and which are our own choice.
 | =oled-irradiance=                     | IEC 61966-2-1, APCA                          | ours                                                                 |
 | =spatial-frequency-csf=               | Campbell & Robson 1968, Legge et al. 1985    | ours                                                                 |
 | =determinism-1to1=                    | CIEDE2000, Oklab, CSS Color 4                | ours                                                                 |
-| =wet-surface-physics=                 | CIELAB                                       | ours                                                                 |
+| =wet-surface-physics=                 | CIELAB (CIE 015:2018)                        | ours                                                                 |
 | =photophobia-glare=                   | CIE S 026:2018                               | 10 lx melanopic EDI for dark themes (Brown et al. 2022); others ours |
 | =pattern-glare-cortical=              | Wilkins et al. 1984                          | ours                                                                 |
 | =macular-hazard-blue-light=           | ICNIRP 2013, IEC 62471                       | 100 W * m^{-2} * sr^{-1} (ICNIRP); others ours                       |
@@ -265,6 +265,7 @@ GPL-3.0-or-later. See [[file:LICENSE][LICENSE]].
   adults. /PLOS Biology/, 20(3), e3001571.
 - Campbell, F. W., & Robson, J. G. (1968). Application of Fourier analysis
   to the visibility of gratings. /Journal of Physiology/, 197(3), 551-566.
+- CIE 015:2018. /Colorimetry/, 4th edition.
 - CIE 191:2010. /Recommended system for mesopic photometry based on visual
   performance/.
 - Curcio, C. A., Allen, K. A., Sloan, K. R., et al. (1991). Distribution
