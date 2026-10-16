@@ -95,17 +95,17 @@
     (bg-added "#17360f")                  ; Diff added line baseline
     (bg-added-faint "#0a2900")            ; Diff added unchanged context
     (bg-added-refine "#204810")           ; Diff added word-level highlight
-    (fg-added "#9ed4a2")                  ; Diff added foreground text
+    (fg-added "#91c796")                  ; Diff added foreground text
 
     (bg-changed "#363300")                ; Diff changed line baseline
     (bg-changed-faint "#2a1f00")          ; Diff changed unchanged context
     (bg-changed-refine "#4a4a00")         ; Diff changed word-level highlight
-    (fg-changed "#dcd478")                ; Diff changed foreground text
+    (fg-changed "#c6be62")                ; Diff changed foreground text
 
     (bg-removed "#4b120a")                ; Diff removed line baseline
     (bg-removed-faint "#3a0a00")          ; Diff removed unchanged context
     (bg-removed-refine "#6f1a16")         ; Diff removed word-level highlight
-    (fg-removed "#ffbfbf")                ; Diff removed foreground text
+    (fg-removed "#e7a8a8")                ; Diff removed foreground text
 
     (bg-mode-line-active "#1e2420")       ; Active modeline surface
     (fg-mode-line-active "#9ca69e")       ; Active modeline primary text
