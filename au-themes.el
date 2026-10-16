@@ -270,7 +270,7 @@ If TRANSFORM is non-nil, return CAND unchanged."
      (if active " (active)" ""))))
 
 (defun au-themes--display-sort (candidates)
-  "Preserve stable candidate order for minibuffer completion."
+  "Return CANDIDATES unchanged, keeping their order in completion."
   candidates)
 
 (defun au-themes--completion-table (themes)
@@ -285,7 +285,7 @@ If TRANSFORM is non-nil, return CAND unchanged."
       (complete-with-action action (mapcar #'symbol-name themes) string pred))))
 
 (defun au-themes--prompt-with-preview (themes prompt)
-  "Prompt user to select a theme from THEMES with live buffer preview.
+  "Prompt with PROMPT to select a theme from THEMES with live preview.
 Restores previous theme if aborted."
   (let* ((saved-theme (au-themes-get-current-theme))
          (au-themes--picker-initial-theme saved-theme)
