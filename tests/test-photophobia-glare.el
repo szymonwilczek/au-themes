@@ -43,7 +43,7 @@
 ;; - Hopkinson (1972) Glare from daylighting in buildings
 ;; - CIE S 026:2018
 ;; - Brown et al. (2022) PLoS Biol 20(3):e3001571
-;; - Noseda et al. (2010, 2017) Nature Neurosci / Brain
+;; - Noseda et al. (2010) Nat. Neurosci. 13:239-245; (2016) Brain 139:1971-1986
 
 ;;; Code:
 
