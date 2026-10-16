@@ -6,6 +6,23 @@
 [[https://github.com/szymonwilczek/au-themes/actions/workflows/test.yml][https://github.com/szymonwilczek/au-themes/actions/workflows/test.yml/badge.svg]]
 [[file:LICENSE][https://img.shields.io/badge/license-GPL--3.0--or--later-blue.svg]]
 
+Screenshots of every theme: https://szymon-wilczek.me/writings/au-themes-screenshots/
+
+[[https://szymon-wilczek.me/assets/au-themes/au-salina-night.png]]
+/au-salina-night/
+
+[[https://szymon-wilczek.me/assets/au-themes/au-whispergrove-day.png]]
+/au-whispergrove-day/
+
+[[https://szymon-wilczek.me/assets/au-themes/au-aurum-night.png]]
+/au-aurum-night/
+
+[[https://szymon-wilczek.me/assets/au-themes/au-parchment-day.png]]
+/au-parchment-day/
+
+[[https://szymon-wilczek.me/assets/au-themes/au-herbarium-night.png]]
+/au-herbarium-night/
+
 Calm, low-glare colour themes. Made first of all for autistic people,
 and for anyone who finds most themes too loud to read for long.
 
