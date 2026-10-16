@@ -94,6 +94,7 @@ AU_TEST_THEMES=au-whispergrove-night to gate a single variant.")
            (let* ((themes au-test-themes)
                   (total-modules (* (length rf-test-modules) (length themes)))
                   (passed-modules 0)
+                  (skipped-modules nil)
                   (failed-modules nil))
              (princ "\n+---------------------------------------------------------------------+\n")
              (princ "| AU THEMES: AUTOMATED TEST SUITE                                     |\n")
@@ -111,9 +112,12 @@ AU_TEST_THEMES=au-whispergrove-night to gate a single variant.")
                  (require mod)
                  (let* ((fn-name (intern (format "%s-run" (symbol-name mod))))
                         (res (funcall fn-name)))
-                   (if res
-                       (setq passed-modules (1+ passed-modules))
-                     (push (cons theme mod) failed-modules)))))
+                   (cond ((eq res 'skip)
+                          (push (cons theme mod) skipped-modules))
+                         (res
+                          (setq passed-modules (1+ passed-modules)))
+                         (t
+                          (push (cons theme mod) failed-modules))))))
 
              (princ "\n+-------------------------------------+\n")
              (princ "| EXECUTIVE MASTER TEST SUITE SUMMARY |\n")
@@ -122,6 +126,8 @@ AU_TEST_THEMES=au-whispergrove-night to gate a single variant.")
                             total-modules (length rf-test-modules) (length themes)))
              (princ (format "Passed Test Executions:      %d\n" passed-modules))
              (princ (format "Failed Test Executions:      %d\n" (length failed-modules)))
+             (princ (format "Skipped Test Executions:     %d (module not applicable to theme)\n"
+                            (length skipped-modules)))
              (if failed-modules
                  (progn
                    (princ (format "Failing Modules:             %S\n" (nreverse failed-modules)))
@@ -129,7 +135,7 @@ AU_TEST_THEMES=au-whispergrove-night to gate a single variant.")
                    (princ "Status: FAILING GATES DETECTED\n")
                    nil)
                (princ "+-------------------------------------+\n")
-               (princ (format "Status: ALL %d GATES PASSED\n" total-modules))
+               (princ (format "Status: ALL %d APPLICABLE GATES PASSED\n" passed-modules))
                t)))))
     (if (called-interactively-p 'any)
         (with-output-to-temp-buffer "*Au Themes Test Results*"
