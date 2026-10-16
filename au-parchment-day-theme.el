@@ -40,7 +40,7 @@
     (bg-alt "#c6bfad")                    ; Subtle borders, alternating stripes
     (fg-main "#282420")                   ; Default buffer text
     (fg-dim "#685e50")                    ; Comments, metadata
-    (fg-alt "#645962")                    ; Struct properties
+    (fg-alt "#665862")                    ; Struct properties
     (fg-var "#282420")                    ; Variable definitions
     (bg-active "#c8c0ae")                 ; Active modeline frame, focused bars
     (bg-inactive "#d2cbba")               ; Inactive modeline
@@ -52,14 +52,14 @@
     (red-cooler "#9e3a2a")                ; Diff deletions, removal markers
     (red-faint "#4b453e")                 ; Structural brackets
 
-    (green "#646258")                     ; Primitive types
+    (green "#5c6557")                     ; Primitive types
     (green-warmer "#4b6358")              ; Constant values and macros
     (green-cooler "#343f33")              ; Control keywords
     (green-faint "#685e50")               ; Documentation strings, inline comments
 
     (yellow "#363f2c")                    ; Keyword alias
     (yellow-warmer "#6e594c")             ; Numeric literals
-    (yellow-cooler "#442b28")             ; Preprocessor directives
+    (yellow-cooler "#472926")             ; Preprocessor directives
     (yellow-faint "#726858")              ; Informational tooltips, fringe markers
 
     (blue "#404138")                      ; Function definitions
@@ -73,7 +73,7 @@
     (magenta-faint "#685e50")             ; Inactive conditional blocks
 
     (cyan "#363f2c")                      ; Keyword fallback
-    (cyan-warmer "#442b28")               ; Preprocessor alias
+    (cyan-warmer "#472926")               ; Preprocessor alias
     (cyan-cooler "#524c44")               ; Operator alias
     (cyan-faint "#61584e")                ; Punctuation delimiters
 
