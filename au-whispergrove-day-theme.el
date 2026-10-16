@@ -54,7 +54,7 @@
 
     (green "#1d6742")                     ; Primitive types
     (green-warmer "#682045")              ; Constant values and macros
-    (green-cooler "#513205")              ; Control keywords
+    (green-cooler "#4f3803")              ; Control keywords
     (green-faint "#59665b")               ; Documentation strings, inline comments
 
     (yellow "#5b381a")                    ; Keyword alias
