@@ -41,7 +41,7 @@
 ;; floor are au-themes heuristics.
 ;;
 ;; Ref:
-;; - Kooi et al. (1994) Vision Res. 34:269-276
+;; - Kooi et al. (1994) Spatial Vision 8(2):255-279
 ;; - Levi (2008) Vision Res. 48:635-654
 ;; - Pelli et al. (2004)
 ;; - Baldassi et al. (2009) Hum. Brain Mapp.
