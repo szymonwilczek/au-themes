@@ -73,7 +73,8 @@
     test-crowding-effect-foveal
     test-isoluminance-jitter
     test-afterimage-persistence
-    test-cross-family-distinctiveness))
+    test-cross-family-distinctiveness
+    test-ui-text-contrast))
 
 (defvar au-test-themes
   (let ((env (or (getenv "AU_TEST_THEMES") (getenv "RF_TEST_THEMES"))))
