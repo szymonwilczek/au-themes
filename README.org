@@ -164,7 +164,7 @@ source it uses, and which numbers are ours.
 
 ** Requirements
 
-- Emacs 28.1 or newer
+- Emacs 29.1 or newer
 - [[https://github.com/protesilaos/ef-themes][ef-themes]] 2.0.0 or newer
 - [[https://github.com/protesilaos/modus-themes][modus-themes]] 5.2.0 or newer
 
