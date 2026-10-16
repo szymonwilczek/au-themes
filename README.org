@@ -217,3 +217,60 @@ GPL-3.0-or-later. See [[file:LICENSE][LICENSE]].
   ipRGC-influenced responses to light/.
 - ICNIRP (2013). Guidelines on limits of exposure to incoherent visible and
   infrared radiation. /Health Physics/, 105(1), 74-96.
+- Brown, T. M., Brainard, G. C., Cajochen, C., et al. (2022).
+  Recommendations for daytime, evening, and nighttime indoor light
+  exposure to best support physiology, sleep, and wakefulness in healthy
+  adults. /PLOS Biology/, 20(3), e3001571.
+- Campbell, F. W., & Robson, J. G. (1968). Application of Fourier analysis
+  to the visibility of gratings. /Journal of Physiology/, 197(3), 551-566.
+- CIE 191:2010. /Recommended system for mesopic photometry based on visual
+  performance/.
+- Curcio, C. A., Allen, K. A., Sloan, K. R., et al. (1991). Distribution
+  and morphology of human cone photoreceptors stained with anti-blue
+  opsin. /Journal of Comparative Neurology/, 312(4), 610-624.
+- Endler, J. A. (1993). The color of light in forests and its
+  implications. /Ecological Monographs/, 63(1), 1-27.
+- Fairchild, M. D., & Pirrotta, E. (1991). Predicting the lightness of
+  chromatic object colors using CIELAB. /Color Research & Application/,
+  16(6), 385-393.
+- IEC 61966-2-1:1999. /Multimedia systems and equipment - Colour
+  measurement and management - Part 2-1: Default RGB colour space - sRGB/.
+- IEC 62471:2006. /Photobiological safety of lamps and lamp systems/.
+- Kelly, D. H. (1979). Motion and vision. II. Stabilized spatio-temporal
+  threshold surface. /JOSA/, 69(10), 1340-1349.
+- Kooi, F. L., Toet, A., Tripathy, S. P., & Levi, D. M. (1994). The effect
+  of similarity and duration on spatial interaction in peripheral vision.
+  /Spatial Vision/, 8(2), 255-279.
+- Legge, G. E., Pelli, D. G., Rubin, G. S., & Schleske, M. M. (1985).
+  Psychophysics of reading. I. Normal vision. /Vision Research/, 25(2),
+  239-252.
+- Leibowitz, H. W., & Owens, D. A. (1978). New evidence for the
+  intermediate position of relaxed accommodation. /Documenta
+  Ophthalmologica/, 46(1), 133-147.
+- Levi, D. M. (2008). Crowding - an essential bottleneck for object
+  recognition: a mini-review. /Vision Research/, 48(5), 635-654.
+- Liang, J., & Williams, D. R. (1997). Aberrations and retinal image
+  quality of the normal human eye. /JOSA A/, 14(11), 2873-2883.
+- Livingstone, M., & Hubel, D. (1988). Segregation of form, color,
+  movement, and depth: anatomy, physiology, and perception. /Science/,
+  240(4853), 740-749.
+- Loomis, J. M. (1978). Complementary afterimages and the unequal adapting
+  effects of steady and flickering light. /JOSA/, 68(3), 411-416.
+- Noseda, R., Kainz, V., Jakubowski, M., et al. (2010). A neural mechanism
+  for exacerbation of headache by light. /Nature Neuroscience/, 13(2),
+  239-245.
+- Noseda, R., Bernstein, C. A., Nir, R.-R., et al. (2016). Migraine
+  photophobia originating in cone-driven retinal pathways. /Brain/,
+  139(7), 1971-1986.
+- Shannon, C. E. (1948). A mathematical theory of communication. /Bell
+  System Technical Journal/, 27(3), 379-423.
+- Stiles, W. S., & Crawford, B. H. (1933). The luminous efficiency of rays
+  entering the eye pupil at different points. /Proceedings of the Royal
+  Society B/, 112(778), 428-450.
+- Stockman, A., & Sharpe, L. T. (2000). The spectral sensitivities of the
+  middle- and long-wavelength-sensitive cones derived from measurements
+  in observers of known genotype. /Vision Research/, 40(13), 1711-1737.
+- Watson, A. B., & Yellott, J. I. (2012). A unified formula for
+  light-adapted pupil size. /Journal of Vision/, 12(10):12.
+- W3C (2018). /Web Content Accessibility Guidelines (WCAG) 2.1/.
+- W3C. /CSS Color Module Level 4/.
