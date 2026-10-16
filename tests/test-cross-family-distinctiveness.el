@@ -56,12 +56,10 @@ or `<family>-<variant>'."
       (intern (match-string 1 name)))
      (t (intern name)))))
 
-(defconst au-cross-family-exemptions
-  '((au-aurum-twilight . whispergrove))
+(defconst au-cross-family-exemptions nil
   "Declared (THEME . FAMILY) pairs that are not compared with each other.
-`au-aurum-twilight' keeps the original aurum palette, whose olivine data
-types and builtins share the forest greens of whispergrove on purpose.
-It is still compared with every other family.")
+Each entry needs a reason in this docstring.  There are none: every
+theme is compared with every other family.")
 
 (defun au-cross-family-exempt-p (theme other)
   "Return non-nil when THEME and OTHER form a declared exemption."
