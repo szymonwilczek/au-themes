@@ -238,9 +238,6 @@ to `au-themes-toggle-themes'."
         (au-themes-load-theme target)
       (user-error "No valid au-theme available to toggle"))))
 
-;;;###autoload
-(defalias 'au-toggle #'au-themes-toggle)
-
 (defvar au-themes--picker-initial-theme nil
   "Theme that was active when the picker was initiated.")
 
@@ -385,15 +382,6 @@ With optional THEME symbol, load it directly without prompting."
                      (au-themes--prompt-with-preview themes "Select dark au-theme: "))))
     (when chosen
       (au-themes-load-theme chosen))))
-
-;;;###autoload
-(defalias 'au-select #'au-themes-select)
-
-;;;###autoload
-(defalias 'au-select-light #'au-themes-select-light)
-
-;;;###autoload
-(defalias 'au-select-dark #'au-themes-select-dark)
 
 (provide 'au-themes)
 ;;; au-themes.el ends here
