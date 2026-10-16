@@ -49,7 +49,7 @@
 
     ;; Basic Chromatic Scale
     (red "#9a3c2e")                       ; Errors, critical warnings
-    (red-warmer "#074329")                ; String literals
+    (red-warmer "#084629")                ; String literals
     (red-cooler "#843026")                ; Diff deletions, removal markers
     (red-faint "#4c5747")                 ; Structural brackets
 
@@ -60,7 +60,7 @@
 
     (yellow "#6c223a")                    ; Keyword alias
     (yellow-warmer "#944818")             ; Numeric literals
-    (yellow-cooler "#1c3838")             ; Preprocessor directives
+    (yellow-cooler "#0f3733")             ; Preprocessor directives
     (yellow-faint "#605c48")              ; Informational tooltips, fringe markers
 
     (blue "#184668")                      ; Function definitions
@@ -74,7 +74,7 @@
     (magenta-faint "#586050")             ; Inactive conditional blocks
 
     (cyan "#4a3410")                      ; Builtin fallback
-    (cyan-warmer "#1c3838")               ; Preprocessor alias
+    (cyan-warmer "#0f3733")               ; Preprocessor alias
     (cyan-cooler "#444e44")               ; Operator alias
     (cyan-faint "#464e44")                ; Punctuation delimiters
 
