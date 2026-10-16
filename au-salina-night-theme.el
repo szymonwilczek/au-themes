@@ -96,12 +96,12 @@
     (bg-added "#143020")                  ; Diff added line baseline
     (bg-added-faint "#0e2216")            ; Diff added unchanged context
     (bg-added-refine "#20462c")           ; Diff added word-level highlight
-    (fg-added "#a2dab0")                  ; Diff added foreground text
+    (fg-added "#8ec59c")                  ; Diff added foreground text
 
     (bg-changed "#322a0e")                ; Diff changed line baseline
     (bg-changed-faint "#221c08")          ; Diff changed unchanged context
     (bg-changed-refine "#443a16")         ; Diff changed word-level highlight
-    (fg-changed "#d8c272")                ; Diff changed foreground text
+    (fg-changed "#cdb767")                ; Diff changed foreground text
 
     (bg-removed "#361614")                ; Diff removed line baseline
     (bg-removed-faint "#260e0c")          ; Diff removed unchanged context
