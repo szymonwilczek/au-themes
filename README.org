@@ -43,7 +43,7 @@ belong together.
 | Herbarium    | =night=, =day=          | pressed sage, dried lavender, oak-gall ink, chamomile        |
 
 Full names follow the pattern =au-<family>-<variant>=, for example
-=au-whispergrove-night=.
+=au-salina-night=.
 
 Which one to try first:
 
@@ -97,7 +97,7 @@ Every theme is checked by the modules in [[file:tests][tests]]. To run them all:
 #+end_src
 
 Set =AU_TEST_THEMES= to check only some themes, for example
-=AU_TEST_THEMES=au-whispergrove-night=. The run fails if any theme
+=AU_TEST_THEMES=au-salina-night=. The run fails if any theme
 fails any module.
 
 The tests look for ef-themes and modus-themes in your =elpa=
@@ -184,7 +184,7 @@ package. Until then we stay on modus-themes and ef-themes.
 #+begin_src elisp
   (add-to-list 'load-path "~/.emacs.d/au-themes")
   (require 'au-themes)
-  (load-theme 'au-whispergrove-night t)
+  (load-theme 'au-salina-night t)
 #+end_src
 
 On Emacs 30 or newer you can use =use-package= instead:
@@ -193,7 +193,7 @@ On Emacs 30 or newer you can use =use-package= instead:
   (use-package au-themes
     :vc (:url "https://github.com/szymonwilczek/au-themes")
     :config
-    (load-theme 'au-whispergrove-night t))
+    (load-theme 'au-salina-night t))
 #+end_src
 
 ** Usage
@@ -205,8 +205,9 @@ On Emacs 30 or newer you can use =use-package= instead:
 | =au-themes-select-dark=    | pick from dark themes only               |
 | =au-themes-toggle=         | switch between last light and dark theme |
 
-The default pair for =au-themes-toggle= is set in
-=au-themes-toggle-themes=.
+=au-themes-toggle= switches between =au-salina-day= and
+=au-salina-night= until you pick other themes. Change the default pair
+in =au-themes-toggle-themes=.
 
 * License
 
