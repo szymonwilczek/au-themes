@@ -31,16 +31,27 @@ belong together.
 
 * Themes
 
-| Family       | Variants            |
-|--------------+---------------------|
-| Whispergrove | =night=, =morning=, =day= |
-| Aurum        | =night=, =day=          |
-| Parchment    | =night=, =day=          |
-| Salina       | =night=, =day=          |
-| Herbarium    | =night=, =day=          |
+| Family       | Variants            | Mood                                                         |
+|--------------+---------------------+--------------------------------------------------------------|
+| Whispergrove | =night=, =morning=, =day= | muted greens and earth tones of a quiet forest               |
+| Aurum        | =night=, =day=          | warm amber and gold, with little blue light                  |
+| Parchment    | =night=, =day=          | almost monochrome; italics and brightness instead of colour  |
+| Salina       | =night=, =day=          | the coast: salt flats, sand, deep ocean, driftwood and coral |
+| Herbarium    | =night=, =day=          | pressed sage, dried lavender, oak-gall ink, chamomile        |
 
 Full names follow the pattern =au-<family>-<variant>=, for example
 =au-whispergrove-night=.
+
+Which one to try first:
+
+- =night= variants are for dark rooms and evenings. Of these,
+  =aurum-night= gives off the least of the blue light that keeps you
+  awake.
+- =day= variants are for daylight. =whispergrove-morning= has a dimmer
+  background than the other light themes, for early mornings or a room
+  with little light.
+- =parchment= suits anyone who finds even calm syntax colours too
+  busy.
 
 * Supported programs
 
