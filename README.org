@@ -67,7 +67,10 @@ We pick colours by hand and check each palette against these rules:
   crowd the words.
 - Neighbouring colours differ in brightness, not only in hue, so the
   line does not seem to shimmer.
-- Colours stay distinguishable under simulated colour blindness.
+- Colours stay distinguishable under simulated colour blindness
+  (Brettel et al. 1997): seven key pairs, such as keyword and type,
+  stay at least 10 dE00 apart for every type of dichromacy, and no
+  two token colours come closer than 3 dE00.
 
 The rules are based on the sources listed under [[*References][References]].
 
