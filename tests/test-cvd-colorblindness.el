@@ -27,10 +27,26 @@
 ;; Dichromat appearance is simulated with the two half-plane LMS projection
 ;; using the Smith & Pokorny (1975) cone fundamentals over Judd-Vos corrected XYZ.
 ;;
+;; Pairs that carry most of the syntactic structure must stay at least 10 dE00
+;; apart under every dichromacy.
+;; Every other role pair (`au-test-role-pairs') must not collapse: it
+;; must stay at least 3 dE00 apart.  A dichromat loses one colour
+;; dimension, so the full 10 dE00 separation cannot hold for all pairs
+;; at once while every role also stays within its contrast band.
+;;
+;; Basis: the simulation is Brettel et al. (1997); both thresholds are
+;; au-themes heuristics.  Colour differences shrink perceptually as
+;; targets get smaller (Carter & Silverstein 2010; Stone et al. 2014),
+;; so the 3 dE00 floor is meant as a single noticeable step at glyph
+;; size, not as a measured threshold.
+;;
 ;; Ref:
 ;; - Brettel, Viénot & Mollon (1997) J. Opt. Soc. Am. A 14(10):2647-2655
 ;; - Viénot, Brettel & Mollon (1999) Color Res. Appl. 24(4):243-252
 ;; - Smith & Pokorny (1975)
+;; - Carter & Silverstein (2010) J. Soc. Inf. Display 18(1):17-28
+;; - Stone, Szafir & Setlur (2014) An engineering model for color difference
+;;   as a function of size.  22nd Color and Imaging Conference (IS&T).
 
 ;;; Code:
 
@@ -47,6 +63,10 @@
          ;; inspected in passing need a large margin, so a 10x design factor is
          ;; required.
          (min-de 10.0)
+         ;; Collapse floor for every role pair: a single noticeable step
+         ;; at glyph size, where colour differences look smaller than on
+         ;; large patches (Carter & Silverstein 2010)
+         (min-de-all 3.0)
          (cvd-modes '((protan . "Protanopia (Red-Blind)")
                       (deutan . "Deuteranopia (Green-Blind)")
                       (tritan . "Tritanopia (Blue-Blind)")))
@@ -88,6 +108,29 @@
                            p-label c1 sim1 c2 sim2 dist
                            (if ok "PASS" "FAIL")))))
         (princ (format "+----------------------------+--------------------+--------------------+----------+--------+\n"))))
+    (princ (format "\nRole Collapse Check (every role pair, worst mode, dE00 >= %.1f):\n" min-de-all))
+    (princ (format "+----------------------------------+---------+---------+--------+----------+--------+\n"))
+    (princ (format "| %-32s | %-7s | %-7s | %-6s | %-8s | %-7s|\n"
+                   "Role Pair" "Color 1" "Color 2" "Mode" "dE00" "Status"))
+    (princ (format "+----------------------------------+---------+---------+--------+----------+--------+\n"))
+    (dolist (p au-test-role-pairs)
+      (let* ((c1 (plist-get pal (nth 1 p)))
+             (c2 (plist-get pal (nth 2 p)))
+             (worst nil)
+             (worst-mode nil))
+        (dolist (mode-spec cvd-modes)
+          (let ((d (rf-delta-e-2000 (rf-cvd-simulate c1 (car mode-spec))
+                                    (rf-cvd-simulate c2 (car mode-spec)))))
+            (when (or (null worst) (< d worst))
+              (setq worst d worst-mode (car mode-spec)))))
+        (let ((ok (>= worst min-de-all)))
+          (if ok
+              (setq passes (1+ passes))
+            (setq fails (1+ fails)))
+          (princ (format "| %-32s | %-7s | %-7s | %-6s | %8.2f | %s   |\n"
+                         (nth 0 p) c1 c2 worst-mode worst
+                         (if ok "PASS" "FAIL"))))))
+    (princ (format "+----------------------------------+---------+---------+--------+----------+--------+\n"))
     (princ (format "\nCVD Simulation Summary: %d Passed, %d Failed across all 3 modes.\n\n" passes fails))
     (zerop fails)))
 
