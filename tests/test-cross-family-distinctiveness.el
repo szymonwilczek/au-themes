@@ -102,9 +102,7 @@ family's own chromatic signature."
     (princ (format "'~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~'\n"))
 
     (if (null counterparts)
-        (progn
-          (princ "[SKIP]  No cross-family counterpart of the same polarity found for comparison.\n")
-          (setq passes (1+ passes)))
+        (princ "[SKIP]  No cross-family counterpart of the same polarity found for comparison.\n")
 
       (dolist (c-theme counterparts)
         (let ((c-pal (au-extract-active-palette c-theme)))
