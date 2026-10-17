@@ -33,15 +33,26 @@
 ;; Syntax roles keep at least Lc 20, and the hl-line luminance step may
 ;; be at most 0.35 of the body-text step.
 ;;
+;; The Michelson contrast of the hl-line is taken over the light that
+;; reaches the eye: the emitted luminance plus the panel's physical floor
+;; (LCD black level and diffusely reflected ambient light,
+;; `rf-display-physical-floor-y').  On an optically black canvas the
+;; emitted luminances alone are near zero, so their Michelson ratio
+;; would treat a step the eye cannot resolve against the floor as a
+;; large one.
+;;
 ;; Basis: the M and P pathway properties are Livingstone & Hubel (1988)
-;; and Merigan & Maunsell (1993).  The Lc 12 and Michelson 0.35 chrome
-;; limits, the Lc 20 role floor and the 0.35 gain ratio are au-themes
-;; heuristics.
+;; and Merigan & Maunsell (1993); Michelson contrast is Michelson
+;; (1927), and the panel floor follows IEC 61966-2-1 ambient conditions.
+;; The Lc 12 and Michelson 0.35 chrome limits, the Lc 20 role floor and
+;; the 0.35 gain ratio are au-themes heuristics.
 ;;
 ;; Ref:
 ;; - Livingstone & Hubel (1988) Science
 ;; - Milne et al. (2002) NeuroReport
 ;; - Merigan & Maunsell (1993)
+;; - Michelson (1927) Studies in Optics, University of Chicago Press
+;; - IEC 61966-2-1:1999 sRGB, reference viewing environment
 
 ;;; Code:
 
@@ -56,6 +67,7 @@
          (hl (plist-get pal :bg-hl-line))
          (bg-y (rf-luminance-y bg))
          (hl-y (rf-luminance-y hl))
+         (floor-y (rf-display-physical-floor-y))
          (passes 0)
          (fails 0))
 
@@ -69,7 +81,7 @@
     (princ "\nBackground UI Surfaces vs Canvas Luminance Shock:\n")
     (princ (format "-----------------------------------------------------------------------\n"))
     (let* ((lc-hl (abs (rf-apca-contrast hl bg)))
-           (m-hl (/ (abs (- hl-y bg-y)) (max 1e-6 (+ hl-y bg-y))))
+           (m-hl (/ (abs (- hl-y bg-y)) (+ hl-y bg-y (* 2.0 floor-y))))
            (hl-ok (and (< lc-hl 12.0) (<= m-hl 0.35))))
       (if hl-ok
           (progn
