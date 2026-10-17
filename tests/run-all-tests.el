@@ -54,6 +54,7 @@
     test-oklab-perceptual
     test-helmholtz-kohlrausch
     test-spectral-coherence
+    test-stellar-locus
     test-lcd-black-bleed
     test-oled-irradiance
     test-spatial-frequency-csf
