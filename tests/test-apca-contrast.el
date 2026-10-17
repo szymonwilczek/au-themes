@@ -38,10 +38,30 @@
 ;; Variables may be drawn as body text or as a syntax role, so their band
 ;; spans both: the syntax floor and the body-text ceiling.
 ;;
+;; The dark-mode floors for body text within the selection (40) and on
+;; intense panels (35) sit a fixed distance under the body-text floor
+;; of 46.  When `rf-base-text-lc-band' lowers that floor on an
+;; optically black canvas, both move down by the same amount: these
+;; surfaces are also darker than APCA's soft black clamp (Y 0.022).
+;;
+;; Families in `au-test-strict-families' also hold comments at least
+;; Lc 5 below every syntax role.  Comments and dim syntax roles sit near
+;; the bottom of the luminance range, where colourfulness falls with
+;; luminance (Hunt effect), so a hue difference alone stops telling
+;; them apart: a string and a comment 19.8 dE00 apart but only Lc 2.4
+;; apart read as one colour on a near-black canvas.
+;;
 ;; Basis: Lc is APCA 0.0.98G-4g (Somers, apca-w3), and the Bronze
-;; levels quoted above are APCA's.  The role bands and the canvas,
-;; selection and panel limits are au-themes heuristics; the body-text
-;; band is shared with other modules through `rf-base-text-lc-band'.
+;; levels quoted above are APCA's.  The fall of colourfulness with
+;; luminance is Hunt's (1952).  The role bands, the Lc 5 comment
+;; recession and the canvas, selection and panel limits are au-themes
+;; heuristics; the body-text band is shared with other modules through
+;; `rf-base-text-lc-band'.
+;;
+;; Ref:
+;; Somers, A. APCA 0.0.98G-4g, apca-w3 (github.com/Myndex/apca-w3).
+;; Hunt, R. W. G. (1952) Light and dark adaptation and the perception
+;;   of color.  JOSA 42(3):190-199.
 
 ;;; Code:
 
@@ -57,6 +77,7 @@
          (passes 0)
          (fails 0)
          (base-band (rf-base-text-lc-band polarity bg))
+         (floor-shift (if (eq polarity 'light) 0.0 (- 46.0 (car base-band))))
          (tokens
           (if (eq polarity 'light)
               (let ((subdued (< bg-y 0.420)))
@@ -130,6 +151,24 @@
                        (if ok "PASS" "FAIL")))))
     (princ (format "+--------------------------------+----------+---------+--------------+----------+\n"))
 
+    (when (au-test-strict-family-p theme)
+      (let* ((min-gap 5.0)
+             (c-hex (plist-get pal :comment))
+             (c-lc (abs (rf-apca-contrast c-hex bg))))
+        (princ (format "\nComment Recession Gate (syntax |Lc| - comment |Lc| >= %.1f, comment %s |Lc| %.2f):\n"
+                       min-gap c-hex c-lc))
+        (princ (format "---------------------------------------------------------------------------------\n"))
+        (dolist (key '(:preprocessor :keyword :type :constant :number :builtin
+                                     :fnname :fnname-call :string :property :variable))
+          (let* ((hex (plist-get pal key))
+                 (gap (- (abs (rf-apca-contrast hex bg)) c-lc))
+                 (ok (>= gap min-gap)))
+            (if ok
+                (setq passes (1+ passes))
+              (setq fails (1+ fails)))
+            (princ (format "[%s] %-14s [%s]: Delta-Lc=%5.2f\n"
+                           (if ok "PASS" "FAIL") (substring (symbol-name key) 1) hex gap))))))
+
     (princ "\nVisual Selection Region Contrast Gate (bg-region):\n")
     (princ (format "---------------------------------------------------------------------------------\n"))
     (let* ((reg (plist-get pal :bg-region))
@@ -138,7 +177,8 @@
            (reg-dy (abs (- (rf-luminance-y reg) (rf-luminance-y bg))))
            (reg-vis-ok (and (>= reg-de 10.0) (>= reg-dy 0.020)))
            (fg-reg-lc (abs (rf-apca-contrast fg reg)))
-           (fg-reg-ok (>= fg-reg-lc 40.0)))
+           (fg-reg-min (- 40.0 floor-shift))
+           (fg-reg-ok (>= fg-reg-lc fg-reg-min)))
       (if reg-vis-ok
           (progn
             (princ (format "[PASS] Selection region visibility vs canvas:\n\t\tdE00=%.2f >= 10.0, Delta-Y=%.4f >= 0.020\n"
@@ -149,9 +189,9 @@
         (setq fails (1+ fails)))
       (if fg-reg-ok
           (progn
-            (princ (format "[PASS] Body text legibility within selection:\n\t\tAPCA |Lc|=%.2f >= 40.0\n" fg-reg-lc))
+            (princ (format "[PASS] Body text legibility within selection:\n\t\tAPCA |Lc|=%.2f >= %.1f\n" fg-reg-lc fg-reg-min))
             (setq passes (1+ passes)))
-        (princ (format "[FAIL] Body text illegible within selection:\n\t\tAPCA |Lc|=%.2f < 40.0\n" fg-reg-lc))
+        (princ (format "[FAIL] Body text illegible within selection:\n\t\tAPCA |Lc|=%.2f < %.1f\n" fg-reg-lc fg-reg-min))
         (setq fails (1+ fails))))
 
     (let ((intense-panels '((:bg-red-intense     "Alert / Fatal assertion panel")
@@ -167,7 +207,7 @@
                             (:bg-magenta-subtle  "Paren match context wash")
                             (:bg-cyan-subtle     "Block highlight wash")))
           (fg (plist-get pal :fg-main))
-          (min-intense-lc (if (eq polarity 'light) 55.0 35.0)))
+          (min-intense-lc (if (eq polarity 'light) 55.0 (- 35.0 floor-shift))))
       (princ "\nPanels and Structural Highlights APCA Contrast Gate:\n")
       (princ (format "---------------------------------------------------------------------------------\n"))
       (dolist (item intense-panels)

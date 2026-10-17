@@ -44,18 +44,6 @@
 
 (require 'test-palette-extractor)
 
-(defun au-theme-family (theme)
-  "Return the package/family symbol of THEME.
-Extracts the family identifier from the convention `au-<family>-<variant>'
-or `<family>-<variant>'."
-  (let ((name (symbol-name theme)))
-    (cond
-     ((string-match "\\`au-\\([a-z0-9]+\\)-" name)
-      (intern (match-string 1 name)))
-     ((string-match "\\`\\([a-z0-9]+\\)-" name)
-      (intern (match-string 1 name)))
-     (t (intern name)))))
-
 (defconst au-cross-family-exemptions nil
   "Declared (THEME . FAMILY) pairs that are not compared with each other.
 Each entry needs a reason in this docstring.  There are none: every

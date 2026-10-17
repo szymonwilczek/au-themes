@@ -29,11 +29,26 @@
 ;; under 0.98; dark themes keep that contrast at or under 60 and the
 ;; canvas at or above Y 0.001.
 ;;
+;; Dark themes also cap the plain luminance ratio of body text to
+;; canvas, Y_fg / Y_bg, at `rf-irradiation-ratio-max'.  Irradiation
+;; makes a bright figure on a dark ground look larger than it is,
+;; so light letters on a near-black canvas seem to spread and thicken.
+;; The Weber gate cannot see this on a very dark canvas, where the
+;; panel floor and the straylight veil dominate the retinal
+;; background, and APCA cannot either (see `rf-base-text-lc-band').
+;;
 ;; Basis: the glare spread function and straylight integral are CIE
-;; 146:2002.  The canvas and Weber limits are au-themes heuristics.
+;; 146:2002; irradiation is described by Helmholtz (1867) and reviewed
+;; by Westheimer (2008).  The canvas, Weber and ratio limits are
+;; au-themes heuristics.
 ;;
 ;; Ref:
 ;; Vos (2003) CIE Report on Disability Glare (CIE 146:2002).
+;; Helmholtz, H. von (1867). Handbuch der physiologischen Optik.
+;;   Leipzig: Voss.
+;; Westheimer, G. (2008). Illusions in the spatial sense of the eye:
+;;   geometrical-optical illusions and the neural representation of
+;;   space. Vision Research, 48(20), 2128-2142.
 
 ;;; Code:
 
@@ -55,6 +70,8 @@
          (retinal-bg (+ y-bg floor-y stray-y))
          ;; Retinal Weber contrast: |Delta Y| / Y_retinal_bg
          (weber-contrast (/ (abs (- y-fg y-bg)) (max 1e-6 retinal-bg)))
+         ;; Plain luminance ratio of body text to canvas
+         (irr-ratio (/ y-fg (max 1e-6 y-bg)))
          ;; Clinical ocular straylight parameter s at 10 deg
          ;; per Vos (2003) / CIE 146:2002
          (s-10 (* 100.0 (rf-glare-spread-function 10.0)))
@@ -70,6 +87,7 @@
     (princ (format "| Panel Physical Floor:          %.6f\n" floor-y))
     (princ (format "| Retinal Straylight Veiling:    %.6f\n" stray-y))
     (princ (format "| Retinal Weber Ratio (|C_W|):   %.2f\n" weber-contrast))
+    (princ (format "| Text/Canvas Ratio (Y_fg/Y_bg): %.1f\n" irr-ratio))
     (princ (format "| Ocular Straylight s(10 deg):   %.2f deg^2/sr [log(s) = %.2f]\n" s-10 log-s))
     (princ (format "'~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~'\n"))
 
@@ -103,6 +121,15 @@
         (princ "[FAIL]  High Weber contrast: risk of disability glare on older eyes / astigmatism.\n")
         (setq fails (1+ fails)))
 
+      (princ (format "\nIrradiation Spread (Y_fg/Y_bg <= %.1f):\n" rf-irradiation-ratio-max))
+      (princ (format "------------------------------------------------------------------\n"))
+      (if (<= irr-ratio rf-irradiation-ratio-max)
+          (progn
+            (princ "[PASS]  Text-to-canvas ratio controlled; letters keep their weight\n\twithout spreading.\n")
+            (setq passes (1+ passes)))
+        (princ (format "[FAIL]  Text-to-canvas ratio %.1f: light letters spread and look bold\n\ton the dark canvas.\n" irr-ratio))
+        (setq fails (1+ fails)))
+
       (princ "\nAbsolute Black Hole Avoidance (Y_bg >= 0.0010):\n")
       (princ (format "------------------------------------------------------------------\n"))
       (if (>= y-bg 0.0010)
@@ -112,7 +139,7 @@
         (princ "[FAIL]  Background too dark (< 0.0010): creates infinite Weber contrast.\n")
         (setq fails (1+ fails))))
 
-      (princ (format "\n==================================================================\n"))
+    (princ (format "\n==================================================================\n"))
     (princ (format "Straylight & Glare Summary: %d Passed, %d Failed.\n\n"
                    passes fails))
     (zerop fails)))

@@ -242,6 +242,51 @@ so the colours tested are the colours the faces render."
 Keys are those returned by `au-extract-active-palette'.  Shared by the
 CIEDE2000 separation gate and the colour-vision-deficiency gate.")
 
+(defun au-theme-family (theme)
+  "Return the package/family symbol of THEME.
+Extracts the family identifier from the convention `au-<family>-<variant>'
+or `<family>-<variant>'."
+  (let ((name (symbol-name theme)))
+    (cond
+     ((string-match "\\`au-\\([a-z0-9]+\\)-" name)
+      (intern (match-string 1 name)))
+     ((string-match "\\`\\([a-z0-9]+\\)-" name)
+      (intern (match-string 1 name)))
+     (t (intern name)))))
+
+(defconst au-test-strict-families nil
+  "Families held to the all-pairs separation and comment recession gates.
+Families released before these gates (aurum, herbarium, parchment,
+salina, whispergrove) still fail them; each joins this list once it
+has been retuned.")
+
+(defun au-test-strict-family-p (theme)
+  "Return non-nil when THEME belongs to `au-test-strict-families'."
+  (memq (au-theme-family theme) au-test-strict-families))
+
+(defconst au-test-receding-roles '(:operator :bracket :delimiter :comment)
+  "Neutral roles that recede by luminance rather than by colour.
+They form one grey ladder whose steps are held by the crowding,
+triplet and isoluminance modules, so the all-pairs gate does not
+compare them with each other.")
+
+(defun au-test-all-role-pairs (roles)
+  "Return every pair of ROLES as (NAME K1 K2) entries.
+Pairs in which both roles belong to `au-test-receding-roles' are left out."
+  (let ((pairs nil))
+    (while roles
+      (let ((a (car roles)))
+        (dolist (b (cdr roles))
+          (unless (and (memq a au-test-receding-roles)
+                       (memq b au-test-receding-roles))
+            (push (list (format "%s vs %s"
+                                (substring (symbol-name a) 1)
+                                (substring (symbol-name b) 1))
+                        a b)
+                  pairs))))
+      (setq roles (cdr roles)))
+    (nreverse pairs)))
+
 (defun rf-clean-hex (hex)
   "Normalise HEX to lowercase #rrggbb, signalling an error if it is not one."
   (let ((s (format "%s" hex)))
@@ -363,15 +408,42 @@ If OLED-P is non-nil, assume emissive zero black floor."
 Subdued canvases lower every Lc floor, since less canvas luminance is
 left to contrast against.")
 
+(defconst rf-optically-black-floor-factor 1.5
+  "Canvas luminance, in panel floors, at or under which a canvas is optically black.
+Such a canvas adds at most half again the light the panel already
+shows at black (`rf-display-physical-floor-y').")
+
+(defun rf-optically-black-p (bg-hex)
+  "Return non-nil when BG-HEX is an optically black canvas.
+The canvas must be neutral (Oklab C <= 0.005) and its luminance Y at
+or under `rf-optically-black-floor-factor' panel floors."
+  (and (<= (nth 1 (rf-hex-to-oklch bg-hex)) 0.005)
+       (<= (rf-luminance-y bg-hex)
+           (* rf-optically-black-floor-factor (rf-display-physical-floor-y)))))
+
+(defconst rf-irradiation-ratio-max 100.0
+  "Upper limit of the body-text luminance ratio Y_fg / Y_bg on a dark canvas.
+Set at the ratio of the darkest canvas in the collection before
+optically black canvases (whispergrove-night, 99.5); an au-themes
+heuristic.")
+
 (defun rf-base-text-lc-band (polarity bg-hex)
   "Return the APCA |Lc| band (MIN . MAX) for body text under POLARITY on BG-HEX.
 Dark themes hold body text to a moderate 46..62 to limit edge
 irradiation; light themes need 58 (48 on a subdued canvas) and are
-capped at 85.  This band is an au-themes calibration, not an APCA
-conformance level, and every module gating body text uses it."
-  (if (eq polarity 'light)
-      (cons (if (< (rf-luminance-y bg-hex) rf-subdued-canvas-y) 48.0 58.0) 85.0)
-    (cons 46.0 62.0)))
+capped at 85.  On an optically black canvas (`rf-optically-black-p')
+the floor drops to 37: APCA's soft black clamp (blkThrs 0.022) lifts
+every canvas under Y 0.022 to nearly the same value, so Lc no longer
+sees how dark the canvas is, and at Lc 46 the luminance ratio of text
+to canvas reaches 130:1.  That ratio falls to
+`rf-irradiation-ratio-max' near Lc 38.5; the floor sits just under
+it, so the LCD estimate (about 0.5 Lc lower) still fits.  This band is an au-themes calibration,
+not an APCA conformance level, and every module gating body text
+uses it."
+  (cond ((eq polarity 'light)
+         (cons (if (< (rf-luminance-y bg-hex) rf-subdued-canvas-y) 48.0 58.0) 85.0))
+        ((rf-optically-black-p bg-hex) (cons 37.0 62.0))
+        (t (cons 46.0 62.0))))
 
 (defun rf-lcd-contrast (txt-hex bg-hex)
   "APCA Lc on an IPS LCD: native black level plus reflected ambient."

@@ -38,7 +38,8 @@
 ;; Keys whose palette comment legitimately differs between themes,
 ;; because the colour serves a different role.
 (defconst au-integrity-comment-variants
-  '((cyan "Keyword fallback" "Builtin fallback"))
+  '((cyan "Keyword fallback" "Builtin fallback")
+    (fg-alt "Section headings"))
   "Allowed palette comments per key besides the collection majority.")
 
 (defun au-integrity-theme-lines (theme)

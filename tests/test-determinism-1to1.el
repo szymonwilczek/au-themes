@@ -35,8 +35,16 @@
 ;; a neutral colour against a clearly chromatic one (two JNDs) counts as
 ;; a different category.
 ;;
+;; Families in `au-test-strict-families' are checked on every pair of
+;; roles, not only on the curated `au-test-role-pairs': a pair left off
+;; the list can collide unnoticed.  The neutral roles in
+;; `au-test-receding-roles' form one grey ladder and are not compared
+;; with each other here; their steps are held by the crowding, triplet
+;; and isoluminance modules.
+;;
 ;; Basis: CIEDE2000 is a CIE standard; the 10.0 floor, the per-pair hue
-;; minimums and the 0.08 lightness step are au-themes heuristics.
+;; minimums, the 0.08 lightness step and the receding-role exemption
+;; are au-themes heuristics.
 ;;
 ;; Ref:
 ;; CIE 142:2001 / ISO-CIE 11664-6:2014 (CIEDE2000).
@@ -56,7 +64,10 @@
          (tokens-to-check '(:preprocessor :keyword :type :constant :number
                                           :builtin :fnname :fnname-call :string :property
                                           :operator :bracket :delimiter :err :comment :fg-main))
-         (critical-pairs au-test-role-pairs))
+         (strict (au-test-strict-family-p theme))
+         (critical-pairs (if strict
+                             (au-test-all-role-pairs (append tokens-to-check '(:variable)))
+                           au-test-role-pairs)))
 
     (princ (format "\n.~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~.\n"))
     (princ (format "| 1:1 Keyface Determinism & Pairwise CIEDE2000 Suite (min. dE00 10.0)\n"))
@@ -81,7 +92,8 @@
         (setq passes (1+ passes))))
 
     (princ (format "-------------------------------------------------------------------------------------------\n"))
-    (princ "\nPairwise Separation Check (CIEDE2000 dE00 >= 10.0):\n")
+    (princ (format "\nPairwise Separation Check (CIEDE2000 dE00 >= 10.0, %s):\n"
+                   (if strict "every pair of roles" "curated pairs")))
     (princ (format "+--------------------------------------+-------------+-------------+-----------+----------+\n"))
     (princ (format "| %-31s      |   %-10s|   %-10s|  %-6s   |  %-6s  |\n"
                    "Role Comparison" "Color 1" "Color 2" " dE00" "Status"))
