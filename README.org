@@ -61,7 +61,7 @@ belong together.
 | Parchment    | =night=, =day=          | almost monochrome; italics and brightness instead of colour  |
 | Salina       | =night=, =day=          | the coast: salt flats, sand, deep ocean, driftwood and coral |
 | Herbarium    | =night=, =day=          | pressed sage, dried lavender, oak-gall ink, chamomile        |
-| Perseida     | =night=               | an August meteor night: near-black sky, star-coloured syntax |
+| Perseida     | =night=, =day=          | an August meteor night and its dawn, star-coloured syntax    |
 | Mysterium    | one dark theme      | Halloween: an old painted van outside a haunted mansion      |
 
 Full names follow the pattern =au-<family>-<variant>=, for example
@@ -77,7 +77,9 @@ Which one to try first:
   notch.
 - =day= variants are for daylight. =whispergrove-morning= has a dimmer
   background than the other light themes, for early mornings or a room
-  with little light.
+  with little light.  =perseida-day= is the one light theme on a cool
+  pearl background instead of warm paper; it gives off more blue light
+  than the others, though still far below any safety limit.
 - =parchment= suits anyone who finds even calm syntax colours too
   busy.
 
