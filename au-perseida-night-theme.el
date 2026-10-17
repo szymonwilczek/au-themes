@@ -32,7 +32,8 @@
 ;; colours of named stars, held in their spectral order on the
 ;; Planckian locus; keywords glow in the H-alpha rose of the California
 ;; Nebula, the preprocessor in the [O III] teal of the Ring Nebula and
-;; builtins in the green of a Perseid, and Mars marks the cursor.
+;; builtins in the green of a Perseid, and the head of a meteor marks
+;; the cursor.
 ;; Part of the `au-themes' collection.
 
 ;;; Code:
@@ -41,15 +42,15 @@
 
 (defconst au-perseida-night-palette-partial
   '(;; Canvas & Chrome
-    (cursor "#d2835e")                    ; Point / cursor indicator
+    (cursor "#3eb27d")                    ; Point / cursor indicator
     (bg-main "#080808")                   ; Primary canvas background
     (bg-dim "#101114")                    ; Inactive windows, dim canvas
     (bg-alt "#18191c")                    ; Subtle borders, alternating stripes
     (fg-main "#84878a")                   ; Default buffer text
     (fg-dim "#5a564f")                    ; Comments, metadata
-    (fg-alt "#927a3d")                    ; Section headings
-    (fg-prop "#576e52")                   ; Struct properties
-    (fg-var "#79734d")                    ; Variable definitions
+    (fg-alt "#6d7bad")                    ; Section headings
+    (fg-prop "#816a37")                   ; Struct properties
+    (fg-var "#4a7080")                    ; Variable definitions
     (bg-active "#24262c")                 ; Active modeline frame, focused bars
     (bg-inactive "#18191c")               ; Inactive modeline
     (border "#27292e")                    ; Window dividers
@@ -68,7 +69,7 @@
     (yellow "#ae772f")                    ; Keyword alias
     (yellow-warmer "#918070")             ; Numeric literals
     (yellow-cooler "#498282")             ; Preprocessor directives
-    (yellow-faint "#857c61")              ; Informational tooltips, fringe markers
+    (yellow-faint "#5c8193")              ; Informational tooltips, fringe markers
 
     (blue "#857492")                      ; Function definitions
     (blue-warmer "#6e73b4")               ; Function calls
@@ -108,7 +109,7 @@
     (bg-changed "#2c2303")                ; Diff changed line baseline
     (bg-changed-faint "#1d1804")          ; Diff changed unchanged context
     (bg-changed-refine "#3d3200")         ; Diff changed word-level highlight
-    (fg-changed "#ab974a")                ; Diff changed foreground text
+    (fg-changed "#be9042")                ; Diff changed foreground text
 
     (bg-removed "#391415")                ; Diff removed line baseline
     (bg-removed-faint "#281011")          ; Diff removed unchanged context
@@ -121,7 +122,7 @@
     (bg-popup "#0e0f12")                  ; Autocomplete tooltip surface
     (bg-hover "#282c42")                  ; Mouse hover overlay
     (bg-hover-secondary "#37273a")        ; Secondary hover overlay
-    (bg-hl-line "#0a0d0a")                ; Current line indicator
+    (bg-hl-line "#0c0d1c")                ; Current line indicator
     (bg-paren-match "#3c2e14")            ; Matching delimiter highlight
     (bg-err "#2b0e0c")                    ; Flymake error inline box
     (bg-warning "#231502")                ; Flymake warning inline box
