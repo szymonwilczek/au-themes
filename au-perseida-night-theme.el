@@ -32,7 +32,7 @@
 ;; colours of named stars, held in their spectral order on the
 ;; Planckian locus; keywords glow in the H-alpha rose of the California
 ;; Nebula, the preprocessor in the [O III] teal of the Ring Nebula and
-;; builtins in the green of a Perseid, and the head of a meteor marks
+;; builtins in the green of a Perseid, and a blue-white star marks
 ;; the cursor.
 ;; Part of the `au-themes' collection.
 
@@ -42,14 +42,14 @@
 
 (defconst au-perseida-night-palette-partial
   '(;; Canvas & Chrome
-    (cursor "#3eb27d")                    ; Point / cursor indicator
+    (cursor "#8ea9c5")                    ; Point / cursor indicator
     (bg-main "#080808")                   ; Primary canvas background
     (bg-dim "#101114")                    ; Inactive windows, dim canvas
     (bg-alt "#18191c")                    ; Subtle borders, alternating stripes
     (fg-main "#84878a")                   ; Default buffer text
     (fg-dim "#5a564f")                    ; Comments, metadata
     (fg-alt "#6d7bad")                    ; Section headings
-    (fg-prop "#816a37")                   ; Struct properties
+    (fg-prop "#8c793b")                   ; Struct properties
     (fg-var "#4a7080")                    ; Variable definitions
     (bg-active "#24262c")                 ; Active modeline frame, focused bars
     (bg-inactive "#18191c")               ; Inactive modeline
@@ -122,12 +122,12 @@
     (bg-popup "#0e0f12")                  ; Autocomplete tooltip surface
     (bg-hover "#282c42")                  ; Mouse hover overlay
     (bg-hover-secondary "#37273a")        ; Secondary hover overlay
-    (bg-hl-line "#0c0d1c")                ; Current line indicator
+    (bg-hl-line "#141517")                ; Current line indicator
     (bg-paren-match "#3c2e14")            ; Matching delimiter highlight
     (bg-err "#2b0e0c")                    ; Flymake error inline box
     (bg-warning "#231502")                ; Flymake warning inline box
     (bg-info "#0f1c10")                   ; Flymake info inline box
-    (bg-region "#302f36")                 ; Marked region
+    (bg-region "#31303c")                 ; Marked region
     (fg-line-number-inactive "#53555a"))) ; Inactive line numbers margin
 
 (defconst au-perseida-night-palette-mappings-partial
