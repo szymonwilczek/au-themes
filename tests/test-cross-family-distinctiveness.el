@@ -24,11 +24,13 @@
 ;;
 ;; Verification of chromatic divergence and anti-cloning separation
 ;; between theme families (aurum, herbarium, mysterium, parchment,
-;; salina, whispergrove).  Each theme is compared with every theme of
-;; the same polarity in the other families, and must also hold its own
-;; family's chromatic signature: the hue envelope of the selection
-;; region, plus the chroma ceiling for parchment, the non-green data
-;; type for aurum's light variant and the teal keywords of mysterium.
+;; perseida, salina, whispergrove).  Each theme is compared with every
+;; theme of the same polarity in the other families, and must also
+;; hold its own family's chromatic signature: the hue envelope of the
+;; selection region, plus the chroma ceiling for parchment, the
+;; non-green data type for aurum's light variant, the optically black
+;; canvas of perseida's dark variant and the teal keywords of
+;; mysterium.
 ;;
 ;; Pairs listed in `au-cross-family-exemptions' are skipped, each with
 ;; its reason.
@@ -279,6 +281,39 @@ family's own chromatic signature."
                          reg-hex reg-h))
           (setq fails (1+ fails)))))
 
+     ((eq family 'perseida)
+      ;; Perseida requirements:
+      ;; Selection region: h in [265deg..295deg] (the radiant in Perseus)
+      (let* ((reg-hex (plist-get pal :bg-region))
+             (reg-okl (rf-hex-to-oklch reg-hex))
+             (reg-h   (nth 2 reg-okl))
+             (reg-ok  (and (>= reg-h 265.0) (<= reg-h 295.0))))
+        (if reg-ok
+            (progn
+              (princ (format "[PASS]  Perseida Selection Region (%s, hue %.1fdeg).\n"
+                             reg-hex reg-h))
+              (setq passes (1+ passes)))
+          (princ (format "[FAIL]  Perseida Selection Region (%s, hue %.1fdeg): expected [265deg..295deg].\n"
+                         reg-hex reg-h))
+          (setq fails (1+ fails))))
+
+      ;; For perseida-night, canvas: optically black, i.e. neutral
+      ;; (Oklab C <= 0.005) and adding at most half again the light the
+      ;; panel shows at black (IPS black level + reflected ambient),
+      ;; which keeps it darker than every other family's night canvas
+      (when (eq polarity 'dark)
+        (let* ((bg-hex (plist-get pal :bg-main))
+               (bg-y (rf-luminance-y bg-hex))
+               (bg-c (nth 1 (rf-hex-to-oklch bg-hex)))
+               (floor-y (* rf-optically-black-floor-factor (rf-display-physical-floor-y))))
+          (if (rf-optically-black-p bg-hex)
+              (progn
+                (princ (format "[PASS]  Perseida Night Canvas (%s, Y %.5f <= 1.5x panel floor %.5f, C %.3f).\n"
+                               bg-hex bg-y floor-y bg-c))
+                (setq passes (1+ passes)))
+            (princ (format "[FAIL]  Perseida Night Canvas (%s, Y %.5f, C %.3f): expected neutral, Y <= 1.5x panel floor %.5f.\n"
+                           bg-hex bg-y bg-c floor-y))
+            (setq fails (1+ fails))))))
      ((eq family 'mysterium)
       ;; Mysterium requirements:
       ;; Selection region: h in [295deg..315deg], a violet dusk
