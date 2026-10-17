@@ -23,6 +23,9 @@ Screenshots of every theme: https://szymon-wilczek.me/writings/au-themes-screens
 [[https://szymon-wilczek.me/assets/au-themes/au-herbarium-night.png]]
 /au-herbarium-night/
 
+[[https://szymon-wilczek.me/assets/au-themes/au-perseida-day.png]]
+/au-perseida-day/
+
 [[https://szymon-wilczek.me/assets/au-themes/au-mysterium.png]]
 /au-mysterium/
 
