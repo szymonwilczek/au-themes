@@ -61,6 +61,7 @@ belong together.
 | Parchment    | =night=, =day=          | almost monochrome; italics and brightness instead of colour  |
 | Salina       | =night=, =day=          | the coast: salt flats, sand, deep ocean, driftwood and coral |
 | Herbarium    | =night=, =day=          | pressed sage, dried lavender, oak-gall ink, chamomile        |
+| Perseida     | =night=               | an August meteor night: near-black sky, star-coloured syntax |
 | Mysterium    | one dark theme      | Halloween: an old painted van outside a haunted mansion      |
 
 Full names follow the pattern =au-<family>-<variant>=, for example
@@ -71,7 +72,9 @@ Which one to try first:
 
 - =night= variants are for dark rooms and evenings. Of these,
   =aurum-night= gives off the least of the blue light that keeps you
-  awake.
+  awake. =perseida-night= has the darkest background of the
+  collection, almost black, so the frame blends into a dark bezel or
+  notch.
 - =day= variants are for daylight. =whispergrove-morning= has a dimmer
   background than the other light themes, for early mornings or a room
   with little light.
@@ -155,6 +158,7 @@ says which parts come from a source and which are our own choice.
 | =oklab-perceptual=                    | Ottosson 2020                                | ours                                                                 |
 | =helmholtz-kohlrausch=                | Fairchild & Pirrotta 1991                    | ours                                                                 |
 | =spectral-coherence=                  | Endler 1993                                  | ours, Whispergrove only                                              |
+| =stellar-locus=                       | CIE 015:2018, Ohno 2014                      | ours, Perseida only                                                  |
 | =lcd-black-bleed=                     | IEC 61966-2-1, APCA                          | ours                                                                 |
 | =oled-irradiance=                     | IEC 61966-2-1, APCA                          | ours                                                                 |
 | =spatial-frequency-csf=               | Campbell & Robson 1968, Legge et al. 1985    | ours                                                                 |
@@ -311,6 +315,8 @@ GPL-3.0-or-later. See [[file:LICENSE][LICENSE]].
 - Noseda, R., Bernstein, C. A., Nir, R.-R., et al. (2016). Migraine
   photophobia originating in cone-driven retinal pathways. /Brain/,
   139(7), 1971-1986.
+- Ohno, Y. (2014). Practical use and calculation of CCT and Duv.
+  /LEUKOS/, 10(1), 47-55.
 - Shannon, C. E. (1948). A mathematical theory of communication. /Bell
   System Technical Journal/, 27(3), 379-423.
 - Stiles, W. S., & Crawford, B. H. (1933). The luminous efficiency of rays
