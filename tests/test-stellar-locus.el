@@ -1,4 +1,4 @@
-;;; test-stellar-locus.el --- Stellar roles on the Planckian locus in spectral sequence -*- lexical-binding: t -*-
+;;; test-stellar-locus.el --- Stellar roles on the Planckian locus, nebular roles on their emission lines -*- lexical-binding: t -*-
 
 ;; Copyright (C) 2026  Szymon Wilczek
 
@@ -22,22 +22,23 @@
 
 ;;; Commentary:
 ;;
-;; Evaluate the stellar syntax roles of the perseida family against the
-;; colour of the stars they are named after.
+;; Evaluate the sky syntax roles of the perseida family against the
+;; light of the objects they are named after.
 ;;
 ;; Scope:
 ;; Applies exclusively to the star-sky family (currently `perseida').
-;; Other themes are skipped, since their roles do not stand for stars.
+;; Other themes are skipped, since their roles do not stand for sky
+;; objects.
 ;;
-;; Seven syntax roles stand for seven stars of the August sky:
+;; Two kinds of light are modelled.  Stars shine with a near-thermal
+;; continuum; nebulae and meteors shine in a few emission lines.
+;;
+;; Stars.  Four syntax roles stand for four stars of the August sky:
 ;;
 ;;   fnname-call  Algol A (beta Per)    12550 K   Kolbas et al. (2015)
 ;;   constant     Vega (alpha Lyr)       9640 K   Smalley (2005)
-;;   fnname       Mirfak (alpha Per)     6350 K   Lyubimkov et al. (2010)
-;;   keyword      Polaris (alpha UMi)    6017 K   Usenko et al. (2016)
 ;;   number       Capella (alpha Aur)    4970-5730 K (Aa, Ab)  Torres et al. (2015)
 ;;   type         Arcturus (alpha Boo)   4286 K   Ramirez & Allende Prieto (2011)
-;;   string       Antares (alpha Sco)    3660 K   Ohnaka et al. (2013)
 ;;
 ;; A star's colour is close to that of a black body at its effective
 ;; temperature (Harre & Heller 2021), but drawn at its true chromaticity
@@ -48,27 +49,55 @@
 ;;
 ;;  1. Locus: each role lies on the Planckian locus, |Duv| <= 0.010
 ;;     in the CIE 1960 UCS (Ohno 2014).
-;;  2. Sequence: the roles' correlated colour temperatures (CCT) rank
-;;     in the same order as the stars' effective temperatures.
+;;  2. Sequence: the roles' reciprocal colour temperatures (mired) rank
+;;     in the same order as the stars' effective temperatures.  Mired
+;;     is used rather than kelvin because a stretched blue role may lie
+;;     past the infinite-temperature end of the locus, where its CCT
+;;     turns negative while its mired stays ordered.
 ;;  3. White side: each role is bluer than the display white (D65)
 ;;     exactly when its star is hotter than the white's CCT, so a star
 ;;     cooler than the adapting white is never drawn bluish and vice
 ;;     versa.
 ;;
+;; Emission objects.  Three roles stand for line emitters:
+;;
+;;   keyword       California Nebula (NGC 1499, in Perseus): H II region,
+;;                 H-alpha 656.28 nm and H-beta 486.13 nm.
+;;   preprocessor  Ring Nebula (M57, in Lyra): planetary nebula whose
+;;                 inner shell shines in [O III] 495.89/500.68 nm and
+;;                 H-beta.
+;;   builtin       Perseid meteor: Mg I b 518.36 nm in the head and
+;;                 O I 557.73 nm in the afterglow (Borovicka 1993;
+;;                 Borovicka & Jenniskens 2000).
+;;
+;; A mixture of lines, desaturated by any amount of white continuum,
+;; lies on the rays from the display white towards the mixtures' own
+;; chromaticities, so each role's hue angle about D65 in the CIE 1960
+;; UCS must fall on the arc spanned by its two limiting spectra:
+;;
+;;  4. California Nebula: from the recombination Case B decrement
+;;     H-alpha/H-beta = 2.86 at 10^4 K (Osterbrock & Ferland 2006),
+;;     which dust only raises, to pure H-alpha.
+;;  5. Ring Nebula: from the [O III] doublet at its fixed ratio
+;;     500.68/495.89 = 2.98 (Storey & Zeippen 2000) to pure H-beta.
+;;  6. Perseid meteor: from Mg I b to O I 557.73 nm.
+;;
 ;; The Planckian locus is integrated from Planck's law with
 ;; c2 = 1.4388e-2 m K over the CIE 1931 2-degree colour-matching
 ;; functions (CIE 015:2018), and CCT is the temperature of the nearest
 ;; locus point in the CIE 1960 (u, v) diagram, found on a 0.5 mired
-;; grid and refined parabolically.  The computation is checked against
-;; CIE illuminant A (x, y) = (0.44757, 0.40745), a Planckian radiator
-;; at 2856 K, and against the CCT of D65 (6504 K) before any role is
-;; evaluated.
+;; grid and refined parabolically.  Line chromaticities use the same
+;; colour-matching functions, interpolated linearly between their 5 nm
+;; samples.  The computation is checked against CIE illuminant A
+;; (x, y) = (0.44757, 0.40745), a Planckian radiator at 2856 K, and
+;; against the CCT of D65 (6504 K) before any role is evaluated.
 ;;
 ;; Basis: Planck's law, the colour-matching functions and the CCT/Duv
-;; definitions are CIE 015:2018; the stellar temperatures are the
-;; published measurements above.  The 0.010 Duv tolerance (about 1.7x
-;; the ANSI C78.377 white-light tolerance of 0.006) and the use of a
-;; saturation stretch are au-themes heuristics.
+;; definitions are CIE 015:2018; the stellar temperatures, line
+;; wavelengths and line ratios are the published measurements above.
+;; The 0.010 Duv tolerance (about 1.7x the ANSI C78.377 white-light
+;; tolerance of 0.006), the 3 degree hue-arc tolerance and the use of
+;; a saturation stretch are au-themes heuristics.
 ;;
 ;; Ref:
 ;; CIE 015:2018 Colorimetry, 4th ed., DOI: 10.25039/TR.015.2018.
@@ -76,11 +105,14 @@
 ;; Harre & Heller (2021) Astron. Nachr. 342:578, arXiv:2101.06254.
 ;; Kolbas et al. (2015) MNRAS 451:4150, arXiv:1506.01254 (Algol A).
 ;; Smalley (2005) Mem. S.A.It. Suppl. 8:130, arXiv:astro-ph/0509535 (Vega).
-;; Lyubimkov et al. (2010) MNRAS 402:1369, arXiv:0911.1335 (Mirfak).
-;; Usenko et al. (2016) Odessa Astron. Publ. 29, arXiv:1610.03813 (Polaris).
 ;; Torres et al. (2015) ApJ 807:26, DOI: 10.1088/0004-637X/807/1/26 (Capella).
 ;; Ramirez & Allende Prieto (2011) ApJ 743:135, arXiv:1109.4425 (Arcturus).
-;; Ohnaka et al. (2013) A&A 555:A24, arXiv:1304.4800 (Antares).
+;; Osterbrock & Ferland (2006) Astrophysics of Gaseous Nebulae and Active
+;;   Galactic Nuclei, 2nd ed., University Science Books (Case B decrement).
+;; Storey & Zeippen (2000) MNRAS 312:813 ([O III] doublet ratio).
+;; Borovicka (1993) A&A 279:627 (meteor head spectrum, Mg I).
+;; Borovicka & Jenniskens (2000) Earth Moon Planets 82-83:399
+;;   (meteor afterglow, O I 557.7 nm).
 
 ;;; Code:
 
@@ -92,17 +124,31 @@
 (defconst rf-duv-tolerance 0.010
   "Largest |Duv| a stellar role may have; au-themes heuristic.")
 
+(defconst rf-hue-arc-tolerance 3.0
+  "Degrees an emission role may lie outside its arc; au-themes heuristic.")
+
 (defconst rf-stellar-roles
   '((:fnname-call "Algol A"   12550.0 12550.0)
     (:constant    "Vega"       9640.0  9640.0)
-    (:fnname      "Mirfak"     6350.0  6350.0)
-    (:keyword     "Polaris"    6017.0  6017.0)
     (:number      "Capella"    4970.0  5730.0)
-    (:type        "Arcturus"   4286.0  4286.0)
-    (:string      "Antares"    3660.0  3660.0))
+    (:type        "Arcturus"   4286.0  4286.0))
   "Stellar roles as (KEY STAR TEFF-MIN TEFF-MAX), hottest first.
 Capella is an unresolved pair, so it carries the range of its two
 components.")
+
+(defconst rf-emission-roles
+  '((:keyword      "California Nebula"
+                   "Case B" ((656.28 . 2.86) (486.13 . 1.0))
+                   "H-alpha" ((656.28 . 1.0)))
+    (:preprocessor "Ring Nebula"
+                   "[O III]" ((500.68 . 2.98) (495.89 . 1.0))
+                   "H-beta" ((486.13 . 1.0)))
+    (:builtin      "Perseid meteor"
+                   "Mg I b" ((518.36 . 1.0))
+                   "O I" ((557.73 . 1.0))))
+  "Emission roles as (KEY OBJECT NAME-A LINES-A NAME-B LINES-B).
+LINES are (WAVELENGTH-NM . RELATIVE-ENERGY) pairs; the role's hue must
+lie on the arc between the two limiting spectra A and B.")
 
 (defun rf-xyz-to-uv1960 (xyz)
   "Return CIE 1960 UCS (u v) of tristimulus XYZ."
@@ -120,6 +166,34 @@ components.")
               y (+ y (* m (aref rf-cie1931-ybar i)))
               z (+ z (* m (aref rf-cie1931-zbar i))))))
     (list x y z)))
+
+(defun rf-line-xyz (lines)
+  "Return CIE 1931 XYZ of emission LINES, ((NM . ENERGY) ...).
+The colour-matching functions are interpolated linearly between
+their tabulated samples."
+  (let ((l0 (rf--spectral-lambda 0))
+        (step (- (rf--spectral-lambda 1) (rf--spectral-lambda 0)))
+        (sum (list 0.0 0.0 0.0)))
+    (dolist (line lines)
+      (let* ((f (/ (- (car line) l0) step))
+             (i (floor f))
+             (r (- f i)))
+        (setq sum (cl-mapcar
+                   (lambda (acc cmf)
+                     (+ acc (* (cdr line)
+                               (+ (* (- 1.0 r) (aref cmf i)) (* r (aref cmf (1+ i)))))))
+                   sum
+                   (list rf-cie1931-xbar rf-cie1931-ybar rf-cie1931-zbar)))))
+    sum))
+
+(defun rf-hue-angle-uv (uv white)
+  "Return the hue angle in degrees of UV about WHITE, CIE 1960 (u v)."
+  (* (/ 180.0 float-pi)
+     (atan (- (cadr uv) (cadr white)) (- (car uv) (car white)))))
+
+(defun rf-angle-diff (a b)
+  "Return B minus A in degrees, wrapped to [-180, 180)."
+  (- (mod (+ (- b a) 180.0) 360.0) 180.0))
 
 (defvar rf--planck-locus-table nil
   "Vector of (MIRED U V) on a 0.5 mired grid, built on first use.")
@@ -183,14 +257,14 @@ by more than 0.0005 or when the sRGB white is not within 10 K of 6504 K."
     white))
 
 (defun test-stellar-locus-run ()
-  "Evaluate stellar roles against the Planckian locus and the spectral sequence.
+  "Evaluate stellar roles on the Planckian locus and nebular roles on their lines.
 Applies exclusively to the star-sky family (currently `perseida')."
   (let* ((pal (au-extract-active-palette))
          (theme (plist-get pal :theme))
          (passes 0)
          (fails 0))
     (princ (format "\n.~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~.\n"))
-    (princ (format "| Stellar Planckian Locus and Spectral Sequence Suite\n"))
+    (princ (format "| Stellar Planckian Locus and Emission-Line Hue Suite\n"))
     (princ (format "| Theme: %s\n" theme))
     (princ (format "| Scope: Star-sky themes only (currently perseida family)\n"))
     (princ (format "'~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~'\n"))
@@ -201,14 +275,18 @@ Applies exclusively to the star-sky family (currently `perseida')."
           (princ "Stellar Locus Summary: skipped (not a star-sky theme).\n\n")
           'skip)
       (let* ((white-cct (rf-planck-self-check))
+             (white-mired (/ 1e6 white-cct))
+             (white-uv (rf-xyz-to-uv1960 (rf-hex-to-xyz "#ffffff")))
              (rows (mapcar (lambda (r)
-                             (let ((hex (plist-get pal (nth 0 r))))
-                               (append r (list hex) (rf-hex-cct-duv hex))))
+                             (let* ((hex (plist-get pal (nth 0 r)))
+                                    (cd (rf-hex-cct-duv hex)))
+                               (append r (list hex (/ 1e6 (car cd)) (cadr cd)))))
                            rf-stellar-roles)))
-        (princ (format "\nDisplay white (D65) CCT: %.0f K; illuminant A self-check passed.\n" white-cct))
+        (princ (format "\nDisplay white (D65) CCT: %.0f K (%.1f mired); illuminant A self-check passed.\n"
+                       white-cct white-mired))
         (princ (format "\n+--------------+----------+-------------+---------+----------+---------+--------+--------+\n"))
         (princ (format "| %-12s | %-8s | %-11s | %-7s | %-8s | %-7s | %-6s | %-6s |\n"
-                       "Role" "Star" "Teff (K)" "Hex" "CCT (K)" "Duv" "Locus" "Side"))
+                       "Role" "Star" "Teff (K)" "Hex" "Mired" "Duv" "Locus" "Side"))
         (princ (format "+--------------+----------+-------------+---------+----------+---------+--------+--------+\n"))
         (dolist (row rows)
           (let* ((key (nth 0 row))
@@ -216,30 +294,55 @@ Applies exclusively to the star-sky family (currently `perseida')."
                  (t-lo (nth 2 row))
                  (t-hi (nth 3 row))
                  (hex (nth 4 row))
-                 (cct (nth 5 row))
+                 (mired (nth 5 row))
                  (duv (nth 6 row))
                  (locus-ok (<= (abs duv) rf-duv-tolerance))
-                 (side-ok (cond ((> t-lo white-cct) (> cct white-cct))
-                                ((< t-hi white-cct) (< cct white-cct))
+                 (side-ok (cond ((> t-lo white-cct) (< mired white-mired))
+                                ((< t-hi white-cct) (> mired white-mired))
                                 (t t))))
             (setq passes (+ passes (if locus-ok 1 0) (if side-ok 1 0))
                   fails (+ fails (if locus-ok 0 1) (if side-ok 0 1)))
-            (princ (format "| %-12s | %-8s | %-11s | %-7s | %8.0f | %+7.4f | %-6s | %-6s |\n"
+            (princ (format "| %-12s | %-8s | %-11s | %-7s | %8.1f | %+7.4f | %-6s | %-6s |\n"
                            (substring (symbol-name key) 1) star
                            (if (= t-lo t-hi) (format "%.0f" t-lo) (format "%.0f-%.0f" t-lo t-hi))
-                           hex cct duv
+                           hex mired duv
                            (if locus-ok "PASS" "FAIL") (if side-ok "PASS" "FAIL")))))
         (princ (format "+--------------+----------+-------------+---------+----------+---------+--------+--------+\n"))
 
-        (princ "\nSpectral Sequence (CCT ranks as Teff, hottest star first):\n")
+        (princ "\nSpectral Sequence (mired ranks as Teff, hottest star first):\n")
         (cl-loop for (a b) on rows while b do
-                 (let ((ok (> (nth 5 a) (nth 5 b))))
+                 (let ((ok (< (nth 5 a) (nth 5 b))))
                    (if ok
                        (setq passes (1+ passes))
                      (setq fails (1+ fails)))
-                   (princ (format "[%s]  %-8s (%5.0f K) above %-8s (%5.0f K)\n"
+                   (princ (format "[%s]  %-8s (%6.1f mired) hotter than %-8s (%6.1f mired)\n"
                                   (if ok "PASS" "FAIL")
                                   (nth 1 a) (nth 5 a) (nth 1 b) (nth 5 b)))))
+
+        (princ (format "\nEmission-Line Hue Arcs (CIE 1960 hue angle about D65, tolerance %.1f deg):\n"
+                       rf-hue-arc-tolerance))
+        (princ (format "+--------------+-------------------+---------+----------------------------------+---------+--------+\n"))
+        (princ (format "| %-12s | %-17s | %-7s | %-32s | %-7s | %-6s |\n"
+                       "Role" "Object" "Hex" "Arc (deg)" "Hue" "Status"))
+        (princ (format "+--------------+-------------------+---------+----------------------------------+---------+--------+\n"))
+        (dolist (e rf-emission-roles)
+          (let* ((key (nth 0 e))
+                 (hex (plist-get pal key))
+                 (a (rf-hue-angle-uv (rf-xyz-to-uv1960 (rf-line-xyz (nth 3 e))) white-uv))
+                 (b (rf-hue-angle-uv (rf-xyz-to-uv1960 (rf-line-xyz (nth 5 e))) white-uv))
+                 (h (rf-hue-angle-uv (rf-xyz-to-uv1960 (rf-hex-to-xyz hex)) white-uv))
+                 (span (rf-angle-diff a b))
+                 (pos (rf-angle-diff a h))
+                 (ok (and (>= pos (- (min 0.0 span) rf-hue-arc-tolerance))
+                          (<= pos (+ (max 0.0 span) rf-hue-arc-tolerance)))))
+            (if ok
+                (setq passes (1+ passes))
+              (setq fails (1+ fails)))
+            (princ (format "| %-12s | %-17s | %-7s | %-32s | %7.1f | %-6s |\n"
+                           (substring (symbol-name key) 1) (nth 1 e) hex
+                           (format "%s %.1f .. %s %.1f" (nth 2 e) a (nth 4 e) b)
+                           h (if ok "PASS" "FAIL")))))
+        (princ (format "+--------------+-------------------+---------+----------------------------------+---------+--------+\n"))
 
         (princ (format "\n======================================================================================\n"))
         (princ (format "Stellar Locus Summary: %d Passed, %d Failed.\n\n" passes fails))
