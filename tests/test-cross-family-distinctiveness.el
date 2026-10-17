@@ -29,8 +29,8 @@
 ;; hold its own family's chromatic signature: the hue envelope of the
 ;; selection region, plus the chroma ceiling for parchment, the
 ;; non-green data type for aurum's light variant, the optically black
-;; canvas of perseida's dark variant and the teal keywords of
-;; mysterium.
+;; canvas of perseida's dark variant, the cool pearl canvas of its
+;; light variant and the teal keywords of mysterium.
 ;;
 ;; Pairs listed in `au-cross-family-exemptions' are skipped, each with
 ;; its reason.
@@ -313,7 +313,26 @@ family's own chromatic signature."
                 (setq passes (1+ passes)))
             (princ (format "[FAIL]  Perseida Night Canvas (%s, Y %.5f, C %.3f): expected neutral, Y <= 1.5x panel floor %.5f.\n"
                            bg-hex bg-y bg-c floor-y))
+            (setq fails (1+ fails)))))
+
+      ;; For perseida-day, canvas: a cool pearl, the sky at nautical
+      ;; dawn, i.e. near-neutral (Oklab C <= 0.012) on the blue side
+      ;; (h in [220deg..290deg]), where every other light family keeps
+      ;; a warm paper or sand canvas
+      (when (eq polarity 'light)
+        (let* ((bg-hex (plist-get pal :bg-main))
+               (bg-okl (rf-hex-to-oklch bg-hex))
+               (bg-c (nth 1 bg-okl))
+               (bg-h (nth 2 bg-okl)))
+          (if (and (<= bg-c 0.012) (>= bg-h 220.0) (<= bg-h 290.0))
+              (progn
+                (princ (format "[PASS]  Perseida Dawn Canvas (%s, C %.3f, hue %.1fdeg).\n"
+                               bg-hex bg-c bg-h))
+                (setq passes (1+ passes)))
+            (princ (format "[FAIL]  Perseida Dawn Canvas (%s, C %.3f, hue %.1fdeg): expected C <= 0.012, hue [220deg..290deg].\n"
+                           bg-hex bg-c bg-h))
             (setq fails (1+ fails))))))
+
      ((eq family 'mysterium)
       ;; Mysterium requirements:
       ;; Selection region: h in [295deg..315deg], a violet dusk
