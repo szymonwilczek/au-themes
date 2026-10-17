@@ -27,10 +27,12 @@
 ;; Perseid maximum.  The canvas adds about as much light as the panel
 ;; already shows at black, the darkest canvas the halation and pattern
 ;; glare gates allow, and the header line, tab bar and fringe share it,
-;; so the frame edge fades into the bezel.  Syntax roles take the
-;; colours of seven named stars, held in their spectral order on the
-;; Planckian locus; the Ring and Lagoon nebulae, the meteor and the
-;; horizon colour the rest.
+;; so the frame edge fades into the bezel.  Text is dimmed to match, so
+;; letters do not spread on the black.  Four syntax roles take the
+;; colours of named stars, held in their spectral order on the
+;; Planckian locus; keywords glow in the H-alpha rose of the California
+;; Nebula, the preprocessor in the [O III] teal of the Ring Nebula and
+;; builtins in the green of a Perseid, and Mars marks the cursor.
 ;; Part of the `au-themes' collection.
 
 ;;; Code:
@@ -39,48 +41,49 @@
 
 (defconst au-perseida-night-palette-partial
   '(;; Canvas & Chrome
-    (cursor "#71ba81")                    ; Point / cursor indicator
+    (cursor "#d2835e")                    ; Point / cursor indicator
     (bg-main "#080808")                   ; Primary canvas background
-    (bg-dim "#080808")                    ; Inactive windows, dim canvas
-    (bg-alt "#131417")                    ; Subtle borders, alternating stripes
-    (fg-main "#97999c")                   ; Default buffer text
-    (fg-dim "#5e5a53")                    ; Comments, metadata
-    (fg-alt "#647f69")                    ; Struct properties
-    (fg-var "#897b9a")                    ; Variable definitions
+    (bg-dim "#101114")                    ; Inactive windows, dim canvas
+    (bg-alt "#18191c")                    ; Subtle borders, alternating stripes
+    (fg-main "#84878a")                   ; Default buffer text
+    (fg-dim "#5a564f")                    ; Comments, metadata
+    (fg-alt "#927a3d")                    ; Section headings
+    (fg-prop "#576e52")                   ; Struct properties
+    (fg-var "#79734d")                    ; Variable definitions
     (bg-active "#24262c")                 ; Active modeline frame, focused bars
-    (bg-inactive "#131417")               ; Inactive modeline
+    (bg-inactive "#18191c")               ; Inactive modeline
     (border "#27292e")                    ; Window dividers
 
     ;; Basic Chromatic Scale
-    (red "#c34f45")                       ; Errors, critical warnings
-    (red-warmer "#8d531a")                ; String literals
-    (red-cooler "#da8888")                ; Diff deletions, removal markers
-    (red-faint "#666b71")                 ; Structural brackets
+    (red "#c04b55")                       ; Errors, critical warnings
+    (red-warmer "#9b5244")                ; String literals
+    (red-cooler "#c67676")                ; Diff deletions, removal markers
+    (red-faint "#52575d")                 ; Structural brackets
 
-    (green "#a47543")                     ; Primitive types
-    (green-warmer "#546181")              ; Constant values and macros
-    (green-cooler "#726b66")              ; Control keywords
-    (green-faint "#5e5a53")               ; Documentation strings, inline comments
+    (green "#a3794b")                     ; Primitive types
+    (green-warmer "#536080")              ; Constant values and macros
+    (green-cooler "#84526a")              ; Control keywords
+    (green-faint "#57534c")               ; Documentation strings, inline comments
 
-    (yellow "#bf8842")                    ; Keyword alias
-    (yellow-warmer "#a28a70")             ; Numeric literals
+    (yellow "#ae772f")                    ; Keyword alias
+    (yellow-warmer "#918070")             ; Numeric literals
     (yellow-cooler "#498282")             ; Preprocessor directives
-    (yellow-faint "#948b70")              ; Informational tooltips, fringe markers
+    (yellow-faint "#857c61")              ; Informational tooltips, fringe markers
 
-    (blue "#928c8b")                      ; Function definitions
-    (blue-warmer "#6879aa")               ; Function calls
-    (blue-cooler "#6a6e73")               ; Binary and unary operators
-    (blue-faint "#b26986")                ; Built-in functions
+    (blue "#857492")                      ; Function definitions
+    (blue-warmer "#6e73b4")               ; Function calls
+    (blue-cooler "#5b5f64")               ; Binary and unary operators
+    (blue-faint "#588c66")                ; Built-in functions
 
-    (magenta "#9e774d")                   ; Composite types: struct, union, enum
-    (magenta-warmer "#9c6c87")            ; Extended library types
-    (magenta-cooler "#5d8b8d")            ; Rare syntax nodes, special escapes
-    (magenta-faint "#58554f")             ; Inactive conditional blocks
+    (magenta "#8e6a44")                   ; Composite types: struct, union, enum
+    (magenta-warmer "#846851")            ; Extended library types
+    (magenta-cooler "#4f7c7f")            ; Rare syntax nodes, special escapes
+    (magenta-faint "#504d48")             ; Inactive conditional blocks
 
-    (cyan "#736c67")                      ; Keyword fallback
-    (cyan-warmer "#4c7f7b")               ; Preprocessor alias
-    (cyan-cooler "#75797e")               ; Operator alias
-    (cyan-faint "#6b7076")                ; Punctuation delimiters
+    (cyan "#68615c")                      ; Keyword fallback
+    (cyan-warmer "#3f726e")               ; Preprocessor alias
+    (cyan-cooler "#686c71")               ; Operator alias
+    (cyan-faint "#60656b")                ; Punctuation delimiters
 
     ;; Panels, Diffs and Structural Highlights
     (bg-red-intense "#4f1a18")            ; Blocking errors, fatal assertion panel
@@ -100,20 +103,20 @@
     (bg-added "#112812")                  ; Diff added line baseline
     (bg-added-faint "#0d1d0e")            ; Diff added unchanged context
     (bg-added-refine "#163918")           ; Diff added word-level highlight
-    (fg-added "#7cb67e")                  ; Diff added foreground text
+    (fg-added "#69a26b")                  ; Diff added foreground text
 
     (bg-changed "#2c2303")                ; Diff changed line baseline
     (bg-changed-faint "#1d1804")          ; Diff changed unchanged context
     (bg-changed-refine "#3d3200")         ; Diff changed word-level highlight
-    (fg-changed "#bfab5e")                ; Diff changed foreground text
+    (fg-changed "#ab974a")                ; Diff changed foreground text
 
     (bg-removed "#391415")                ; Diff removed line baseline
     (bg-removed-faint "#281011")          ; Diff removed unchanged context
     (bg-removed-refine "#511c1f")         ; Diff removed word-level highlight
-    (fg-removed "#e49291")                ; Diff removed foreground text
+    (fg-removed "#cf7f7e")                ; Diff removed foreground text
 
     (bg-mode-line-active "#17181c")       ; Active modeline surface
-    (fg-mode-line-active "#9da1a7")       ; Active modeline primary text
+    (fg-mode-line-active "#8b8f95")       ; Active modeline primary text
     (bg-completion "#1e212e")             ; Minibuffer completion selected row
     (bg-popup "#0e0f12")                  ; Autocomplete tooltip surface
     (bg-hover "#282c42")                  ; Mouse hover overlay
@@ -123,8 +126,8 @@
     (bg-err "#2b0e0c")                    ; Flymake error inline box
     (bg-warning "#231502")                ; Flymake warning inline box
     (bg-info "#0f1c10")                   ; Flymake info inline box
-    (bg-region "#26215b")                 ; Marked region
-    (fg-line-number-inactive "#585b5f"))) ; Inactive line numbers margin
+    (bg-region "#302f36")                 ; Marked region
+    (fg-line-number-inactive "#53555a"))) ; Inactive line numbers margin
 
 (defconst au-perseida-night-palette-mappings-partial
   '((err red)
@@ -140,7 +143,7 @@
     (fg-link-visited blue)
     (name blue)
     (keybind red)
-    (identifier fg-alt)
+    (identifier blue-warmer)
     (fg-prompt yellow-warmer)
 
     ;; Syntax Mappings:
@@ -153,7 +156,7 @@
     (fnname blue)
     (fnname-call blue-warmer)
     (string red-warmer)
-    (property fg-alt)
+    (property fg-prop)
     (variable fg-var)
     (variable-use fg-main)
     (operator blue-cooler)
@@ -164,9 +167,9 @@
     (rx-backslash yellow-cooler)
     (rx-construct red)
 
-    (accent-0 yellow-warmer)
-    (accent-1 green)
-    (accent-2 blue)
+    (accent-0 yellow)
+    (accent-1 yellow-cooler)
+    (accent-2 blue-faint)
     (accent-3 green-warmer)))
 
 (defconst au-perseida-night-palette
