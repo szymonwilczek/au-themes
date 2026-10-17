@@ -158,7 +158,7 @@ says which parts come from a source and which are our own choice.
 | =oklab-perceptual=                    | Ottosson 2020                                | ours                                                                 |
 | =helmholtz-kohlrausch=                | Fairchild & Pirrotta 1991                    | ours                                                                 |
 | =spectral-coherence=                  | Endler 1993                                  | ours, Whispergrove only                                              |
-| =stellar-locus=                       | CIE 015:2018, Ohno 2014                      | ours, Perseida only                                                  |
+| =stellar-locus=                       | CIE 015:2018, Ohno 2014, Osterbrock 2006     | ours, Perseida only                                                  |
 | =lcd-black-bleed=                     | IEC 61966-2-1, APCA                          | ours                                                                 |
 | =oled-irradiance=                     | IEC 61966-2-1, APCA                          | ours                                                                 |
 | =spatial-frequency-csf=               | Campbell & Robson 1968, Legge et al. 1985    | ours                                                                 |
