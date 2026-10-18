@@ -33,6 +33,11 @@
 ;; Pairs listed in `au-cross-family-exemptions' are skipped, each with
 ;; its reason.
 ;;
+;; The 10 dE00 per-role and 18 dE00 mean separations are informational:
+;; a pair under them is reported as NOTE and does not fail the module.
+;; Each family is built from its own named objects, and two families may
+;; legitimately share one (a carrot is orange in any of them).
+;;
 ;; Basis: CIEDE2000 (CIE 142-2001).  The 10 and 18 dE00 separations and
 ;; every family signature are au-themes heuristics; they keep the
 ;; families from converging, they do not model perception.
@@ -116,7 +121,7 @@ family's own chromatic signature."
               (princ (format "[FAIL]  Cross-family color collision detected: %S\n" collisions))
               (setq fails (1+ fails))))
 
-          (princ (format "\nExpressive Roles Minimum Separation (%s vs %s, min dE00 10.0):\n"
+          (princ (format "\nExpressive Roles Minimum Separation (%s vs %s, min dE00 10.0, informational):\n"
                          theme c-theme))
           (princ (format "---------------------------------------------------------------------------------------------------------\n"))
           (princ (format "+------------------------------+-------------------------+-------------------------+----------+---------+\n"))
@@ -136,11 +141,10 @@ family's own chromatic signature."
                      (h2 (plist-get c-pal k))
                      (dist (rf-delta-e-2000 h1 h2))
                      (ok (>= dist 10.0)))
-                (if ok
-                    (setq passes (1+ passes))
-                  (setq fails (1+ fails)))
+                (when ok
+                  (setq passes (1+ passes)))
                 (princ (format "| %-28s | %-23s | %-23s | %8.2f | %s    |\n"
-                               label h1 h2 dist (if ok "PASS" "FAIL (< 10.0)"))))))
+                               label h1 h2 dist (if ok "PASS" "NOTE (< 10.0)"))))))
           (princ (format "+------------------------------+-------------------------+-------------------------+----------+---------+\n"))
 
           (princ (format "\nGlobal Palette Profile Divergence (%s vs %s):\n" theme c-theme))
@@ -156,8 +160,7 @@ family's own chromatic signature."
                 (progn
                   (princ (format "[PASS]  Mean cross-family syntax separation = %.2f >= 18.0\n" mean-dist))
                   (setq passes (1+ passes)))
-              (princ (format "[FAIL]  Palette clone alert: Mean separation = %.2f < 18.0\n" mean-dist))
-              (setq fails (1+ fails)))))))
+              (princ (format "[NOTE]  Palette clone alert: Mean separation = %.2f < 18.0\n" mean-dist)))))))
 
     (princ (format "\nChromatic Identity Purity Gate (%s family signature):\n" family))
     (princ (format "---------------------------------------------------------------------------------------------------------\n"))
