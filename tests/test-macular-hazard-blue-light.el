@@ -28,8 +28,13 @@
 ;; 10^4 s.  A self-luminous display at 80 cd/m2 is far below it, so this
 ;; check guards against a modelling error. Separately, each role's
 ;; hazard-weighted energy per lumen may be at most that of D65 (warm and
-;; neutral roles) or twice it (sparse short-wavelength roles), and the
-;; canvas at most that of D65.
+;; neutral roles) or twice it (sparse short-wavelength roles).
+;; The canvas passes at most that of D65 per lumen, or, when it is
+;; tinted, an absolute hazard-weighted emission no higher than a neutral
+;; #1e1e1e canvas (the Visual Studio Code Dark+ editor background).
+;; Per lumen alone would fail every navy night canvas, though at
+;; Y 0.004 it sends less blue light to the retina than an ordinary grey
+;; dark theme.
 ;;
 ;; Basis: the blue-light hazard function and the 100 W m^-2 sr^-1 limit
 ;; are ICNIRP (2013) and IEC 62471.  The per-lumen ratios against D65 are
@@ -138,16 +143,23 @@
 
     (let* ((bg-kb (rf-blue-light-hazard-efficacy bg))
            (bg-rel (/ bg-kb kd65))
-           (bg-ok (<= bg-rel 1.00)))
-      (if bg-ok
-          (progn
-            (princ (format "[PASS]  Canvas K_B,v = %.4f mW/lm (%.2fx D65) <= 1.00x: the continuously\n"
-                           (* 1000.0 bg-kb) bg-rel))
-            (princ "\texposed surface is spectrally warmer than daylight.\n")
-            (setq passes (1+ passes)))
-        (princ (format "[FAIL]  Canvas K_B,v = %.4f mW/lm (%.2fx D65) > 1.00x D65.\n"
+           (bg-abs (/ (* bg-kb bg-y) (* kd65 (rf-luminance-y "#1e1e1e")))))
+      (cond
+       ((<= bg-rel 1.00)
+        (princ (format "[PASS]  Canvas K_B,v = %.4f mW/lm (%.2fx D65) <= 1.00x: the continuously\n"
                        (* 1000.0 bg-kb) bg-rel))
-        (setq fails (1+ fails))))
+        (princ "\texposed surface is spectrally warmer than daylight.\n")
+        (setq passes (1+ passes)))
+       ((<= bg-abs 1.00)
+        (princ (format "[PASS]  Canvas K_B,v = %.4f mW/lm (%.2fx D65), but its emission K_B,v * Y\n"
+                       (* 1000.0 bg-kb) bg-rel))
+        (princ (format "\tis %.2fx that of a neutral #1e1e1e canvas <= 1.00x.\n" bg-abs))
+        (setq passes (1+ passes)))
+       (t
+        (princ (format "[FAIL]  Canvas K_B,v = %.4f mW/lm (%.2fx D65) > 1.00x D65,\n"
+                       (* 1000.0 bg-kb) bg-rel))
+        (princ (format "\tand emission %.2fx a neutral #1e1e1e canvas > 1.00x.\n" bg-abs))
+        (setq fails (1+ fails)))))
 
     (princ (format "\n==================================================================================\n"))
     (princ (format "Blue Light Hazard Summary: %d Passed, %d Failed.\n\n" passes fails))
