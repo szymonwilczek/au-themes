@@ -31,6 +31,9 @@
 ;; Each role's excitation purity is capped (0.85 dark, 0.88 light), roles
 ;; purer than 0.40 are also capped in luminance, and the error colour
 ;; must keep some green and blue so it is not a narrowband red.
+;; On a dark canvas the luminance cap is 0.25 for red roles (R/G >= 2)
+;; and 0.40 for numbers and for orange, yellow or cream roles, whose light
+;; is not the narrowband red that drives the pain.
 ;;
 ;; Basis: the wavelength dependence of migraine photophobia is Noseda et
 ;; al. (2010, 2016).  The purity and luminance caps and the 0.05 green
@@ -63,7 +66,7 @@
     (princ (format "\n.~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~.\n"))
     (princ (format "| Retino-Thalamic Trigeminovascular Red Photophobia Suite\n"))
     (princ (format "| Theme: %s (%s) | Background: %s\n" theme polarity bg))
-    (princ (format "| Requirements:  Red Channel Frac <= 0.850, Muted Red Lum Y <= 0.250\n\t\t (Dark mode)\n"))
+    (princ (format "| Requirements:  Red Channel Frac <= 0.850, Muted Red Lum Y <= 0.250\n\t\t (Dark mode, R/G >= 2)\n"))
     (princ (format "'~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~'\n"))
 
     (princ (format "\n-------------------+---------+---------+----------+-----------+--------+\n"))
@@ -82,7 +85,9 @@
              (purity (/ r (max 1e-4 (+ r g b))))
              (rg-ratio (/ r (max 1e-4 g)))
              (max-purity (if (eq polarity 'light) 0.880 0.850))
-             (max-lum    (if (eq polarity 'light) 0.400 (if (eq key :number) 0.400 0.250)))
+             (max-lum    (if (or (eq polarity 'light) (eq key :number) (< rg-ratio 2.0))
+                             0.400
+                           0.250))
              (ok (and (<= purity max-purity)
                       (if (> purity 0.400) (<= y-val max-lum) t))))
         (if ok
