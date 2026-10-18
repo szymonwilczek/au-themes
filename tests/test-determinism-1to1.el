@@ -22,7 +22,7 @@
 
 ;;; Commentary:
 ;;
-;; Evaluate 1:1 keyface uniqueness and pairwise CIEDE2000 separation (min 10.0).
+;; Evaluate 1:1 keyface uniqueness and pairwise CIEDE2000 separation (min 8.0).
 ;; Colour separation is measured with CIEDE2000, not with Emacs' `color-distance',
 ;; which is an unpublished sRGB heuristic that is not perceptually uniform:
 ;; the same numeric gate of 8000 corresponded to dE00 between 9.7 and 19.7
@@ -42,7 +42,14 @@
 ;; with each other here; their steps are held by the crowding, triplet
 ;; and isoluminance modules.
 ;;
-;; Basis: CIEDE2000 is a CIE standard; the 10.0 floor, the per-pair hue
+;; The floor is 8.0.0.  Palettes built from named objects need
+;; neighbouring shades of one material (stone and smoke,cocoa and bark),
+;; and the categorical check below, together with the CVD, crowding and
+;; isoluminance modules, already keeps roles apart in kind.
+;; dE00 8.0 sits several times above the difference seen at a glance
+;; (about 2 to 3).
+;;
+;; Basis: CIEDE2000 is a CIE standard; the 8.0 floor, the per-pair hue
 ;; minimums, the 0.08 lightness step and the receding-role exemption
 ;; are au-themes heuristics.
 ;;
@@ -56,7 +63,7 @@
 (require 'test-palette-extractor)
 
 (defun test-determinism-1to1-run ()
-  "Evaluate 1:1 keyface uniqueness and pairwise CIEDE2000 separation (min 10.0)"
+  "Evaluate 1:1 keyface uniqueness and pairwise CIEDE2000 separation (min 8.0)"
   (let* ((theme (or rf-active-theme (car (au-test-discover-themes))))
          (pal (au-extract-active-palette theme))
          (passes 0)
@@ -70,7 +77,7 @@
                            au-test-role-pairs)))
 
     (princ (format "\n.~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~.\n"))
-    (princ (format "| 1:1 Keyface Determinism & Pairwise CIEDE2000 Suite (min. dE00 10.0)\n"))
+    (princ (format "| 1:1 Keyface Determinism & Pairwise CIEDE2000 Suite (min. dE00 8.0)\n"))
     (princ (format "| Theme: %s\n" theme))
     (princ (format "'~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~'\n"))
 
@@ -92,7 +99,7 @@
         (setq passes (1+ passes))))
 
     (princ (format "-------------------------------------------------------------------------------------------\n"))
-    (princ (format "\nPairwise Separation Check (CIEDE2000 dE00 >= 10.0, %s):\n"
+    (princ (format "\nPairwise Separation Check (CIEDE2000 dE00 >= 8.0, %s):\n"
                    (if strict "every pair of roles" "curated pairs")))
     (princ (format "+--------------------------------------+-------------+-------------+-----------+----------+\n"))
     (princ (format "| %-31s      |   %-10s|   %-10s|  %-6s   |  %-6s  |\n"
@@ -102,7 +109,7 @@
       (let* ((name (nth 0 pair))
              (k1   (nth 1 pair))
              (k2   (nth 2 pair))
-             (min-dist (or (nth 3 pair) 10.0))
+             (min-dist (or (nth 3 pair) 8.0))
              (h1   (plist-get pal k1))
              (h2   (plist-get pal k2))
              (dist (rf-delta-e-2000 h1 h2))
