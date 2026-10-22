@@ -255,7 +255,7 @@ Extracts the family identifier from the convention `au-<family>-<variant>',
       (intern (match-string 1 name)))
      (t (intern name)))))
 
-(defconst au-test-strict-families '(mysterium perseida)
+(defconst au-test-strict-families '(mysterium perseida yerba)
   "Families held to the all-pairs separation and comment recession gates.
 Families released before these gates (aurum, herbarium, parchment,
 salina, whispergrove) still fail them; each joins this list once it

@@ -24,13 +24,14 @@
 ;;
 ;; Verification of chromatic divergence and anti-cloning separation
 ;; between theme families (aurum, herbarium, mysterium, parchment,
-;; perseida, salina, whispergrove).  Each theme is compared with every
-;; theme of the same polarity in the other families, and must also
-;; hold its own family's chromatic signature: the hue envelope of the
-;; selection region, plus the chroma ceiling for parchment, the
-;; non-green data type for aurum's light variant, the optically black
-;; canvas of perseida's dark variant, the cool pearl canvas of its
-;; light variant and the teal keywords of mysterium.
+;; perseida, salina, whispergrove, yerba).  Each theme is compared
+;; with every theme of the same polarity in the other families, and
+;; must also hold its own family's chromatic signature: the hue
+;; envelope of the selection region, plus the chroma ceiling for
+;; parchment, the non-green data type for aurum's light variant, the
+;; optically black canvas of perseida's dark variant, the cool pearl
+;; canvas of its light variant, the dry leaf canvas of yerba and the
+;; teal keywords of mysterium.
 ;;
 ;; Pairs listed in `au-cross-family-exemptions' are skipped, each with
 ;; its reason.
@@ -359,6 +360,36 @@ family's own chromatic signature."
               (setq passes (1+ passes)))
           (princ (format "[FAIL]  Mysterium Teal Keywords (%s, hue %.1fdeg): expected [185deg..205deg].\n"
                          kw-hex kw-h))
+          (setq fails (1+ fails)))))
+
+     ((eq family 'yerba)
+      ;; Yerba requirements:
+      ;; Selection region: h in [100deg..135deg] (dried yerba leaf)
+      ;; Canvas: h in [90deg..125deg] with C <= 0.03, the dry yellowish
+      ;; side of green, never the wet blue-green side
+      (let* ((reg-hex (plist-get pal :bg-region))
+             (reg-h   (nth 2 (rf-hex-to-oklch reg-hex)))
+             (reg-ok  (and (>= reg-h 100.0) (<= reg-h 135.0)))
+             (bg-hex  (plist-get pal :bg-main))
+             (bg-okl  (rf-hex-to-oklch bg-hex))
+             (bg-c    (nth 1 bg-okl))
+             (bg-h    (nth 2 bg-okl))
+             (bg-ok   (and (<= bg-c 0.03) (>= bg-h 90.0) (<= bg-h 125.0))))
+        (if reg-ok
+            (progn
+              (princ (format "[PASS]  Yerba Selection Region (%s, hue %.1fdeg).\n"
+                             reg-hex reg-h))
+              (setq passes (1+ passes)))
+          (princ (format "[FAIL]  Yerba Selection Region (%s, hue %.1fdeg): expected [100deg..135deg].\n"
+                         reg-hex reg-h))
+          (setq fails (1+ fails)))
+        (if bg-ok
+            (progn
+              (princ (format "[PASS]  Yerba Dry Leaf Canvas (%s, C %.3f, hue %.1fdeg).\n"
+                             bg-hex bg-c bg-h))
+              (setq passes (1+ passes)))
+          (princ (format "[FAIL]  Yerba Dry Leaf Canvas (%s, C %.3f, hue %.1fdeg): expected C <= 0.03, hue [90deg..125deg].\n"
+                         bg-hex bg-c bg-h))
           (setq fails (1+ fails)))))
 
      (t
