@@ -26,6 +26,9 @@ Screenshots of every theme: https://szymon-wilczek.me/writings/au-themes-screens
 [[https://szymon-wilczek.me/assets/au-themes/au-perseida-day.png]]
 /au-perseida-day/
 
+[[https://szymon-wilczek.me/assets/au-themes/au-yerba-day.png]]
+/au-yerba-day/
+
 [[https://szymon-wilczek.me/assets/au-themes/au-mysterium.png]]
 /au-mysterium/
 
@@ -65,6 +68,7 @@ belong together.
 | Salina       | =night=, =day=          | the coast: salt flats, sand, deep ocean, driftwood and coral |
 | Herbarium    | =night=, =day=          | pressed sage, dried lavender, oak-gall ink, chamomile        |
 | Perseida     | =night=, =day=          | an August meteor night and its dawn, star-coloured syntax    |
+| Yerba        | =night=, =day=          | a yerba mate gourd: dried leaf, Ilex berries and steam       |
 | Mysterium    | one dark theme      | Halloween: an old painted van outside a haunted mansion      |
 
 Full names follow the pattern =au-<family>-<variant>=, for example
