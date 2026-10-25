@@ -56,7 +56,7 @@
 
     ;; Basic Chromatic Scale
     (red "#b85454")                       ; Errors, critical warnings
-    (red-warmer "#929598")                ; String literals
+    (red-warmer "#898c8f")                ; String literals
     (red-cooler "#d6857f")                ; Diff deletions, removal markers
     (red-faint "#6d7559")                 ; Structural brackets
 
@@ -71,8 +71,8 @@
     (yellow-faint "#7c755a")              ; Informational tooltips, fringe markers
 
     (blue "#8e5e74")                      ; Function definitions
-    (blue-warmer "#7a6691")               ; Function calls
-    (blue-cooler "#767e7f")               ; Binary and unary operators
+    (blue-warmer "#776793")               ; Function calls
+    (blue-cooler "#707879")               ; Binary and unary operators
     (blue-faint "#ae7f9c")                ; Built-in functions
 
     (magenta "#ce8844")                   ; Composite types: struct, union, enum
