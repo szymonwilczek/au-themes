@@ -24,14 +24,15 @@
 ;;
 ;; Verification of chromatic divergence and anti-cloning separation
 ;; between theme families (aurum, herbarium, mysterium, parchment,
-;; perseida, salina, whispergrove, yerba).  Each theme is compared
-;; with every theme of the same polarity in the other families, and
-;; must also hold its own family's chromatic signature: the hue
-;; envelope of the selection region, plus the chroma ceiling for
-;; parchment, the non-green data type for aurum's light variant, the
-;; optically black canvas of perseida's dark variant, the cool pearl
-;; canvas of its light variant, the dry leaf canvas of yerba and the
-;; teal keywords of mysterium.
+;; perseida, pluvia, salina, whispergrove, yerba).  Each theme is
+;; compared with every theme of the same polarity in the other
+;; families, and must also hold its own family's chromatic signature:
+;; the hue envelope of the selection region, plus the chroma ceiling
+;; for parchment, the non-green data type for aurum's light variant,
+;; the optically black canvas of perseida's dark variant, the cool
+;; pearl canvas of its light variant, the dry leaf canvas of yerba,
+;; the grey text and fogged pane region of pluvia and the teal
+;; keywords of mysterium.
 ;;
 ;; Pairs listed in `au-cross-family-exemptions' are skipped, each with
 ;; its reason.
@@ -333,6 +334,37 @@ family's own chromatic signature."
             (princ (format "[FAIL]  Perseida Dawn Canvas (%s, C %.3f, hue %.1fdeg): expected C <= 0.012, hue [220deg..290deg].\n"
                            bg-hex bg-c bg-h))
             (setq fails (1+ fails))))))
+
+     ((eq family 'pluvia)
+      ;; Pluvia requirements:
+      ;; Base text: C <= 0.004, the plain grey light of a rainy day,
+      ;; where every other family tints its text
+      ;; Selection region: C <= 0.025 with h in [220deg..250deg],
+      ;; a fogged window pane, where other families colour the region
+      (let* ((fg-hex  (plist-get pal :fg-main))
+             (fg-c    (nth 1 (rf-hex-to-oklch fg-hex)))
+             (fg-ok   (<= fg-c 0.004))
+             (reg-hex (plist-get pal :bg-region))
+             (reg-okl (rf-hex-to-oklch reg-hex))
+             (reg-c   (nth 1 reg-okl))
+             (reg-h   (nth 2 reg-okl))
+             (reg-ok  (and (<= reg-c 0.025) (>= reg-h 220.0) (<= reg-h 250.0))))
+        (if fg-ok
+            (progn
+              (princ (format "[PASS]  Pluvia Grey Light Text (%s, C %.3f).\n"
+                             fg-hex fg-c))
+              (setq passes (1+ passes)))
+          (princ (format "[FAIL]  Pluvia Grey Light Text (%s, C %.3f): expected C <= 0.004.\n"
+                         fg-hex fg-c))
+          (setq fails (1+ fails)))
+        (if reg-ok
+            (progn
+              (princ (format "[PASS]  Pluvia Fogged Pane Region (%s, C %.3f, hue %.1fdeg).\n"
+                             reg-hex reg-c reg-h))
+              (setq passes (1+ passes)))
+          (princ (format "[FAIL]  Pluvia Fogged Pane Region (%s, C %.3f, hue %.1fdeg): expected C <= 0.025, hue [220deg..250deg].\n"
+                         reg-hex reg-c reg-h))
+          (setq fails (1+ fails)))))
 
      ((eq family 'mysterium)
       ;; Mysterium requirements:
