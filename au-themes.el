@@ -58,6 +58,7 @@
   :group 'faces
   :prefix "au-themes-")
 
+;;;###autoload
 (defvar au-themes--dir
   (file-name-directory
    (or (macroexp-file-name)
@@ -67,6 +68,7 @@
        default-directory))
   "Directory where `au-themes' library resides.")
 
+;;;###autoload
 (when (and (boundp 'custom-theme-load-path)
            au-themes--dir)
   (add-to-list 'custom-theme-load-path
