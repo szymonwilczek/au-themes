@@ -23,6 +23,9 @@ Screenshots of every theme: https://szymon-wilczek.me/writings/au-themes-screens
 [[https://szymon-wilczek.me/assets/au-themes/au-herbarium-night.png]]
 /au-herbarium-night/
 
+[[https://szymon-wilczek.me/assets/au-themes/au-mysterium.png]]
+/au-mysterium/
+
 Calm, low-glare colour themes. Made first of all for autistic people,
 and for anyone who finds most themes too loud to read for long.
 
@@ -58,9 +61,11 @@ belong together.
 | Parchment    | =night=, =day=          | almost monochrome; italics and brightness instead of colour  |
 | Salina       | =night=, =day=          | the coast: salt flats, sand, deep ocean, driftwood and coral |
 | Herbarium    | =night=, =day=          | pressed sage, dried lavender, oak-gall ink, chamomile        |
+| Mysterium    | one dark theme      | Halloween: an old painted van outside a haunted mansion      |
 
 Full names follow the pattern =au-<family>-<variant>=, for example
-=au-salina-night=.
+=au-salina-night=.  A seasonal theme with one polarity drops the
+variant: =au-mysterium=.
 
 Which one to try first:
 
