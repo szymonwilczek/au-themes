@@ -39,9 +39,9 @@
     (bg-dim "#1a1e17")                    ; Inactive windows, dim canvas
     (bg-alt "#282e24")                    ; Subtle borders, alternating stripes
     (fg-main "#9ca69e")                   ; Default buffer text
-    (fg-dim "#586c5a")                    ; Comments, metadata
+    (fg-dim "#506250")                    ; Comments, metadata
     (fg-alt "#6ea288")                    ; Struct properties
-    (fg-var "#98aba0")                    ; Variable definitions
+    (fg-var "#99bca9")                    ; Variable definitions
     (bg-active "#3e463a")                 ; Active modeline frame, focused bars
     (bg-inactive "#1a1e17")               ; Inactive modeline
     (border "#424a3e")                    ; Window dividers
@@ -53,27 +53,27 @@
     (red-faint "#687e6b")                 ; Structural brackets
 
     (green "#51a85f")                     ; Primitive types
-    (green-warmer "#b05c70")              ; Constant values and macros
+    (green-warmer "#b75f73")              ; Constant values and macros
     (green-cooler "#a47028")              ; Control keywords
-    (green-faint "#586c5a")               ; Documentation strings, inline comments
+    (green-faint "#506250")               ; Documentation strings, inline comments
 
     (yellow "#a47028")                    ; Keyword alias
     (yellow-warmer "#bca03c")             ; Numeric literals
-    (yellow-cooler "#7e5a28")             ; Preprocessor directives
+    (yellow-cooler "#86632f")             ; Preprocessor directives
     (yellow-faint "#647062")              ; Informational tooltips, fringe markers
 
-    (blue "#227086")                      ; Function definitions
+    (blue "#247288")                      ; Function definitions
     (blue-warmer "#4e92a4")               ; Function calls
     (blue-cooler "#5e8274")               ; Binary and unary operators
-    (blue-faint "#398a80")                ; Built-in functions
+    (blue-faint "#2a8d82")                ; Built-in functions
 
     (magenta "#8c6238")                   ; Composite types: struct, union, enum
     (magenta-warmer "#62a28c")            ; Extended library types
     (magenta-cooler "#72627e")            ; Rare syntax nodes, special escapes
-    (magenta-faint "#586c5a")             ; Inactive conditional blocks
+    (magenta-faint "#506250")             ; Inactive conditional blocks
 
     (cyan "#a47028")                      ; Keyword fallback
-    (cyan-warmer "#7e5a28")               ; Preprocessor alias
+    (cyan-warmer "#86632f")               ; Preprocessor alias
     (cyan-cooler "#5e8274")               ; Operator alias
     (cyan-faint "#6a756b")                ; Punctuation delimiters
 
