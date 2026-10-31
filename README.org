@@ -167,6 +167,7 @@ says which parts come from a source and which are our own choice.
 | =magnocellular-parvocellular-balance= | Livingstone & Hubel 1988                     | ours                                                                 |
 | =tonic-accommodation-dark-focus=      | Leibowitz & Owens 1978                       | ours                                                                 |
 | =crowding-effect-foveal=              | Kooi et al. 1994, Levi 2008                  | ours                                                                 |
+| =glyph-size-color-difference=         | Szafir 2018, Stone et al. 2014               | ours, strict families only                                           |
 | =isoluminance-jitter=                 | -                                            | ours                                                                 |
 | =afterimage-persistence=              | Loomis 1978, Kelly 1979                      | ours                                                                 |
 | =cross-family-distinctiveness=        | CIEDE2000                                    | ours                                                                 |
@@ -313,6 +314,12 @@ GPL-3.0-or-later. See [[file:LICENSE][LICENSE]].
 - Stockman, A., & Sharpe, L. T. (2000). The spectral sensitivities of the
   middle- and long-wavelength-sensitive cones derived from measurements
   in observers of known genotype. /Vision Research/, 40(13), 1711-1737.
+- Stone, M., Szafir, D. A., & Setlur, V. (2014). An engineering model
+  for color difference as a function of size. /22nd Color and Imaging
+  Conference/, IS&T.
+- Szafir, D. A. (2018). Modeling color difference for visualization
+  design. /IEEE Transactions on Visualization and Computer Graphics/,
+  24(1), 392ff. doi:10.1109/TVCG.2017.2744359
 - Watson, A. B., & Yellott, J. I. (2012). A unified formula for
   light-adapted pupil size. /Journal of Vision/, 12(10):12.
 - W3C (2018). /Web Content Accessibility Guidelines (WCAG) 2.1/.

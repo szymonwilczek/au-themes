@@ -71,6 +71,7 @@
     test-magnocellular-parvocellular-balance
     test-tonic-accommodation-dark-focus
     test-crowding-effect-foveal
+    test-glyph-size-color-difference
     test-isoluminance-jitter
     test-afterimage-persistence
     test-cross-family-distinctiveness
