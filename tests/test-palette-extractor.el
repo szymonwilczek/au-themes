@@ -244,17 +244,18 @@ CIEDE2000 separation gate and the colour-vision-deficiency gate.")
 
 (defun au-theme-family (theme)
   "Return the package/family symbol of THEME.
-Extracts the family identifier from the convention `au-<family>-<variant>'
-or `<family>-<variant>'."
+Extracts the family identifier from the convention `au-<family>-<variant>',
+`<family>-<variant>' or, for a seasonal theme with a single polarity,
+`au-<family>'."
   (let ((name (symbol-name theme)))
     (cond
-     ((string-match "\\`au-\\([a-z0-9]+\\)-" name)
+     ((string-match "\\`au-\\([a-z0-9]+\\)\\(?:-\\|\\'\\)" name)
       (intern (match-string 1 name)))
      ((string-match "\\`\\([a-z0-9]+\\)-" name)
       (intern (match-string 1 name)))
      (t (intern name)))))
 
-(defconst au-test-strict-families nil
+(defconst au-test-strict-families '(mysterium)
   "Families held to the all-pairs separation and comment recession gates.
 Families released before these gates (aurum, herbarium, parchment,
 salina, whispergrove) still fail them; each joins this list once it

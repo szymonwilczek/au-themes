@@ -23,12 +23,12 @@
 ;;; Commentary:
 ;;
 ;; Verification of chromatic divergence and anti-cloning separation
-;; between theme families (aurum, herbarium, parchment, salina,
-;; whispergrove).  Each theme is compared with every theme of the same
-;; polarity in the other families, and must also hold its own family's
-;; chromatic signature: the hue envelope of the selection region, plus
-;; the chroma ceiling for parchment and the non-green data type for
-;; aurum's light variant.
+;; between theme families (aurum, herbarium, mysterium, parchment,
+;; salina, whispergrove).  Each theme is compared with every theme of
+;; the same polarity in the other families, and must also hold its own
+;; family's chromatic signature: the hue envelope of the selection
+;; region, plus the chroma ceiling for parchment, the non-green data
+;; type for aurum's light variant and the teal keywords of mysterium.
 ;;
 ;; Pairs listed in `au-cross-family-exemptions' are skipped, each with
 ;; its reason.
@@ -277,6 +277,34 @@ family's own chromatic signature."
               (setq passes (1+ passes)))
           (princ (format "[FAIL]  Salina Selection Region (%s, hue %.1fdeg): expected [195deg..265deg].\n"
                          reg-hex reg-h))
+          (setq fails (1+ fails)))))
+
+     ((eq family 'mysterium)
+      ;; Mysterium requirements:
+      ;; Selection region: h in [295deg..315deg], a violet dusk
+      ;; Keywords: h in [185deg..205deg], the teal bodywork of the
+      ;; old van
+      (let* ((reg-hex (plist-get pal :bg-region))
+             (reg-h   (nth 2 (rf-hex-to-oklch reg-hex)))
+             (reg-ok  (and (>= reg-h 295.0) (<= reg-h 315.0)))
+             (kw-hex  (plist-get pal :keyword))
+             (kw-h    (nth 2 (rf-hex-to-oklch kw-hex)))
+             (kw-ok   (and (>= kw-h 185.0) (<= kw-h 205.0))))
+        (if reg-ok
+            (progn
+              (princ (format "[PASS]  Mysterium Violet Region (%s, hue %.1fdeg).\n"
+                             reg-hex reg-h))
+              (setq passes (1+ passes)))
+          (princ (format "[FAIL]  Mysterium Violet Region (%s, hue %.1fdeg): expected [295deg..315deg].\n"
+                         reg-hex reg-h))
+          (setq fails (1+ fails)))
+        (if kw-ok
+            (progn
+              (princ (format "[PASS]  Mysterium Teal Keywords (%s, hue %.1fdeg).\n"
+                             kw-hex kw-h))
+              (setq passes (1+ passes)))
+          (princ (format "[FAIL]  Mysterium Teal Keywords (%s, hue %.1fdeg): expected [185deg..205deg].\n"
+                         kw-hex kw-h))
           (setq fails (1+ fails)))))
 
      (t
