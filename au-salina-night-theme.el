@@ -41,8 +41,8 @@
     (bg-alt "#1e2626")                    ; Subtle borders, alternating stripes
     (fg-main "#8e9fa2")                   ; Default buffer text
     (fg-dim "#566468")                    ; Comments, metadata
-    (fg-alt "#587e8c")                    ; Struct properties
-    (fg-var "#729eb1")                    ; Variable definitions
+    (fg-alt "#508c96")                    ; Struct properties
+    (fg-var "#61a2be")                    ; Variable definitions
     (bg-active "#1e2626")                 ; Active modeline frame, focused bars
     (bg-inactive "#161c1c")               ; Inactive modeline
     (border "#283438")                    ; Window dividers
@@ -56,22 +56,22 @@
     (green "#199a94")                     ; Primitive types
     (green-warmer "#a97248")              ; Constant values and macros
     (green-cooler "#a8545e")              ; Control keywords
-    (green-faint "#546468")               ; Documentation strings, inline comments
+    (green-faint "#49585d")               ; Documentation strings, inline comments
 
     (yellow "#a8545e")                    ; Keyword alias
     (yellow-warmer "#9e8644")             ; Numeric literals
     (yellow-cooler "#207866")             ; Preprocessor directives
     (yellow-faint "#686858")              ; Informational tooltips, fringe markers
 
-    (blue "#326492")                      ; Function definitions
-    (blue-warmer "#6094ca")               ; Function calls
+    (blue "#336594")                      ; Function definitions
+    (blue-warmer "#5f94cc")               ; Function calls
     (blue-cooler "#5a7276")               ; Binary and unary operators
     (blue-faint "#827030")                ; Built-in functions
 
     (magenta "#28968a")                   ; Composite types: struct, union, enum
-    (magenta-warmer "#6094ca")            ; Extended library types
+    (magenta-warmer "#5f94cc")            ; Extended library types
     (magenta-cooler "#207866")            ; Rare syntax nodes, special escapes
-    (magenta-faint "#546468")             ; Inactive conditional blocks
+    (magenta-faint "#49585d")             ; Inactive conditional blocks
 
     (cyan "#827030")                      ; Builtin fallback
     (cyan-warmer "#207866")               ; Preprocessor alias
