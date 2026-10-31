@@ -1,0 +1,16 @@
+name: notify site
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'au-*-theme.el'
+
+jobs:
+  dispatch:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Rebuild szymon-wilczek.me with the new palettes
+        env:
+          GH_TOKEN: ${{ secrets.SITE_DISPATCH_TOKEN }}
+        run: gh api repos/szymonwilczek/szymon-wilczek.me/dispatches -f event_type=au-themes-updated
