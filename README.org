@@ -213,7 +213,7 @@ On Emacs 30 or newer you can use =use-package= instead:
 
 #+begin_src elisp
   (use-package au-themes
-    :vc (:url "https://github.com/szymonwilczek/au-themes")
+    :vc (:url "https://github.com/szymonwilczek/au-themes" :rev :newest)
     :config
     (load-theme 'au-salina-night t))
 #+end_src
