@@ -10,8 +10,8 @@
 <h3 align="center"><a href="https://szymon-wilczek.me/writings/au-themes-screenshots/">Screenshots of every theme in code, Magit, Dired and Org</a></h3>
 #+END_HTML
 
-Go to the [[#light-themes][light]] or the [[#dark-themes][dark]] themes, the [[#themes][list of families]],
-[[#installation][installation]] or [[#tests][tests]].
+Go to the [[#light-themes][light]] or the [[#dark-themes][dark]] themes, [[#installation][installation]],
+[[#usage][usage]] or the [[#themes][list of families]].
 
 Calm, low-glare colour themes. Made first of all for autistic people,
 and for anyone who finds most themes too loud to read for long.
@@ -68,6 +68,55 @@ in code, Magit, Dired and Org on the blog.
 </tr>
 </table>
 #+END_HTML
+
+* Emacs
+
+** Requirements
+
+- Emacs 29.1 or newer
+- [[https://github.com/protesilaos/ef-themes][ef-themes]] 2.0.0 or newer
+- [[https://github.com/protesilaos/modus-themes][modus-themes]] 5.2.0 or newer
+
+The Emacs themes are built on top of modus-themes and ef-themes by
+[[https://protesilaos.com][Protesilaos Stavrou]]. His work gives us face coverage for hundreds of
+packages and a solid base to build palettes on. Thank you, Prot.
+
+We plan to move to our own engine later, with no dependency on either
+package. Until then we stay on modus-themes and ef-themes.
+
+** Installation
+
+#+begin_src sh
+  git clone https://github.com/szymonwilczek/au-themes.git ~/.emacs.d/au-themes
+#+end_src
+
+#+begin_src elisp
+  (add-to-list 'load-path "~/.emacs.d/au-themes")
+  (require 'au-themes)
+  (load-theme 'au-salina-night t)
+#+end_src
+
+On Emacs 30 or newer you can use =use-package= instead:
+
+#+begin_src elisp
+  (use-package au-themes
+    :vc (:url "https://github.com/szymonwilczek/au-themes" :rev :newest)
+    :config
+    (load-theme 'au-salina-night t))
+#+end_src
+
+** Usage
+
+| Command                | What it does                             |
+|------------------------+------------------------------------------|
+| =au-themes-select=       | pick a theme with live preview           |
+| =au-themes-select-light= | pick from light themes only              |
+| =au-themes-select-dark=  | pick from dark themes only               |
+| =au-themes-toggle=       | switch between last light and dark theme |
+
+=au-themes-toggle= switches between =au-salina-day= and
+=au-salina-night= until you pick other themes. Change the default pair
+in =au-themes-toggle-themes=.
 
 * Why
 
@@ -140,129 +189,9 @@ We pick colours by hand and check each palette against these rules:
   stay at least 10 dE00 apart for every type of dichromacy, and no
   two token colours come closer than 3 dE00.
 
-The rules are based on the sources listed under [[*References][References]].
-
-* Tests
-
-Every theme is checked by the modules in [[file:tests][tests]]. To run them all:
-
-#+begin_src sh
-  emacs -Q --batch -L . -l tests/run-all-tests.el
-#+end_src
-
-Set =AU_TEST_THEMES= to check only some themes, for example
-=AU_TEST_THEMES=au-salina-night=. The run fails if any theme
-fails any module.
-
-The tests look for ef-themes and modus-themes in your =elpa=
-directory. Without them installed, put both in a separate directory
-first:
-
-#+begin_src sh
-  export EMACS_ELPA_DIR=/tmp/au-elpa
-  emacs -Q --batch -l tests/install-deps.el
-  emacs -Q --batch -L . -l tests/run-all-tests.el
-#+end_src
-
-Each module measures the palette with a published model and compares
-the result with a limit. Most of the limits are ours: we chose them
-for these palettes, and they are not clinical thresholds. The table
-says which parts come from a source and which are our own choice.
-
-| Module                              | Model from                                   | Limit                                                                |
-|-------------------------------------+----------------------------------------------+----------------------------------------------------------------------|
-| =theme-integrity=                     | -                                            | file layout and palette structure                                    |
-| =apca-contrast=                       | APCA 0.0.98G-4g                              | ours                                                                 |
-| =wcag21-ratios=                       | WCAG 2.1                                     | 4.5:1 for body text (WCAG); others ours                              |
-| =astigmatism-ciliary=                 | Charman & Heron 1988                         | ours                                                                 |
-| =pupil-aberrations=                   | Watson & Yellott 2012, Liang & Williams 1997 | ours                                                                 |
-| =straylight-glare=                    | CIE 146:2002                                 | ours                                                                 |
-| =lca-chromatic=                       | Thibos et al. 1992                           | ours                                                                 |
-| =chromostereopsis=                    | Thibos et al. 1992                           | ours                                                                 |
-| =foveal-scotopic-macula=              | Curcio et al. 1991, Stockman & Sharpe 2000   | ours                                                                 |
-| =cvd-colorblindness=                  | Brettel et al. 1997                          | ours                                                                 |
-| =mesopic-purkinje-shift=              | CIE 191:2010                                 | ours                                                                 |
-| =toric-blur-astigmatism=              | Campbell & Robson 1968                       | ours                                                                 |
-| =glare-veiling-luminance=             | CIE 146:2002                                 | ours                                                                 |
-| =oklab-perceptual=                    | Ottosson 2020                                | ours                                                                 |
-| =helmholtz-kohlrausch=                | Fairchild & Pirrotta 1991                    | ours                                                                 |
-| =spectral-coherence=                  | Endler 1993                                  | ours, Whispergrove only                                              |
-| =stellar-locus=                       | CIE 015:2018, Ohno 2014, Osterbrock 2006     | ours, Perseida only                                                  |
-| =lcd-black-bleed=                     | IEC 61966-2-1, APCA                          | ours                                                                 |
-| =oled-irradiance=                     | IEC 61966-2-1, APCA                          | ours                                                                 |
-| =spatial-frequency-csf=               | Campbell & Robson 1968, Legge et al. 1985    | ours                                                                 |
-| =determinism-1to1=                    | CIEDE2000, Oklab, CSS Color 4                | ours                                                                 |
-| =wet-surface-physics=                 | CIELAB (CIE 015:2018)                        | ours                                                                 |
-| =photophobia-glare=                   | CIE S 026:2018                               | 10 lx melanopic EDI for dark themes (Brown et al. 2022); others ours |
-| =pattern-glare-cortical=              | Wilkins et al. 1984                          | ours                                                                 |
-| =macular-hazard-blue-light=           | ICNIRP 2013, IEC 62471                       | 100 W * m^{-2} * sr^{-1} (ICNIRP); others ours                       |
-| =pupil-spasm-adaptation=              | Watson & Yellott 2012                        | ours                                                                 |
-| =astigmatism-meridional-blur=         | -                                            | ours                                                                 |
-| =asd-semantic-entropy=                | Shannon 1948, Ottosson 2020                  | ours                                                                 |
-| =photophobia-triplet-contrast=        | APCA                                         | ours                                                                 |
-| =trigeminal-nerve-excitation=         | Noseda et al. 2010, 2016                     | ours                                                                 |
-| =scotopic-pupillary-aperture=         | Stiles & Crawford 1933, CIE 191:2010         | ours                                                                 |
-| =magnocellular-parvocellular-balance= | Livingstone & Hubel 1988                     | ours                                                                 |
-| =tonic-accommodation-dark-focus=      | Leibowitz & Owens 1978                       | ours                                                                 |
-| =crowding-effect-foveal=              | Kooi et al. 1994, Levi 2008                  | ours                                                                 |
-| =glyph-size-color-difference=         | Szafir 2018, Stone et al. 2014               | ours, strict families only                                           |
-| =isoluminance-jitter=                 | -                                            | ours                                                                 |
-| =afterimage-persistence=              | Loomis 1978, Kelly 1979                      | ours                                                                 |
-| =cross-family-distinctiveness=        | CIEDE2000                                    | ours                                                                 |
-| =ui-text-contrast=                    | APCA                                         | ours                                                                 |
-| =diff-refine-separation=              | CIEDE2000                                    | ours                                                                 |
-
-Each module's commentary gives the details: what it measures, which
-source it uses, and which numbers are ours.
-
-* Emacs
-
-** Requirements
-
-- Emacs 29.1 or newer
-- [[https://github.com/protesilaos/ef-themes][ef-themes]] 2.0.0 or newer
-- [[https://github.com/protesilaos/modus-themes][modus-themes]] 5.2.0 or newer
-
-The Emacs themes are built on top of modus-themes and ef-themes by
-[[https://protesilaos.com][Protesilaos Stavrou]]. His work gives us face coverage for hundreds of
-packages and a solid base to build palettes on. Thank you, Prot.
-
-We plan to move to our own engine later, with no dependency on either
-package. Until then we stay on modus-themes and ef-themes.
-
-** Installation
-
-#+begin_src sh
-  git clone https://github.com/szymonwilczek/au-themes.git ~/.emacs.d/au-themes
-#+end_src
-
-#+begin_src elisp
-  (add-to-list 'load-path "~/.emacs.d/au-themes")
-  (require 'au-themes)
-  (load-theme 'au-salina-night t)
-#+end_src
-
-On Emacs 30 or newer you can use =use-package= instead:
-
-#+begin_src elisp
-  (use-package au-themes
-    :vc (:url "https://github.com/szymonwilczek/au-themes" :rev :newest)
-    :config
-    (load-theme 'au-salina-night t))
-#+end_src
-
-** Usage
-
-| Command                  | What it does                             |
-|--------------------------+------------------------------------------|
-| =au-themes-select=         | pick a theme with live preview           |
-| =au-themes-select-light=   | pick from light themes only              |
-| =au-themes-select-dark=    | pick from dark themes only               |
-| =au-themes-toggle=         | switch between last light and dark theme |
-
-=au-themes-toggle= switches between =au-salina-day= and
-=au-salina-night= until you pick other themes. Change the default pair
-in =au-themes-toggle-themes=.
+The test suite checks every theme against these rules and many more;
+[[file:tests/README.org][tests/README.org]] explains how it works and how to run it. The
+sources are listed in [[file:REFERENCES.org][REFERENCES.org]].
 
 * License
 
@@ -275,92 +204,5 @@ GPL-3.0-or-later. See [[file:LICENSE][LICENSE]].
 
 * References
 
-- Somers, A. /APCA: Accessible Perceptual Contrast Algorithm/. Myndex Research.
-- Happé, F., & Frith, U. (2006). The weak coherence account: detail-focused
-  cognitive style in autism spectrum disorders. /Journal of Autism and
-  Developmental Disorders/, 36(1), 5-25.
-- Wilkins, A. J., Nimmo-Smith, I., Tait, A., et al. (1984). A neurological
-  basis for visual discomfort. /Brain/, 107(4), 989-1017.
-- Pelli, D. G., & Tillman, K. A. (2008). The uncrowded window of object
-  recognition. /Nature Neuroscience/, 11(10), 1129-1135.
-- Charman, W. N., & Heron, G. (1988). Fluctuations in accommodation: a
-  review. /Ophthalmic and Physiological Optics/, 8(2), 153-164.
-- Thibos, L. N., Ye, M., Zhang, X., & Bradley, A. (1992). The chromatic eye:
-  a new reduced-eye model of ocular chromatic aberration in humans.
-  /Applied Optics/, 31(19), 3594-3600.
-- Brettel, H., Viénot, F., & Mollon, J. D. (1997). Computerized simulation
-  of color appearance for dichromats. /JOSA A/, 14(10), 2647-2655.
-- Ottosson, B. (2020). /A perceptual color space for image processing/.
-- CIE 142:2001. /Improvement to industrial colour-difference evaluation/
-  (CIEDE2000).
-- CIE 146:2002. /CIE equations for disability glare/.
-- CIE S 026:2018. /System for metrology of optical radiation for
-  ipRGC-influenced responses to light/.
-- ICNIRP (2013). Guidelines on limits of exposure to incoherent visible and
-  infrared radiation. /Health Physics/, 105(1), 74-96.
-- Brown, T. M., Brainard, G. C., Cajochen, C., et al. (2022).
-  Recommendations for daytime, evening, and nighttime indoor light
-  exposure to best support physiology, sleep, and wakefulness in healthy
-  adults. /PLOS Biology/, 20(3), e3001571.
-- Campbell, F. W., & Robson, J. G. (1968). Application of Fourier analysis
-  to the visibility of gratings. /Journal of Physiology/, 197(3), 551-566.
-- CIE 015:2018. /Colorimetry/, 4th edition.
-- CIE 191:2010. /Recommended system for mesopic photometry based on visual
-  performance/.
-- Curcio, C. A., Allen, K. A., Sloan, K. R., et al. (1991). Distribution
-  and morphology of human cone photoreceptors stained with anti-blue
-  opsin. /Journal of Comparative Neurology/, 312(4), 610-624.
-- Endler, J. A. (1993). The color of light in forests and its
-  implications. /Ecological Monographs/, 63(1), 1-27.
-- Fairchild, M. D., & Pirrotta, E. (1991). Predicting the lightness of
-  chromatic object colors using CIELAB. /Color Research & Application/,
-  16(6), 385-393.
-- IEC 61966-2-1:1999. /Multimedia systems and equipment - Colour
-  measurement and management - Part 2-1: Default RGB colour space - sRGB/.
-- IEC 62471:2006. /Photobiological safety of lamps and lamp systems/.
-- Kelly, D. H. (1979). Motion and vision. II. Stabilized spatio-temporal
-  threshold surface. /JOSA/, 69(10), 1340-1349.
-- Kooi, F. L., Toet, A., Tripathy, S. P., & Levi, D. M. (1994). The effect
-  of similarity and duration on spatial interaction in peripheral vision.
-  /Spatial Vision/, 8(2), 255-279.
-- Legge, G. E., Pelli, D. G., Rubin, G. S., & Schleske, M. M. (1985).
-  Psychophysics of reading. I. Normal vision. /Vision Research/, 25(2),
-  239-252.
-- Leibowitz, H. W., & Owens, D. A. (1978). New evidence for the
-  intermediate position of relaxed accommodation. /Documenta
-  Ophthalmologica/, 46(1), 133-147.
-- Levi, D. M. (2008). Crowding - an essential bottleneck for object
-  recognition: a mini-review. /Vision Research/, 48(5), 635-654.
-- Liang, J., & Williams, D. R. (1997). Aberrations and retinal image
-  quality of the normal human eye. /JOSA A/, 14(11), 2873-2883.
-- Livingstone, M., & Hubel, D. (1988). Segregation of form, color,
-  movement, and depth: anatomy, physiology, and perception. /Science/,
-  240(4853), 740-749.
-- Loomis, J. M. (1978). Complementary afterimages and the unequal adapting
-  effects of steady and flickering light. /JOSA/, 68(3), 411-416.
-- Noseda, R., Kainz, V., Jakubowski, M., et al. (2010). A neural mechanism
-  for exacerbation of headache by light. /Nature Neuroscience/, 13(2),
-  239-245.
-- Noseda, R., Bernstein, C. A., Nir, R.-R., et al. (2016). Migraine
-  photophobia originating in cone-driven retinal pathways. /Brain/,
-  139(7), 1971-1986.
-- Ohno, Y. (2014). Practical use and calculation of CCT and Duv.
-  /LEUKOS/, 10(1), 47-55.
-- Shannon, C. E. (1948). A mathematical theory of communication. /Bell
-  System Technical Journal/, 27(3), 379-423.
-- Stiles, W. S., & Crawford, B. H. (1933). The luminous efficiency of rays
-  entering the eye pupil at different points. /Proceedings of the Royal
-  Society B/, 112(778), 428-450.
-- Stockman, A., & Sharpe, L. T. (2000). The spectral sensitivities of the
-  middle- and long-wavelength-sensitive cones derived from measurements
-  in observers of known genotype. /Vision Research/, 40(13), 1711-1737.
-- Stone, M., Szafir, D. A., & Setlur, V. (2014). An engineering model
-  for color difference as a function of size. /22nd Color and Imaging
-  Conference/, IS&T.
-- Szafir, D. A. (2018). Modeling color difference for visualization
-  design. /IEEE Transactions on Visualization and Computer Graphics/,
-  24(1), 392ff. doi:10.1109/TVCG.2017.2744359
-- Watson, A. B., & Yellott, J. I. (2012). A unified formula for
-  light-adapted pupil size. /Journal of Vision/, 12(10):12.
-- W3C (2018). /Web Content Accessibility Guidelines (WCAG) 2.1/.
-- W3C. /CSS Color Module Level 4/.
+The papers and standards behind the colour rules and the tests are
+listed in [[file:REFERENCES.org][REFERENCES.org]].

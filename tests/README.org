@@ -1,0 +1,107 @@
+#+TITLE: au-themes: tests
+#+AUTHOR: Szymon Wilczek
+#+LANGUAGE: en
+#+OPTIONS: toc:nil num:nil
+
+Every theme is checked by the modules in this directory before it is
+released.  Back to the [[file:../README.org][README]].
+
+* Running the tests
+
+Run all modules on all themes from the repository root:
+
+#+begin_src sh
+  emacs -Q --batch -L . -l tests/run-all-tests.el
+#+end_src
+
+Set =AU_TEST_THEMES= to check only some themes, for example
+=AU_TEST_THEMES=au-salina-night=. The run fails if any theme
+fails any module.
+
+The tests look for ef-themes and modus-themes in your =elpa=
+directory. Without them installed, put both in a separate directory
+first:
+
+#+begin_src sh
+  export EMACS_ELPA_DIR=/tmp/au-elpa
+  emacs -Q --batch -l tests/install-deps.el
+  emacs -Q --batch -L . -l tests/run-all-tests.el
+#+end_src
+
+* How a run works
+
+1. [[file:run-all-tests.el][run-all-tests.el]] finds every =au-*-theme.el= in the repository,
+   or takes the themes named in =AU_TEST_THEMES=.
+2. For each theme it reads the palette through
+   [[file:test-palette-extractor.el][test-palette-extractor.el]], which resolves every named colour to a
+   hex value and holds the colour maths the modules share: sRGB,
+   CIELAB, CIEDE2000, Oklab and Oklch, and APCA.
+3. It then runs each module listed in =rf-test-modules=.  A module is
+   a file =test-<name>.el= with a function =test-<name>-run=.  It
+   measures the palette roles with its model, prints a =[PASS]= or
+   =[FAIL]= line for each check, and returns a pass, a fail, or a skip
+   when it does not apply to the theme (a module for one family only,
+   for example).  Some checks only print a =NOTE= and never fail.
+4. At the end it prints a summary of passed, failed and skipped runs.
+   The run exits with status 1 if any module fails for any theme.
+
+Some gates, such as the all-pairs separation of syntax roles, comment
+recession and colour difference at glyph size, hold only for the
+families in =au-test-strict-families= (in
+[[file:test-palette-extractor.el][test-palette-extractor.el]]).  Families released before these gates
+join the list once they have been retuned.
+
+* Modules
+
+Each module measures the palette with a published model and compares
+the result with a limit. Most of the limits are ours: we chose them
+for these palettes, and they are not clinical thresholds. The table
+says which parts come from a source and which are our own choice.
+
+| Module                              | Model from                                         | Limit                                                                |
+|-------------------------------------+----------------------------------------------------+----------------------------------------------------------------------|
+| =theme-integrity=                     | -                                                  | file layout and palette structure                                    |
+| =apca-contrast=                       | APCA 0.0.98G-4g                                    | ours                                                                 |
+| =wcag21-ratios=                       | WCAG 2.1                                           | 4.5:1 for body text (WCAG); others ours                              |
+| =astigmatism-ciliary=                 | Charman & Heron 1988                               | ours                                                                 |
+| =pupil-aberrations=                   | Watson & Yellott 2012, Liang & Williams 1997       | ours                                                                 |
+| =straylight-glare=                    | CIE 146:2002                                       | ours                                                                 |
+| =lca-chromatic=                       | Thibos et al. 1992                                 | ours                                                                 |
+| =chromostereopsis=                    | Thibos et al. 1992                                 | ours                                                                 |
+| =foveal-scotopic-macula=              | Curcio et al. 1991, Stockman & Sharpe 2000         | ours                                                                 |
+| =cvd-colorblindness=                  | Brettel et al. 1997                                | ours                                                                 |
+| =mesopic-purkinje-shift=              | CIE 191:2010                                       | ours                                                                 |
+| =toric-blur-astigmatism=              | Campbell & Robson 1968                             | ours                                                                 |
+| =glare-veiling-luminance=             | CIE 146:2002                                       | ours                                                                 |
+| =oklab-perceptual=                    | Ottosson 2020                                      | ours                                                                 |
+| =helmholtz-kohlrausch=                | Fairchild & Pirrotta 1991                          | ours                                                                 |
+| =spectral-coherence=                  | Endler 1993                                        | ours, Whispergrove only                                              |
+| =stellar-locus=                       | CIE 015:2018, Ohno 2014, Osterbrock & Ferland 2006 | ours, Perseida only                                                  |
+| =lcd-black-bleed=                     | IEC 61966-2-1, APCA                                | ours                                                                 |
+| =oled-irradiance=                     | IEC 61966-2-1, APCA                                | ours                                                                 |
+| =spatial-frequency-csf=               | Campbell & Robson 1968, Legge et al. 1985          | ours                                                                 |
+| =determinism-1to1=                    | CIEDE2000, Oklab, CSS Color 4                      | ours                                                                 |
+| =wet-surface-physics=                 | CIELAB (CIE 015:2018)                              | ours                                                                 |
+| =photophobia-glare=                   | CIE S 026:2018                                     | 10 lx melanopic EDI for dark themes (Brown et al. 2022); others ours |
+| =pattern-glare-cortical=              | Wilkins et al. 1984                                | ours                                                                 |
+| =macular-hazard-blue-light=           | ICNIRP 2013, IEC 62471                             | 100 W * m^{-2} * sr^{-1} (ICNIRP); others ours                       |
+| =pupil-spasm-adaptation=              | Watson & Yellott 2012                              | ours                                                                 |
+| =astigmatism-meridional-blur=         | -                                                  | ours                                                                 |
+| =asd-semantic-entropy=                | Shannon 1948, Ottosson 2020                        | ours                                                                 |
+| =photophobia-triplet-contrast=        | APCA                                               | ours                                                                 |
+| =trigeminal-nerve-excitation=         | Noseda et al. 2010, 2016                           | ours                                                                 |
+| =scotopic-pupillary-aperture=         | Stiles & Crawford 1933, CIE 191:2010               | ours                                                                 |
+| =magnocellular-parvocellular-balance= | Livingstone & Hubel 1988                           | ours                                                                 |
+| =tonic-accommodation-dark-focus=      | Leibowitz & Owens 1978                             | ours                                                                 |
+| =crowding-effect-foveal=              | Kooi et al. 1994, Levi 2008                        | ours                                                                 |
+| =glyph-size-color-difference=         | Szafir 2018, Stone et al. 2014                     | ours, strict families only                                           |
+| =isoluminance-jitter=                 | -                                                  | ours                                                                 |
+| =afterimage-persistence=              | Loomis 1978, Kelly 1979                            | ours                                                                 |
+| =cross-family-distinctiveness=        | CIEDE2000                                          | ours                                                                 |
+| =ui-text-contrast=                    | APCA                                               | ours                                                                 |
+| =diff-refine-separation=              | CIEDE2000                                          | ours                                                                 |
+
+Each module's commentary gives the details: what it measures, which
+source it uses, and which numbers are ours.
+
+The sources are listed in [[file:../REFERENCES.org][REFERENCES.org]].
