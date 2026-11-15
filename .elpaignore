@@ -1,0 +1,6 @@
+tests/
+screenshots/
+.github/
+.*
+*.md
+REFERENCES.org

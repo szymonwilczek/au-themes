@@ -4,7 +4,7 @@
 
 ;; Author: Szymon Wilczek <swilczek.lx@gmail.com>
 ;; URL: https://github.com/szymonwilczek/au-themes
-;; Version: 0.3.0
+;; Version: 0.3.1
 ;; Package-Requires: ((emacs "29.1") (ef-themes "2.0.0") (modus-themes "5.2.0"))
 ;; Keywords: faces, themes, accessibility, autism, neurodivergence
 
@@ -58,7 +58,6 @@
   :group 'faces
   :prefix "au-themes-")
 
-;;;###autoload
 (defvar au-themes--dir
   (file-name-directory
    (or load-file-name
@@ -69,10 +68,10 @@
   "Directory where `au-themes' library resides.")
 
 ;;;###autoload
-(when (and (boundp 'custom-theme-load-path)
-           au-themes--dir)
-  (add-to-list 'custom-theme-load-path
-               (file-name-as-directory (expand-file-name au-themes--dir))))
+(when load-file-name
+  (let ((dir (file-name-directory load-file-name)))
+    (unless (file-equal-p dir (expand-file-name "themes/" data-directory))
+      (add-to-list 'custom-theme-load-path dir))))
 
 (defun au-themes--get-theme-dirs ()
   "Return list of directory paths where au-themes may reside."
