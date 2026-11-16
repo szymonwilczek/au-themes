@@ -30,7 +30,8 @@
 
 ;;; Code:
 
-(require 'ef-themes)
+(require 'modus-themes)
+(require 'au-themes)
 
 (defconst au-whispergrove-day-palette-partial
   '(;; Canvas & Chrome
@@ -164,12 +165,12 @@
    au-whispergrove-day-palette-partial
    nil
    nil
-   (append au-whispergrove-day-palette-mappings-partial ef-themes-palette-common)))
+   (append au-whispergrove-day-palette-mappings-partial au-themes-palette-common)))
 
 ;;;###theme-autoload
 (modus-themes-theme
  'au-whispergrove-day
- 'ef-themes
+ 'au-themes
  "Low-glare daylight theme with muted green and neutral tones."
  'light
  'au-whispergrove-day-palette

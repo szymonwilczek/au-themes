@@ -31,7 +31,8 @@
 
 ;;; Code:
 
-(require 'ef-themes)
+(require 'modus-themes)
+(require 'au-themes)
 
 (defconst au-salina-night-palette-partial
   '(;; Canvas & Chrome
@@ -165,12 +166,12 @@
    au-salina-night-palette-partial
    nil
    nil
-   (append au-salina-night-palette-mappings-partial ef-themes-palette-common)))
+   (append au-salina-night-palette-mappings-partial au-themes-palette-common)))
 
 ;;;###theme-autoload
 (modus-themes-theme
  'au-salina-night
- 'ef-themes
+ 'au-themes
  "Nocturnal coastal theme with deep oceanic and coral tones."
  'dark
  'au-salina-night-palette

@@ -74,12 +74,12 @@ in code, Magit, Dired and Org on the blog.
 ** Requirements
 
 - Emacs 29.1 or newer
-- [[https://github.com/protesilaos/ef-themes][ef-themes]] 2.0.0 or newer
 - [[https://github.com/protesilaos/modus-themes][modus-themes]] 5.2.0 or newer
 
-The Emacs themes are built on top of modus-themes and ef-themes by
-[[https://protesilaos.com][Protesilaos Stavrou]]. His work gives us face coverage for hundreds of
-packages and a solid base to build palettes on. Thank you, Prot.
+The Emacs themes are built on top of modus-themes by [[https://protesilaos.com][Protesilaos Stavrou]],
+and their shared semantic mappings come from his ef-themes. His work
+gives us face coverage for hundreds of packages and a solid base to
+build palettes on. Thank you, Prot.
 
 ** Installation
 
@@ -196,8 +196,9 @@ GPL-3.0-or-later. See [[file:LICENSE][LICENSE]].
 
 * Credits
 
-- Protesilaos Stavrou, author of [[https://github.com/protesilaos/modus-themes][modus-themes]] and
-  [[https://github.com/protesilaos/ef-themes][ef-themes]], which the Emacs themes are built on.
+- Protesilaos Stavrou, author of [[https://github.com/protesilaos/modus-themes][modus-themes]], which the Emacs
+  themes are built on, and of [[https://github.com/protesilaos/ef-themes][ef-themes]], whose semantic mappings
+  they share.
 
 * References
 

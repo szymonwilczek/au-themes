@@ -31,7 +31,8 @@
 
 ;;; Code:
 
-(require 'ef-themes)
+(require 'modus-themes)
+(require 'au-themes)
 
 (defconst au-salina-day-palette-partial
   '(;; Canvas & Chrome
@@ -165,12 +166,12 @@
    au-salina-day-palette-partial
    nil
    nil
-   (append au-salina-day-palette-mappings-partial ef-themes-palette-common)))
+   (append au-salina-day-palette-mappings-partial au-themes-palette-common)))
 
 ;;;###theme-autoload
 (modus-themes-theme
  'au-salina-day
- 'ef-themes
+ 'au-themes
  "Coastal daylight theme with sea-salt and dune tones."
  'light
  'au-salina-day-palette

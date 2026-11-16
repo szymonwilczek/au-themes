@@ -31,7 +31,8 @@
 
 ;;; Code:
 
-(require 'ef-themes)
+(require 'modus-themes)
+(require 'au-themes)
 
 (defconst au-herbarium-night-palette-partial
   '(;; Canvas & Chrome
@@ -165,12 +166,12 @@
    au-herbarium-night-palette-partial
    nil
    nil
-   (append au-herbarium-night-palette-mappings-partial ef-themes-palette-common)))
+   (append au-herbarium-night-palette-mappings-partial au-themes-palette-common)))
 
 ;;;###theme-autoload
 (modus-themes-theme
  'au-herbarium-night
- 'ef-themes
+ 'au-themes
  "Nocturnal herbal theme with dried botanicals and pressed leaves."
  'dark
  'au-herbarium-night-palette

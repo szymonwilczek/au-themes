@@ -31,7 +31,8 @@
 
 ;;; Code:
 
-(require 'ef-themes)
+(require 'modus-themes)
+(require 'au-themes)
 
 (defconst au-mysterium-palette-partial
   '(;; Canvas & Chrome
@@ -167,12 +168,12 @@
    au-mysterium-palette-partial
    nil
    nil
-   (append au-mysterium-palette-mappings-partial ef-themes-palette-common)))
+   (append au-mysterium-palette-mappings-partial au-themes-palette-common)))
 
 ;;;###theme-autoload
 (modus-themes-theme
  'au-mysterium
- 'ef-themes
+ 'au-themes
  "Dark Halloween theme of an old painted van."
  'dark
  'au-mysterium-palette

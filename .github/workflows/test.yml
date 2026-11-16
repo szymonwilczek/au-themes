@@ -19,7 +19,7 @@ jobs:
       - uses: purcell/setup-emacs@master
         with:
           version: ${{ matrix.emacs-version }}
-      - name: Install ef-themes and modus-themes
+      - name: Install modus-themes
         run: emacs -Q --batch -l tests/install-deps.el
       - name: Run the test suite
         run: emacs -Q --batch -L . -l tests/run-all-tests.el

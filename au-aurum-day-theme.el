@@ -29,7 +29,8 @@
 
 ;;; Code:
 
-(require 'ef-themes)
+(require 'modus-themes)
+(require 'au-themes)
 
 (defconst au-aurum-day-palette-partial
   '(;; Canvas & Chrome
@@ -163,12 +164,12 @@
    au-aurum-day-palette-partial
    nil
    nil
-   (append au-aurum-day-palette-mappings-partial ef-themes-palette-common)))
+   (append au-aurum-day-palette-mappings-partial au-themes-palette-common)))
 
 ;;;###theme-autoload
 (modus-themes-theme
  'au-aurum-day
- 'ef-themes
+ 'au-themes
  "Warm daylight theme with earth tones, calibrated for photophobia."
  'light
  'au-aurum-day-palette

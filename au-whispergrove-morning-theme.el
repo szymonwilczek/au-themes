@@ -30,7 +30,8 @@
 
 ;;; Code:
 
-(require 'ef-themes)
+(require 'modus-themes)
+(require 'au-themes)
 
 (defconst au-whispergrove-morning-palette-partial
   '(;; Canvas & Chrome
@@ -164,12 +165,12 @@
    au-whispergrove-morning-palette-partial
    nil
    nil
-   (append au-whispergrove-morning-palette-mappings-partial ef-themes-palette-common)))
+   (append au-whispergrove-morning-palette-mappings-partial au-themes-palette-common)))
 
 ;;;###theme-autoload
 (modus-themes-theme
  'au-whispergrove-morning
- 'ef-themes
+ 'au-themes
  "Subdued daylight theme with reduced canvas luminance for sensitive eyes."
  'light
  'au-whispergrove-morning-palette

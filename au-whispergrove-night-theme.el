@@ -30,7 +30,8 @@
 
 ;;; Code:
 
-(require 'ef-themes)
+(require 'modus-themes)
+(require 'au-themes)
 
 (defconst au-whispergrove-night-palette-partial
   '(;; Canvas & Chrome
@@ -164,12 +165,12 @@
    au-whispergrove-night-palette-partial
    nil
    nil
-   (append au-whispergrove-night-palette-mappings-partial ef-themes-palette-common)))
+   (append au-whispergrove-night-palette-mappings-partial au-themes-palette-common)))
 
 ;;;###theme-autoload
 (modus-themes-theme
  'au-whispergrove-night
- 'ef-themes
+ 'au-themes
  "Deep nocturnal theme calibrated for low photic irradiation and OLED/LCD displays."
  'dark
  'au-whispergrove-night-palette

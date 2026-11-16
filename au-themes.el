@@ -5,7 +5,7 @@
 ;; Author: Szymon Wilczek <swilczek.lx@gmail.com>
 ;; URL: https://github.com/szymonwilczek/au-themes
 ;; Version: 0.3.2
-;; Package-Requires: ((emacs "29.1") (ef-themes "2.0.0") (modus-themes "5.2.0"))
+;; Package-Requires: ((emacs "29.1") (modus-themes "5.2.0"))
 ;; Keywords: faces, themes, accessibility, autism, neurodivergence
 
 ;; This file is not part of GNU Emacs.
@@ -58,6 +58,87 @@
   "Sensory-safe, scientifically gated themes for autism and neurodivergence."
   :group 'faces
   :prefix "au-themes-")
+
+(defconst au-themes-palette-common
+  '((fringe unspecified)
+    (property variable)
+    (fg-region unspecified)
+
+    (bg-diff-context bg-dim)
+
+    (bg-tab-bar bg-alt)
+    (bg-tab-current bg-main)
+    (bg-tab-other bg-active)
+
+    (fg-link-symbolic fg-alt)
+    (underline-link border)
+    (underline-link-visited border)
+    (underline-link-symbolic border)
+
+    (border-mode-line-active border)
+    (bg-mode-line-inactive bg-alt)
+    (fg-mode-line-inactive fg-dim)
+    (border-mode-line-inactive border)
+
+    (bg-line-number-active unspecified)
+    (fg-line-number-active accent-0)
+    (bg-line-number-inactive unspecified)
+
+    (bg-prominent-err bg-err)
+    (bg-prominent-warning bg-warning)
+    (bg-prominent-note bg-info)
+    (fg-prominent-err err)
+    (fg-prominent-warning warning)
+    (fg-prominent-note info)
+
+    (bg-added-fringe bg-info)
+    (bg-changed-fringe bg-warning)
+    (bg-removed-fringe bg-err)
+
+    (bg-space unspecified)
+    (fg-space border)
+
+    (bg-active-argument bg-warning)
+    (fg-active-argument warning)
+    (bg-active-value bg-info)
+    (fg-active-value info)
+
+    (bg-mark-delete bg-err)
+    (fg-mark-delete err)
+    (bg-mark-select bg-info)
+    (fg-mark-select info)
+    (bg-mark-other bg-warning)
+    (fg-mark-other warning)
+
+    (fg-search-current fg-main)
+    (fg-search-lazy fg-main)
+    (fg-search-static fg-main)
+    (fg-search-replace fg-main)
+
+    (fg-search-rx-group-0 fg-main)
+    (fg-search-rx-group-1 fg-main)
+    (fg-search-rx-group-2 fg-main)
+    (fg-search-rx-group-3 fg-main)
+
+    (fg-completion-match-0 accent-0)
+    (fg-completion-match-1 accent-1)
+    (fg-completion-match-2 accent-2)
+    (fg-completion-match-3 accent-3)
+
+    (fg-heading-0 rainbow-0)
+    (fg-heading-1 rainbow-1)
+    (fg-heading-2 rainbow-2)
+    (fg-heading-3 rainbow-3)
+    (fg-heading-4 rainbow-4)
+    (fg-heading-5 rainbow-5)
+    (fg-heading-6 rainbow-6)
+    (fg-heading-7 rainbow-7)
+    (fg-heading-8 rainbow-8))
+  "Semantic palette mappings shared by all au-themes.
+Each theme appends these to its own mappings before passing them to
+`modus-themes-generate-palette'.  They are the mappings of
+`ef-themes-palette-common' from ef-themes 2.2.1 by Protesilaos
+Stavrou, kept here so that the themes need only modus-themes.")
 
 (defvar au-themes--dir
   (file-name-directory

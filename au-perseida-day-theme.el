@@ -37,7 +37,8 @@
 
 ;;; Code:
 
-(require 'ef-themes)
+(require 'modus-themes)
+(require 'au-themes)
 
 (defconst au-perseida-day-palette-partial
   '(;; Canvas & Chrome
@@ -177,12 +178,12 @@
    au-perseida-day-palette-partial
    nil
    nil
-   (append au-perseida-day-palette-mappings-partial ef-themes-palette-common)))
+   (append au-perseida-day-palette-mappings-partial au-themes-palette-common)))
 
 ;;;###theme-autoload
 (modus-themes-theme
  'au-perseida-day
- 'ef-themes
+ 'au-themes
  "Pearl light theme of the dawn after a meteor night, with star-coloured syntax."
  'light
  'au-perseida-day-palette

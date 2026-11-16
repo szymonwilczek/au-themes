@@ -38,7 +38,8 @@
 
 ;;; Code:
 
-(require 'ef-themes)
+(require 'modus-themes)
+(require 'au-themes)
 
 (defconst au-pluvia-night-palette-partial
   '(;; Canvas & Chrome
@@ -174,12 +175,12 @@
    au-pluvia-night-palette-partial
    nil
    nil
-   (append au-pluvia-night-palette-mappings-partial ef-themes-palette-common)))
+   (append au-pluvia-night-palette-mappings-partial au-themes-palette-common)))
 
 ;;;###theme-autoload
 (modus-themes-theme
  'au-pluvia-night
- 'ef-themes
+ 'au-themes
  "Dark theme of a rainy night at home."
  'dark
  'au-pluvia-night-palette

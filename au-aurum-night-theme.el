@@ -30,7 +30,8 @@
 
 ;;; Code:
 
-(require 'ef-themes)
+(require 'modus-themes)
+(require 'au-themes)
 
 (defconst au-aurum-night-palette-partial
   '(;; Canvas & Chrome
@@ -164,12 +165,12 @@
    au-aurum-night-palette-partial
    nil
    nil
-   (append au-aurum-night-palette-mappings-partial ef-themes-palette-common)))
+   (append au-aurum-night-palette-mappings-partial au-themes-palette-common)))
 
 ;;;###theme-autoload
 (modus-themes-theme
  'au-aurum-night
- 'ef-themes
+ 'au-themes
  "Warm dark theme with a low blue-light share, calibrated for nocturnal photophobia."
  'dark
  'au-aurum-night-palette

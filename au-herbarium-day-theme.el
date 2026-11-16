@@ -31,7 +31,8 @@
 
 ;;; Code:
 
-(require 'ef-themes)
+(require 'modus-themes)
+(require 'au-themes)
 
 (defconst au-herbarium-day-palette-partial
   '(;; Canvas & Chrome
@@ -165,12 +166,12 @@
    au-herbarium-day-palette-partial
    nil
    nil
-   (append au-herbarium-day-palette-mappings-partial ef-themes-palette-common)))
+   (append au-herbarium-day-palette-mappings-partial au-themes-palette-common)))
 
 ;;;###theme-autoload
 (modus-themes-theme
  'au-herbarium-day
- 'ef-themes
+ 'au-themes
  "Herbal daylight theme with dried botanicals and pressed leaves."
  'light
  'au-herbarium-day-palette

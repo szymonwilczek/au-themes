@@ -40,7 +40,7 @@
                                  (expand-file-name "~/.emacs.d/elpa")))))
   (dolist (dir possible-dirs)
     (when (and dir (file-directory-p dir))
-      (dolist (pkg '("modus-themes" "ef-themes"))
+      (dolist (pkg '("modus-themes"))
         (dolist (match (file-expand-wildcards (expand-file-name (concat pkg "*") dir)))
           (when (file-directory-p match)
             (add-to-list 'load-path match)))))))
@@ -97,9 +97,9 @@ uses; `test-theme-integrity' checks that it matches the palette."
 (defun au-test-theme-palette-alist (theme)
   "Return the unresolved palette alist of THEME, loading the theme file if needed.
 This is the `<theme>-palette' that `modus-themes-generate-palette' builds
-from the theme's colours, its semantic mappings and the shared ef-themes
-mappings, i.e. the palette the theme's faces are rendered from (without
-user overrides)."
+from the theme's colours, its semantic mappings and the shared
+`au-themes-palette-common' mappings, i.e. the palette the theme's
+faces are rendered from (without user overrides)."
   (let* ((canonical (let ((name (symbol-name theme)))
                       (if (string-prefix-p "au-" name)
                           name

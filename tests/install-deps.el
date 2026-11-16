@@ -11,9 +11,9 @@
 
 ;;; Commentary:
 ;;
-;; Installs ef-themes and modus-themes from GNU ELPA into the directory
-;; named by EMACS_ELPA_DIR, where tests/test-palette-extractor.el looks
-;; for them.  Used by CI on a clean machine:
+;; Installs modus-themes from GNU ELPA into the directory named by
+;; EMACS_ELPA_DIR, where tests/test-palette-extractor.el looks for it.
+;; Used by CI on a clean machine:
 ;;
 ;;   EMACS_ELPA_DIR=/tmp/elpa emacs -Q --batch -l tests/install-deps.el
 
@@ -31,7 +31,7 @@
 (package-initialize)
 (package-refresh-contents)
 
-(dolist (pkg '(modus-themes ef-themes))
+(dolist (pkg '(modus-themes))
   (package-install pkg))
 
 (message "Installed: %s"
@@ -40,6 +40,6 @@
                               (package-version-join
                                (package-desc-version
                                 (cadr (assq pkg package-alist))))))
-                    '(modus-themes ef-themes) ", "))
+                    '(modus-themes) ", "))
 
 ;;; install-deps.el ends here

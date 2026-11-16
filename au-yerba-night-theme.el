@@ -37,7 +37,8 @@
 
 ;;; Code:
 
-(require 'ef-themes)
+(require 'modus-themes)
+(require 'au-themes)
 
 (defconst au-yerba-night-palette-partial
   '(;; Canvas & Chrome
@@ -172,12 +173,12 @@
    au-yerba-night-palette-partial
    nil
    nil
-   (append au-yerba-night-palette-mappings-partial ef-themes-palette-common)))
+   (append au-yerba-night-palette-mappings-partial au-themes-palette-common)))
 
 ;;;###theme-autoload
 (modus-themes-theme
  'au-yerba-night
- 'ef-themes
+ 'au-themes
  "Dark theme of a yerba mate gourd at night."
  'dark
  'au-yerba-night-palette

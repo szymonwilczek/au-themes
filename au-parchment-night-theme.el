@@ -30,7 +30,8 @@
 
 ;;; Code:
 
-(require 'ef-themes)
+(require 'modus-themes)
+(require 'au-themes)
 
 (defconst au-parchment-night-palette-partial
   '(;; Canvas & Chrome
@@ -164,7 +165,7 @@
    au-parchment-night-palette-partial
    nil
    nil
-   (append au-parchment-night-palette-mappings-partial ef-themes-palette-common)))
+   (append au-parchment-night-palette-mappings-partial au-themes-palette-common)))
 
 (defconst au-parchment-night-custom-faces
   '(`(font-lock-keyword-face ((,c :slant italic :foreground ,keyword)))
@@ -176,7 +177,7 @@
 ;;;###theme-autoload
 (modus-themes-theme
  'au-parchment-night
- 'ef-themes
+ 'au-themes
  "Low-chroma nocturnal theme with typographic italics and minimal color variance."
  'dark
  'au-parchment-night-palette

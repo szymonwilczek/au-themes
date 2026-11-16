@@ -38,7 +38,8 @@
 
 ;;; Code:
 
-(require 'ef-themes)
+(require 'modus-themes)
+(require 'au-themes)
 
 (defconst au-perseida-night-palette-partial
   '(;; Canvas & Chrome
@@ -178,12 +179,12 @@
    au-perseida-night-palette-partial
    nil
    nil
-   (append au-perseida-night-palette-mappings-partial ef-themes-palette-common)))
+   (append au-perseida-night-palette-mappings-partial au-themes-palette-common)))
 
 ;;;###theme-autoload
 (modus-themes-theme
  'au-perseida-night
- 'ef-themes
+ 'au-themes
  "Optically black dark theme of an August meteor night, with star-coloured syntax."
  'dark
  'au-perseida-night-palette

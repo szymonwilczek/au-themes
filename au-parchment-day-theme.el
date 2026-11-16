@@ -30,7 +30,8 @@
 
 ;;; Code:
 
-(require 'ef-themes)
+(require 'modus-themes)
+(require 'au-themes)
 
 (defconst au-parchment-day-palette-partial
   '(;; Canvas & Chrome
@@ -164,7 +165,7 @@
    au-parchment-day-palette-partial
    nil
    nil
-   (append au-parchment-day-palette-mappings-partial ef-themes-palette-common)))
+   (append au-parchment-day-palette-mappings-partial au-themes-palette-common)))
 
 (defconst au-parchment-day-custom-faces
   '(`(font-lock-keyword-face ((,c :slant italic :foreground ,keyword)))
@@ -176,7 +177,7 @@
 ;;;###theme-autoload
 (modus-themes-theme
  'au-parchment-day
- 'ef-themes
+ 'au-themes
  "Low-chroma daylight theme with typographic italics and minimal color variance."
  'light
  'au-parchment-day-palette
