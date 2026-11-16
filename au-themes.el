@@ -93,33 +93,16 @@
                 (modus-themes-declare name 'au-themes desc mode palette nil nil)
                 (modus-themes-register name)))))))))
 
-(defun au-themes--get-theme-dirs ()
-  "Return list of directory paths where au-themes may reside."
-  (let ((dirs nil))
-    (when (and au-themes--dir (file-directory-p au-themes--dir))
-      (push (file-name-as-directory (expand-file-name au-themes--dir)) dirs))
-    (dolist (d custom-theme-load-path)
-      (when (and (stringp d) (file-directory-p d))
-        (push (file-name-as-directory (expand-file-name d)) dirs)))
-    (dolist (p load-path)
-      (when (and (stringp p)
-                 (file-directory-p p)
-                 (directory-files p nil "\\`au-[-a-z0-9]+-theme\\.el\\'"))
-        (push (file-name-as-directory (expand-file-name p)) dirs)))
-    (delete-dups (nreverse dirs))))
-
 (defun au-themes--discover-themes ()
-  "Dynamically discover all available au-themes across load paths.
-Finds all theme files matching `au-*-theme.el'"
+  "Return the sorted list of au-themes found on disk.
+A theme is a file named `au-NAME-theme.el' in `au-themes--dir', in
+`custom-theme-load-path' or in `load-path'."
   (let ((themes nil))
-    (dolist (dir (au-themes--get-theme-dirs))
-      (when (file-directory-p dir)
+    (dolist (dir (cons au-themes--dir (append custom-theme-load-path load-path)))
+      (when (and (stringp dir) (file-directory-p dir))
         (dolist (file (directory-files dir nil "\\`au-[-a-z0-9]+-theme\\.el\\'"))
-          (when (string-match "\\`\\(au-[-a-z0-9]+\\)-theme\\.el\\'" file)
-            (let ((theme-sym (intern (match-string 1 file))))
-              (push theme-sym themes))))))
-    (sort (delete-dups themes)
-          (lambda (a b) (string< (symbol-name a) (symbol-name b))))))
+          (push (intern (string-remove-suffix "-theme.el" file)) themes))))
+    (sort (delete-dups themes) #'string<)))
 
 (defcustom au-themes-collection nil
   "List of themes included in the `au-themes' collection.
