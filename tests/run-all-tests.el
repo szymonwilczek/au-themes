@@ -77,7 +77,8 @@
     test-afterimage-persistence
     test-cross-family-distinctiveness
     test-ui-text-contrast
-    test-diff-refine-separation))
+    test-diff-refine-separation
+    test-select-restore))
 
 (defvar au-test-themes
   (let ((env (or (getenv "AU_TEST_THEMES") (getenv "RF_TEST_THEMES"))))

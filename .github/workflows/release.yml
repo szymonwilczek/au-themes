@@ -1,0 +1,42 @@
+name: release
+
+on:
+  push:
+    tags:
+      - 'v*'
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Build changelog from commits between tags
+        id: changelog
+        run: |
+          PREV=$(git describe --tags --abbrev=0 "${GITHUB_REF_NAME}^" 2>/dev/null || true)
+          if [ -n "$PREV" ]; then
+            RANGE="${PREV}..${GITHUB_REF_NAME}"
+            HEADER="Changes since ${PREV}:"
+          else
+            RANGE="${GITHUB_REF_NAME}"
+            HEADER="Initial release:"
+          fi
+          {
+            echo "body<<CHANGELOG_EOF"
+            echo "$HEADER"
+            echo ""
+            git log --pretty=format:"- %s" --reverse "$RANGE"
+            echo ""
+            echo "CHANGELOG_EOF"
+          } >> "$GITHUB_OUTPUT"
+
+      - name: Create GitHub release
+        uses: softprops/action-gh-release@v2
+        with:
+          body: ${{ steps.changelog.outputs.body }}
