@@ -126,8 +126,7 @@ Finds all theme files matching `au-*-theme.el'"
 When nil (the default), themes are dynamically discovered from
 `custom-theme-load-path' and library directories."
   :type '(choice (const :tag "Dynamic autodiscovery" nil)
-                 (repeat :tag "Explicit theme list" symbol))
-  :group 'au-themes)
+                 (repeat :tag "Explicit theme list" symbol)))
 
 (defun au-themes--hex-to-rgb (hex)
   "Convert HEX string #rrggbb to list of normalized (R G B) [0.0..1.0]."
@@ -191,13 +190,11 @@ POLARITY should be `light' or `dark'."
 
 (defcustom au-themes-post-load-hook nil
   "Hook run after an au-theme is loaded and enabled."
-  :type 'hook
-  :group 'au-themes)
+  :type 'hook)
 
 (defcustom au-themes-toggle-themes '(au-salina-day au-salina-night)
   "Default pair of themes to toggle between when no history exists."
-  :type '(list symbol symbol)
-  :group 'au-themes)
+  :type '(list symbol symbol))
 
 (defvar au-themes--last-light-theme nil
   "Last enabled light theme in au-themes.")
