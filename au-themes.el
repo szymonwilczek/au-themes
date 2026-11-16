@@ -211,21 +211,20 @@ to `au-themes-toggle-themes'."
   (interactive)
   (let* ((current (au-themes-get-current-theme))
          (curr-polarity (and current (au-themes--theme-polarity current)))
-         (target (cond
-                  ((eq curr-polarity 'light)
-                   (or au-themes--last-dark-theme
-                       (cadr au-themes-toggle-themes)
-                       (car (au-themes-get-themes 'dark))))
-                  ((eq curr-polarity 'dark)
-                   (or au-themes--last-light-theme
-                       (car au-themes-toggle-themes)
-                       (car (au-themes-get-themes 'light))))
-                  (t
-                   (or (car au-themes-toggle-themes)
-                       (car (au-themes-get-themes 'dark)))))))
-    (if target
-        (au-themes-load-theme target)
-      (user-error "No valid au-theme available to toggle"))))
+         (target (or (cond
+                      ((eq curr-polarity 'light)
+                       (or au-themes--last-dark-theme
+                           (cadr au-themes-toggle-themes)
+                           (car (au-themes-get-themes 'dark))))
+                      ((eq curr-polarity 'dark)
+                       (or au-themes--last-light-theme
+                           (car au-themes-toggle-themes)
+                           (car (au-themes-get-themes 'light))))
+                      (t
+                       (or (car au-themes-toggle-themes)
+                           (car (au-themes-get-themes 'dark)))))
+                     (user-error "No valid au-theme available to toggle"))))
+    (au-themes-load-theme target)))
 
 (defvar au-themes--picker-initial-theme nil
   "Theme that was active when the picker was initiated.")
