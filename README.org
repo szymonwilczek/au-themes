@@ -111,6 +111,10 @@ On Emacs 30 or newer you can use =use-package= instead:
 | =au-themes-select-dark=  | pick from dark themes only               |
 | =au-themes-toggle=       | switch between last light and dark theme |
 
+With [[https://github.com/minad/consult][consult]] installed, the preview goes through =consult-theme=.
+Without it, a theme is previewed once its full name is in the
+minibuffer. =C-g= always brings back the theme you had before.
+
 =au-themes-toggle= switches between =au-salina-day= and
 =au-salina-night= until you pick other themes. Change the default pair
 in =au-themes-toggle-themes=.
