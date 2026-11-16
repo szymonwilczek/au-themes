@@ -22,19 +22,22 @@
 
 ;;; Commentary:
 ;;
-;; Validate that au-themes-select restores the previous theme when the
-;; user aborts, and that every theme is declared to modus-themes.
+;; Validate that au-themes-select previews and restores themes,
+;; and that every theme is declared to modus-themes.
 ;;
-;; Test 1 : Consult state callback: simulate the 'preview → 'exit
-;; sequence (C-g) and verify that the theme applied before the picker
-;; opened is the one that ends up enabled.
+;; Test 1 : Consult path: `au-themes--select' limits `consult-theme'
+;; to the au-themes and records only a selected au-theme as loaded.
+;; Preview and restore on abort are consult's own.
 ;;
-;; Test 2 : completing-read abort: call `au-themes--prompt-with-preview'
-;; through the completing-read path (no consult), signal quit, and
-;; verify the saved theme is restored via the unwind-protect.
+;; Test 2 : completing-read abort: call `au-themes--read-theme'
+;; (no consult), signal quit, and verify the theme enabled before
+;; the prompt (here a modus theme) is restored via the unwind-protect.
 ;;
-;; Test 3 : Modus registration: after loading au-themes inside a
-;; with-eval-after-load for modus-themes, verify every discovered
+;; Test 3 : Plain preview: an input naming a theme shows it; once the
+;; input no longer names a theme, the previous theme is shown again.
+;;
+;; Test 4 : Modus registration: after loading au-themes inside
+;; a with-eval-after-load for modus-themes, verify every discovered
 ;; au-theme has been declared and registered with modus-themes.
 
 ;;; Code:
@@ -42,77 +45,61 @@
 (require 'test-palette-extractor)
 
 ;;; Test 1
-(defun test-select-restore--consult-abort ()
-  "Simulate the consult state callback lifecycle on C-g.
-Build the same closure that `au-themes--prompt-with-preview' builds
-for consult, drive it through preview → exit (no return), and check
-that the saved theme is back."
+(cl-defun test-select-restore--consult ()
+  "Check that the consult path hands THEMES to `consult-theme'.
+Stub `consult-theme' so that it either enables a theme (a selection)
+or leaves the old one enabled (an abort, which consult restores
+itself).  Only a selected au-theme may be recorded as loaded."
   (let* ((themes (au-themes-get-themes))
-         (saved-theme (car themes))
-         (preview-theme (cadr themes))
-         (applied nil))
-    (unless (and saved-theme preview-theme (not (eq saved-theme preview-theme)))
-      (princ "[SKIP]  Need at least two themes for consult abort test\n")
-      (return-from test-select-restore--consult-abort 'skip))
-    (cl-letf (((symbol-function 'au-themes--apply-theme)
-               (lambda (th &optional _force)
-                 (setq applied th))))
-      (let* ((selected nil)
-             (state-fn
-              (lambda (action cand)
-                (pcase action
-                  ('preview
-                   (when cand
-                     (let ((th (if (symbolp cand) cand (intern-soft cand))))
-                       (when (memq th themes)
-                         (au-themes--apply-theme th)))))
-                  ('return
-                   (setq selected t)
-                   (let ((final-th (or (and cand (if (symbolp cand) cand (intern-soft cand)))
-                                       saved-theme)))
-                     (when final-th
-                       (au-themes--apply-theme final-th))))
-                  ('exit
-                   (unless selected
-                     (when saved-theme
-                       (au-themes--apply-theme saved-theme))))))))
-        (funcall state-fn 'preview preview-theme)
-        (unless (eq applied preview-theme)
-          (princ (format "[FAIL]  Preview did not apply %s (got %s)\n"
-                         preview-theme applied))
-          (return-from test-select-restore--consult-abort nil))
-        (funcall state-fn 'exit nil)
-        (if (eq applied saved-theme)
-            (progn
-              (princ (format "[PASS]  Consult abort restores saved theme (%s)\n" saved-theme))
-              t)
-          (princ (format "[FAIL]  After exit, expected %s but got %s\n"
-                         saved-theme applied))
-          nil)))))
+         (chosen (car themes))
+         (seen nil)
+         (noted nil)
+         (result nil))
+    (unless chosen
+      (princ "[SKIP]  No themes discovered for consult test\n")
+      (cl-return-from test-select-restore--consult 'skip))
+    (dolist (outcome (list chosen 'modus-vivendi))
+      (let ((custom-enabled-themes '(modus-vivendi)))
+        (setq seen nil noted nil)
+        (cl-letf (((symbol-function 'consult-theme)
+                   (lambda (_theme)
+                     (interactive (list nil))
+                     (setq seen consult-themes)
+                     (setq custom-enabled-themes (list outcome))))
+                  ((symbol-function 'au-themes--note-loaded)
+                   (lambda (th) (setq noted th))))
+          (au-themes--select themes "Test"))
+        (push (and (equal seen themes)
+                   (eq noted (and (memq outcome themes) outcome)))
+              result)))
+    (if (and (car result) (cadr result))
+        (progn
+          (princ "[PASS]  Consult path limits consult-theme to au-themes\n")
+          t)
+      (princ (format "[FAIL]  Consult path: consult-themes=%S, noted=%S\n" seen noted))
+      nil)))
 
 ;;; Test 2
-(defun test-select-restore--completing-read-abort ()
+(cl-defun test-select-restore--completing-read-abort ()
   "Verify that aborting the completing-read picker restores the theme.
+The theme enabled before the prompt is not an au-theme, as in issue #4.
 Override `completing-read' to signal `quit' immediately, then check
-that `au-themes--apply-theme' was called with the saved theme."
+that `au-themes--apply-theme' was called with that theme."
   (let* ((themes (au-themes-get-themes))
-         (saved-theme (car themes))
+         (saved-theme 'modus-vivendi)
          (applied-log nil))
-    (unless saved-theme
+    (unless themes
       (princ "[SKIP]  No themes discovered for completing-read abort test\n")
-      (return-from test-select-restore--completing-read-abort 'skip))
-    (cl-letf (((symbol-function 'au-themes--apply-theme)
-               (lambda (th &optional _force)
-                 (push th applied-log)))
-              ((symbol-function 'au-themes-get-current-theme)
-               (lambda () saved-theme))
-              ((symbol-function 'completing-read)
-               (lambda (&rest _) (signal 'quit nil)))
-              ((symbol-function 'consult--read)
-               nil))
-      (condition-case nil
-          (au-themes--prompt-with-preview themes "Test: ")
-        (quit nil)))
+      (cl-return-from test-select-restore--completing-read-abort 'skip))
+    (let ((custom-enabled-themes (list saved-theme)))
+      (cl-letf (((symbol-function 'au-themes--apply-theme)
+                 (lambda (th &optional _force)
+                   (push th applied-log)))
+                ((symbol-function 'completing-read)
+                 (lambda (&rest _) (signal 'quit nil))))
+        (condition-case nil
+            (au-themes--read-theme themes "Test")
+          (quit nil))))
     (let ((last-applied (car applied-log)))
       (if (eq last-applied saved-theme)
           (progn
@@ -124,6 +111,34 @@ that `au-themes--apply-theme' was called with the saved theme."
         nil))))
 
 ;;; Test 3
+(cl-defun test-select-restore--preview-input ()
+  "Verify that the plain minibuffer preview follows exact input only.
+An input naming a theme shows it; editing the input so that it no
+longer names a theme goes back to the theme enabled before."
+  (let* ((themes (au-themes-get-themes))
+         (theme (car themes))
+         (fallback 'modus-vivendi)
+         (applied nil))
+    (unless theme
+      (princ "[SKIP]  No themes discovered for preview input test\n")
+      (cl-return-from test-select-restore--preview-input 'skip))
+    (cl-letf (((symbol-function 'au-themes--apply-theme)
+               (lambda (th &optional _force) (setq applied th))))
+      (with-temp-buffer
+        (insert (symbol-name theme))
+        (au-themes--preview-input themes fallback)
+        (let ((on-match applied))
+          (delete-char -1)
+          (au-themes--preview-input themes fallback)
+          (if (and (eq on-match theme) (eq applied fallback))
+              (progn
+                (princ "[PASS]  Preview follows exact input and reverts on edit\n")
+                t)
+            (princ (format "[FAIL]  Preview showed %s on match and %s after edit\n"
+                           on-match applied))
+            nil))))))
+
+;;; Test 4
 (defun test-select-restore--modus-registration ()
   "Verify that every au-theme is declared to modus-themes.
 Each theme must be registered (known to `modus-themes-get-all-known-themes')
@@ -171,8 +186,9 @@ and its :background-mode property must match the palette polarity."
     (princ "| Select Restore & Modus Registration Suite\n")
     (princ "'~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~'\n\n")
 
-    (dolist (test '(test-select-restore--consult-abort
+    (dolist (test '(test-select-restore--consult
                     test-select-restore--completing-read-abort
+                    test-select-restore--preview-input
                     test-select-restore--modus-registration))
       (let ((res (funcall test)))
         (cond ((eq res 'skip) (setq skips (1+ skips)))

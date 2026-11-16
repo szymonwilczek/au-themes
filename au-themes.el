@@ -195,10 +195,13 @@ If FORCE is non-nil, reload THEME even if it is already active."
   (unless (memq theme (au-themes-get-themes))
     (user-error "`%s' is not a recognized au-theme" theme))
   (au-themes--apply-theme theme t)
-  (let ((polarity (au-themes--theme-polarity theme)))
-    (if (eq polarity 'light)
-        (setq au-themes--last-light-theme theme)
-      (setq au-themes--last-dark-theme theme)))
+  (au-themes--note-loaded theme))
+
+(defun au-themes--note-loaded (theme)
+  "Record THEME as the last light or dark au-theme and run the hook."
+  (if (eq (au-themes--theme-polarity theme) 'light)
+      (setq au-themes--last-light-theme theme)
+    (setq au-themes--last-dark-theme theme))
   (run-hooks 'au-themes-post-load-hook)
   (message "Loaded theme: `%s' [%s]"
            theme (upcase (symbol-name (or (au-themes--theme-polarity theme) 'unknown)))))
@@ -269,113 +272,80 @@ If TRANSFORM is non-nil, return CAND unchanged."
           (display-sort-function . au-themes--display-sort))
       (complete-with-action action (mapcar #'symbol-name themes) string pred))))
 
-(defun au-themes--prompt-with-preview (themes prompt)
-  "Prompt with PROMPT to select a theme from THEMES with live preview.
-Restores previous theme if aborted."
-  (let* ((saved-theme (au-themes-get-current-theme))
-         (au-themes--picker-initial-theme saved-theme)
-         (default-theme (or saved-theme (car themes)))
-         (cand-names (mapcar #'symbol-name themes)))
-    (if (fboundp 'consult--read)
-        ;; Consult
-        (let ((selected
-               (consult--read
-                cand-names
-                :prompt prompt
-                :require-match t
-                :category 'theme
-                :history 'au-themes--select-history
-                :group #'au-themes--group-themes
-                :annotate #'au-themes--annotate-theme
-                :sort nil
-                :default (and default-theme (symbol-name default-theme))
-                :lookup (lambda (sel &rest _)
-                          (and sel (intern-soft sel)))
-                :state (let ((selected nil))
-                         (lambda (action cand)
-                           (pcase action
-                             ('preview
-                              (when cand
-                                (let ((th (if (symbolp cand) cand (intern-soft cand))))
-                                  (when (memq th themes)
-                                    (au-themes--apply-theme th)))))
-                             ('return
-                              (setq selected t)
-                              (let ((final-th (or (and cand (if (symbolp cand) cand (intern-soft cand)))
-                                                  saved-theme)))
-                                (when final-th
-                                  (au-themes--apply-theme final-th))))
-                             ('exit
-                              (unless selected
-                                (when saved-theme
-                                  (au-themes--apply-theme saved-theme))))))))))
-          (or selected saved-theme))
-      ;; completing-read
-      (let ((completed nil)
-            (preview-cand nil))
-        (unwind-protect
-            (minibuffer-with-setup-hook
-                (lambda ()
-                  (add-hook
-                   'post-command-hook
-                   (lambda ()
-                     (when-let* ((cand-str (or (and (bound-and-true-p vertico-mode)
-                                                    (fboundp 'vertico--candidate)
-                                                    (vertico--candidate))
-                                               (minibuffer-contents)))
-                                 (cand-sym (intern-soft cand-str)))
-                       (when (and (memq cand-sym themes)
-                                  (not (eq cand-sym preview-cand)))
-                         (setq preview-cand cand-sym)
-                         (au-themes--apply-theme cand-sym))))
-                   nil t))
-              (let* ((choice (completing-read
-                              (format "%s (default %s): " prompt default-theme)
-                              (au-themes--completion-table themes)
-                              nil t nil
-                              'au-themes--select-history
-                              (symbol-name default-theme)))
-                     (chosen-sym (intern-soft choice)))
-                (setq completed t)
-                (or chosen-sym saved-theme)))
-          ;; Aborted -> restore original theme
-          (unless completed
-            (when saved-theme
-              (au-themes--apply-theme saved-theme))))))))
+(defun au-themes--preview-input (themes fallback)
+  "Show the theme the minibuffer names exactly, else FALLBACK.
+THEMES is the list of themes that may be previewed.  FALLBACK is the
+theme that was enabled before the prompt, or nil for none."
+  (let ((cand (intern-soft (minibuffer-contents))))
+    (au-themes--apply-theme (if (memq cand themes) cand fallback))))
+
+(defun au-themes--read-theme (themes prompt)
+  "Read one of THEMES in the minibuffer with PROMPT and return it.
+While the input names a theme exactly, that theme is shown; otherwise
+the theme enabled before the prompt is shown.  That theme is also
+restored when the prompt is aborted."
+  (let* ((saved (car custom-enabled-themes))
+         (au-themes--picker-initial-theme (au-themes-get-current-theme))
+         (default (or au-themes--picker-initial-theme (car themes)))
+         (done nil))
+    (unwind-protect
+        (prog1
+            (intern
+             (minibuffer-with-setup-hook
+                 (lambda ()
+                   (add-hook 'post-command-hook
+                             (lambda () (au-themes--preview-input themes saved))
+                             nil t))
+               (completing-read (format-prompt prompt default)
+                                (au-themes--completion-table themes)
+                                nil t nil 'au-themes--select-history
+                                (symbol-name default))))
+          (setq done t))
+      (unless done
+        (au-themes--apply-theme saved)))))
+
+(defvar consult-themes)
+(declare-function consult-theme "consult" (theme))
+
+(defun au-themes--select (themes prompt)
+  "Prompt with PROMPT for one of THEMES, previewing it, and enable it.
+With consult installed, use `consult-theme' limited to THEMES, which
+previews the candidate at point and restores the previous theme on
+abort.  Otherwise use `au-themes--read-theme'."
+  (if (fboundp 'consult-theme)
+      (let ((consult-themes themes))
+        (call-interactively #'consult-theme)
+        (let ((theme (car custom-enabled-themes)))
+          (when (memq theme themes)
+            (au-themes--note-loaded theme))))
+    (au-themes-load-theme (au-themes--read-theme themes prompt))))
 
 ;;;###autoload
 (defun au-themes-select (&optional theme)
   "Select and enable a theme from `au-themes' collection with live preview.
-Themes are grouped into Light and Dark categories.
 With optional THEME symbol, load it directly without prompting."
   (interactive)
-  (let* ((themes (au-themes-get-themes))
-         (chosen (or theme
-                     (au-themes--prompt-with-preview themes "Select au-theme: "))))
-    (when chosen
-      (au-themes-load-theme chosen))))
+  (if theme
+      (au-themes-load-theme theme)
+    (au-themes--select (au-themes-get-themes) "Select au-theme")))
 
 ;;;###autoload
 (defun au-themes-select-light (&optional theme)
   "Select and enable a light theme from `au-themes' collection with live preview.
 With optional THEME symbol, load it directly without prompting."
   (interactive)
-  (let* ((themes (au-themes-get-themes 'light))
-         (chosen (or theme
-                     (au-themes--prompt-with-preview themes "Select light au-theme: "))))
-    (when chosen
-      (au-themes-load-theme chosen))))
+  (if theme
+      (au-themes-load-theme theme)
+    (au-themes--select (au-themes-get-themes 'light) "Select light au-theme")))
 
 ;;;###autoload
 (defun au-themes-select-dark (&optional theme)
   "Select and enable a dark theme from `au-themes' collection with live preview.
 With optional THEME symbol, load it directly without prompting."
   (interactive)
-  (let* ((themes (au-themes-get-themes 'dark))
-         (chosen (or theme
-                     (au-themes--prompt-with-preview themes "Select dark au-theme: "))))
-    (when chosen
-      (au-themes-load-theme chosen))))
+  (if theme
+      (au-themes-load-theme theme)
+    (au-themes--select (au-themes-get-themes 'dark) "Select dark au-theme")))
 
 (provide 'au-themes)
 ;;; au-themes.el ends here
