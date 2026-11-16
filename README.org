@@ -81,9 +81,6 @@ The Emacs themes are built on top of modus-themes and ef-themes by
 [[https://protesilaos.com][Protesilaos Stavrou]]. His work gives us face coverage for hundreds of
 packages and a solid base to build palettes on. Thank you, Prot.
 
-We plan to move to our own engine later, with no dependency on either
-package. Until then we stay on modus-themes and ef-themes.
-
 ** Installation
 
 #+begin_src sh
