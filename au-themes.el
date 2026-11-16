@@ -304,18 +304,24 @@ Restores previous theme if aborted."
                 :default (and default-theme (symbol-name default-theme))
                 :lookup (lambda (sel &rest _)
                           (and sel (intern-soft sel)))
-                :state (lambda (action cand)
-                         (pcase action
-                           ('preview
-                            (when cand
-                              (let ((th (if (symbolp cand) cand (intern-soft cand))))
-                                (when (memq th themes)
-                                  (au-themes--apply-theme th)))))
-                           ('return
-                            (let ((final-th (or (and cand (if (symbolp cand) cand (intern-soft cand)))
-                                                saved-theme)))
-                              (when final-th
-                                (au-themes--apply-theme final-th)))))))))
+                :state (let ((selected nil))
+                         (lambda (action cand)
+                           (pcase action
+                             ('preview
+                              (when cand
+                                (let ((th (if (symbolp cand) cand (intern-soft cand))))
+                                  (when (memq th themes)
+                                    (au-themes--apply-theme th)))))
+                             ('return
+                              (setq selected t)
+                              (let ((final-th (or (and cand (if (symbolp cand) cand (intern-soft cand)))
+                                                  saved-theme)))
+                                (when final-th
+                                  (au-themes--apply-theme final-th))))
+                             ('exit
+                              (unless selected
+                                (when saved-theme
+                                  (au-themes--apply-theme saved-theme))))))))))
           (or selected saved-theme))
       ;; completing-read
       (let ((completed nil)
