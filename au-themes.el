@@ -73,6 +73,26 @@
     (unless (file-equal-p dir (expand-file-name "themes/" data-directory))
       (add-to-list 'custom-theme-load-path dir))))
 
+;;;###autoload
+(with-eval-after-load 'modus-themes
+  (let ((dir (file-name-directory
+              (or load-file-name
+                  (locate-library "au-themes")))))
+    (when dir
+      (dolist (file (directory-files dir t "\\`au-[-a-z0-9]+-theme\\.el\\'"))
+        (with-temp-buffer
+          (insert-file-contents file)
+          (when (search-forward "(modus-themes-theme" nil t)
+            (goto-char (match-beginning 0))
+            (ignore-errors
+              (let* ((form (read (current-buffer)))
+                     (name (cadr (nth 1 form)))
+                     (desc (nth 3 form))
+                     (mode (cadr (nth 4 form)))
+                     (palette (cadr (nth 5 form))))
+                (modus-themes-declare name 'au-themes desc mode palette nil nil)
+                (modus-themes-register name)))))))))
+
 (defun au-themes--get-theme-dirs ()
   "Return list of directory paths where au-themes may reside."
   (let ((dirs nil))
