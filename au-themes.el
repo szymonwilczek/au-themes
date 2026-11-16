@@ -51,6 +51,7 @@
 ;;; Code:
 
 (require 'cl-lib)
+(require 'color)
 (require 'subr-x)
 
 (defgroup au-themes ()
@@ -111,26 +112,13 @@ When nil (the default), themes are dynamically discovered from
   :type '(choice (const :tag "Dynamic autodiscovery" nil)
                  (repeat :tag "Explicit theme list" symbol)))
 
-(defun au-themes--hex-to-rgb (hex)
-  "Convert HEX string #rrggbb to list of normalized (R G B) [0.0..1.0]."
-  (let ((h (string-remove-prefix "#" hex)))
-    (list (/ (string-to-number (substring h 0 2) 16) 255.0)
-          (/ (string-to-number (substring h 2 4) 16) 255.0)
-          (/ (string-to-number (substring h 4 6) 16) 255.0))))
-
-(defun au-themes--srgb-to-linear (c)
-  "Convert sRGB channel C [0.0..1.0] to linear light."
-  (if (<= c 0.04045)
-      (/ c 12.92)
-    (expt (/ (+ c 0.055) 1.055) 2.4)))
-
 (defun au-themes--luminance-y (hex)
-  "Compute relative biophysical luminance Y [0.0..1.0] from HEX color code."
-  (let* ((rgb (au-themes--hex-to-rgb hex))
-         (lr (au-themes--srgb-to-linear (nth 0 rgb)))
-         (lg (au-themes--srgb-to-linear (nth 1 rgb)))
-         (lb (au-themes--srgb-to-linear (nth 2 rgb))))
-    (+ (* 0.2126729 lr) (* 0.7151522 lg) (* 0.0721750 lb))))
+  "Return the relative luminance Y [0.0..1.0] of colour HEX.
+HEX is parsed with `color-values-from-color-spec' rather than
+`color-name-to-rgb', which approximates colours on a tty frame."
+  (let ((rgb (mapcar (lambda (v) (/ v 65535.0))
+                     (color-values-from-color-spec hex))))
+    (nth 1 (apply #'color-srgb-to-xyz rgb))))
 
 (defun au-themes--theme-palette (theme)
   "Extract palette alist for THEME, requiring theme library if needed."
