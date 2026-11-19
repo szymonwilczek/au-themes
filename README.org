@@ -3,6 +3,7 @@
 #+LANGUAGE: en
 #+OPTIONS: toc:nil num:nil
 
+[[https://elpa.nongnu.org/nongnu/au-themes.html][https://elpa.nongnu.org/nongnu/au-themes.svg]]
 [[https://github.com/szymonwilczek/au-themes/actions/workflows/test.yml][https://github.com/szymonwilczek/au-themes/actions/workflows/test.yml/badge.svg]]
 [[file:LICENSE][https://img.shields.io/badge/license-GPL--3.0--or--later-blue.svg]]
 
@@ -86,6 +87,31 @@ build palettes on. Thank you, Prot.
 :CUSTOM_ID: installation
 :END:
 
+=au-themes= is available on [[https://elpa.nongnu.org/nongnu/au-themes.html][NonGNU ELPA]], which is enabled by default
+starting with Emacs 28.1.
+
+Install it with:
+
+#+begin_example
+  M-x package-install RET au-themes RET
+#+end_example
+
+Or in your configuration:
+
+#+begin_src elisp
+  (use-package au-themes
+    :ensure t
+    :config
+    (load-theme 'au-salina-night t))
+#+end_src
+
+*** From source
+:PROPERTIES:
+:CUSTOM_ID: installation-from-source
+:END:
+
+You can also clone the repository manually:
+
 #+begin_src sh
   git clone https://github.com/szymonwilczek/au-themes.git ~/.emacs.d/au-themes
 #+end_src
@@ -96,7 +122,7 @@ build palettes on. Thank you, Prot.
   (load-theme 'au-salina-night t)
 #+end_src
 
-On Emacs 30 or newer you can use =use-package= instead:
+Or with =package-vc-install= on Emacs 30 or newer:
 
 #+begin_src elisp
   (use-package au-themes
