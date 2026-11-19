@@ -6,9 +6,7 @@
 [[https://github.com/szymonwilczek/au-themes/actions/workflows/test.yml][https://github.com/szymonwilczek/au-themes/actions/workflows/test.yml/badge.svg]]
 [[file:LICENSE][https://img.shields.io/badge/license-GPL--3.0--or--later-blue.svg]]
 
-#+BEGIN_HTML
-<h3 align="center"><a href="https://szymon-wilczek.me/writings/au-themes-screenshots/">Screenshots of every theme in code, Magit, Dired and Org</a></h3>
-#+END_HTML
+#+HTML: <h3 align="center"><a href="https://szymon-wilczek.me/writings/au-themes-screenshots/">Screenshots of every theme in code, Magit, Dired and Org</a></h3>
 
 Go to the [[#light-themes][light]] or the [[#dark-themes][dark]] themes, [[#installation][installation]],
 [[#usage][usage]] or the [[#themes][list of families]].
@@ -26,48 +24,50 @@ Click a picture to open it in full size, or a name to see that theme
 in code, Magit, Dired and Org on the blog.
 
 ** Light themes
+:PROPERTIES:
+:CUSTOM_ID: light-themes
+:END:
 
-#+BEGIN_HTML
-<table>
-<tr>
-<td align="center"><a href="https://szymon-wilczek.me/assets/au-themes/au-whispergrove-day.png"><img src="https://szymon-wilczek.me/assets/au-themes/au-whispergrove-day.png" width="260" alt="au-whispergrove-day"></a><br><a href="https://szymon-wilczek.me/writings/au-themes-screenshots/#au-whispergrove-day"><code>au-whispergrove-day</code></a></td>
-<td align="center"><a href="https://szymon-wilczek.me/assets/au-themes/au-whispergrove-morning.png"><img src="https://szymon-wilczek.me/assets/au-themes/au-whispergrove-morning.png" width="260" alt="au-whispergrove-morning"></a><br><a href="https://szymon-wilczek.me/writings/au-themes-screenshots/#au-whispergrove-morning"><code>au-whispergrove-morning</code></a></td>
-<td align="center"><a href="https://szymon-wilczek.me/assets/au-themes/au-aurum-day.png"><img src="https://szymon-wilczek.me/assets/au-themes/au-aurum-day.png" width="260" alt="au-aurum-day"></a><br><a href="https://szymon-wilczek.me/writings/au-themes-screenshots/#au-aurum-day"><code>au-aurum-day</code></a></td>
-</tr>
-<tr>
-<td align="center"><a href="https://szymon-wilczek.me/assets/au-themes/au-parchment-day.png"><img src="https://szymon-wilczek.me/assets/au-themes/au-parchment-day.png" width="260" alt="au-parchment-day"></a><br><a href="https://szymon-wilczek.me/writings/au-themes-screenshots/#au-parchment-day"><code>au-parchment-day</code></a></td>
-<td align="center"><a href="https://szymon-wilczek.me/assets/au-themes/au-salina-day.png"><img src="https://szymon-wilczek.me/assets/au-themes/au-salina-day.png" width="260" alt="au-salina-day"></a><br><a href="https://szymon-wilczek.me/writings/au-themes-screenshots/#au-salina-day"><code>au-salina-day</code></a></td>
-<td align="center"><a href="https://szymon-wilczek.me/assets/au-themes/au-herbarium-day.png"><img src="https://szymon-wilczek.me/assets/au-themes/au-herbarium-day.png" width="260" alt="au-herbarium-day"></a><br><a href="https://szymon-wilczek.me/writings/au-themes-screenshots/#au-herbarium-day"><code>au-herbarium-day</code></a></td>
-</tr>
-<tr>
-<td align="center"><a href="https://szymon-wilczek.me/assets/au-themes/au-perseida-day.png"><img src="https://szymon-wilczek.me/assets/au-themes/au-perseida-day.png" width="260" alt="au-perseida-day"></a><br><a href="https://szymon-wilczek.me/writings/au-themes-screenshots/#au-perseida-day"><code>au-perseida-day</code></a></td>
-<td align="center"><a href="https://szymon-wilczek.me/assets/au-themes/au-yerba-day.png"><img src="https://szymon-wilczek.me/assets/au-themes/au-yerba-day.png" width="260" alt="au-yerba-day"></a><br><a href="https://szymon-wilczek.me/writings/au-themes-screenshots/#au-yerba-day"><code>au-yerba-day</code></a></td>
-<td align="center"><a href="https://szymon-wilczek.me/assets/au-themes/au-pluvia-day.png"><img src="https://szymon-wilczek.me/assets/au-themes/au-pluvia-day.png" width="260" alt="au-pluvia-day"></a><br><a href="https://szymon-wilczek.me/writings/au-themes-screenshots/#au-pluvia-day"><code>au-pluvia-day</code></a></td>
-</tr>
-</table>
-#+END_HTML
+#+HTML: <table>
+#+HTML: <tr>
+#+HTML: <td align="center"><a href="https://szymon-wilczek.me/assets/au-themes/au-whispergrove-day.png"><img src="https://szymon-wilczek.me/assets/au-themes/au-whispergrove-day.png" width="260" alt="au-whispergrove-day"></a><br><a href="https://szymon-wilczek.me/writings/au-themes-screenshots/#au-whispergrove-day"><code>au-whispergrove-day</code></a></td>
+#+HTML: <td align="center"><a href="https://szymon-wilczek.me/assets/au-themes/au-whispergrove-morning.png"><img src="https://szymon-wilczek.me/assets/au-themes/au-whispergrove-morning.png" width="260" alt="au-whispergrove-morning"></a><br><a href="https://szymon-wilczek.me/writings/au-themes-screenshots/#au-whispergrove-morning"><code>au-whispergrove-morning</code></a></td>
+#+HTML: <td align="center"><a href="https://szymon-wilczek.me/assets/au-themes/au-aurum-day.png"><img src="https://szymon-wilczek.me/assets/au-themes/au-aurum-day.png" width="260" alt="au-aurum-day"></a><br><a href="https://szymon-wilczek.me/writings/au-themes-screenshots/#au-aurum-day"><code>au-aurum-day</code></a></td>
+#+HTML: </tr>
+#+HTML: <tr>
+#+HTML: <td align="center"><a href="https://szymon-wilczek.me/assets/au-themes/au-parchment-day.png"><img src="https://szymon-wilczek.me/assets/au-themes/au-parchment-day.png" width="260" alt="au-parchment-day"></a><br><a href="https://szymon-wilczek.me/writings/au-themes-screenshots/#au-parchment-day"><code>au-parchment-day</code></a></td>
+#+HTML: <td align="center"><a href="https://szymon-wilczek.me/assets/au-themes/au-salina-day.png"><img src="https://szymon-wilczek.me/assets/au-themes/au-salina-day.png" width="260" alt="au-salina-day"></a><br><a href="https://szymon-wilczek.me/writings/au-themes-screenshots/#au-salina-day"><code>au-salina-day</code></a></td>
+#+HTML: <td align="center"><a href="https://szymon-wilczek.me/assets/au-themes/au-herbarium-day.png"><img src="https://szymon-wilczek.me/assets/au-themes/au-herbarium-day.png" width="260" alt="au-herbarium-day"></a><br><a href="https://szymon-wilczek.me/writings/au-themes-screenshots/#au-herbarium-day"><code>au-herbarium-day</code></a></td>
+#+HTML: </tr>
+#+HTML: <tr>
+#+HTML: <td align="center"><a href="https://szymon-wilczek.me/assets/au-themes/au-perseida-day.png"><img src="https://szymon-wilczek.me/assets/au-themes/au-perseida-day.png" width="260" alt="au-perseida-day"></a><br><a href="https://szymon-wilczek.me/writings/au-themes-screenshots/#au-perseida-day"><code>au-perseida-day</code></a></td>
+#+HTML: <td align="center"><a href="https://szymon-wilczek.me/assets/au-themes/au-yerba-day.png"><img src="https://szymon-wilczek.me/assets/au-themes/au-yerba-day.png" width="260" alt="au-yerba-day"></a><br><a href="https://szymon-wilczek.me/writings/au-themes-screenshots/#au-yerba-day"><code>au-yerba-day</code></a></td>
+#+HTML: <td align="center"><a href="https://szymon-wilczek.me/assets/au-themes/au-pluvia-day.png"><img src="https://szymon-wilczek.me/assets/au-themes/au-pluvia-day.png" width="260" alt="au-pluvia-day"></a><br><a href="https://szymon-wilczek.me/writings/au-themes-screenshots/#au-pluvia-day"><code>au-pluvia-day</code></a></td>
+#+HTML: </tr>
+#+HTML: </table>
 
 ** Dark themes
+:PROPERTIES:
+:CUSTOM_ID: dark-themes
+:END:
 
-#+BEGIN_HTML
-<table>
-<tr>
-<td align="center"><a href="https://szymon-wilczek.me/assets/au-themes/au-whispergrove-night.png"><img src="https://szymon-wilczek.me/assets/au-themes/au-whispergrove-night.png" width="260" alt="au-whispergrove-night"></a><br><a href="https://szymon-wilczek.me/writings/au-themes-screenshots/#au-whispergrove-night"><code>au-whispergrove-night</code></a></td>
-<td align="center"><a href="https://szymon-wilczek.me/assets/au-themes/au-aurum-night.png"><img src="https://szymon-wilczek.me/assets/au-themes/au-aurum-night.png" width="260" alt="au-aurum-night"></a><br><a href="https://szymon-wilczek.me/writings/au-themes-screenshots/#au-aurum-night"><code>au-aurum-night</code></a></td>
-<td align="center"><a href="https://szymon-wilczek.me/assets/au-themes/au-parchment-night.png"><img src="https://szymon-wilczek.me/assets/au-themes/au-parchment-night.png" width="260" alt="au-parchment-night"></a><br><a href="https://szymon-wilczek.me/writings/au-themes-screenshots/#au-parchment-night"><code>au-parchment-night</code></a></td>
-</tr>
-<tr>
-<td align="center"><a href="https://szymon-wilczek.me/assets/au-themes/au-salina-night.png"><img src="https://szymon-wilczek.me/assets/au-themes/au-salina-night.png" width="260" alt="au-salina-night"></a><br><a href="https://szymon-wilczek.me/writings/au-themes-screenshots/#au-salina-night"><code>au-salina-night</code></a></td>
-<td align="center"><a href="https://szymon-wilczek.me/assets/au-themes/au-herbarium-night.png"><img src="https://szymon-wilczek.me/assets/au-themes/au-herbarium-night.png" width="260" alt="au-herbarium-night"></a><br><a href="https://szymon-wilczek.me/writings/au-themes-screenshots/#au-herbarium-night"><code>au-herbarium-night</code></a></td>
-<td align="center"><a href="https://szymon-wilczek.me/assets/au-themes/au-perseida-night.png"><img src="https://szymon-wilczek.me/assets/au-themes/au-perseida-night.png" width="260" alt="au-perseida-night"></a><br><a href="https://szymon-wilczek.me/writings/au-themes-screenshots/#au-perseida-night"><code>au-perseida-night</code></a></td>
-</tr>
-<tr>
-<td align="center"><a href="https://szymon-wilczek.me/assets/au-themes/au-yerba-night.png"><img src="https://szymon-wilczek.me/assets/au-themes/au-yerba-night.png" width="260" alt="au-yerba-night"></a><br><a href="https://szymon-wilczek.me/writings/au-themes-screenshots/#au-yerba-night"><code>au-yerba-night</code></a></td>
-<td align="center"><a href="https://szymon-wilczek.me/assets/au-themes/au-pluvia-night.png"><img src="https://szymon-wilczek.me/assets/au-themes/au-pluvia-night.png" width="260" alt="au-pluvia-night"></a><br><a href="https://szymon-wilczek.me/writings/au-themes-screenshots/#au-pluvia-night"><code>au-pluvia-night</code></a></td>
-<td align="center"><a href="https://szymon-wilczek.me/assets/au-themes/au-mysterium.png"><img src="https://szymon-wilczek.me/assets/au-themes/au-mysterium.png" width="260" alt="au-mysterium"></a><br><a href="https://szymon-wilczek.me/writings/au-themes-screenshots/#au-mysterium"><code>au-mysterium</code></a></td>
-</tr>
-</table>
-#+END_HTML
+#+HTML: <table>
+#+HTML: <tr>
+#+HTML: <td align="center"><a href="https://szymon-wilczek.me/assets/au-themes/au-whispergrove-night.png"><img src="https://szymon-wilczek.me/assets/au-themes/au-whispergrove-night.png" width="260" alt="au-whispergrove-night"></a><br><a href="https://szymon-wilczek.me/writings/au-themes-screenshots/#au-whispergrove-night"><code>au-whispergrove-night</code></a></td>
+#+HTML: <td align="center"><a href="https://szymon-wilczek.me/assets/au-themes/au-aurum-night.png"><img src="https://szymon-wilczek.me/assets/au-themes/au-aurum-night.png" width="260" alt="au-aurum-night"></a><br><a href="https://szymon-wilczek.me/writings/au-themes-screenshots/#au-aurum-night"><code>au-aurum-night</code></a></td>
+#+HTML: <td align="center"><a href="https://szymon-wilczek.me/assets/au-themes/au-parchment-night.png"><img src="https://szymon-wilczek.me/assets/au-themes/au-parchment-night.png" width="260" alt="au-parchment-night"></a><br><a href="https://szymon-wilczek.me/writings/au-themes-screenshots/#au-parchment-night"><code>au-parchment-night</code></a></td>
+#+HTML: </tr>
+#+HTML: <tr>
+#+HTML: <td align="center"><a href="https://szymon-wilczek.me/assets/au-themes/au-salina-night.png"><img src="https://szymon-wilczek.me/assets/au-themes/au-salina-night.png" width="260" alt="au-salina-night"></a><br><a href="https://szymon-wilczek.me/writings/au-themes-screenshots/#au-salina-night"><code>au-salina-night</code></a></td>
+#+HTML: <td align="center"><a href="https://szymon-wilczek.me/assets/au-themes/au-herbarium-night.png"><img src="https://szymon-wilczek.me/assets/au-themes/au-herbarium-night.png" width="260" alt="au-herbarium-night"></a><br><a href="https://szymon-wilczek.me/writings/au-themes-screenshots/#au-herbarium-night"><code>au-herbarium-night</code></a></td>
+#+HTML: <td align="center"><a href="https://szymon-wilczek.me/assets/au-themes/au-perseida-night.png"><img src="https://szymon-wilczek.me/assets/au-themes/au-perseida-night.png" width="260" alt="au-perseida-night"></a><br><a href="https://szymon-wilczek.me/writings/au-themes-screenshots/#au-perseida-night"><code>au-perseida-night</code></a></td>
+#+HTML: </tr>
+#+HTML: <tr>
+#+HTML: <td align="center"><a href="https://szymon-wilczek.me/assets/au-themes/au-yerba-night.png"><img src="https://szymon-wilczek.me/assets/au-themes/au-yerba-night.png" width="260" alt="au-yerba-night"></a><br><a href="https://szymon-wilczek.me/writings/au-themes-screenshots/#au-yerba-night"><code>au-yerba-night</code></a></td>
+#+HTML: <td align="center"><a href="https://szymon-wilczek.me/assets/au-themes/au-pluvia-night.png"><img src="https://szymon-wilczek.me/assets/au-themes/au-pluvia-night.png" width="260" alt="au-pluvia-night"></a><br><a href="https://szymon-wilczek.me/writings/au-themes-screenshots/#au-pluvia-night"><code>au-pluvia-night</code></a></td>
+#+HTML: <td align="center"><a href="https://szymon-wilczek.me/assets/au-themes/au-mysterium.png"><img src="https://szymon-wilczek.me/assets/au-themes/au-mysterium.png" width="260" alt="au-mysterium"></a><br><a href="https://szymon-wilczek.me/writings/au-themes-screenshots/#au-mysterium"><code>au-mysterium</code></a></td>
+#+HTML: </tr>
+#+HTML: </table>
 
 * Emacs
 
@@ -82,6 +82,9 @@ gives us face coverage for hundreds of packages and a solid base to
 build palettes on. Thank you, Prot.
 
 ** Installation
+:PROPERTIES:
+:CUSTOM_ID: installation
+:END:
 
 #+begin_src sh
   git clone https://github.com/szymonwilczek/au-themes.git ~/.emacs.d/au-themes
@@ -103,6 +106,9 @@ On Emacs 30 or newer you can use =use-package= instead:
 #+end_src
 
 ** Usage
+:PROPERTIES:
+:CUSTOM_ID: usage
+:END:
 
 | Command                | What it does                             |
 |------------------------+------------------------------------------|
@@ -139,6 +145,9 @@ belong together.
 - anyone who spends long hours reading text on a screen.
 
 * Themes
+:PROPERTIES:
+:CUSTOM_ID: themes
+:END:
 
 | Family       | Variants            | Mood                                                         |
 |--------------+---------------------+--------------------------------------------------------------|
