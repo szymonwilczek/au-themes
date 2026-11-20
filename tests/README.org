@@ -18,9 +18,8 @@ Set =AU_TEST_THEMES= to check only some themes, for example
 =AU_TEST_THEMES=au-salina-night=. The run fails if any theme
 fails any module.
 
-The tests look for ef-themes and modus-themes in your =elpa=
-directory. Without them installed, put both in a separate directory
-first:
+The tests look for modus-themes in your =elpa= directory. Without it
+installed, put it in a separate directory first:
 
 #+begin_src sh
   export EMACS_ELPA_DIR=/tmp/au-elpa
