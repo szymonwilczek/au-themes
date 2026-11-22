@@ -34,7 +34,7 @@
 (require 'modus-themes)
 (require 'au-themes)
 
-(defconst au-herbarium-night-palette-partial
+(defconst au-themes-herbarium-night-palette-partial
   '(;; Canvas & Chrome
     (cursor "#9670aa")                    ; Point / cursor indicator
     (bg-main "#141312")                   ; Primary canvas background
@@ -123,7 +123,7 @@
     (bg-region "#3c2842")                 ; Marked region
     (fg-line-number-inactive "#5a564e"))) ; Inactive line numbers margin
 
-(defconst au-herbarium-night-palette-mappings-partial
+(defconst au-themes-herbarium-night-palette-mappings-partial
   '((err red)
     (warning yellow-warmer)
     (info green)
@@ -161,12 +161,12 @@
     (accent-2 blue)
     (accent-3 green-warmer)))
 
-(defconst au-herbarium-night-palette
+(defconst au-themes-herbarium-night-palette
   (modus-themes-generate-palette
-   au-herbarium-night-palette-partial
+   au-themes-herbarium-night-palette-partial
    nil
    nil
-   (append au-herbarium-night-palette-mappings-partial au-themes-palette-common)))
+   (append au-themes-herbarium-night-palette-mappings-partial au-themes-palette-common)))
 
 ;;;###theme-autoload
 (modus-themes-theme
@@ -174,7 +174,7 @@
  'au-themes
  "Nocturnal herbal theme with dried botanicals and pressed leaves."
  'dark
- 'au-herbarium-night-palette
+ 'au-themes-herbarium-night-palette
  nil
  nil)
 

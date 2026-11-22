@@ -34,7 +34,7 @@
 (require 'modus-themes)
 (require 'au-themes)
 
-(defconst au-herbarium-day-palette-partial
+(defconst au-themes-herbarium-day-palette-partial
   '(;; Canvas & Chrome
     (cursor "#286440")                    ; Point / cursor indicator
     (bg-main "#d6d8c8")                   ; Primary canvas background
@@ -123,7 +123,7 @@
     (bg-region "#c8bed0")                 ; Marked region
     (fg-line-number-inactive "#767e72"))) ; Inactive line numbers margin
 
-(defconst au-herbarium-day-palette-mappings-partial
+(defconst au-themes-herbarium-day-palette-mappings-partial
   '((err red)
     (warning yellow-warmer)
     (info green)
@@ -161,12 +161,12 @@
     (accent-2 blue)
     (accent-3 green-warmer)))
 
-(defconst au-herbarium-day-palette
+(defconst au-themes-herbarium-day-palette
   (modus-themes-generate-palette
-   au-herbarium-day-palette-partial
+   au-themes-herbarium-day-palette-partial
    nil
    nil
-   (append au-herbarium-day-palette-mappings-partial au-themes-palette-common)))
+   (append au-themes-herbarium-day-palette-mappings-partial au-themes-palette-common)))
 
 ;;;###theme-autoload
 (modus-themes-theme
@@ -174,7 +174,7 @@
  'au-themes
  "Herbal daylight theme with dried botanicals and pressed leaves."
  'light
- 'au-herbarium-day-palette
+ 'au-themes-herbarium-day-palette
  nil
  nil)
 

@@ -34,7 +34,7 @@
 (require 'modus-themes)
 (require 'au-themes)
 
-(defconst au-salina-night-palette-partial
+(defconst au-themes-salina-night-palette-partial
   '(;; Canvas & Chrome
     (cursor "#ac6a3e")                    ; Point / cursor indicator
     (bg-main "#101414")                   ; Primary canvas background
@@ -123,7 +123,7 @@
     (bg-region "#1a344e")                 ; Marked region
     (fg-line-number-inactive "#46585c"))) ; Inactive line numbers margin
 
-(defconst au-salina-night-palette-mappings-partial
+(defconst au-themes-salina-night-palette-mappings-partial
   '((err red)
     (warning yellow-warmer)
     (info green)
@@ -161,12 +161,12 @@
     (accent-2 blue)
     (accent-3 green-warmer)))
 
-(defconst au-salina-night-palette
+(defconst au-themes-salina-night-palette
   (modus-themes-generate-palette
-   au-salina-night-palette-partial
+   au-themes-salina-night-palette-partial
    nil
    nil
-   (append au-salina-night-palette-mappings-partial au-themes-palette-common)))
+   (append au-themes-salina-night-palette-mappings-partial au-themes-palette-common)))
 
 ;;;###theme-autoload
 (modus-themes-theme
@@ -174,7 +174,7 @@
  'au-themes
  "Nocturnal coastal theme with deep oceanic and coral tones."
  'dark
- 'au-salina-night-palette
+ 'au-themes-salina-night-palette
  nil
  nil)
 

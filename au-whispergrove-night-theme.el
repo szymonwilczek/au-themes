@@ -33,7 +33,7 @@
 (require 'modus-themes)
 (require 'au-themes)
 
-(defconst au-whispergrove-night-palette-partial
+(defconst au-themes-whispergrove-night-palette-partial
   '(;; Canvas & Chrome
     (cursor "#4a9cb2")                    ; Point / cursor indicator
     (bg-main "#0a0d08")                   ; Primary canvas background
@@ -122,7 +122,7 @@
     (bg-region "#1a3226")                 ; Marked region
     (fg-line-number-inactive "#546458"))) ; Inactive line numbers margin
 
-(defconst au-whispergrove-night-palette-mappings-partial
+(defconst au-themes-whispergrove-night-palette-mappings-partial
   '((err red)
     (warning yellow-warmer)
     (info green)
@@ -160,12 +160,12 @@
     (accent-2 yellow)
     (accent-3 green-warmer)))
 
-(defconst au-whispergrove-night-palette
+(defconst au-themes-whispergrove-night-palette
   (modus-themes-generate-palette
-   au-whispergrove-night-palette-partial
+   au-themes-whispergrove-night-palette-partial
    nil
    nil
-   (append au-whispergrove-night-palette-mappings-partial au-themes-palette-common)))
+   (append au-themes-whispergrove-night-palette-mappings-partial au-themes-palette-common)))
 
 ;;;###theme-autoload
 (modus-themes-theme
@@ -173,7 +173,7 @@
  'au-themes
  "Deep nocturnal theme calibrated for low photic irradiation and OLED/LCD displays."
  'dark
- 'au-whispergrove-night-palette
+ 'au-themes-whispergrove-night-palette
  nil
  nil)
 

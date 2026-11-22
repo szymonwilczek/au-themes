@@ -33,7 +33,7 @@
 (require 'modus-themes)
 (require 'au-themes)
 
-(defconst au-aurum-night-palette-partial
+(defconst au-themes-aurum-night-palette-partial
   '(;; Canvas & Chrome
     (cursor "#dca032")                    ; Point / cursor indicator
     (bg-main "#12100e")                   ; Primary canvas background
@@ -122,7 +122,7 @@
     (bg-region "#403222")                 ; Marked region
     (fg-line-number-inactive "#62584c"))) ; Inactive line numbers margin
 
-(defconst au-aurum-night-palette-mappings-partial
+(defconst au-themes-aurum-night-palette-mappings-partial
   '((err red)
     (warning yellow-warmer)
     (info green)
@@ -160,12 +160,12 @@
     (accent-2 blue)
     (accent-3 green-warmer)))
 
-(defconst au-aurum-night-palette
+(defconst au-themes-aurum-night-palette
   (modus-themes-generate-palette
-   au-aurum-night-palette-partial
+   au-themes-aurum-night-palette-partial
    nil
    nil
-   (append au-aurum-night-palette-mappings-partial au-themes-palette-common)))
+   (append au-themes-aurum-night-palette-mappings-partial au-themes-palette-common)))
 
 ;;;###theme-autoload
 (modus-themes-theme
@@ -173,7 +173,7 @@
  'au-themes
  "Warm dark theme with a low blue-light share, calibrated for nocturnal photophobia."
  'dark
- 'au-aurum-night-palette
+ 'au-themes-aurum-night-palette
  nil
  nil)
 

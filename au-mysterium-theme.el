@@ -34,7 +34,7 @@
 (require 'modus-themes)
 (require 'au-themes)
 
-(defconst au-mysterium-palette-partial
+(defconst au-themes-mysterium-palette-partial
   '(;; Canvas & Chrome
     (cursor "#f68f1d")                    ; Point / cursor indicator
     (bg-main "#0e0d0d")                   ; Primary canvas background
@@ -125,7 +125,7 @@
     (bg-region "#322b3b")                 ; Marked region
     (fg-line-number-inactive "#5c5d63"))) ; Inactive line numbers margin
 
-(defconst au-mysterium-palette-mappings-partial
+(defconst au-themes-mysterium-palette-mappings-partial
   '((err red)
     (warning fg-warning)
     (info yellow-faint)
@@ -163,12 +163,12 @@
     (accent-2 blue-faint)
     (accent-3 green-warmer)))
 
-(defconst au-mysterium-palette
+(defconst au-themes-mysterium-palette
   (modus-themes-generate-palette
-   au-mysterium-palette-partial
+   au-themes-mysterium-palette-partial
    nil
    nil
-   (append au-mysterium-palette-mappings-partial au-themes-palette-common)))
+   (append au-themes-mysterium-palette-mappings-partial au-themes-palette-common)))
 
 ;;;###theme-autoload
 (modus-themes-theme
@@ -176,7 +176,7 @@
  'au-themes
  "Dark Halloween theme of an old painted van."
  'dark
- 'au-mysterium-palette
+ 'au-themes-mysterium-palette
  nil
  nil)
 

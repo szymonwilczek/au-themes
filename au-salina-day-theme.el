@@ -34,7 +34,7 @@
 (require 'modus-themes)
 (require 'au-themes)
 
-(defconst au-salina-day-palette-partial
+(defconst au-themes-salina-day-palette-partial
   '(;; Canvas & Chrome
     (cursor "#924626")                    ; Point / cursor indicator
     (bg-main "#dad8cf")                   ; Primary canvas background
@@ -123,7 +123,7 @@
     (bg-region "#a0bcc2")                 ; Marked region
     (fg-line-number-inactive "#74807c"))) ; Inactive line numbers margin
 
-(defconst au-salina-day-palette-mappings-partial
+(defconst au-themes-salina-day-palette-mappings-partial
   '((err red)
     (warning yellow-warmer)
     (info green)
@@ -161,12 +161,12 @@
     (accent-2 blue)
     (accent-3 green-warmer)))
 
-(defconst au-salina-day-palette
+(defconst au-themes-salina-day-palette
   (modus-themes-generate-palette
-   au-salina-day-palette-partial
+   au-themes-salina-day-palette-partial
    nil
    nil
-   (append au-salina-day-palette-mappings-partial au-themes-palette-common)))
+   (append au-themes-salina-day-palette-mappings-partial au-themes-palette-common)))
 
 ;;;###theme-autoload
 (modus-themes-theme
@@ -174,7 +174,7 @@
  'au-themes
  "Coastal daylight theme with sea-salt and dune tones."
  'light
- 'au-salina-day-palette
+ 'au-themes-salina-day-palette
  nil
  nil)
 

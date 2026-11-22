@@ -40,7 +40,7 @@
 (require 'modus-themes)
 (require 'au-themes)
 
-(defconst au-yerba-day-palette-partial
+(defconst au-themes-yerba-day-palette-partial
   '(;; Canvas & Chrome
     (cursor "#2f6323")                    ; Point / cursor indicator
     (bg-main "#dbd9c9")                   ; Primary canvas background
@@ -130,7 +130,7 @@
     (bg-region "#afb792")                 ; Marked region
     (fg-line-number-inactive "#969487"))) ; Inactive line numbers margin
 
-(defconst au-yerba-day-palette-mappings-partial
+(defconst au-themes-yerba-day-palette-mappings-partial
   '((err red)
     (warning yellow)
     (info yellow-faint)
@@ -168,12 +168,12 @@
     (accent-2 blue-faint)
     (accent-3 green-warmer)))
 
-(defconst au-yerba-day-palette
+(defconst au-themes-yerba-day-palette
   (modus-themes-generate-palette
-   au-yerba-day-palette-partial
+   au-themes-yerba-day-palette-partial
    nil
    nil
-   (append au-yerba-day-palette-mappings-partial au-themes-palette-common)))
+   (append au-themes-yerba-day-palette-mappings-partial au-themes-palette-common)))
 
 ;;;###theme-autoload
 (modus-themes-theme
@@ -181,7 +181,7 @@
  'au-themes
  "Light theme of a yerba mate gourd in daylight."
  'light
- 'au-yerba-day-palette
+ 'au-themes-yerba-day-palette
  nil
  nil)
 

@@ -96,15 +96,16 @@ uses; `test-theme-integrity' checks that it matches the palette."
 
 (defun au-test-theme-palette-alist (theme)
   "Return the unresolved palette alist of THEME, loading the theme file if needed.
-This is the `<theme>-palette' that `modus-themes-generate-palette' builds
-from the theme's colours, its semantic mappings and the shared
+This is the `au-themes-<name>-palette' that `modus-themes-generate-palette'
+builds from the theme's colours, its semantic mappings and the shared
 `au-themes-palette-common' mappings, i.e. the palette the theme's
 faces are rendered from (without user overrides)."
   (let* ((canonical (let ((name (symbol-name theme)))
                       (if (string-prefix-p "au-" name)
                           name
                         (format "au-%s" name))))
-         (pal-sym (intern (format "%s-palette" canonical)))
+         (pal-sym (intern (format "au-themes-%s-palette"
+                                  (string-remove-prefix "au-" canonical))))
          (file-sym (intern (format "%s-theme" canonical))))
     (unless (boundp pal-sym)
       (require file-sym nil t))

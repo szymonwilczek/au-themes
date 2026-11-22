@@ -33,7 +33,7 @@
 (require 'modus-themes)
 (require 'au-themes)
 
-(defconst au-whispergrove-day-palette-partial
+(defconst au-themes-whispergrove-day-palette-partial
   '(;; Canvas & Chrome
     (cursor "#0e648a")                    ; Point / cursor indicator
     (bg-main "#cfd1c9")                   ; Primary canvas background
@@ -122,7 +122,7 @@
     (bg-region "#9cc5af")                 ; Marked region
     (fg-line-number-inactive "#707a6e"))) ; Inactive line numbers margin
 
-(defconst au-whispergrove-day-palette-mappings-partial
+(defconst au-themes-whispergrove-day-palette-mappings-partial
   '((err red)
     (warning yellow-warmer)
     (info green)
@@ -160,12 +160,12 @@
     (accent-2 yellow)
     (accent-3 green-warmer)))
 
-(defconst au-whispergrove-day-palette
+(defconst au-themes-whispergrove-day-palette
   (modus-themes-generate-palette
-   au-whispergrove-day-palette-partial
+   au-themes-whispergrove-day-palette-partial
    nil
    nil
-   (append au-whispergrove-day-palette-mappings-partial au-themes-palette-common)))
+   (append au-themes-whispergrove-day-palette-mappings-partial au-themes-palette-common)))
 
 ;;;###theme-autoload
 (modus-themes-theme
@@ -173,7 +173,7 @@
  'au-themes
  "Low-glare daylight theme with muted green and neutral tones."
  'light
- 'au-whispergrove-day-palette
+ 'au-themes-whispergrove-day-palette
  nil
  nil)
 

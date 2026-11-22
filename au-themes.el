@@ -4,7 +4,7 @@
 
 ;; Author: Szymon Wilczek <swilczek.lx@gmail.com>
 ;; URL: https://github.com/szymonwilczek/au-themes
-;; Version: 0.4.0
+;; Version: 0.4.1
 ;; Package-Requires: ((emacs "29.1") (modus-themes "5.2.0"))
 ;; Keywords: faces, themes, accessibility, autism, neurodivergence
 
@@ -212,7 +212,9 @@ HEX is parsed with `color-values-from-color-spec' rather than
 
 (defun au-themes--theme-palette (theme)
   "Extract palette alist for THEME, requiring theme library if needed."
-  (let* ((pal-sym (intern (format "%s-palette-partial" theme)))
+  (let* ((pal-sym (intern (format "au-themes-%s-palette-partial"
+                                  (string-remove-prefix
+                                   "au-" (symbol-name theme)))))
          (file-sym (intern (format "%s-theme" theme))))
     (unless (boundp pal-sym)
       (require file-sym nil t))

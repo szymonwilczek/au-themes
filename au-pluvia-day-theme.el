@@ -40,7 +40,7 @@
 (require 'modus-themes)
 (require 'au-themes)
 
-(defconst au-pluvia-day-palette-partial
+(defconst au-themes-pluvia-day-palette-partial
   '(;; Canvas & Chrome
     (cursor "#1e679a")                    ; Point / cursor indicator
     (bg-main "#b4b8bb")                   ; Primary canvas background
@@ -131,7 +131,7 @@
     (bg-region "#85929b")                 ; Marked region
     (fg-line-number-inactive "#6f757a"))) ; Inactive line numbers margin
 
-(defconst au-pluvia-day-palette-mappings-partial
+(defconst au-themes-pluvia-day-palette-mappings-partial
   '((err red)
     (warning fg-warning)
     (info yellow-faint)
@@ -169,12 +169,12 @@
     (accent-2 blue-faint)
     (accent-3 green-warmer)))
 
-(defconst au-pluvia-day-palette
+(defconst au-themes-pluvia-day-palette
   (modus-themes-generate-palette
-   au-pluvia-day-palette-partial
+   au-themes-pluvia-day-palette-partial
    nil
    nil
-   (append au-pluvia-day-palette-mappings-partial au-themes-palette-common)))
+   (append au-themes-pluvia-day-palette-mappings-partial au-themes-palette-common)))
 
 ;;;###theme-autoload
 (modus-themes-theme
@@ -182,7 +182,7 @@
  'au-themes
  "Light theme of a rainy day at home."
  'light
- 'au-pluvia-day-palette
+ 'au-themes-pluvia-day-palette
  nil
  nil)
 

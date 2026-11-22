@@ -33,7 +33,7 @@
 (require 'modus-themes)
 (require 'au-themes)
 
-(defconst au-parchment-night-palette-partial
+(defconst au-themes-parchment-night-palette-partial
   '(;; Canvas & Chrome
     (cursor "#beaa84")                    ; Point / cursor indicator
     (bg-main "#18130e")                   ; Primary canvas background
@@ -122,7 +122,7 @@
     (bg-region "#343311")                 ; Marked region
     (fg-line-number-inactive "#665c4e"))) ; Inactive line numbers margin
 
-(defconst au-parchment-night-palette-mappings-partial
+(defconst au-themes-parchment-night-palette-mappings-partial
   '((err red)
     (warning yellow-warmer)
     (info green)
@@ -160,14 +160,14 @@
     (accent-2 blue)
     (accent-3 green-warmer)))
 
-(defconst au-parchment-night-palette
+(defconst au-themes-parchment-night-palette
   (modus-themes-generate-palette
-   au-parchment-night-palette-partial
+   au-themes-parchment-night-palette-partial
    nil
    nil
-   (append au-parchment-night-palette-mappings-partial au-themes-palette-common)))
+   (append au-themes-parchment-night-palette-mappings-partial au-themes-palette-common)))
 
-(defconst au-parchment-night-custom-faces
+(defconst au-themes-parchment-night-custom-faces
   '(`(font-lock-keyword-face ((,c :slant italic :foreground ,keyword)))
     `(font-lock-builtin-face ((,c :slant italic :foreground ,builtin)))
     `(font-lock-comment-face ((,c :slant italic :foreground ,comment)))
@@ -180,10 +180,10 @@
  'au-themes
  "Low-chroma nocturnal theme with typographic italics and minimal color variance."
  'dark
- 'au-parchment-night-palette
+ 'au-themes-parchment-night-palette
  nil
  nil
- 'au-parchment-night-custom-faces)
+ 'au-themes-parchment-night-custom-faces)
 
 (provide 'au-parchment-night-theme)
 ;;; au-parchment-night-theme.el ends here

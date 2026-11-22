@@ -41,7 +41,7 @@
 (require 'modus-themes)
 (require 'au-themes)
 
-(defconst au-pluvia-night-palette-partial
+(defconst au-themes-pluvia-night-palette-partial
   '(;; Canvas & Chrome
     (cursor "#518892")                    ; Point / cursor indicator
     (bg-main "#0e1011")                   ; Primary canvas background
@@ -132,7 +132,7 @@
     (bg-region "#2f3a41")                 ; Marked region
     (fg-line-number-inactive "#565c60"))) ; Inactive line numbers margin
 
-(defconst au-pluvia-night-palette-mappings-partial
+(defconst au-themes-pluvia-night-palette-mappings-partial
   '((err red)
     (warning fg-warning)
     (info yellow-faint)
@@ -170,12 +170,12 @@
     (accent-2 blue-faint)
     (accent-3 green-warmer)))
 
-(defconst au-pluvia-night-palette
+(defconst au-themes-pluvia-night-palette
   (modus-themes-generate-palette
-   au-pluvia-night-palette-partial
+   au-themes-pluvia-night-palette-partial
    nil
    nil
-   (append au-pluvia-night-palette-mappings-partial au-themes-palette-common)))
+   (append au-themes-pluvia-night-palette-mappings-partial au-themes-palette-common)))
 
 ;;;###theme-autoload
 (modus-themes-theme
@@ -183,7 +183,7 @@
  'au-themes
  "Dark theme of a rainy night at home."
  'dark
- 'au-pluvia-night-palette
+ 'au-themes-pluvia-night-palette
  nil
  nil)
 

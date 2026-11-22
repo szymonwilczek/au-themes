@@ -33,7 +33,7 @@
 (require 'modus-themes)
 (require 'au-themes)
 
-(defconst au-parchment-day-palette-partial
+(defconst au-themes-parchment-day-palette-partial
   '(;; Canvas & Chrome
     (cursor "#62564c")                    ; Point / cursor indicator
     (bg-main "#ded6c4")                   ; Primary canvas background
@@ -122,7 +122,7 @@
     (bg-region "#b0a48e")                 ; Marked region
     (fg-line-number-inactive "#8c8272"))) ; Inactive line numbers margin
 
-(defconst au-parchment-day-palette-mappings-partial
+(defconst au-themes-parchment-day-palette-mappings-partial
   '((err red)
     (warning yellow-warmer)
     (info green)
@@ -160,14 +160,14 @@
     (accent-2 blue)
     (accent-3 green-warmer)))
 
-(defconst au-parchment-day-palette
+(defconst au-themes-parchment-day-palette
   (modus-themes-generate-palette
-   au-parchment-day-palette-partial
+   au-themes-parchment-day-palette-partial
    nil
    nil
-   (append au-parchment-day-palette-mappings-partial au-themes-palette-common)))
+   (append au-themes-parchment-day-palette-mappings-partial au-themes-palette-common)))
 
-(defconst au-parchment-day-custom-faces
+(defconst au-themes-parchment-day-custom-faces
   '(`(font-lock-keyword-face ((,c :slant italic :foreground ,keyword)))
     `(font-lock-builtin-face ((,c :slant italic :foreground ,builtin)))
     `(font-lock-comment-face ((,c :slant italic :foreground ,comment)))
@@ -180,10 +180,10 @@
  'au-themes
  "Low-chroma daylight theme with typographic italics and minimal color variance."
  'light
- 'au-parchment-day-palette
+ 'au-themes-parchment-day-palette
  nil
  nil
- 'au-parchment-day-custom-faces)
+ 'au-themes-parchment-day-custom-faces)
 
 (provide 'au-parchment-day-theme)
 ;;; au-parchment-day-theme.el ends here

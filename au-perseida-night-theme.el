@@ -41,7 +41,7 @@
 (require 'modus-themes)
 (require 'au-themes)
 
-(defconst au-perseida-night-palette-partial
+(defconst au-themes-perseida-night-palette-partial
   '(;; Canvas & Chrome
     (cursor "#8ea9c5")                    ; Point / cursor indicator
     (bg-main "#080808")                   ; Primary canvas background
@@ -131,7 +131,7 @@
     (bg-region "#31303c")                 ; Marked region
     (fg-line-number-inactive "#53555a"))) ; Inactive line numbers margin
 
-(defconst au-perseida-night-palette-mappings-partial
+(defconst au-themes-perseida-night-palette-mappings-partial
   '((err red)
     (warning yellow)
     (info yellow-faint)
@@ -174,12 +174,12 @@
     (accent-2 blue-faint)
     (accent-3 green-warmer)))
 
-(defconst au-perseida-night-palette
+(defconst au-themes-perseida-night-palette
   (modus-themes-generate-palette
-   au-perseida-night-palette-partial
+   au-themes-perseida-night-palette-partial
    nil
    nil
-   (append au-perseida-night-palette-mappings-partial au-themes-palette-common)))
+   (append au-themes-perseida-night-palette-mappings-partial au-themes-palette-common)))
 
 ;;;###theme-autoload
 (modus-themes-theme
@@ -187,7 +187,7 @@
  'au-themes
  "Optically black dark theme of an August meteor night, with star-coloured syntax."
  'dark
- 'au-perseida-night-palette
+ 'au-themes-perseida-night-palette
  nil
  nil)
 

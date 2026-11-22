@@ -32,7 +32,7 @@
 (require 'modus-themes)
 (require 'au-themes)
 
-(defconst au-aurum-day-palette-partial
+(defconst au-themes-aurum-day-palette-partial
   '(;; Canvas & Chrome
     (cursor "#8c5a08")                    ; Point / cursor indicator
     (bg-main "#ded8cc")                   ; Primary canvas background
@@ -121,7 +121,7 @@
     (bg-region "#d8be78")                 ; Marked region
     (fg-line-number-inactive "#867e70"))) ; Inactive line numbers margin
 
-(defconst au-aurum-day-palette-mappings-partial
+(defconst au-themes-aurum-day-palette-mappings-partial
   '((err red)
     (warning yellow-warmer)
     (info green)
@@ -159,12 +159,12 @@
     (accent-2 blue)
     (accent-3 green-warmer)))
 
-(defconst au-aurum-day-palette
+(defconst au-themes-aurum-day-palette
   (modus-themes-generate-palette
-   au-aurum-day-palette-partial
+   au-themes-aurum-day-palette-partial
    nil
    nil
-   (append au-aurum-day-palette-mappings-partial au-themes-palette-common)))
+   (append au-themes-aurum-day-palette-mappings-partial au-themes-palette-common)))
 
 ;;;###theme-autoload
 (modus-themes-theme
@@ -172,7 +172,7 @@
  'au-themes
  "Warm daylight theme with earth tones, calibrated for photophobia."
  'light
- 'au-aurum-day-palette
+ 'au-themes-aurum-day-palette
  nil
  nil)
 

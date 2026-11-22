@@ -40,7 +40,7 @@
 (require 'modus-themes)
 (require 'au-themes)
 
-(defconst au-perseida-day-palette-partial
+(defconst au-themes-perseida-day-palette-partial
   '(;; Canvas & Chrome
     (cursor "#7e6f03")                    ; Point / cursor indicator
     (bg-main "#d3d5d7")                   ; Primary canvas background
@@ -130,7 +130,7 @@
     (bg-region "#a9b0e1")                 ; Marked region
     (fg-line-number-inactive "#777a80"))) ; Inactive line numbers margin
 
-(defconst au-perseida-day-palette-mappings-partial
+(defconst au-themes-perseida-day-palette-mappings-partial
   '((err red)
     (warning yellow)
     (info yellow-faint)
@@ -173,12 +173,12 @@
     (accent-2 blue-faint)
     (accent-3 green-warmer)))
 
-(defconst au-perseida-day-palette
+(defconst au-themes-perseida-day-palette
   (modus-themes-generate-palette
-   au-perseida-day-palette-partial
+   au-themes-perseida-day-palette-partial
    nil
    nil
-   (append au-perseida-day-palette-mappings-partial au-themes-palette-common)))
+   (append au-themes-perseida-day-palette-mappings-partial au-themes-palette-common)))
 
 ;;;###theme-autoload
 (modus-themes-theme
@@ -186,7 +186,7 @@
  'au-themes
  "Pearl light theme of the dawn after a meteor night, with star-coloured syntax."
  'light
- 'au-perseida-day-palette
+ 'au-themes-perseida-day-palette
  nil
  nil)
 

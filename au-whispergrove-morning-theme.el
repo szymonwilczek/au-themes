@@ -33,7 +33,7 @@
 (require 'modus-themes)
 (require 'au-themes)
 
-(defconst au-whispergrove-morning-palette-partial
+(defconst au-themes-whispergrove-morning-palette-partial
   '(;; Canvas & Chrome
     (cursor "#06566c")                    ; Point / cursor indicator
     (bg-main "#9aa29c")                   ; Primary canvas background
@@ -122,7 +122,7 @@
     (bg-region "#6cb296")                 ; Marked region
     (fg-line-number-inactive "#46504a"))) ; Inactive line numbers margin
 
-(defconst au-whispergrove-morning-palette-mappings-partial
+(defconst au-themes-whispergrove-morning-palette-mappings-partial
   '((err red)
     (warning yellow-warmer)
     (info green)
@@ -160,12 +160,12 @@
     (accent-2 yellow)
     (accent-3 green-warmer)))
 
-(defconst au-whispergrove-morning-palette
+(defconst au-themes-whispergrove-morning-palette
   (modus-themes-generate-palette
-   au-whispergrove-morning-palette-partial
+   au-themes-whispergrove-morning-palette-partial
    nil
    nil
-   (append au-whispergrove-morning-palette-mappings-partial au-themes-palette-common)))
+   (append au-themes-whispergrove-morning-palette-mappings-partial au-themes-palette-common)))
 
 ;;;###theme-autoload
 (modus-themes-theme
@@ -173,7 +173,7 @@
  'au-themes
  "Subdued daylight theme with reduced canvas luminance for sensitive eyes."
  'light
- 'au-whispergrove-morning-palette
+ 'au-themes-whispergrove-morning-palette
  nil
  nil)
 
