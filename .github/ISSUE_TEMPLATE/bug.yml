@@ -1,0 +1,64 @@
+name: Bug report
+description: An error, a face that is missing or wrong, or a command that misbehaves.
+labels: [bug]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thank you for reporting it. For how a theme looks, rather than
+        something broken, [Theme feedback](https://github.com/szymonwilczek/au-themes/discussions/categories/theme-feedback)
+        is the better place.
+  - type: textarea
+    id: what
+    attributes:
+      label: What happened?
+      description: What you did, what you expected, and what happened instead.
+    validations:
+      required: true
+  - type: textarea
+    id: reproduce
+    attributes:
+      label: How to reproduce it
+      description: The smaller the better. Ideally from `emacs -Q` with only au-themes loaded.
+      placeholder: |
+        1. emacs -Q
+        2. M-x package-initialize, then (load-theme 'au-salina-night t)
+        3. M-x magit-status
+    validations:
+      required: true
+  - type: textarea
+    id: messages
+    attributes:
+      label: Error or backtrace
+      description: Optional. From the *Messages* buffer, or the backtrace with M-x toggle-debug-on-error.
+      render: text
+    validations:
+      required: false
+  - type: input
+    id: version
+    attributes:
+      label: au-themes version
+      description: "From M-x describe-package au-themes, or the commit when installed from source."
+      placeholder: 0.4.1
+    validations:
+      required: true
+  - type: input
+    id: emacs
+    attributes:
+      label: Emacs version
+      description: "The first line of M-x emacs-version."
+    validations:
+      required: true
+  - type: dropdown
+    id: install
+    attributes:
+      label: How did you install au-themes?
+      options:
+        - NonGNU ELPA (package-install, use-package)
+        - package-vc or :vc
+        - From source (load-path)
+        - straight.el or elpaca
+        - Doom Emacs or Spacemacs
+        - Something else
+    validations:
+      required: true

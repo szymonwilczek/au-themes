@@ -1,0 +1,14 @@
+blank_issues_enabled: false
+contact_links:
+  - name: Propose a theme
+    url: https://github.com/szymonwilczek/au-themes/discussions/categories/theme-proposals
+    about: An idea for a new family of themes, from a mood, a place or a season.
+  - name: Give feedback on a theme
+    url: https://github.com/szymonwilczek/au-themes/discussions/categories/theme-feedback
+    about: Something in a theme that is hard to read, tiring or does not feel right.
+  - name: Suggest a feature
+    url: https://github.com/szymonwilczek/au-themes/discussions/categories/ideas
+    about: Commands, options or integrations for the package.
+  - name: Ask a question
+    url: https://github.com/szymonwilczek/au-themes/discussions/categories/q-a
+    about: Help with installing, configuring or using au-themes.
