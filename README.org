@@ -10,7 +10,7 @@
 #+HTML: <h3 align="center"><a href="https://szymon-wilczek.me/writings/au-themes-screenshots/">Screenshots of every theme in code, Magit, Dired and Org</a></h3>
 
 Go to the [[#light-themes][light]] or the [[#dark-themes][dark]] themes, [[#installation][installation]],
-[[#usage][usage]] or the [[#themes][list of families]].
+[[#usage][usage]], the [[#themes][list of families]] or the [[#community][community]].
 
 Calm, low-glare colour themes. Made first of all for autistic people,
 and for anyone who finds most themes too loud to read for long.
@@ -228,6 +228,24 @@ We pick colours by hand and check each palette against these rules:
 The test suite checks every theme against these rules and many more;
 [[file:tests/README.org][tests/README.org]] explains how it works and how to run it. The
 sources are listed in [[file:REFERENCES.org][REFERENCES.org]].
+
+* Community
+:PROPERTIES:
+:CUSTOM_ID: community
+:END:
+
+New themes and fixes start from what people tell us in [[https://github.com/szymonwilczek/au-themes/discussions][Discussions]]:
+
+- [[https://github.com/szymonwilczek/au-themes/discussions/categories/theme-proposals][Propose a theme]] from a mood, a place or a season. You do not need
+  to pick the colours; we work them out with you.
+- [[https://github.com/szymonwilczek/au-themes/discussions/categories/theme-feedback][Tell us]] when a theme is hard to read or tiring, and where.
+- [[https://github.com/szymonwilczek/au-themes/discussions/categories/ideas][Suggest a feature]] for the package, or [[https://github.com/szymonwilczek/au-themes/discussions/categories/q-a][ask a question]].
+- Follow [[https://github.com/szymonwilczek/au-themes/discussions/7][What's cooking]] to see what we are working on.
+
+Bugs go to the [[https://github.com/szymonwilczek/au-themes/issues/new/choose][issue tracker]].
+
+If the themes help you, [[https://github.com/sponsors/szymonwilczek][sponsoring]] gives us the time for new
+families.
 
 * License
 
