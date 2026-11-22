@@ -1,0 +1,99 @@
+title: "Feedback: "
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thank you for telling us how a theme works for you. Praise is
+        welcome too, but what helps most is what gets in the way.
+
+        "Too many similar colours" or "too dim" can be fixed once we know
+        *which* colours, *where*, and in what light. Every change is then
+        checked against the [test suite](https://github.com/szymonwilczek/au-themes/blob/main/tests/README.org),
+        so a fix never trades one problem for another.
+
+        Something broken, like an error or a face that is missing?
+        Please [open a bug report](https://github.com/szymonwilczek/au-themes/issues/new/choose) instead.
+  - type: dropdown
+    id: theme
+    attributes:
+      label: Theme
+      description: The theme this is about. For several, pick one and name the others below.
+      options:
+        - au-aurum-day
+        - au-aurum-night
+        - au-herbarium-day
+        - au-herbarium-night
+        - au-mysterium
+        - au-parchment-day
+        - au-parchment-night
+        - au-perseida-day
+        - au-perseida-night
+        - au-pluvia-day
+        - au-pluvia-night
+        - au-salina-day
+        - au-salina-night
+        - au-whispergrove-day
+        - au-whispergrove-morning
+        - au-whispergrove-night
+        - au-yerba-day
+        - au-yerba-night
+    validations:
+      required: true
+  - type: textarea
+    id: what
+    attributes:
+      label: What gets in the way?
+      description: What is hard to read, tiring, or does not feel right. The more concrete, the better.
+      placeholder: |
+        Keywords and types look almost the same in Python, so I cannot tell
+        `def` from `int` at a glance.
+    validations:
+      required: true
+  - type: checkboxes
+    id: where
+    attributes:
+      label: Where do you see it?
+      options:
+        - label: Code (syntax colours)
+        - label: Selected region
+        - label: Search and replace matches
+        - label: Line numbers, fringe or the current line
+        - label: Mode line or header line
+        - label: Completion (minibuffer, Corfu, Company...)
+        - label: Magit or diffs
+        - label: Org or Markdown
+        - label: Dired
+        - label: Somewhere else (tell us below)
+  - type: dropdown
+    id: light
+    attributes:
+      label: Light in the room
+      options:
+        - Dark
+        - Dim, or a lamp only
+        - Daylight
+        - Bright sun
+    validations:
+      required: false
+  - type: input
+    id: display
+    attributes:
+      label: Display
+      description: Screen and any night light or colour filter, if you know them.
+      placeholder: MacBook Pro 14" at full brightness, Night Shift on
+    validations:
+      required: false
+  - type: textarea
+    id: screenshot
+    attributes:
+      label: Screenshot
+      description: A screenshot of the spot, if you can. Drag the image in here.
+    validations:
+      required: false
+  - type: textarea
+    id: better
+    attributes:
+      label: What would feel better?
+      description: Optional. Another theme that gets this right, a colour, or just a direction like "warmer" or "more contrast".
+    validations:
+      required: false

@@ -1,0 +1,28 @@
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Show us your Emacs with au-themes: your setup, a theme with your
+        favourite font, a port of a palette to your terminal. We love
+        seeing them.
+  - type: textarea
+    id: screenshot
+    attributes:
+      label: Screenshot
+      description: Drag images in here.
+    validations:
+      required: true
+  - type: input
+    id: theme
+    attributes:
+      label: Theme
+      placeholder: au-perseida-night
+    validations:
+      required: false
+  - type: textarea
+    id: details
+    attributes:
+      label: Details
+      description: Optional. Font, packages, or anything else you would like to tell.
+    validations:
+      required: false

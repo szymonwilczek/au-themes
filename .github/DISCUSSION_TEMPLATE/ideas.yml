@@ -1,0 +1,24 @@
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Ideas for the package itself: commands, options, integrations with
+        other packages. For a new theme, use [Theme proposals](https://github.com/szymonwilczek/au-themes/discussions/categories/theme-proposals);
+        for how an existing theme looks, [Theme feedback](https://github.com/szymonwilczek/au-themes/discussions/categories/theme-feedback).
+  - type: textarea
+    id: problem
+    attributes:
+      label: What would you like to do?
+      description: The situation first, then the idea. That helps us find the best fit, which may differ from the first one.
+      placeholder: |
+        I like the light themes, but they are too dim for my office. I would
+        like to raise their contrast a little without switching themes.
+    validations:
+      required: true
+  - type: textarea
+    id: idea
+    attributes:
+      label: How could it work?
+      description: Optional. A command, an option, a hook, or how another package does it.
+    validations:
+      required: false

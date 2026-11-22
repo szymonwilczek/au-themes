@@ -1,0 +1,42 @@
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Ask anything about installing, configuring or using au-themes.
+        When an answer solves it, mark it as the answer so the next person
+        finds it.
+  - type: textarea
+    id: question
+    attributes:
+      label: Question
+    validations:
+      required: true
+  - type: dropdown
+    id: install
+    attributes:
+      label: How did you install au-themes?
+      options:
+        - NonGNU ELPA (package-install, use-package)
+        - package-vc or :vc
+        - From source (load-path)
+        - straight.el or elpaca
+        - Doom Emacs or Spacemacs
+        - Something else
+    validations:
+      required: false
+  - type: input
+    id: emacs
+    attributes:
+      label: Emacs version
+      description: "The first line of M-x emacs-version."
+      placeholder: GNU Emacs 30.1 (build 1, x86_64-pc-linux-gnu, GTK+ Version 3.24.43)
+    validations:
+      required: false
+  - type: textarea
+    id: config
+    attributes:
+      label: Your au-themes configuration
+      description: Optional. The part of your init file that loads or sets up the themes.
+      render: emacs-lisp
+    validations:
+      required: false

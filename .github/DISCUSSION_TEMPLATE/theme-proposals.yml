@@ -1,0 +1,66 @@
+title: "Proposal: "
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Have a theme in mind? Tell us about it. New families start from a
+        mood or a place, like a quiet forest, a salt flat or a rainy window,
+        and the colours come from there.
+
+        You do not need to pick colours or write any code. We work the
+        palette out together, and it has to pass the same rules as every
+        other au-theme: low glare, calm text, and colours that stay apart
+        under colour blindness. [How the colours are chosen](https://github.com/szymonwilczek/au-themes#how-the-colours-are-chosen)
+        explains them.
+
+        We add new families rather than new variants of the existing ones,
+        so each family stays distinct.
+  - type: textarea
+    id: mood
+    attributes:
+      label: Mood or inspiration
+      description: A place, a season, a time of day, a painting, a memory. What should it feel like?
+      placeholder: |
+        The first hour of a spring morning in an orchard: pale sky, wet grass,
+        blossom, still a little cold.
+    validations:
+      required: true
+  - type: dropdown
+    id: polarity
+    attributes:
+      label: Light or dark
+      options:
+        - Dark
+        - Light
+        - Both, as a night and day pair
+        - Not sure
+    validations:
+      required: true
+  - type: textarea
+    id: when
+    attributes:
+      label: When would you use it?
+      description: Time of day, light in the room, how long you read at a stretch.
+      placeholder: Early mornings before sunrise, in a dark room, for an hour or two.
+    validations:
+      required: false
+  - type: textarea
+    id: colours
+    attributes:
+      label: Colours or pictures
+      description: Optional. Photos, paintings, palettes or hex codes that capture it. Drag images in here.
+    validations:
+      required: false
+  - type: textarea
+    id: missing
+    attributes:
+      label: What do the current themes miss for you?
+      description: Optional. If a theme comes close but not quite, tell us which one and why.
+    validations:
+      required: false
+  - type: markdown
+    attributes:
+      value: |
+        au-themes is made by two people in their free time. If the themes
+        help you, [sponsoring](https://github.com/sponsors/szymonwilczek)
+        is what gives us the time for new families.
