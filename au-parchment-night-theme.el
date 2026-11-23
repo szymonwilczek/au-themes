@@ -41,6 +41,8 @@
     (bg-alt "#2c221a")                    ; Subtle borders, alternating stripes
     (fg-main "#a29a88")                   ; Default buffer text
     (fg-dim "#665c4e")                    ; Comments, metadata
+    (fg-info "#788a6b")                   ; Info notes, marks, rebase commits done
+    (fg-accent "#c59fac")                 ; Accent: current rebase commit, completion match
     (fg-alt "#987e72")                    ; Struct properties
     (fg-var "#a3998b")                    ; Variable definitions
     (bg-active "#34281e")                 ; Active modeline frame, focused bars
@@ -125,7 +127,7 @@
 (defconst au-themes-parchment-night-palette-mappings-partial
   '((err red)
     (warning yellow-warmer)
-    (info green)
+    (info fg-info)
 
     (fg-link blue-warmer)
     (fg-link-visited blue)
@@ -155,7 +157,7 @@
     (rx-backslash yellow-cooler)
     (rx-construct red)
 
-    (accent-0 yellow-warmer)
+    (accent-0 fg-accent)
     (accent-1 green)
     (accent-2 blue)
     (accent-3 green-warmer)))
