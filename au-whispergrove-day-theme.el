@@ -41,6 +41,7 @@
     (bg-alt "#b3b5ad")                    ; Subtle borders, alternating stripes
     (fg-main "#242d26")                   ; Default buffer text
     (fg-dim "#5d6a5e")                    ; Comments, metadata
+    (fg-info "#00663d")                   ; Info notes, marks, rebase commits done
     (fg-alt "#63506e")                    ; Struct properties
     (fg-var "#4c5b32")                    ; Variable definitions
     (bg-active "#b1b3ab")                 ; Active modeline frame, focused bars
@@ -125,7 +126,7 @@
 (defconst au-themes-whispergrove-day-palette-mappings-partial
   '((err red)
     (warning yellow-warmer)
-    (info green)
+    (info fg-info)
 
     (fg-link blue-warmer)
     (fg-link-visited blue)
