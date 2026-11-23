@@ -78,6 +78,7 @@
     test-cross-family-distinctiveness
     test-ui-text-contrast
     test-diff-refine-separation
+    test-magit-sequence-separation
     test-select-restore))
 
 (defvar au-test-themes
