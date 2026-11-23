@@ -256,11 +256,11 @@ Extracts the family identifier from the convention `au-<family>-<variant>',
       (intern (match-string 1 name)))
      (t (intern name)))))
 
-(defconst au-test-strict-families '(herbarium mysterium perseida pluvia salina yerba)
+(defconst au-test-strict-families
+  '(herbarium mysterium perseida pluvia salina whispergrove yerba)
   "Families held to the all-pairs separation and comment recession gates.
-Families released before these gates (aurum, parchment, whispergrove)
-still fail them; each joins this list once it has been
-retuned.")
+Families released before these gates (aurum, parchment) still fail
+them; each joins this list once it has been retuned.")
 
 (defun au-test-strict-family-p (theme)
   "Return non-nil when THEME belongs to `au-test-strict-families'."
