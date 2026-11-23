@@ -41,6 +41,7 @@
     (bg-alt "#28221e")                    ; Subtle borders, alternating stripes
     (fg-main "#a9a18d")                   ; Default buffer text
     (fg-dim "#61584a")                    ; Comments, metadata
+    (fg-info "#c37b59")                   ; Info notes, marks, rebase commits done
     (fg-alt "#87917a")                    ; Struct properties
     (fg-var "#aa8f55")                    ; Variable definitions
     (bg-active "#3e3228")                 ; Active modeline frame, focused bars
@@ -125,7 +126,7 @@
 (defconst au-themes-aurum-night-palette-mappings-partial
   '((err red)
     (warning yellow-warmer)
-    (info green)
+    (info fg-info)
 
     (fg-link blue-warmer)
     (fg-link-visited blue)
