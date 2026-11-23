@@ -41,6 +41,7 @@
     (bg-alt "#282e24")                    ; Subtle borders, alternating stripes
     (fg-main "#9ca69e")                   ; Default buffer text
     (fg-dim "#506250")                    ; Comments, metadata
+    (fg-accent "#007b9d")                 ; Accent: current rebase commit, completion match
     (fg-alt "#6ea288")                    ; Struct properties
     (fg-var "#99bca9")                    ; Variable definitions
     (bg-active "#3e463a")                 ; Active modeline frame, focused bars
@@ -155,7 +156,7 @@
     (rx-backslash yellow-cooler)
     (rx-construct red)
 
-    (accent-0 blue)
+    (accent-0 fg-accent)
     (accent-1 green)
     (accent-2 yellow)
     (accent-3 green-warmer)))
