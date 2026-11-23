@@ -41,6 +41,8 @@
     (bg-alt "#919993")                    ; Subtle borders, alternating stripes
     (fg-main "#141c16")                   ; Default buffer text
     (fg-dim "#425046")                    ; Comments, metadata
+    (fg-info "#01663b")                   ; Info notes, marks, rebase commits done
+    (fg-accent "#303457")                 ; Accent: current rebase commit, completion match
     (fg-alt "#543e5c")                    ; Struct properties
     (fg-var "#4b4e29")                    ; Variable definitions
     (bg-active "#808882")                 ; Active modeline frame, focused bars
@@ -125,7 +127,7 @@
 (defconst au-themes-whispergrove-morning-palette-mappings-partial
   '((err red)
     (warning yellow-warmer)
-    (info green)
+    (info fg-info)
 
     (fg-link blue-warmer)
     (fg-link-visited blue)
@@ -155,7 +157,7 @@
     (rx-backslash yellow-cooler)
     (rx-construct red)
 
-    (accent-0 blue)
+    (accent-0 fg-accent)
     (accent-1 green)
     (accent-2 yellow)
     (accent-3 green-warmer)))
