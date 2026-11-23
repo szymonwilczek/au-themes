@@ -40,7 +40,9 @@
     (bg-dim "#d2cbba")                    ; Inactive windows, dim canvas
     (bg-alt "#c6bfad")                    ; Subtle borders, alternating stripes
     (fg-main "#282420")                   ; Default buffer text
-    (fg-dim "#685e50")                    ; Comments, metadata
+    (fg-dim "#584e40")                    ; Comments, metadata
+    (fg-accent "#936036")                 ; Accent: current rebase commit, completion match
+    (fg-info "#6f7a6a")                   ; Info notes, marks, rebase commits done
     (fg-alt "#665862")                    ; Struct properties
     (fg-var "#282420")                    ; Variable definitions
     (bg-active "#c8c0ae")                 ; Active modeline frame, focused bars
@@ -125,7 +127,7 @@
 (defconst au-themes-parchment-day-palette-mappings-partial
   '((err red)
     (warning yellow-warmer)
-    (info green)
+    (info fg-info)
 
     (fg-link blue-warmer)
     (fg-link-visited blue)
@@ -155,7 +157,7 @@
     (rx-backslash yellow-cooler)
     (rx-construct red)
 
-    (accent-0 yellow-warmer)
+    (accent-0 fg-accent)
     (accent-1 green)
     (accent-2 blue)
     (accent-3 green-warmer)))
