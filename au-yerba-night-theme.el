@@ -69,7 +69,7 @@
     (yellow "#477c3b")                    ; Keyword alias
     (yellow-warmer "#ba6e62")             ; Numeric literals
     (yellow-cooler "#96624e")             ; Preprocessor directives
-    (yellow-faint "#7c755a")              ; Informational tooltips, fringe markers
+    (yellow-faint "#938969")              ; Informational tooltips, fringe markers
 
     (blue "#8e5e74")                      ; Function definitions
     (blue-warmer "#776793")               ; Function calls
