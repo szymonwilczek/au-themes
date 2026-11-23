@@ -66,7 +66,7 @@
     (green-cooler "#3f3824")              ; Control keywords
     (green-faint "#5c5c5c")               ; Documentation strings, inline comments
 
-    (yellow "#3f3824")                    ; Keyword alias
+    (yellow "#3e3723")                    ; Keyword alias
     (yellow-warmer "#5e4204")             ; Numeric literals
     (yellow-cooler "#79381c")             ; Preprocessor directives
     (yellow-faint "#19579f")              ; Informational tooltips, fringe markers
