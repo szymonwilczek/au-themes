@@ -43,42 +43,42 @@
     (fg-dim "#665c4e")                    ; Comments, metadata
     (fg-info "#788a6b")                   ; Info notes, marks, rebase commits done
     (fg-accent "#c59fac")                 ; Accent: current rebase commit, completion match
-    (fg-alt "#987e72")                    ; Struct properties
-    (fg-var "#a3998b")                    ; Variable definitions
+    (fg-alt "#9d8073")                    ; Struct properties
+    (fg-var "#a59985")                    ; Variable definitions
     (bg-active "#34281e")                 ; Active modeline frame, focused bars
     (bg-inactive "#221b14")               ; Inactive modeline
     (border "#443426")                    ; Window dividers
 
     ;; Basic Chromatic Scale
     (red "#aa4238")                       ; Errors, critical warnings
-    (red-warmer "#88737c")                ; String literals
+    (red-warmer "#806570")                ; String literals
     (red-cooler "#9e3e34")                ; Diff deletions, removal markers
-    (red-faint "#736b5d")                 ; Structural brackets
+    (red-faint "#7a7160")                 ; Structural brackets
 
-    (green "#87927d")                     ; Primitive types
-    (green-warmer "#a3af98")              ; Constant values and macros
-    (green-cooler "#6c7158")              ; Control keywords
-    (green-faint "#665c4e")               ; Documentation strings, inline comments
+    (green "#8a9282")                     ; Primitive types
+    (green-warmer "#a6b29a")              ; Constant values and macros
+    (green-cooler "#6a6e5e")              ; Control keywords
+    (green-faint "#5e513b")               ; Documentation strings, inline comments
 
-    (yellow "#6c7158")                    ; Keyword alias
-    (yellow-warmer "#b2959c")             ; Numeric literals
-    (yellow-cooler "#6f624e")             ; Preprocessor directives
+    (yellow "#6a6e5e")                    ; Keyword alias
+    (yellow-warmer "#bb9aa2")             ; Numeric literals
+    (yellow-cooler "#726246")             ; Preprocessor directives
     (yellow-faint "#786c5c")              ; Informational tooltips, fringe markers
 
-    (blue "#646c5a")                      ; Function definitions
-    (blue-warmer "#836771")               ; Function calls
-    (blue-cooler "#787062")               ; Binary and unary operators
-    (blue-faint "#9e8184")                ; Built-in functions
+    (blue "#6c785e")                      ; Function definitions
+    (blue-warmer "#846671")               ; Function calls
+    (blue-cooler "#85795f")               ; Binary and unary operators
+    (blue-faint "#978083")                ; Built-in functions
 
     (magenta "#88967e")                   ; Composite types: struct, union, enum
     (magenta-warmer "#80646f")            ; Extended library types
     (magenta-cooler "#706556")            ; Rare syntax nodes, special escapes
-    (magenta-faint "#665c4e")             ; Inactive conditional blocks
+    (magenta-faint "#5e513b")             ; Inactive conditional blocks
 
-    (cyan "#6c7158")                      ; Keyword fallback
+    (cyan "#6a6e5e")                      ; Keyword fallback
     (cyan-warmer "#706556")               ; Preprocessor alias
-    (cyan-cooler "#787062")               ; Operator alias
-    (cyan-faint "#686054")                ; Punctuation delimiters
+    (cyan-cooler "#85795f")               ; Operator alias
+    (cyan-faint "#595246")                ; Punctuation delimiters
 
     ;; Panels, Diffs and Structural Highlights
     (bg-red-intense "#5a1e18")            ; Blocking errors, fatal assertion panel
