@@ -39,46 +39,46 @@
     (bg-main "#ded6c4")                   ; Primary canvas background
     (bg-dim "#d2cbba")                    ; Inactive windows, dim canvas
     (bg-alt "#c6bfad")                    ; Subtle borders, alternating stripes
-    (fg-main "#282420")                   ; Default buffer text
+    (fg-main "#232320")                   ; Default buffer text
     (fg-dim "#584e40")                    ; Comments, metadata
     (fg-accent "#936036")                 ; Accent: current rebase commit, completion match
     (fg-info "#6f7a6a")                   ; Info notes, marks, rebase commits done
-    (fg-alt "#665862")                    ; Struct properties
-    (fg-var "#282420")                    ; Variable definitions
+    (fg-alt "#6c5363")                    ; Struct properties
+    (fg-var "#211e12")                    ; Variable definitions
     (bg-active "#c8c0ae")                 ; Active modeline frame, focused bars
     (bg-inactive "#d2cbba")               ; Inactive modeline
     (border "#a49b88")                    ; Window dividers
 
     ;; Basic Chromatic Scale
     (red "#9e3a2a")                       ; Errors, critical warnings
-    (red-warmer "#463726")                ; String literals
+    (red-warmer "#3b2c16")                ; String literals
     (red-cooler "#9e3a2a")                ; Diff deletions, removal markers
-    (red-faint "#4b453e")                 ; Structural brackets
+    (red-faint "#4c3f32")                 ; Structural brackets
 
-    (green "#5c6557")                     ; Primitive types
-    (green-warmer "#4b6358")              ; Constant values and macros
-    (green-cooler "#343f33")              ; Control keywords
-    (green-faint "#685e50")               ; Documentation strings, inline comments
+    (green "#5c6456")                     ; Primitive types
+    (green-warmer "#4b645a")              ; Constant values and macros
+    (green-cooler "#323b31")              ; Control keywords
+    (green-faint "#766d62")               ; Documentation strings, inline comments
 
     (yellow "#363f2c")                    ; Keyword alias
-    (yellow-warmer "#6e594c")             ; Numeric literals
-    (yellow-cooler "#472926")             ; Preprocessor directives
+    (yellow-warmer "#745c4a")             ; Numeric literals
+    (yellow-cooler "#4d2523")             ; Preprocessor directives
     (yellow-faint "#726858")              ; Informational tooltips, fringe markers
 
-    (blue "#404138")                      ; Function definitions
-    (blue-warmer "#594a42")               ; Function calls
-    (blue-cooler "#524c44")               ; Binary and unary operators
-    (blue-faint "#765b5c")                ; Built-in functions
+    (blue "#393937")                      ; Function definitions
+    (blue-warmer "#5c453b")               ; Function calls
+    (blue-cooler "#4c4c4c")               ; Binary and unary operators
+    (blue-faint "#755657")                ; Built-in functions
 
     (magenta "#665f48")                   ; Composite types: struct, union, enum
     (magenta-warmer "#564740")            ; Extended library types
     (magenta-cooler "#442b28")            ; Rare syntax nodes, special escapes
-    (magenta-faint "#685e50")             ; Inactive conditional blocks
+    (magenta-faint "#766d62")             ; Inactive conditional blocks
 
     (cyan "#363f2c")                      ; Keyword fallback
-    (cyan-warmer "#472926")               ; Preprocessor alias
-    (cyan-cooler "#524c44")               ; Operator alias
-    (cyan-faint "#61584e")                ; Punctuation delimiters
+    (cyan-warmer "#4d2523")               ; Preprocessor alias
+    (cyan-cooler "#4c4c4c")               ; Operator alias
+    (cyan-faint "#56493d")                ; Punctuation delimiters
 
     ;; Panels, Diffs and Structural Highlights
     (bg-red-intense "#e6a79c")            ; Blocking errors, fatal assertion panel
@@ -111,7 +111,7 @@
     (fg-removed "#78201a")                ; Diff removed foreground text
 
     (bg-mode-line-active "#c8c0ae")       ; Active modeline surface
-    (fg-mode-line-active "#282420")       ; Active modeline primary text
+    (fg-mode-line-active "#211e12")       ; Active modeline primary text
     (bg-completion "#cbc2b0")             ; Minibuffer completion selected row
     (bg-popup "#e4dcce")                  ; Autocomplete tooltip surface
     (bg-hover "#ccc4b2")                  ; Mouse hover overlay
