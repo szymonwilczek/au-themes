@@ -39,6 +39,19 @@
 ;; Test 4 : Modus registration: after loading au-themes inside
 ;; a with-eval-after-load for modus-themes, verify every discovered
 ;; au-theme has been declared and registered with modus-themes.
+;;
+;; Test 5 : Random loading & exclusion: `au-themes-load-random',
+;; `au-themes-load-random-light', and `au-themes-load-random-dark'
+;; filter a mixed collection by polarity, exclude the current theme
+;; when alternatives exist, fall back cleanly on a 1-theme collection,
+;; and do not mutate `au-themes-collection'.
+;;
+;; Test 6 : Random loading validation: invalid `background-mode' values
+;; and empty filtered collections raise `user-error' without loading.
+;;
+;; Test 7 : Random loading prefix prompt: calling `au-themes-load-random'
+;; interactively prompts via `read-multiple-choice' only with a prefix
+;; argument and limits selection to the chosen polarity.
 
 ;;; Code:
 
@@ -176,6 +189,140 @@ and its :background-mode property must match the palette polarity."
                    passes fails (length all)))
     (zerop fails)))
 
+;;; Test 5
+(cl-defun test-select-restore--load-random-exclusion ()
+  "Verify polarity filtering, current-theme exclusion, and 1-theme fallback."
+  (let* ((lights (au-themes-get-themes 'light))
+         (darks (au-themes-get-themes 'dark)))
+    (unless (and (>= (length lights) 2) (>= (length darks) 2))
+      (princ "[SKIP]  Need at least 2 light and 2 dark themes for random test\n")
+      (cl-return-from test-select-restore--load-random-exclusion 'skip))
+    (let* ((l1 (nth 0 lights)) (l2 (nth 1 lights))
+           (d1 (nth 0 darks))  (d2 (nth 1 darks))
+           (mixed (list l1 l2 d1 d2))
+           (loaded nil)
+           (failure nil))
+      (cl-letf (((symbol-function 'au-themes-load-theme)
+                 (lambda (th) (setq loaded th))))
+        (let ((au-themes-collection mixed)
+              (custom-enabled-themes (list l1)))
+          (dotimes (_ 5)
+            (setq loaded nil)
+            (au-themes-load-random 'light)
+            (unless (or failure (eq loaded l2))
+              (setq failure (format "light arg -> %S" loaded)))
+            (setq loaded nil)
+            (au-themes-load-random-light)
+            (unless (or failure (eq loaded l2))
+              (setq failure (format "load-random-light -> %S" loaded)))))
+        (let ((au-themes-collection mixed)
+              (custom-enabled-themes (list d1)))
+          (dotimes (_ 5)
+            (setq loaded nil)
+            (au-themes-load-random 'dark)
+            (unless (or failure (eq loaded d2))
+              (setq failure (format "dark arg -> %S" loaded)))
+            (setq loaded nil)
+            (au-themes-load-random-dark)
+            (unless (or failure (eq loaded d2))
+              (setq failure (format "load-random-dark -> %S" loaded)))))
+        (let* ((pair (list l1 d1))
+               (au-themes-collection pair)
+               (custom-enabled-themes (list d1)))
+          (dotimes (_ 5)
+            (setq loaded nil)
+            (au-themes-load-random)
+            (unless (or failure (eq loaded l1))
+              (setq failure (format "unfiltered exclusion -> %S" loaded))))
+          (unless (or failure (equal pair (list l1 d1)))
+            (setq failure (format "mutated collection -> %S" pair))))
+        (let ((au-themes-collection (list l1))
+              (custom-enabled-themes (list l1)))
+          (setq loaded nil)
+          (au-themes-load-random)
+          (unless (or failure (eq loaded l1))
+            (setq failure (format "1-theme fallback -> %S" loaded)))))
+      (if (not failure)
+          (progn
+            (princ "[PASS]  Random loader filters polarity, excludes current, and falls back on 1 theme\n")
+            t)
+        (princ (format "[FAIL]  Random loader exclusion/fallback failed (%s)\n" failure))
+        nil))))
+
+;;; Test 6
+(cl-defun test-select-restore--load-random-validation ()
+  "Verify invalid background modes and empty pools signal `user-error'."
+  (let* ((lights (au-themes-get-themes 'light))
+         (called nil)
+         (err-str nil)
+         (err-sym nil)
+         (err-empty nil))
+    (unless lights
+      (princ "[SKIP]  No light themes discovered for random validation test\n")
+      (cl-return-from test-select-restore--load-random-validation 'skip))
+    (cl-letf (((symbol-function 'au-themes-load-theme)
+               (lambda (th) (setq called th))))
+      (setq err-str (condition-case err
+                        (progn (au-themes-load-random "light") nil)
+                      (user-error (error-message-string err))))
+      (setq err-sym (condition-case err
+                        (progn (au-themes-load-random 'invalid) nil)
+                      (user-error (error-message-string err))))
+      (let ((au-themes-collection (list (car lights))))
+        (setq err-empty (condition-case err
+                            (progn (au-themes-load-random 'dark) nil)
+                          (user-error (error-message-string err))))))
+    (if (and (not called)
+             (stringp err-str) (string-match-p "Invalid background mode" err-str)
+             (stringp err-sym) (string-match-p "Invalid background mode" err-sym)
+             (stringp err-empty) (string-match-p "No au-themes available for dark" err-empty))
+        (progn
+          (princ "[PASS]  Random loader validates background-mode and empty collections\n")
+          t)
+      (princ (format "[FAIL]  Random validation: called=%S str=%S sym=%S empty=%S\n"
+                     called err-str err-sym err-empty))
+      nil)))
+
+;;; Test 7
+(cl-defun test-select-restore--load-random-prefix-prompt ()
+  "Verify prefix-argument invocation prompts and loads chosen polarity."
+  (let ((lights (au-themes-get-themes 'light))
+        (darks (au-themes-get-themes 'dark))
+        (loaded nil)
+        (prompted nil)
+        (failure nil))
+    (unless (and lights darks)
+      (princ "[SKIP]  Need light and dark themes for prefix prompt test\n")
+      (cl-return-from test-select-restore--load-random-prefix-prompt 'skip))
+    (cl-letf (((symbol-function 'au-themes-load-theme)
+               (lambda (th) (setq loaded th))))
+      (cl-letf (((symbol-function 'read-multiple-choice)
+                 (lambda (&rest _) (setq prompted t) nil)))
+        (let ((current-prefix-arg nil))
+          (call-interactively #'au-themes-load-random))
+        (when (or prompted (not loaded))
+          (setq failure (format "no-prefix prompted=%S loaded=%S" prompted loaded))))
+      (dolist (spec '((?l . light) (?d . dark)))
+        (setq loaded nil prompted nil)
+        (cl-letf (((symbol-function 'read-multiple-choice)
+                   (lambda (_prompt choices &rest _)
+                     (setq prompted t)
+                     (assq (car spec) choices))))
+          (let ((current-prefix-arg '(4)))
+            (call-interactively #'au-themes-load-random)))
+        (unless (or failure
+                    (and prompted
+                         loaded
+                         (eq (au-themes--theme-polarity loaded) (cdr spec))))
+          (setq failure (format "prefix %s prompted=%S loaded=%S"
+                                (cdr spec) prompted loaded)))))
+    (if (not failure)
+        (progn
+          (princ "[PASS]  Random loader prefix prompt selects chosen polarity\n")
+          t)
+      (princ (format "[FAIL]  Random prefix prompt failed (%s)\n" failure))
+      nil)))
+
 ;;; Runner
 (defun test-select-restore-run ()
   "Run all select-restore tests.  Return t if all pass, nil if any fail."
@@ -189,7 +336,10 @@ and its :background-mode property must match the palette polarity."
     (dolist (test '(test-select-restore--consult
                     test-select-restore--completing-read-abort
                     test-select-restore--preview-input
-                    test-select-restore--modus-registration))
+                    test-select-restore--modus-registration
+                    test-select-restore--load-random-exclusion
+                    test-select-restore--load-random-validation
+                    test-select-restore--load-random-prefix-prompt))
       (let ((res (funcall test)))
         (cond ((eq res 'skip) (setq skips (1+ skips)))
               (res            (setq passes (1+ passes)))

@@ -4,7 +4,7 @@
 
 ;; Author: Szymon Wilczek <swilczek.lx@gmail.com>
 ;; URL: https://github.com/szymonwilczek/au-themes
-;; Version: 0.4.2
+;; Version: 0.4.3
 ;; Package-Requires: ((emacs "29.1") (modus-themes "5.2.0"))
 ;; Keywords: faces, themes, accessibility, autism, neurodivergence
 
@@ -246,6 +246,8 @@ symbol properties `au-themes-polarity' and `au-themes-luminance-y'."
 (defun au-themes-get-themes (&optional polarity)
   "Return list of discovered au-themes, optionally filtered by POLARITY.
 POLARITY should be `light' or `dark'."
+  (when (and polarity (not (memq polarity '(light dark))))
+    (user-error "Invalid background mode `%S'; expected `light' or `dark'" polarity))
   (let ((all (or au-themes-collection (au-themes--discover-themes))))
     (if polarity
         (cl-remove-if-not (lambda (th) (eq (au-themes--theme-polarity th) polarity)) all)
@@ -438,6 +440,44 @@ With optional THEME symbol, load it directly without prompting."
   (if theme
       (au-themes-load-theme theme)
     (au-themes--select (au-themes-get-themes 'dark) "Select dark au-theme")))
+
+(defun au-themes--background-mode-prompt ()
+  "Prompt for a background mode and return `light' or `dark'."
+  (intern
+   (cadr
+    (read-multiple-choice
+     "Background mode"
+     '((?l "light" "Load a random light theme")
+       (?d "dark" "Load a random dark theme"))
+     "Limit random theme selection to light or dark themes."))))
+
+;;;###autoload
+(defun au-themes-load-random (&optional background-mode)
+  "Load a random `au-themes' theme, excluding the current one.
+With optional BACKGROUND-MODE (symbol `light' or `dark'), limit the
+selection to themes of that polarity.  Called interactively with a
+prefix argument, prompt for the polarity."
+  (interactive
+   (list (when current-prefix-arg
+           (au-themes--background-mode-prompt))))
+  (let* ((themes (au-themes-get-themes background-mode))
+         (candidates (or (remq (au-themes-get-current-theme) themes) themes)))
+    (unless candidates
+      (user-error "No au-themes available%s"
+                  (if background-mode (format " for %s" background-mode) "")))
+    (au-themes-load-theme (nth (random (length candidates)) candidates))))
+
+;;;###autoload
+(defun au-themes-load-random-light ()
+  "Load a random light theme from the `au-themes' collection."
+  (interactive)
+  (au-themes-load-random 'light))
+
+;;;###autoload
+(defun au-themes-load-random-dark ()
+  "Load a random dark theme from the `au-themes' collection."
+  (interactive)
+  (au-themes-load-random 'dark))
 
 (provide 'au-themes)
 ;;; au-themes.el ends here
