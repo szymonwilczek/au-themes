@@ -80,6 +80,7 @@
     test-diff-refine-separation
     test-magit-sequence-separation
     test-completion-selection
+    test-hover-highlight
     test-select-restore))
 
 (defvar au-test-themes
