@@ -118,7 +118,7 @@
 
     (bg-mode-line-active "#c2c1b2")       ; Active modeline surface
     (fg-mode-line-active "#2e3120")       ; Active modeline primary text
-    (bg-completion "#bebcab")             ; Minibuffer completion selected row
+    (bg-completion "#b7b5a4")             ; Minibuffer completion selected row
     (bg-popup "#ceccbd")                  ; Autocomplete tooltip surface
     (bg-hover "#b6b39c")                  ; Mouse hover overlay
     (bg-hover-secondary "#c5b5a8")        ; Secondary hover overlay
