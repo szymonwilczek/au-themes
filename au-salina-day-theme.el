@@ -113,7 +113,7 @@
     (fg-mode-line-active "#1c2422")       ; Active modeline primary text
     (bg-completion "#c1bfb5")             ; Minibuffer completion selected row
     (bg-popup "#dcdad0")                  ; Autocomplete tooltip surface
-    (bg-hover "#c2c0b6")                  ; Mouse hover overlay
+    (bg-hover "#cfccbc")                  ; Mouse hover overlay
     (bg-hover-secondary "#c6c2c8")        ; Secondary hover overlay
     (bg-hl-line "#cec8bc")                ; Current line indicator
     (bg-paren-match "#a2c4c2")            ; Matching delimiter highlight
